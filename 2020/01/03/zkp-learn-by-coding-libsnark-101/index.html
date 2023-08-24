@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" itemscope itemtype="http://schema.org/WebPage">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>零知识证明 Learn by Coding：libsnark 入门篇 - SECBIT Blog</title>
-  
+<html
+  lang="zh-cn"
+  itemscope
+  itemtype="http://schema.org/WebPage"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>
+          零知识证明 Learn by Coding：libsnark 入门篇 - SECBIT Blog
+        </title>
+    
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +38,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.75.1" />
+<meta name="generator" content="Hugo 0.117.0" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/" />
@@ -53,7 +59,9 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.d8d87b982993a745e5e7b6a6cbf257be8c3e82aab5e485f0908ad7e6c3501ab2.css" integrity="sha256-2Nh7mCmTp0Xl57amy/JXvow&#43;gqq15IXwkIrX5sNQGrI=" media="screen" crossorigin="anonymous">
+
+
 
 
 
@@ -64,19 +72,14 @@
 <meta property="og:title" content="零知识证明 Learn by Coding：libsnark 入门篇" />
 <meta property="og:description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sec-bit.github.io/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/" />
+<meta property="og:url" content="https://sec-bit.github.io/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2020-01-03T08:00:00+08:00" />
-<meta property="article:modified_time" content="2020-03-24T13:12:58+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
+<meta property="article:modified_time" content="2020-03-24T13:12:58+08:00" />
 <meta itemprop="name" content="零知识证明 Learn by Coding：libsnark 入门篇">
-<meta itemprop="description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。">
-<meta itemprop="datePublished" content="2020-01-03T08:00:00+08:00" />
+<meta itemprop="description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。"><meta itemprop="datePublished" content="2020-01-03T08:00:00+08:00" />
 <meta itemprop="dateModified" content="2020-03-24T13:12:58+08:00" />
-<meta itemprop="wordCount" content="6611">
-
-
-
-<meta itemprop="keywords" content="Zero Knowledge Proof,zksnarks,libsnark,tutorials," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="wordCount" content="6613">
+<meta itemprop="keywords" content="Zero Knowledge Proof,zksnarks,libsnark,tutorials," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="零知识证明 Learn by Coding：libsnark 入门篇"/>
 <meta name="twitter:description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。"/>
 
@@ -90,16 +93,16 @@
 <![endif]-->
 
 
-<script type="application/javascript">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CVGF90VYL2"></script>
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-149859278-1', 'auto');
-	
-	ga('send', 'pageview');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-CVGF90VYL2', { 'anonymize_ip': false });
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -114,11 +117,13 @@ if (!doNotTrack) {
     });
 </script>
 
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
+  </head>
+  <body>
+    <div id="back-to-top"></div>
+
+    <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/blog/" class="logo">SECBIT Blog</a>
+    <a href="/" class="logo">SECBIT Blog</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -208,8 +213,8 @@ if (!doNotTrack) {
 </nav>
 
 
-  
     
+      
 
 
 
@@ -266,10 +271,10 @@ if (!doNotTrack) {
     </div>
 </div>
 
-  
-
-  
     
+
+    
+      
 <div class="modal-dialog">
     
     <div class="modal-content">
@@ -296,13 +301,14 @@ if (!doNotTrack) {
     </div>
 </div>
 
-  
+    
 
-  
+    
 
-  <header id="header" class="header container">
-    <div class="logo-wrapper">
-  <a href="/blog/" class="logo">
+
+    <header id="header" class="header">
+      <div class="logo-wrapper">
+  <a href="/" class="logo">
     
       SECBIT Blog
     
@@ -374,7 +380,7 @@ if (!doNotTrack) {
         <ul class="submenu">
           
             
-              <li>
+              <li class="submenu-item">
                 <a href="https://sec-bit.github.io/blog/en/">English</a>
               </li>
             
@@ -403,65 +409,66 @@ if (!doNotTrack) {
   </ul>
 </nav>
 
-  </header>
-
-  <div id="mobile-panel">
-    <main id="main" class="main bg-llight">
-      <div class="content-wrapper">
-        <div id="content" class="content container">
-          <article class="post bg-white">
-    
-    <header class="post-header">
-      <h1 class="post-title">零知识证明 Learn by Coding：libsnark 入门篇</h1>
-      
-      <div class="post-meta">
-        <time datetime="2020-01-03" class="post-time">
-          2020-01-03
-        </time>
-        <div class="post-category">
-            <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
-            <a href="https://sec-bit.github.io/blog/categories/zksnarks/"> zkSNARKs </a>
-            
-          </div>
-        <span class="more-meta"> 约 6611 字 </span>
-          <span class="more-meta"> 预计阅读 14 分钟 </span>
-
-        
-        
-
-        
-        
-      </div>
     </header>
 
+    <div id="mobile-panel">
+      <main id="main" class="main bg-llight wallpaper">
+        <div class="content-wrapper">
+    <div id="content" class="content">
+      <article class="post">
+        
+        <header class="post-header">
+          <h1 class="post-title">零知识证明 Learn by Coding：libsnark 入门篇</h1>
+          
+
+          <div class="post-meta">
+  <div class="post-meta-author">
+    by
+      p0n1
+    
+  </div>
+
+  <div class="post-meta-time">
+    <time datetime="2020-01-03">
+      2020-01-03
+    </time>
+  </div>
+
+  
+    <div class="post-meta-lastmod">
+      (上次更新:
+      2020-03-24)
+    </div>
+  
+
+
+  <div class="post-meta__right">
+    <span class="post-meta-more">
+        约 6613 字 -
+        预计阅读 14 分钟
+      </span>
+
+    <div class="post-meta-category">
+        <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
+          <a href="https://sec-bit.github.io/blog/categories/zksnarks/"> zkSNARKs </a>
+          
+      </div>
+
+
     
     
-<div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#1-zk-snarks-和-libsnark-背景简介">1. zk-SNARKs 和 libsnark 背景简介</a></li>
-    <li><a href="#2-基本原理与步骤">2. 基本原理与步骤</a></li>
-    <li><a href="#3-搭建-zk-snarks-应用开发环境">3. 搭建 zk-SNARKs 应用开发环境</a></li>
-    <li><a href="#4-理解示例代码">4. 理解示例代码</a></li>
-    <li><a href="#5-再次上手实践">5. 再次上手实践</a></li>
-    <li><a href="#6-whats-next">6. What&rsquo;s NEXT?</a></li>
-    <li><a href="#7-附录">7. 附录</a>
-      <ul>
-        <li><a href="#maincpp"><code>main.cpp</code></a></li>
-        <li><a href="#testcpp"><code>test.cpp</code></a></li>
-        <li><a href="#rangecpp"><code>range.cpp</code></a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+
+
+    
+    
   </div>
 </div>
 
-    
-    <div class="post-content">
-      <p>libsnark 是目前实现 zk-SNARKs 电路最重要的框架，在众多私密交易或隐私计算相关项目间广泛应用，其中最著名当然要数 Zcash。Zcash 在 Sapling 版本升级前一直使用 libsnark 来实现电路（之后才替换为 bellman）。毫不夸张地说，libsnark 支撑并促进了 zk-SNARKs 技术的<strong>首次大规模应用</strong>，填补了零知识证明技术从最新理论到工程实现间的空缺。</p>
+        </header>
+
+        
+        <div class="post-content">
+          <p>libsnark 是目前实现 zk-SNARKs 电路最重要的框架，在众多私密交易或隐私计算相关项目间广泛应用，其中最著名当然要数 Zcash。Zcash 在 Sapling 版本升级前一直使用 libsnark 来实现电路（之后才替换为 bellman）。毫不夸张地说，libsnark 支撑并促进了 zk-SNARKs 技术的<strong>首次大规模应用</strong>，填补了零知识证明技术从最新理论到工程实现间的空缺。</p>
 <p>希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。</p>
 <h2 id="1-zk-snarks-和-libsnark-背景简介">1. zk-SNARKs 和 libsnark 背景简介</h2>
 <p>零知识证明，可能是目前最具应用前景和想象力的密码学黑科技。而 zk-SNARKs 正是一类零知识证明方案的简称，全称为 Zero-Knowledge Succinct Non-interactive Arguments of Knowledge。这一名字几乎包含了其所有技术特征，即可以在不泄露任何其他信息的前提下证明一个命题的正确性，并且最终生成的证明具有简洁性（Succinct），也就是说最终生成的证明足够小，并且与计算量大小无关，是一个常数。用白话说就是，你理论上可以在不暴露任何隐私的情况下向其他所有人证明某件事，并且生成的证明体积很小，校验成本很低，与需要证明的内容计算量无关。听起来简直太美好了！</p>
@@ -524,48 +531,48 @@ if (!doNotTrack) {
 <p>有这样一个函数 <code>C(x, out)</code>，用于判断秘密 <code>x</code> 是否满足等式 <code>x^3 + x + 5 == out</code>，若满足则返回 <code>true</code>。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">C</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">out</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="p">(</span> <span class="nx">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">==</span> <span class="nx">out</span> <span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">C</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">out</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">(</span> <span class="nx">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">==</span> <span class="nx">out</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>第一步</strong>，我们需要将函数 <code>C(x, out)</code> 在 libsnark 中进行表达。此处先省略，后面介绍详细过程。</p>
 <p><strong>第二步</strong>，对应下面的 Generator 函数（<em><strong>G</strong></em>），<code>lambda</code> 为随机产生，也就是常说的 trusted setup 过程中产生的 &ldquo;toxic waste&rdquo;。人们喜欢称它为“有毒废物”，是因为它必须被妥善处理（如必须销毁，不能让任何人知道），否则会影响证明协议安全。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">lambda</span> <span class="o">&lt;-</span> <span class="nx">random</span><span class="p">()</span>
-
-<span class="p">(</span><span class="nx">pk</span><span class="p">,</span> <span class="nx">vk</span><span class="p">)</span> <span class="o">=</span> <span class="nx">G</span><span class="p">(</span><span class="nx">C</span><span class="p">,</span> <span class="nx">lambda</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">lambda</span> <span class="o">&lt;-</span> <span class="nx">random</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nx">pk</span><span class="p">,</span> <span class="nx">vk</span><span class="p">)</span> <span class="o">=</span> <span class="nx">G</span><span class="p">(</span><span class="nx">C</span><span class="p">,</span> <span class="nx">lambda</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>最终生成 proving key (<code>pk</code>) 和 verification key (<code>vk</code>)。</p>
 <p><strong>第三步</strong>，对应使用 Prove 函数（<em><strong>P</strong></em>）生成证明。这里想证明的是 prover 知道一个秘密值 <code>x</code> 和计算结果 <code>out</code> 可使等式满足。因此将 <code>x</code>、<code>out</code> 还有 <code>pk</code> 作为输入一起传给 <em><strong>P</strong></em>，最终生成证明 <code>proof</code>。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">proof</span> <span class="o">=</span> <span class="nx">P</span><span class="p">(</span><span class="nx">pk</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">proof</span> <span class="o">=</span> <span class="nx">P</span><span class="p">(</span><span class="nx">pk</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>第四步</strong>，对应使用 Verify 函数（<em><strong>V</strong></em>）验证证明，将 <code>proof</code>、<code>out</code> 还有 <code>vk</code> 传给 <em><strong>G</strong></em>，即可在不暴露秘密的情况下证明存在一个秘密值可使等式满足。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">V</span><span class="p">(</span><span class="nx">vk</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">proof</span><span class="p">)</span> <span class="o">?=</span> <span class="kc">true</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">V</span><span class="p">(</span><span class="nx">vk</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">proof</span><span class="p">)</span> <span class="o">?=</span> <span class="kc">true</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>而<strong>开发者主要工作量就集中在第一步</strong>，需要按照 libsnark 的接口规则手写 C++ 电路代码来描述命题，由代码构造 R1CS 约束。整个过程也即对应下图的 Computation -&gt; Arithmetic Circuit -&gt; R1CS。</p>
 <p><img src="img/flow.png" alt="flow"></p>
@@ -574,81 +581,81 @@ if (!doNotTrack) {
 <p>先下载本文对应的 libsnark 最小可用例子代码库 <code>libsnark_abc</code>。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git clone https://github.com/sec-bit/libsnark_abc.git
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone https://github.com/sec-bit/libsnark_abc.git
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="img/github.png" alt="github"></p>
 <p>通过 git submodule 拉取 libsnark 代码。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> libsnark_abc
-git submodule update --init --recursive
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> libsnark_abc
+</span></span><span class="line"><span class="cl">git submodule update --init --recursive
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>参考 libsnark <a href="https://github.com/scipr-lab/libsnark#dependencies">项目文档</a>完成相关依赖安装。以 Ubuntu 16.04 LTS 为例，需安装以下组件：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">sudo apt-get install build-essential cmake git libgmp3-dev libprocps4-dev python-markdown libboost-all-dev libssl-dev
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo apt-get install build-essential cmake git libgmp3-dev libprocps4-dev python-markdown libboost-all-dev libssl-dev
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>初始化 <code>build</code> 文件夹。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build <span class="o">&amp;&amp;</span> cmake ..
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build <span class="o">&amp;&amp;</span> cmake ..
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这步在 macOS 系统可能会遇到问题，参考<a href="https://github.com/scipr-lab/libsnark/issues/99#issuecomment-367677834">这个 issue</a> 处理。或尝试使用以下命令：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build <span class="o">&amp;&amp;</span> <span class="nv">CPPFLAGS</span><span class="o">=</span>-I/usr/local/opt/openssl/include <span class="nv">LDFLAGS</span><span class="o">=</span>-L/usr/local/opt/openssl/lib <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span>/usr/local/opt/openssl/lib/pkgconfig cmake -DWITH_PROCPS<span class="o">=</span>OFF -DWITH_SUPERCOP<span class="o">=</span>OFF ..
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build <span class="o">&amp;&amp;</span> <span class="nv">CPPFLAGS</span><span class="o">=</span>-I/usr/local/opt/openssl/include <span class="nv">LDFLAGS</span><span class="o">=</span>-L/usr/local/opt/openssl/lib <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span>/usr/local/opt/openssl/lib/pkgconfig cmake -DWITH_PROCPS<span class="o">=</span>OFF -DWITH_SUPERCOP<span class="o">=</span>OFF ..
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>成功后，依旧在 <code>build</code> 目录进行编译。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">make
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">make
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>编译成功后，在 <code>build/src</code> 目录中可看到 3 个二进制文件。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">main
-range
-<span class="nb">test</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">main
+</span></span><span class="line"><span class="cl">range
+</span></span><span class="line"><span class="cl"><span class="nb">test</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>到这儿，你就以及完成示例项目的编译啦。尝试运行示例代码吧。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">./src/main
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./src/main
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>最终出现如下日志，则说明一切正常。<strong>你已顺利拥有了 zkSNARK 应用开发环境，并成功跑了第一个 zk-SNARKs 的 demo</strong>。</p>
 <p><img src="img/run-main.png" alt="run-main"></p>
@@ -659,7 +666,7 @@ range
 <p>只有区区几十行代码，其中 <code>run_r1cs_gg_ppzksnark()</code> 是主要部分。很容易发现，真正起作用的实质代码只有下面 5 行。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -670,66 +677,66 @@ range
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">r1cs_gg_ppzksnark_keypair</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">keypair</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_generator</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example</span><span class="p">.</span><span class="n">constraint_system</span><span class="p">);</span>
-
-<span class="n">r1cs_gg_ppzksnark_processed_verification_key</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">pvk</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_verifier_process_vk</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">vk</span><span class="p">);</span>
-
-<span class="n">r1cs_gg_ppzksnark_proof</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">proof</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_prover</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">pk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">auxiliary_input</span><span class="p">);</span>
-
-<span class="k">const</span> <span class="kt">bool</span> <span class="n">ans</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_verifier_strong_IC</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">vk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">proof</span><span class="p">);</span>
-
-<span class="k">const</span> <span class="kt">bool</span> <span class="n">ans2</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_online_verifier_strong_IC</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pvk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">proof</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">r1cs_gg_ppzksnark_keypair</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">keypair</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_generator</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example</span><span class="p">.</span><span class="n">constraint_system</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r1cs_gg_ppzksnark_processed_verification_key</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">pvk</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_verifier_process_vk</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">vk</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r1cs_gg_ppzksnark_proof</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">proof</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_prover</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">pk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">auxiliary_input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">bool</span> <span class="n">ans</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_verifier_strong_IC</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">vk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">proof</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">bool</span> <span class="n">ans2</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_online_verifier_strong_IC</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pvk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">proof</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>仅从“超长”的函数名就能看出来每步是在做什么，但是却看不到如何构造电路的细节。实际上这里仅仅是调用了自带的 <code>r1cs_example</code>，隐去了实现细节。</p>
 <p>既然如此，<strong>那让我们通过一个更直观的例子来学习电路细节</strong>。研究 <code>src/test.cpp</code>，这个例子改编自 Christian Lundkvist 的 <a href="https://github.com/christianlundkvist/libsnark-tutorial">libsnark-tutorial</a>。</p>
 <p>代码开头仅引用了三个头文件，分别是：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;libsnark/gadgetlib1/pb_variable.hpp&gt;</span><span class="cp">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;libsnark/gadgetlib1/pb_variable.hpp&gt;</span><span class="cp">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>前面提到 <code>r1cs_gg_ppzksnark</code> 对应的是 Groth16 方案。这里加了 <code>gg</code> 是为了区别 <code>r1cs_ppzksnark</code>（也就是 BCTV14a 方案），表示 Generic Group Model（通用群模型）。Groth16 安全性证明依赖 Generic Group Model，以更强的安全假设换得了更好的性能和更短的证明。</p>
 <p>第一个头文件是为了引入 <code>default_r1cs_gg_ppzksnark_pp</code> 类型，第二个则为了引入证明相关的各个接口。<code>pb_variable</code> 则是用来定义电路相关的变量。</p>
 <p>下面需要进行一些初始化，定义使用的有限域，并初始化曲线参数。这是相当于每次的准备工作。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">typedef</span> <span class="n">libff</span><span class="o">::</span><span class="n">Fr</span><span class="o">&lt;</span><span class="n">default_r1cs_gg_ppzksnark_pp</span><span class="o">&gt;</span> <span class="n">FieldT</span><span class="p">;</span>
-<span class="n">default_r1cs_gg_ppzksnark_pp</span><span class="o">::</span><span class="n">init_public_params</span><span class="p">();</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="n">libff</span><span class="o">::</span><span class="n">Fr</span><span class="o">&lt;</span><span class="n">default_r1cs_gg_ppzksnark_pp</span><span class="o">&gt;</span> <span class="n">FieldT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">default_r1cs_gg_ppzksnark_pp</span><span class="o">::</span><span class="n">init_public_params</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>接下来就需要明确「待证命题」是什么。这里不妨沿用之前的例子，证明秘密 <code>x</code> 满足等式 <code>x^3 + x + 5 == out</code>。这实际也是 Vitalik 博文 <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">&ldquo;Quadratic Arithmetic Programs: from Zero to Hero&rdquo;</a> 中用的例子。如果对下面的变化陌生，可尝试阅读该博文。</p>
 <p>通过引入中间变量 <code>sym_1</code>、<code>y</code>、<code>sym_2</code> 将 <code>x^3 + x + 5 = out</code> 扁平化为若干个二次方程式，几个只涉及简单乘法或加法的式子，<strong>对应到算术电路中就是乘法门和加法门</strong>。你可以很容易地在纸上画出对应的电路。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">x * x = sym_1
-sym_1 * x = y
-y + x = sym_2
-sym_2 + 5 = out
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">x * x = sym_1
+</span></span><span class="line"><span class="cl">sym_1 * x = y
+</span></span><span class="line"><span class="cl">y + x = sym_2
+</span></span><span class="line"><span class="cl">sym_2 + 5 = out
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>通常文章到这里便会顺着介绍如何按照 R1CS 的形式编排上面的几个等式，并一步步推导出具体对应的向量。这对理解如何把 Gate 转换为 R1CS 有帮助，然而却不是本文的核心目的。所以此处省略一百字。</p>
 <p>下面定义与命题相关的变量。首先创建的 <code>protoboard</code> 是 libsnark 中的一个重要概念，顾名思义就是<strong>原型板</strong>或者<strong>面包板</strong>，用来快速搭建电路，在 zk-SNARKs 电路中则是用来关联所有变量、组件和约束。接下来的代码定义了所有需要外部输入的变量以及中间变量。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -740,21 +747,21 @@ sym_2 + 5 = out
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="c1">// Create protoboard
-</span><span class="c1"></span><span class="n">protoboard</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">pb</span><span class="p">;</span>
-
-<span class="c1">// Define variables
-</span><span class="c1"></span><span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">x</span><span class="p">;</span>
-<span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">sym_1</span><span class="p">;</span>
-<span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">y</span><span class="p">;</span>
-<span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">sym_2</span><span class="p">;</span>
-<span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">out</span><span class="p">;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// Create protoboard
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">protoboard</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">pb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Define variables
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">sym_1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">sym_2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">out</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>下面将各个变量与 <code>protoboard</code> 连接，相当于把各个元器件插到“面包板”上。<code>allocate()</code> 函数的第二个 string 类型变量仅是用来方便 DEBUG 时的注释，方便 DEBUG 时查看日志。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -762,19 +769,19 @@ sym_2 + 5 = out
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="n">out</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;out&#34;</span><span class="p">);</span>
-<span class="n">x</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;x&#34;</span><span class="p">);</span>
-<span class="n">sym_1</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;sym_1&#34;</span><span class="p">);</span>
-<span class="n">y</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;y&#34;</span><span class="p">);</span>
-<span class="n">sym_2</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;sym_2&#34;</span><span class="p">);</span>
-<span class="n">pb</span><span class="p">.</span><span class="n">set_input_sizes</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="n">out</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;out&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;x&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">sym_1</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;sym_1&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;y&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">sym_2</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;sym_2&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">pb</span><span class="p">.</span><span class="n">set_input_sizes</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>注意，<strong>此处第一个与 <code>pb</code> 连接的是 <code>out</code> 变量</strong>。我们知道 zk-SNARKs 中有 public input 和 private witness 的概念，分别对应 libsnark 中的 primary 和 auxiliary 变量。那么如何在代码中进行区分呢？我们需要借助 <code>set_input_sizes(n)</code> 来声明与 protoboard 连接的 public/primary 变量的个数 <code>n</code>。在这里 <code>n = 1</code>，表明与 <code>pb</code> 连接的<strong>前 <code>n = 1</code> 个变量</strong>是 public 的，其余都是 private 的。</p>
 <p>至此， 所有变量都已经顺利与 protoboard 相连，下面需要确定的是这些变量间的约束关系。这个也很好理解，类似元器件插至面包板后，需要根据电路需求确定他们之间的关系再连线焊接。如下调用 protoboard 的 <code>add_r1cs_constraint()</code> 函数，为 <code>pb</code> 添加形如 <code>a * b = c</code> 的 <code>r1cs_constraint</code>。即 <code>r1cs_constraint&lt;FieldT&gt;(a, b, c)</code> 中参数应该满足 <code>a * b = c</code>。根据注释不难理解每个等式和约束之间的关系。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -784,31 +791,31 @@ sym_2 + 5 = out
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="c1">// x*x = sym_1
-</span><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">sym_1</span><span class="p">));</span>
-<span class="c1">// sym_1 * x = y
-</span><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">sym_1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">));</span>
-<span class="c1">// y + x = sym_2
-</span><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sym_2</span><span class="p">));</span>
-<span class="c1">// sym_2 + 5 = ~out
-</span><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">sym_2</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">out</span><span class="p">));</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// x*x = sym_1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">sym_1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// sym_1 * x = y
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">sym_1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// y + x = sym_2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sym_2</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// sym_2 + 5 = ~out
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">sym_2</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">out</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>至此，变量间的约束也已添加完成，针对命题的电路已构建完毕。下面进入前文提到的“四个步骤”中的<strong>第二步</strong>：使用生成算法（<em><strong>G</strong></em>）为该命题生成公共参数（<code>pk</code> 和 <code>vk</code>），即 trusted setup。生成出来的 proving key 和 verification key 分别可以通过 <code>keypair.pk</code> 和 <code>keypair.vk</code> 获得。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
-const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
+</span></span><span class="line"><span class="cl">const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>进入<strong>第三步</strong>，生成证明。先为 public input 以及 witness 提供具体数值。不难发现，<code>x = 3, out = 35</code> 是原始方程的一个解。则依次为 <code>x</code>、<code>out</code> 以及各个中间变量赋值。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -816,31 +823,31 @@ const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">pb.val(out) = 35;
-
-pb.val(x) = 3;
-pb.val(sym_1) = 9;
-pb.val(y) = 27;
-pb.val(sym_2) = 30;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">pb.val(out) = 35;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">pb.val(x) = 3;
+</span></span><span class="line"><span class="cl">pb.val(sym_1) = 9;
+</span></span><span class="line"><span class="cl">pb.val(y) = 27;
+</span></span><span class="line"><span class="cl">pb.val(sym_2) = 30;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>再把 public input 以及 witness 的数值传给 prover 函数进行证明，可分别通过 <code>pb.primary_input()</code> 和 <code>pb.auxiliary_input()</code> 访问。生成的证明用 <code>proof</code> 变量保存。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后我们使用 verifier 函数校验证明。如果 <code>verified = true</code> 则说明证明验证成功。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>从日志输出中可以看出验证结果为 <code>true</code>，R1CS 约束数量为 4，public input 和 private input 数量分别为 1 和 4。日志输出符合预期。</p>
 <p><img src="img/test-output.png" alt="test_output"></p>
@@ -855,7 +862,7 @@ pb.val(sym_2) = 30;
 <p><em>DangDangDang</em>，<code>gadgetlib1/gadgets/basic_gadgets.hpp</code> 中的 <code>comparison_gadget</code> 正是我们所需。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -864,20 +871,20 @@ pb.val(sym_2) = 30;
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">comparison_gadget(protoboard&lt;FieldT&gt;&amp; pb,
-                    const size_t n,
-                    const pb_linear_combination&lt;FieldT&gt; &amp;A,
-                    const pb_linear_combination&lt;FieldT&gt; &amp;B,
-                    const pb_variable&lt;FieldT&gt; &amp;less,
-                    const pb_variable&lt;FieldT&gt; &amp;less_or_eq,
-                    const std::string &amp;annotation_prefix=&#34;&#34;)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">comparison_gadget(protoboard&lt;FieldT&gt;&amp; pb,
+</span></span><span class="line"><span class="cl">                    const size_t n,
+</span></span><span class="line"><span class="cl">                    const pb_linear_combination&lt;FieldT&gt; &amp;A,
+</span></span><span class="line"><span class="cl">                    const pb_linear_combination&lt;FieldT&gt; &amp;B,
+</span></span><span class="line"><span class="cl">                    const pb_variable&lt;FieldT&gt; &amp;less,
+</span></span><span class="line"><span class="cl">                    const pb_variable&lt;FieldT&gt; &amp;less_or_eq,
+</span></span><span class="line"><span class="cl">                    const std::string &amp;annotation_prefix=&#34;&#34;)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>该 gadget 需要传入的参数较多：<code>n</code> 表示位数，<code>A</code> 和 <code>B</code> 分别为需要比较的两个数，<code>less</code> 和 <code>less_or_eq</code> 用来标记两个数的关系是「小于」还是「小于或等于」。该 gadget 实现的原理简单来讲是把 <code>A</code> 和 <code>B</code> 的比较，转化为 <code>2^n + B - A</code> 按位表示。具体实现还用到了其余多个基础 gadget，可以通过 <code>comparison_gadget&lt;FieldT&gt;::generate_r1cs_constraints()</code> 研究。</p>
 <p>这里需要创建以下变量，并将 <code>x</code> 和 <code>max</code> 与 <code>pb</code> 相连，把 <code>max</code> 值设为 <code>60</code>，代表数值上限。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -888,42 +895,42 @@ pb.val(sym_2) = 30;
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">protoboard&lt;FieldT&gt; pb;
-
-pb_variable&lt;FieldT&gt; x, max;
-pb_variable&lt;FieldT&gt; less, less_or_eq;
-
-x.allocate(pb, &#34;x&#34;);
-max.allocate(pb, &#34;max&#34;);
-
-pb.val(max)= 60;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">protoboard&lt;FieldT&gt; pb;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">pb_variable&lt;FieldT&gt; x, max;
+</span></span><span class="line"><span class="cl">pb_variable&lt;FieldT&gt; less, less_or_eq;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">x.allocate(pb, &#34;x&#34;);
+</span></span><span class="line"><span class="cl">max.allocate(pb, &#34;max&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">pb.val(max)= 60;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>使用 <code>comparison_gadget</code> 创建 <code>cmp</code>，并把前面的参数填入，并调用 gadget 自带的 <code>generate_r1cs_constraints()</code> 方法。同时另外添加一个约束，要求 <code>less * 1 = 1</code>，也就是 <code>less</code> 必须为 <code>true</code>。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">comparison_gadget&lt;FieldT&gt; cmp(pb, 10, x, max, less, less_or_eq, &#34;cmp&#34;);
-cmp.generate_r1cs_constraints();
-pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(less, 1, FieldT::one()));
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">comparison_gadget&lt;FieldT&gt; cmp(pb, 10, x, max, less, less_or_eq, &#34;cmp&#34;);
+</span></span><span class="line"><span class="cl">cmp.generate_r1cs_constraints();
+</span></span><span class="line"><span class="cl">pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(less, 1, FieldT::one()));
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>输入 witness（秘密值 x），比如让 <code>x = 18</code>。这里还需要调用 <code>comparison_gadget</code> 的 <code>generate_r1cs_witness</code> 方法。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">// Add witness values
-pb.val(x) = 18; // secret
-cmp.generate_r1cs_witness();
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// Add witness values
+</span></span><span class="line"><span class="cl">pb.val(x) = 18; // secret
+</span></span><span class="line"><span class="cl">cmp.generate_r1cs_witness();
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>其余部分和上一个例子一致，即可在不泄露秘密数字大小的前提下，证明某数字小于 <code>60</code>。同理，就实现一个对数值作最大和最小值限定的 “range proof”。</p>
 <p>在强大基础库的帮助下，我们又用更短的代码实现了证明需求。</p>
@@ -940,7 +947,7 @@ cmp.generate_r1cs_witness();
 <p>第一个例子 <code>main.cpp</code>，调用 libsnark 官方 example 的示例代码。通过该例子可了解 libsnark 的基本使用流程和主要函数。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1001,72 +1008,72 @@ cmp.generate_r1cs_witness();
 </span><span class="lnt">59
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">#include &lt;libff/common/default_types/ec_pp.hpp&gt;
-#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
-#include &lt;libsnark/relations/constraint_satisfaction_problems/r1cs/examples/r1cs_examples.hpp&gt;
-#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
-
-using namespace libsnark;
-
-/**
- * The code below provides an example of all stages of running a R1CS GG-ppzkSNARK.
- *
- * Of course, in a real-life scenario, we would have three distinct entities,
- * mangled into one in the demonstration below. The three entities are as follows.
- * (1) The &#34;generator&#34;, which runs the ppzkSNARK generator on input a given
- *     constraint system CS to create a proving and a verification key for CS.
- * (2) The &#34;prover&#34;, which runs the ppzkSNARK prover on input the proving key,
- *     a primary input for CS, and an auxiliary input for CS.
- * (3) The &#34;verifier&#34;, which runs the ppzkSNARK verifier on input the verification key,
- *     a primary input for CS, and a proof.
- */
-template&lt;typename ppT&gt;
-bool run_r1cs_gg_ppzksnark(const r1cs_example&lt;libff::Fr&lt;ppT&gt; &gt; &amp;example)
-{
-    libff::print_header(&#34;R1CS GG-ppzkSNARK Generator&#34;);
-    r1cs_gg_ppzksnark_keypair&lt;ppT&gt; keypair = r1cs_gg_ppzksnark_generator&lt;ppT&gt;(example.constraint_system);
-    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after generator&#34;);
-
-    libff::print_header(&#34;Preprocess verification key&#34;);
-    r1cs_gg_ppzksnark_processed_verification_key&lt;ppT&gt; pvk = r1cs_gg_ppzksnark_verifier_process_vk&lt;ppT&gt;(keypair.vk);
-
-    libff::print_header(&#34;R1CS GG-ppzkSNARK Prover&#34;);
-    r1cs_gg_ppzksnark_proof&lt;ppT&gt; proof = r1cs_gg_ppzksnark_prover&lt;ppT&gt;(keypair.pk, example.primary_input, example.auxiliary_input);
-    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after prover&#34;);
-
-    libff::print_header(&#34;R1CS GG-ppzkSNARK Verifier&#34;);
-    const bool ans = r1cs_gg_ppzksnark_verifier_strong_IC&lt;ppT&gt;(keypair.vk, example.primary_input, proof);
-    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after verifier&#34;);
-    printf(&#34;* The verification result is: %s\n&#34;, (ans ? &#34;PASS&#34; : &#34;FAIL&#34;));
-
-    libff::print_header(&#34;R1CS GG-ppzkSNARK Online Verifier&#34;);
-    const bool ans2 = r1cs_gg_ppzksnark_online_verifier_strong_IC&lt;ppT&gt;(pvk, example.primary_input, proof);
-    assert(ans == ans2);
-
-    return ans;
-}
-
-template&lt;typename ppT&gt;
-void test_r1cs_gg_ppzksnark(size_t num_constraints, size_t input_size)
-{
-    r1cs_example&lt;libff::Fr&lt;ppT&gt; &gt; example = generate_r1cs_example_with_binary_input&lt;libff::Fr&lt;ppT&gt; &gt;(num_constraints, input_size);
-    const bool bit = run_r1cs_gg_ppzksnark&lt;ppT&gt;(example);
-    assert(bit);
-}
-
-int main () {
-    default_r1cs_gg_ppzksnark_pp::init_public_params();
-    test_r1cs_gg_ppzksnark&lt;default_r1cs_gg_ppzksnark_pp&gt;(1000, 100);
-
-    return 0;
-}
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#include &lt;libff/common/default_types/ec_pp.hpp&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libsnark/relations/constraint_satisfaction_problems/r1cs/examples/r1cs_examples.hpp&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">using namespace libsnark;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * The code below provides an example of all stages of running a R1CS GG-ppzkSNARK.
+</span></span><span class="line"><span class="cl"> *
+</span></span><span class="line"><span class="cl"> * Of course, in a real-life scenario, we would have three distinct entities,
+</span></span><span class="line"><span class="cl"> * mangled into one in the demonstration below. The three entities are as follows.
+</span></span><span class="line"><span class="cl"> * (1) The &#34;generator&#34;, which runs the ppzkSNARK generator on input a given
+</span></span><span class="line"><span class="cl"> *     constraint system CS to create a proving and a verification key for CS.
+</span></span><span class="line"><span class="cl"> * (2) The &#34;prover&#34;, which runs the ppzkSNARK prover on input the proving key,
+</span></span><span class="line"><span class="cl"> *     a primary input for CS, and an auxiliary input for CS.
+</span></span><span class="line"><span class="cl"> * (3) The &#34;verifier&#34;, which runs the ppzkSNARK verifier on input the verification key,
+</span></span><span class="line"><span class="cl"> *     a primary input for CS, and a proof.
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">template&lt;typename ppT&gt;
+</span></span><span class="line"><span class="cl">bool run_r1cs_gg_ppzksnark(const r1cs_example&lt;libff::Fr&lt;ppT&gt; &gt; &amp;example)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    libff::print_header(&#34;R1CS GG-ppzkSNARK Generator&#34;);
+</span></span><span class="line"><span class="cl">    r1cs_gg_ppzksnark_keypair&lt;ppT&gt; keypair = r1cs_gg_ppzksnark_generator&lt;ppT&gt;(example.constraint_system);
+</span></span><span class="line"><span class="cl">    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after generator&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    libff::print_header(&#34;Preprocess verification key&#34;);
+</span></span><span class="line"><span class="cl">    r1cs_gg_ppzksnark_processed_verification_key&lt;ppT&gt; pvk = r1cs_gg_ppzksnark_verifier_process_vk&lt;ppT&gt;(keypair.vk);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    libff::print_header(&#34;R1CS GG-ppzkSNARK Prover&#34;);
+</span></span><span class="line"><span class="cl">    r1cs_gg_ppzksnark_proof&lt;ppT&gt; proof = r1cs_gg_ppzksnark_prover&lt;ppT&gt;(keypair.pk, example.primary_input, example.auxiliary_input);
+</span></span><span class="line"><span class="cl">    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after prover&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    libff::print_header(&#34;R1CS GG-ppzkSNARK Verifier&#34;);
+</span></span><span class="line"><span class="cl">    const bool ans = r1cs_gg_ppzksnark_verifier_strong_IC&lt;ppT&gt;(keypair.vk, example.primary_input, proof);
+</span></span><span class="line"><span class="cl">    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after verifier&#34;);
+</span></span><span class="line"><span class="cl">    printf(&#34;* The verification result is: %s\n&#34;, (ans ? &#34;PASS&#34; : &#34;FAIL&#34;));
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    libff::print_header(&#34;R1CS GG-ppzkSNARK Online Verifier&#34;);
+</span></span><span class="line"><span class="cl">    const bool ans2 = r1cs_gg_ppzksnark_online_verifier_strong_IC&lt;ppT&gt;(pvk, example.primary_input, proof);
+</span></span><span class="line"><span class="cl">    assert(ans == ans2);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    return ans;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">template&lt;typename ppT&gt;
+</span></span><span class="line"><span class="cl">void test_r1cs_gg_ppzksnark(size_t num_constraints, size_t input_size)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    r1cs_example&lt;libff::Fr&lt;ppT&gt; &gt; example = generate_r1cs_example_with_binary_input&lt;libff::Fr&lt;ppT&gt; &gt;(num_constraints, input_size);
+</span></span><span class="line"><span class="cl">    const bool bit = run_r1cs_gg_ppzksnark&lt;ppT&gt;(example);
+</span></span><span class="line"><span class="cl">    assert(bit);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main () {
+</span></span><span class="line"><span class="cl">    default_r1cs_gg_ppzksnark_pp::init_public_params();
+</span></span><span class="line"><span class="cl">    test_r1cs_gg_ppzksnark&lt;default_r1cs_gg_ppzksnark_pp&gt;(1000, 100);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    return 0;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="testcpp"><code>test.cpp</code></h3>
 <p>第二个例子 <code>test.cpp</code>。这个例子具体展示了如何利用 libsnark 构建一个最简单的电路。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1142,87 +1149,87 @@ int main () {
 </span><span class="lnt">74
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
-#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
-#include &lt;libsnark/gadgetlib1/pb_variable.hpp&gt;
-
-using namespace libsnark;
-using namespace std;
-
-int main () {
-    typedef libff::Fr&lt;default_r1cs_gg_ppzksnark_pp&gt; FieldT;
-
-    // Initialize the curve parameters
-    default_r1cs_gg_ppzksnark_pp::init_public_params();
-  
-    // Create protoboard
-    protoboard&lt;FieldT&gt; pb;
-
-    // Define variables
-    pb_variable&lt;FieldT&gt; x;
-    pb_variable&lt;FieldT&gt; sym_1;
-    pb_variable&lt;FieldT&gt; y;
-    pb_variable&lt;FieldT&gt; sym_2;
-    pb_variable&lt;FieldT&gt; out;
-
-    // Allocate variables to protoboard
-    // The strings (like &#34;x&#34;) are only for debugging purposes    
-    out.allocate(pb, &#34;out&#34;);
-    x.allocate(pb, &#34;x&#34;);
-    sym_1.allocate(pb, &#34;sym_1&#34;);
-    y.allocate(pb, &#34;y&#34;);
-    sym_2.allocate(pb, &#34;sym_2&#34;);
-
-    // This sets up the protoboard variables
-    // so that the first one (out) represents the public
-    // input and the rest is private input
-    pb.set_input_sizes(1);
-
-    // Add R1CS constraints to protoboard
-
-    // x*x = sym_1
-    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(x, x, sym_1));
-
-    // sym_1 * x = y
-    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(sym_1, x, y));
-
-    // y + x = sym_2
-    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(y + x, 1, sym_2));
-
-    // sym_2 + 5 = ~out
-    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(sym_2 + 5, 1, out));
-    
-    const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
-
-    // generate keypair
-    const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
-
-    // Add public input and witness values
-    pb.val(out) = 35;
-
-    pb.val(x) = 3;
-    pb.val(sym_1) = 9;
-    pb.val(y) = 27;
-    pb.val(sym_2) = 30;
-
-    // generate proof
-    const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
-
-    // verify
-    bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
-
-    cout &lt;&lt; &#34;Number of R1CS constraints: &#34; &lt;&lt; constraint_system.num_constraints() &lt;&lt; endl;
-    cout &lt;&lt; &#34;Primary (public) input: &#34; &lt;&lt; pb.primary_input() &lt;&lt; endl;
-    cout &lt;&lt; &#34;Auxiliary (private) input: &#34; &lt;&lt; pb.auxiliary_input() &lt;&lt; endl;
-    cout &lt;&lt; &#34;Verification status: &#34; &lt;&lt; verified &lt;&lt; endl;
-}
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libsnark/gadgetlib1/pb_variable.hpp&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">using namespace libsnark;
+</span></span><span class="line"><span class="cl">using namespace std;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main () {
+</span></span><span class="line"><span class="cl">    typedef libff::Fr&lt;default_r1cs_gg_ppzksnark_pp&gt; FieldT;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // Initialize the curve parameters
+</span></span><span class="line"><span class="cl">    default_r1cs_gg_ppzksnark_pp::init_public_params();
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    // Create protoboard
+</span></span><span class="line"><span class="cl">    protoboard&lt;FieldT&gt; pb;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // Define variables
+</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; x;
+</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; sym_1;
+</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; y;
+</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; sym_2;
+</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; out;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // Allocate variables to protoboard
+</span></span><span class="line"><span class="cl">    // The strings (like &#34;x&#34;) are only for debugging purposes    
+</span></span><span class="line"><span class="cl">    out.allocate(pb, &#34;out&#34;);
+</span></span><span class="line"><span class="cl">    x.allocate(pb, &#34;x&#34;);
+</span></span><span class="line"><span class="cl">    sym_1.allocate(pb, &#34;sym_1&#34;);
+</span></span><span class="line"><span class="cl">    y.allocate(pb, &#34;y&#34;);
+</span></span><span class="line"><span class="cl">    sym_2.allocate(pb, &#34;sym_2&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // This sets up the protoboard variables
+</span></span><span class="line"><span class="cl">    // so that the first one (out) represents the public
+</span></span><span class="line"><span class="cl">    // input and the rest is private input
+</span></span><span class="line"><span class="cl">    pb.set_input_sizes(1);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // Add R1CS constraints to protoboard
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // x*x = sym_1
+</span></span><span class="line"><span class="cl">    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(x, x, sym_1));
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // sym_1 * x = y
+</span></span><span class="line"><span class="cl">    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(sym_1, x, y));
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // y + x = sym_2
+</span></span><span class="line"><span class="cl">    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(y + x, 1, sym_2));
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // sym_2 + 5 = ~out
+</span></span><span class="line"><span class="cl">    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(sym_2 + 5, 1, out));
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // generate keypair
+</span></span><span class="line"><span class="cl">    const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // Add public input and witness values
+</span></span><span class="line"><span class="cl">    pb.val(out) = 35;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    pb.val(x) = 3;
+</span></span><span class="line"><span class="cl">    pb.val(sym_1) = 9;
+</span></span><span class="line"><span class="cl">    pb.val(y) = 27;
+</span></span><span class="line"><span class="cl">    pb.val(sym_2) = 30;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // generate proof
+</span></span><span class="line"><span class="cl">    const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // verify
+</span></span><span class="line"><span class="cl">    bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Number of R1CS constraints: &#34; &lt;&lt; constraint_system.num_constraints() &lt;&lt; endl;
+</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Primary (public) input: &#34; &lt;&lt; pb.primary_input() &lt;&lt; endl;
+</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Auxiliary (private) input: &#34; &lt;&lt; pb.auxiliary_input() &lt;&lt; endl;
+</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Verification status: &#34; &lt;&lt; verified &lt;&lt; endl;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="rangecpp"><code>range.cpp</code></h3>
 <p>第三个例子 <code>range.cpp</code>。该例子利用了 libsnark 自带的 <code>comparison_gadget</code> 来实现取值范围证明。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1273,62 +1280,62 @@ int main () {
 </span><span class="lnt">49
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
-#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
-#include &lt;libsnark/gadgetlib1/pb_variable.hpp&gt;
-#include &lt;libsnark/gadgetlib1/gadgets/basic_gadgets.hpp&gt;
-
-using namespace libsnark;
-using namespace std;
-
-int main () {
-    typedef libff::Fr&lt;default_r1cs_gg_ppzksnark_pp&gt; FieldT;
-
-    // Initialize the curve parameters
-    default_r1cs_gg_ppzksnark_pp::init_public_params();
-  
-    // Create protoboard
-    protoboard&lt;FieldT&gt; pb;
-
-    pb_variable&lt;FieldT&gt; x, max;
-    pb_variable&lt;FieldT&gt; less, less_or_eq;
-
-    x.allocate(pb, &#34;x&#34;);
-    max.allocate(pb, &#34;max&#34;);
-    
-    pb.val(max)= 60;
-
-    comparison_gadget&lt;FieldT&gt; cmp(pb, 10, x, max, less, less_or_eq, &#34;cmp&#34;);
-    cmp.generate_r1cs_constraints();
-    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(less, 1, FieldT::one()));
-
-    const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
-
-    // generate keypair
-    const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
-
-    // Add witness values
-    pb.val(x) = 18; // secret
-    cmp.generate_r1cs_witness();
-
-    // generate proof
-    const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
-
-    // verify
-    bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
-
-    cout &lt;&lt; &#34;Number of R1CS constraints: &#34; &lt;&lt; constraint_system.num_constraints() &lt;&lt; endl;
-    cout &lt;&lt; &#34;Primary (public) input: &#34; &lt;&lt; pb.primary_input() &lt;&lt; endl;
-    cout &lt;&lt; &#34;Auxiliary (private) input: &#34; &lt;&lt; pb.auxiliary_input() &lt;&lt; endl;
-    cout &lt;&lt; &#34;Verification status: &#34; &lt;&lt; verified &lt;&lt; endl;
-}
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libsnark/gadgetlib1/pb_variable.hpp&gt;
+</span></span><span class="line"><span class="cl">#include &lt;libsnark/gadgetlib1/gadgets/basic_gadgets.hpp&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">using namespace libsnark;
+</span></span><span class="line"><span class="cl">using namespace std;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">int main () {
+</span></span><span class="line"><span class="cl">    typedef libff::Fr&lt;default_r1cs_gg_ppzksnark_pp&gt; FieldT;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // Initialize the curve parameters
+</span></span><span class="line"><span class="cl">    default_r1cs_gg_ppzksnark_pp::init_public_params();
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    // Create protoboard
+</span></span><span class="line"><span class="cl">    protoboard&lt;FieldT&gt; pb;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; x, max;
+</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; less, less_or_eq;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    x.allocate(pb, &#34;x&#34;);
+</span></span><span class="line"><span class="cl">    max.allocate(pb, &#34;max&#34;);
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    pb.val(max)= 60;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    comparison_gadget&lt;FieldT&gt; cmp(pb, 10, x, max, less, less_or_eq, &#34;cmp&#34;);
+</span></span><span class="line"><span class="cl">    cmp.generate_r1cs_constraints();
+</span></span><span class="line"><span class="cl">    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(less, 1, FieldT::one()));
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // generate keypair
+</span></span><span class="line"><span class="cl">    const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // Add witness values
+</span></span><span class="line"><span class="cl">    pb.val(x) = 18; // secret
+</span></span><span class="line"><span class="cl">    cmp.generate_r1cs_witness();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // generate proof
+</span></span><span class="line"><span class="cl">    const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // verify
+</span></span><span class="line"><span class="cl">    bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Number of R1CS constraints: &#34; &lt;&lt; constraint_system.num_constraints() &lt;&lt; endl;
+</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Primary (public) input: &#34; &lt;&lt; pb.primary_input() &lt;&lt; endl;
+</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Auxiliary (private) input: &#34; &lt;&lt; pb.auxiliary_input() &lt;&lt; endl;
+</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Verification status: &#34; &lt;&lt; verified &lt;&lt; endl;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
-    </div>
+        </div>
 
-    
-    
+        
+        
 <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
@@ -1356,72 +1363,80 @@ int main () {
 </div>
 
 
-    
-    
 
-    <footer class="post-footer">
-      <div class="post-tags">
-          <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
-          <a href="https://sec-bit.github.io/blog/tags/zksnarks/">zksnarks</a>
-          <a href="https://sec-bit.github.io/blog/tags/libsnark/">libsnark</a>
-          <a href="https://sec-bit.github.io/blog/tags/tutorials/">tutorials</a>
-          
-        </div>
-
-      
-      <nav class="post-nav">
         
-          <a class="prev" href="/blog/2020/01/08/learn-zk-snark-from-zero-part-three/">
+        
+
+
+        <footer class="post-footer">
+          <div class="post-tags">
+              <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
+                <a href="https://sec-bit.github.io/blog/tags/zksnarks/">zksnarks</a>
+                <a href="https://sec-bit.github.io/blog/tags/libsnark/">libsnark</a>
+                <a href="https://sec-bit.github.io/blog/tags/tutorials/">tutorials</a>
+                
+            </div>
+
+
+          
+          <nav class="post-nav">
             
-            <i class="iconfont">
-              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+              <a class="prev" href="/blog/2020/01/08/nizk-by-crs/">
+                
+                <i class="iconfont">
+                  <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="18" height="18">
   <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
 </svg>
 
-            </i>
-            <span class="prev-text nav-default">从零开始学习 zk-SNARK（三）——从程序到多项式的构造</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        
-          <a class="next" href="/blog/2020/01/01/learn-zk-snark-from-zero-part-two/">
-            <span class="next-text nav-default">从零开始学习 zk-SNARK（二）——多项式的非交互式零知识证明</span>
-            <span class="prev-text nav-mobile">下一篇</span>
+                </i>
+                <span class="prev-text nav-default">云中「秘密」：构建非交互式零知识证明</span>
+                <span class="prev-text nav-mobile">上一篇</span>
+              </a>
             
-            <i class="iconfont">
-              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+              <a class="next" href="/blog/2020/01/01/learn-zk-snark-from-zero-part-two/">
+                <span class="next-text nav-default">从零开始学习 zk-SNARK（二）——多项式的非交互式零知识证明</span>
+                <span class="prev-text nav-mobile">下一篇</span>
+                
+                <i class="iconfont">
+                  <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="18" height="18">
   <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
 </svg>
 
-            </i>
-          </a>
-      </nav>
-    </footer>
-  </article>
+                </i>
+              </a>
+          </nav>
+        </footer>
+      </article>
+
+      
+      
+        
+      
+
+
+      
+      
+
+  
 
   
   
 
   
   
-
-  
-
-  
-  
-    <div class="post bg-white">
-      <script src="https://utteranc.es/client.js"
-            repo= "sec-bit/comments-for-secbit-blog"
-            issue-term="pathname"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-      </script>
-    </div>
-  
+    <div class="post">
+  <script src="https://utteranc.es/client.js"
+        repo= "sec-bit/comments-for-secbit-blog"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+</div>
 
   
 
@@ -1433,12 +1448,42 @@ int main () {
 
   
 
-        </div>
-      </div>
-    </main>
+  
 
-    <footer id="footer" class="footer">
-      <div class="icon-links">
+
+    </div>
+
+    
+    <nav class="toc" id="toc">
+    <div class="toc-title">文章目录</div>
+    <div class="toc-content custom-scrollbar">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-zk-snarks-和-libsnark-背景简介">1. zk-SNARKs 和 libsnark 背景简介</a></li>
+    <li><a href="#2-基本原理与步骤">2. 基本原理与步骤</a></li>
+    <li><a href="#3-搭建-zk-snarks-应用开发环境">3. 搭建 zk-SNARKs 应用开发环境</a></li>
+    <li><a href="#4-理解示例代码">4. 理解示例代码</a></li>
+    <li><a href="#5-再次上手实践">5. 再次上手实践</a></li>
+    <li><a href="#6-whats-next">6. What&rsquo;s NEXT?</a></li>
+    <li><a href="#7-附录">7. 附录</a>
+      <ul>
+        <li><a href="#maincpp"><code>main.cpp</code></a></li>
+        <li><a href="#testcpp"><code>test.cpp</code></a></li>
+        <li><a href="#rangecpp"><code>range.cpp</code></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </nav>
+
+
+  </div>
+
+      </main>
+
+      <footer id="footer" class="footer">
+        <div class="icon-links">
   
   
     <a href="mailto:hi@secbit.io" rel="me noopener" class="iconfont"
@@ -1495,7 +1540,7 @@ int main () {
 </svg>
 
   </a>
-   
+  
 </div>
 
 <div class="copyright">
@@ -1511,7 +1556,7 @@ int main () {
     &copy;
     
       2018 -
-    2020
+    2023
     <span class="heart">
       
       <i class="iconfont">
@@ -1534,28 +1579,30 @@ int main () {
   
 </div>
 
-    </footer>
+      </footer>
 
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont">
-        
-        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+      <div class="button__back-to-top">
+        <a href="#back-to-top">
+          <i class="iconfont">
+            
+            <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="35" height="35">
   <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
 </svg>
 
-      </i>
+          </i>
+        </a>
+      </div>
     </div>
-  </div>
-  
+    
 <script type="text/javascript" src="/blog/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/blog/lib/slideout/slideout-1.0.1.min.js"></script>
 
 
 
 
-<script type="text/javascript" src="/blog/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/blog/js/main.8f212fb6e092bf9e169cea5934d935af61b1e0d48702c784602d318f3bb1cc67.js" integrity="sha256-jyEvtuCSv54WnOpZNNk1r2Gx4NSHAseEYC0xjzuxzGc=" crossorigin="anonymous"></script>
 
 
 
@@ -1593,10 +1640,11 @@ int main () {
 
 
   
-    <script type="text/javascript" src="/blog/js/load-photoswipe.js"></script>
     <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe.min.js"></script>
     <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe-ui-default.min.js"></script>
   
+
+
 
 
 
@@ -1629,5 +1677,5 @@ int main () {
 
 
 
-</body>
+  </body>
 </html>

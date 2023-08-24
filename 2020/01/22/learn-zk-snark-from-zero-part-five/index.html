@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" itemscope itemtype="http://schema.org/WebPage">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>从零开始学习 zk-SNARK（五）——Pinocchio 协议 - SECBIT Blog</title>
-  
+<html
+  lang="zh-cn"
+  itemscope
+  itemtype="http://schema.org/WebPage"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>
+          从零开始学习 zk-SNARK（五）——Pinocchio 协议 - SECBIT Blog
+        </title>
+    
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -23,7 +29,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="Maksym Petkus，翻译 & 注解：even@安比实验室（even@secbit.io）" />
-  <meta name="description" content="作为本系列的最后一篇文章，本文继续对 zk-SNARK 协议进行完善，最终形成一个完整的 zk-SNARK 协议。" />
+  <meta name="description" content="作为本系列的最后一篇文章，本文继续对 zk-SNARK
+协议进行完善，最终形成一个完整的 zk-SNARK 协议。" />
 
   <meta name="keywords" content="Blockchain, Smart Contract, Zero Knowledge Proof" />
 
@@ -32,7 +39,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.75.1" />
+<meta name="generator" content="Hugo 0.117.0" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2020/01/22/learn-zk-snark-from-zero-part-five/" />
@@ -53,7 +60,9 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.d8d87b982993a745e5e7b6a6cbf257be8c3e82aab5e485f0908ad7e6c3501ab2.css" integrity="sha256-2Nh7mCmTp0Xl57amy/JXvow&#43;gqq15IXwkIrX5sNQGrI=" media="screen" crossorigin="anonymous">
+
+
 
 
 
@@ -62,23 +71,21 @@
 
 
 <meta property="og:title" content="从零开始学习 zk-SNARK（五）——Pinocchio 协议" />
-<meta property="og:description" content="作为本系列的最后一篇文章，本文继续对 zk-SNARK 协议进行完善，最终形成一个完整的 zk-SNARK 协议。" />
+<meta property="og:description" content="作为本系列的最后一篇文章，本文继续对 zk-SNARK
+协议进行完善，最终形成一个完整的 zk-SNARK 协议。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sec-bit.github.io/blog/2020/01/22/learn-zk-snark-from-zero-part-five/" />
+<meta property="og:url" content="https://sec-bit.github.io/blog/2020/01/22/learn-zk-snark-from-zero-part-five/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2020-01-22T08:00:00+08:00" />
-<meta property="article:modified_time" content="2020-12-15T19:40:44+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
+<meta property="article:modified_time" content="2020-12-15T19:40:44+08:00" />
 <meta itemprop="name" content="从零开始学习 zk-SNARK（五）——Pinocchio 协议">
-<meta itemprop="description" content="作为本系列的最后一篇文章，本文继续对 zk-SNARK 协议进行完善，最终形成一个完整的 zk-SNARK 协议。">
-<meta itemprop="datePublished" content="2020-01-22T08:00:00+08:00" />
+<meta itemprop="description" content="作为本系列的最后一篇文章，本文继续对 zk-SNARK
+协议进行完善，最终形成一个完整的 zk-SNARK 协议。"><meta itemprop="datePublished" content="2020-01-22T08:00:00+08:00" />
 <meta itemprop="dateModified" content="2020-12-15T19:40:44+08:00" />
-<meta itemprop="wordCount" content="6937">
-
-
-
-<meta itemprop="keywords" content="Zero Knowledge Proof,tutorials,zkSNARKs," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="wordCount" content="6927">
+<meta itemprop="keywords" content="Zero Knowledge Proof,tutorials,zkSNARKs," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="从零开始学习 zk-SNARK（五）——Pinocchio 协议"/>
-<meta name="twitter:description" content="作为本系列的最后一篇文章，本文继续对 zk-SNARK 协议进行完善，最终形成一个完整的 zk-SNARK 协议。"/>
+<meta name="twitter:description" content="作为本系列的最后一篇文章，本文继续对 zk-SNARK
+协议进行完善，最终形成一个完整的 zk-SNARK 协议。"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -90,16 +97,16 @@
 <![endif]-->
 
 
-<script type="application/javascript">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CVGF90VYL2"></script>
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-149859278-1', 'auto');
-	
-	ga('send', 'pageview');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-CVGF90VYL2', { 'anonymize_ip': false });
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -114,11 +121,13 @@ if (!doNotTrack) {
     });
 </script>
 
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
+  </head>
+  <body>
+    <div id="back-to-top"></div>
+
+    <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/blog/" class="logo">SECBIT Blog</a>
+    <a href="/" class="logo">SECBIT Blog</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -208,8 +217,8 @@ if (!doNotTrack) {
 </nav>
 
 
-  
     
+      
 
 
 
@@ -266,10 +275,10 @@ if (!doNotTrack) {
     </div>
 </div>
 
-  
-
-  
     
+
+    
+      
 <div class="modal-dialog">
     
     <div class="modal-content">
@@ -296,13 +305,14 @@ if (!doNotTrack) {
     </div>
 </div>
 
-  
+    
 
-  
+    
 
-  <header id="header" class="header container">
-    <div class="logo-wrapper">
-  <a href="/blog/" class="logo">
+
+    <header id="header" class="header">
+      <div class="logo-wrapper">
+  <a href="/" class="logo">
     
       SECBIT Blog
     
@@ -374,7 +384,7 @@ if (!doNotTrack) {
         <ul class="submenu">
           
             
-              <li>
+              <li class="submenu-item">
                 <a href="https://sec-bit.github.io/blog/en/">English</a>
               </li>
             
@@ -403,50 +413,68 @@ if (!doNotTrack) {
   </ul>
 </nav>
 
-  </header>
-
-  <div id="mobile-panel">
-    <main id="main" class="main bg-llight">
-      <div class="content-wrapper">
-        <div id="content" class="content container">
-          <article class="post bg-white">
-    
-    <header class="post-header">
-      <h1 class="post-title">从零开始学习 zk-SNARK（五）——Pinocchio 协议</h1>
-      
-      <div class="post-meta">
-        <time datetime="2020-01-22" class="post-time">
-          2020-01-22
-        </time>
-        <div class="post-category">
-            <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
-            <a href="https://sec-bit.github.io/blog/categories/zksnarks/"> zkSNARKs </a>
-            
-          </div>
-        <span class="more-meta"> 约 6937 字 </span>
-          <span class="more-meta"> 预计阅读 14 分钟 </span>
-
-        
-        
-
-        
-        
-      </div>
     </header>
 
+    <div id="mobile-panel">
+      <main id="main" class="main bg-llight wallpaper">
+        <div class="content-wrapper">
+    <div id="content" class="content">
+      <article class="post">
+        
+        <header class="post-header">
+          <h1 class="post-title">从零开始学习 zk-SNARK（五）——Pinocchio 协议</h1>
+          
+
+          <div class="post-meta">
+  <div class="post-meta-author">
+    by
+      Maksym Petkus，翻译 & 注解：even@安比实验室（even@secbit.io）
+    
+  </div>
+
+  <div class="post-meta-time">
+    <time datetime="2020-01-22">
+      2020-01-22
+    </time>
+  </div>
+
+  
+    <div class="post-meta-lastmod">
+      (上次更新:
+      2020-12-15)
+    </div>
+  
+
+
+  <div class="post-meta__right">
+    <span class="post-meta-more">
+        约 6927 字 -
+        预计阅读 14 分钟
+      </span>
+
+    <div class="post-meta-category">
+        <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
+          <a href="https://sec-bit.github.io/blog/categories/zksnarks/"> zkSNARKs </a>
+          
+      </div>
+
+
     
     
-<div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content">
+
+
+    
     
   </div>
 </div>
 
-    
-    <div class="post-content">
-      <blockquote>
-<p>even@安比实验室: 作为本系列的最后一篇文章，本文继续对 zk-SNARK 协议进行完善，最终形成一个完整的 zk-SNARK 协议。</p>
+        </header>
+
+        
+        <div class="post-content">
+          <blockquote>
+<p>even@安比实验室: 作为本系列的最后一篇文章，本文继续对 zk-SNARK
+协议进行完善，最终形成一个完整的 zk-SNARK 协议。</p>
 </blockquote>
 <p>作者：Maksym Petkus</p>
 <p>翻译 &amp; 注解：even@安比实验室（even@secbit.io）</p>
@@ -454,216 +482,497 @@ if (!doNotTrack) {
 <p>本系列文章已获作者中文翻译授权。</p>
 <h2 id="约束和公共输入">约束和公共输入</h2>
 <h3 id="约束">约束</h3>
-<p>我们的分析主要集中在运算的概念上。但是，协议实际上不是去做”计算“，而是检验输出值是否是操作数正确运算得到的结果。所以我们称之为约束，即一个 verifier 约束 prover 去为预定义的“程序”提供有效值，而无论这个“程序”是什么。多个约束组成的系统被称为“约束系统”（在我们的例子中这是一个一阶约束系统，或被称为<strong>R1CS</strong>）。</p>
+<p>我们的分析主要集中在运算的概念上。但是，协议实际上不是去做”计算“，而是检验输出值是否是操作数正确运算得到的结果。所以我们称之为约束，即一个
+verifier 约束 prover
+去为预定义的“程序”提供有效值，而无论这个“程序”是什么。多个约束组成的系统被称为“约束系统”（在我们的例子中这是一个一阶约束系统，或被称为<strong>R1CS</strong>）。</p>
 <blockquote>
-<p><span class="citation" data-cites="Maksym">@Maksym</span>（作者）：这里其实隐含了寻找所有正确答案的一个方法就是对所有可能的组合值进行一次暴力破解，然后只选择一个满足的约束，或者使用可满足约束的更精密的技术[<a href="#b979">con18</a>]。</p>
+<p><span class="citation"
+data-cites="Maksym">@Maksym</span>（作者）：这里其实隐含了寻找所有正确答案的一个方法就是对所有可能的组合值进行一次暴力破解，然后只选择一个满足的约束，或者使用可满足约束的更精密的技术[<a
+href="#b979">con18</a>]。</p>
 </blockquote>
 <blockquote>
-<p>even@安比实验室：请注意这个约束是定义在算术电路，或者布尔电路上。因为这两类电路的可满足性问题是 NP-Complete 问题。</p>
+<p>even@安比实验室：请注意这个约束是定义在算术电路，或者布尔电路上。因为这两类电路的可满足性问题是
+NP-Complete 问题。</p>
 </blockquote>
-<p>因而我们也可以使用约束来确保其它的关系。例如，如果我们想要确认变量 <em>a</em> 的值只能为 0 或 1（即二进制数），我们可以用一个简单的约束去做这件事：</p>
-<p><span class="math inline">\(\textcolor{green}{a} \times \textcolor{blue}{a} = \textcolor{red}{a}\)</span></p>
+<p>因而我们也可以使用约束来确保其它的关系。例如，如果我们想要确认变量
+<em>a</em> 的值只能为 0 或
+1（即二进制数），我们可以用一个简单的约束去做这件事：</p>
+<p><span class="math inline">\(\textcolor{green}{a} \times
+\textcolor{blue}{a} = \textcolor{red}{a}\)</span></p>
 <p>我们也可以约束 <em>a</em> 的值只能为 2：</p>
-<p><span class="math inline">\(\textcolor{green}{(a-2)} \times \textcolor{blue}{1} = \textcolor{red}{0}\)</span></p>
-<p>一个更复杂的例子是确保数字 <em>a</em> 是一个 4-bit 的数字（也称为半字节），换句话说可以用 4个bit 来表示出 <em>a</em>。我们也可以称这个为“确保取值范围” 因为一个 4-bit 的数字可以代表 2<sup>4</sup> 的组合，因而也就是从 0 到15 范围内的 16 个数字。在十进制数字系统中任何数字都可以表示为以 10为底 （也就是我们手指头的数量）并根据对应的指数求幂后的值的和，例如： 123 = 1 ⋅ 10<sup>2</sup> + 2 ⋅ 10<sup>1</sup> + 3 ⋅ 10<sup>0</sup>。同样的一个二进制数可以表示为以 2 为底在对应系数上的求幂值的和，例如，1011 (二进制) = 1 ⋅ 2<sup>3</sup> + 0 ⋅ 2<sup>2</sup> + 1 ⋅ 2<sup>1</sup> + 1 ⋅ 2<sup>0</sup> = 11 (十进制)。</p>
-<p>因而如果 <em>a</em> 是一个 4-bit 的数，那么 *a= b<sub>3</sub>⋅2<sup>3</sup> + b<sub>2</sub> ⋅ 2<sup>2</sup> + b<sub>1</sub>⋅ 2<sup>1</sup> + b<sub>0</sub> ⋅ 2<sup>0</sup> ，其中 b<sub>3</sub>, b<sub>2</sub>, b<sub>1</sub>, b<sub>0</sub> 为布尔值。约束就可以表示为下面的形式：</p>
-<p>$1:   = \textcolor{red}{8 b_3 +4 b_2 + 2 b_1 + 1 b_0} $</p>
-<p>并且为了确保 b<sub>3</sub>, b<sub>2</sub>, b<sub>1</sub>, b<sub>0</sub> 都是二进制数我们需要增加约束：</p>
-<p><span class="math inline">\(2: \qquad \textcolor{green}{b_0} \times \textcolor{blue}{b_0} = \textcolor{red}{b_0}\)</span></p>
-<p><span class="math inline">\(3: \qquad \textcolor{green}{b_1} \times \textcolor{blue}{b_1} = \textcolor{red}{b_1}\)</span></p>
-<p><span class="math inline">\(4: \qquad \textcolor{green}{b_2} \times \textcolor{blue}{b_2} = \textcolor{red}{b_2}\)</span></p>
-<p><span class="math inline">\(5: \qquad \textcolor{green}{b_3} \times \textcolor{blue}{b_3} = \textcolor{red}{b_3}\)</span></p>
-<p>更复杂的约束也可以用这种方式表示，以此来确保使用的值满足规则。注意很重要的一点是在当前的计算结构中是不能对 1 进行约束的：</p>
-<p><span class="math inline">\(\textcolor{green}{\Sigma_{i=1}^n{c_{l,i} \cdot v_i }} \times \textcolor{blue}{\Sigma_{i=1}^n{c_{r,i} \cdot v_i}} = \textcolor{red}{\Sigma_{i=1}^n{c_{o,i} \cdot v_i }}\)</span></p>
-<p>因为值 1 （以及前面约束中的 2）必须通过 <em>c·v<sub>one </sub></em> 表达出来，其中 <em>c</em> 可以被固定到 <em>proving key</em> 中，但是因为 <em>v</em> 是由 prover 提供的，所以可以是任何别的值。尽管我们可以通过设置 <em>c=0</em> 来强制 <em>c·v<sub>one </sub></em> 变成 0，但是在我们前面受限的构造方法中很难找到一个约束来强制 v<sub>one </sub> 为 1。于是，Verifier 需要有一种办法来设置 v<sub>one </sub> 的值。</p>
+<p><span class="math inline">\(\textcolor{green}{(a-2)} \times
+\textcolor{blue}{1} = \textcolor{red}{0}\)</span></p>
+<p>一个更复杂的例子是确保数字 <em>a</em> 是一个 4-bit
+的数字（也称为半字节），换句话说可以用 4个bit 来表示出
+<em>a</em>。我们也可以称这个为“确保取值范围” 因为一个 4-bit
+的数字可以代表 2<sup>4</sup> 的组合，因而也就是从 0 到15 范围内的 16
+个数字。在十进制数字系统中任何数字都可以表示为以 10为底
+（也就是我们手指头的数量）并根据对应的指数求幂后的值的和，例如： 123 = 1
+⋅ 10<sup>2</sup> + 2 ⋅ 10<sup>1</sup> + 3 ⋅
+10<sup>0</sup>。同样的一个二进制数可以表示为以 2
+为底在对应系数上的求幂值的和，例如，1011 (二进制) = 1 ⋅ 2<sup>3</sup> +
+0 ⋅ 2<sup>2</sup> + 1 ⋅ 2<sup>1</sup> + 1 ⋅ 2<sup>0</sup> = 11
+(十进制)。</p>
+<p>因而如果 <em>a</em> 是一个 4-bit 的数，那么 *a=
+b<sub>3</sub>⋅2<sup>3</sup> + b<sub>2</sub> ⋅ 2<sup>2</sup> +
+b<sub>1</sub>⋅ 2<sup>1</sup> + b<sub>0</sub> ⋅ 2<sup>0</sup> ，其中
+b<sub>3</sub>, b<sub>2</sub>, b<sub>1</sub>, b<sub>0</sub>
+为布尔值。约束就可以表示为下面的形式：</p>
+<p>$1: = $</p>
+<p>并且为了确保 b<sub>3</sub>, b<sub>2</sub>, b<sub>1</sub>,
+b<sub>0</sub> 都是二进制数我们需要增加约束：</p>
+<p><span class="math inline">\(2: \qquad \textcolor{green}{b_0} \times
+\textcolor{blue}{b_0} = \textcolor{red}{b_0}\)</span></p>
+<p><span class="math inline">\(3: \qquad \textcolor{green}{b_1} \times
+\textcolor{blue}{b_1} = \textcolor{red}{b_1}\)</span></p>
+<p><span class="math inline">\(4: \qquad \textcolor{green}{b_2} \times
+\textcolor{blue}{b_2} = \textcolor{red}{b_2}\)</span></p>
+<p><span class="math inline">\(5: \qquad \textcolor{green}{b_3} \times
+\textcolor{blue}{b_3} = \textcolor{red}{b_3}\)</span></p>
+<p>更复杂的约束也可以用这种方式表示，以此来确保使用的值满足规则。注意很重要的一点是在当前的计算结构中是不能对
+1 进行约束的：</p>
+<p><span class="math inline">\(\textcolor{green}{\Sigma_{i=1}^n{c_{l,i}
+\cdot v_i }} \times \textcolor{blue}{\Sigma_{i=1}^n{c_{r,i} \cdot v_i}}
+= \textcolor{red}{\Sigma_{i=1}^n{c_{o,i} \cdot v_i }}\)</span></p>
+<p>因为值 1 （以及前面约束中的 2）必须通过 <em>c·v<sub>one </sub></em>
+表达出来，其中 <em>c</em> 可以被固定到 <em>proving key</em> 中，但是因为
+<em>v</em> 是由 prover
+提供的，所以可以是任何别的值。尽管我们可以通过设置 <em>c=0</em> 来强制
+<em>c·v<sub>one </sub></em> 变成
+0，但是在我们前面受限的构造方法中很难找到一个约束来强制 v<sub>one </sub>
+为 1。于是，Verifier 需要有一种办法来设置 v<sub>one </sub> 的值。</p>
 <blockquote>
 <p>even@安比实验室: 我们前文中提到的表达式的约束关系就称为 R1CS。</p>
 </blockquote>
 <h3 id="公共输入和-1">公共输入和 1</h3>
-<p>如果不能根据 verifier 的输入对其进行检查，那么证明的可用性将受到限制。也就是说，虽然知道 prover 将两个值相乘但是并不知道这些值和/或计算结果。尽管有可能在 <em>proving key</em> 中通过“硬编码”来进行验证一些特定的值（如，乘法运算的结果必须为12），但这就需要针对每一个想要的“verifier 的输入”生成单独的密钥对。</p>
+<p>如果不能根据 verifier
+的输入对其进行检查，那么证明的可用性将受到限制。也就是说，虽然知道
+prover 将两个值相乘但是并不知道这些值和/或计算结果。尽管有可能在
+<em>proving key</em>
+中通过“硬编码”来进行验证一些特定的值（如，乘法运算的结果必须为12），但这就需要针对每一个想要的“verifier
+的输入”生成单独的密钥对。</p>
 <blockquote>
 <p>even@安比实验室: 这样会严重限制实用性，电路需要支持参数。</p>
 </blockquote>
-<p><strong>因而如果可以由 verifier 而不是 prover 为计算指定一些值（输入或者输出），包括 <span class="math inline">\(v_{one}\)</span>，那证明就可以变得更通用了。</strong></p>
-<p>首先，我们看一下要证明的值 g<sup>L(s)</sup>，g<sup>R(s)</sup>，g<sup>O(s)</sup>。因为这里使用了同态加密所以可以增大这些值，例如，我们可以与另一个加密的多项式相加使得值为<em>g<sup>L(s)</sup> · g<sup>l<sub>v</sub>(s)</sup> =g<sup>L(s)+l<sub>v</sub>(s)</sup></em> 。</p>
-<p>这样如果我们能够在提供给 prover 的变量多项式中排除必要的一项，verifier 就可以在这一项变量多项式上设置他自己的值，并且使得检查依然能够通过。</p>
-<p>因为 verifier 已经可以通过加入α-转换来限制 prover 选择多项式了，所以这个检查结果就很容易得到。因而当消除了它的 α<sub>s </sub>和 <em>β</em> 校验和对应的项，这些可变多项式就可以从 <em>proving key</em> 转移到 <em>verification key</em> 当中去了。</p>
+<p><strong>因而如果可以由 verifier 而不是 prover
+为计算指定一些值（输入或者输出），包括 <span
+class="math inline">\(v_{one}\)</span>，那证明就可以变得更通用了。</strong></p>
+<p>首先，我们看一下要证明的值
+g<sup>L(s)</sup>，g<sup>R(s)</sup>，g<sup>O(s)</sup>。因为这里使用了同态加密所以可以增大这些值，例如，我们可以与另一个加密的多项式相加使得值为<em>g<sup>L(s)</sup>
+· g<sup>l<sub>v</sub>(s)</sup> =g<sup>L(s)+l<sub>v</sub>(s)</sup></em>
+。</p>
+<p>这样如果我们能够在提供给 prover
+的变量多项式中排除必要的一项，verifier
+就可以在这一项变量多项式上设置他自己的值，并且使得检查依然能够通过。</p>
+<p>因为 verifier 已经可以通过加入α-转换来限制 prover
+选择多项式了，所以这个检查结果就很容易得到。因而当消除了它的
+α<sub>s </sub>和 <em>β</em> 校验和对应的项，这些可变多项式就可以从
+<em>proving key</em> 转移到 <em>verification key</em> 当中去了。</p>
 <p>必要的协议更新为：</p>
 <ul>
 <li><p>Setup</p>
 <ul>
 <li><p>…将 n 个可变多项式全部分为两组：</p>
 <ul>
-<li><p>verifier 的 <em>m+1</em> 项：<span class="math inline">\(L_v(x) = l_0(x) + l_1(x) +…+l_m(x)\)</span>,对 <span class="math inline">\(R_v(x)\)</span> 和 <span class="math inline">\(O_v(x)\)</span> 也做同样的计算。这里对于索引0 保留值 <span class="math inline">\(v_{one} =1\)</span></p></li>
+<li><p>verifier 的 <em>m+1</em> 项：<span class="math inline">\(L_v(x) =
+l_0(x) + l_1(x) +…+l_m(x)\)</span>,对 <span
+class="math inline">\(R_v(x)\)</span> 和 <span
+class="math inline">\(O_v(x)\)</span> 也做同样的计算。这里对于索引0
+保留值 <span class="math inline">\(v_{one} =1\)</span></p></li>
 <li><p>prover 的 <em>n-m</em> 项：</p>
-<p><span class="math inline">\(L_p(x) = l_{m+1}(x) +…+l_n(x)\)</span>，对 <span class="math inline">\(R_p(x)\)</span> 和 <span class="math inline">\(O_p(x)\)</span> 也做同样的计算。</p></li>
+<p><span class="math inline">\(L_p(x) = l_{m+1}(x)
++…+l_n(x)\)</span>，对 <span class="math inline">\(R_p(x)\)</span> 和
+<span class="math inline">\(O_p(x)\)</span> 也做同样的计算。</p></li>
 </ul></li>
-<li><p>设置 <em>proving key</em>：<span class="math inline">\((\{g^{s^k}\}_{k \in [d]},\{g_l^{l_i(s)},g_r^{r_i(s)},g_o^{o_i(s)},g_l^{α_ll_i(s)},g_r^{α_rr_i(s)},g_o^{α_oo_i(s)},g_l^{βl_i(s)},g_r^{βr_i(s)},g_o^{βo_i(s)}\}_{i \in \{m+1,…,n\}})\)</span></p></li>
-<li><p>添加到 <em>verification key</em>：<span class="math inline">\((……，\{g_l^{l_i(s)}, g_r^{r_i(s)}, g_o^{o_i(s)}\}_{i \in \{0,…,m\}})\)</span></p></li>
+<li><p>设置 <em>proving key</em>：<span
+class="math inline">\((\{g^{s^k}\}_{k \in
+[d]},\{g_l^{l_i(s)},g_r^{r_i(s)},g_o^{o_i(s)},g_l^{α_ll_i(s)},g_r^{α_rr_i(s)},g_o^{α_oo_i(s)},g_l^{βl_i(s)},g_r^{βr_i(s)},g_o^{βo_i(s)}\}_{i
+\in \{m+1,…,n\}})\)</span></p></li>
+<li><p>添加到 <em>verification key</em>：<span
+class="math inline">\((……，\{g_l^{l_i(s)}, g_r^{r_i(s)},
+g_o^{o_i(s)}\}_{i \in \{0,…,m\}})\)</span></p></li>
 </ul></li>
 <li><p>Proving</p>
 <ul>
-<li><p>…为 verifier 的多项式计算 <em>h(x)</em>：<span class="math inline">\(h(x) = \frac{L(x) \cdot R(x) -O(x)}{t(x)}\)</span>，其中 <span class="math inline">\(L(x) = L_v(x) + L_p(x)\)</span>，<span class="math inline">\(R(x)\)</span> ，<span class="math inline">\(O(x)\)</span> 也通过同样的计算获得。</p></li>
+<li><p>…为 verifier 的多项式计算 <em>h(x)</em>：<span
+class="math inline">\(h(x) = \frac{L(x) \cdot R(x)
+-O(x)}{t(x)}\)</span>，其中 <span class="math inline">\(L(x) = L_v(x) +
+L_p(x)\)</span>，<span class="math inline">\(R(x)\)</span> ，<span
+class="math inline">\(O(x)\)</span> 也通过同样的计算获得。</p></li>
 <li><p>提供证明：</p>
-<p><span class="math inline">\((g_l^{L_p(s)},g_r^{R_p(s)},g_o^{O_p(s)},g_l^{α_lL_p(s)},g_r^{α_rR_p(s)},g_o^{α_oO_p(s)},g^{Z(s)},g^{h(s)})\)</span></p></li>
+<p><span
+class="math inline">\((g_l^{L_p(s)},g_r^{R_p(s)},g_o^{O_p(s)},g_l^{α_lL_p(s)},g_r^{α_rR_p(s)},g_o^{α_oO_p(s)},g^{Z(s)},g^{h(s)})\)</span></p></li>
 </ul></li>
 <li><p>Verification</p>
 <ul>
 <li><p>为 verifier 的变量多项式赋值，并加 1：</p>
-<p><span class="math inline">\(g_l^{L_v(s)} = g_l^{l_0(s)} \cdot \prod_{i=1}^m{(g_l^{l_i(s)})^{v_i}}\)</span>，对 <span class="math inline">\(g_r^{R_v(s)}\)</span> 和 <span class="math inline">\(g_o^{O_v(s)}\)</span> 做同样的计算</p></li>
+<p><span class="math inline">\(g_l^{L_v(s)} = g_l^{l_0(s)} \cdot
+\prod_{i=1}^m{(g_l^{l_i(s)})^{v_i}}\)</span>，对 <span
+class="math inline">\(g_r^{R_v(s)}\)</span> 和 <span
+class="math inline">\(g_o^{O_v(s)}\)</span> 做同样的计算</p></li>
 <li><p>变量多项式约束检查：</p>
-<p><span class="math inline">\(e(g_l^{L_p},g^{α_l}) = e(g_l^{L&#39;_p},g)\)</span>，对 <span class="math inline">\(g_r^{R_p}\)</span> 和 <span class="math inline">\(g_o^{O_p}\)</span> 做同样的计算</p></li>
+<p><span class="math inline">\(e(g_l^{L_p},g^{α_l}) =
+e(g_l^{L&#39;_p},g)\)</span>，对 <span
+class="math inline">\(g_r^{R_p}\)</span> 和 <span
+class="math inline">\(g_o^{O_p}\)</span> 做同样的计算</p></li>
 <li><p>变量值一致性检查：</p>
-<p><span class="math inline">\(e(g_l^{L_p}g_r^{R_p}g_o^{O_p},h^{βγ}) = e(g^Z,g^γ)\)</span></p></li>
+<p><span class="math inline">\(e(g_l^{L_p}g_r^{R_p}g_o^{O_p},h^{βγ}) =
+e(g^Z,g^γ)\)</span></p></li>
 <li><p>有效计算检查：</p>
-<p><span class="math inline">\(e(g_l^{L_v(s)}g_l^{L_p},g_r^{R_v(s)}g_r^{R_p}) =e(g_o^t,g^h)e(g_o^{O_v(s)}g_o^{O_p},g)\)</span></p></li>
+<p><span
+class="math inline">\(e(g_l^{L_v(s)}g_l^{L_p},g_r^{R_v(s)}g_r^{R_p})
+=e(g_o^t,g^h)e(g_o^{O_v(s)}g_o^{O_p},g)\)</span></p></li>
 </ul></li>
 </ul>
 <blockquote>
-<p>注意：根据协议（<strong>单个变量操作数多项式</strong> 的章节）的性质，由多项式 <em>l<sub>0</sub>(x),r<sub>0</sub>(x),o<sub>0</sub>(x)</em> 表示的值 1 已在相应的运算中具备了合适的值，因此不需要再赋值了。</p>
-<p>注意：verifier 将不得不在验证步骤中做额外的工作，使得赋值的变量成比例。</p>
+<p>注意：根据协议（<strong>单个变量操作数多项式</strong>
+的章节）的性质，由多项式
+<em>l<sub>0</sub>(x),r<sub>0</sub>(x),o<sub>0</sub>(x)</em> 表示的值 1
+已在相应的运算中具备了合适的值，因此不需要再赋值了。</p>
+<p>注意：verifier
+将不得不在验证步骤中做额外的工作，使得赋值的变量成比例。</p>
 </blockquote>
-<p><strong>这实际上是把一些变量从 prover 手中拿到 verifier 的手中，并同时保持等式相等。</strong> 因而只有当 prover 和 verifier 的输入中使用相同值的时候， <em>有效计算</em>检查才依然成立。</p>
-<p>1 这个值相当重要，它能够通过与任意一个常数项相乘来生成这个值（从选择的有限域上），例如，用 123 去乘以 <em>a</em>：</p>
-<p><span class="math inline">\(\textcolor{green}{1 \cdot a} \times \textcolor{blue}{123 \cdot v_{one}} = \textcolor{red}{1 \cdot r}\)</span></p>
+<p><strong>这实际上是把一些变量从 prover 手中拿到 verifier
+的手中，并同时保持等式相等。</strong> 因而只有当 prover 和 verifier
+的输入中使用相同值的时候， <em>有效计算</em>检查才依然成立。</p>
+<p>1
+这个值相当重要，它能够通过与任意一个常数项相乘来生成这个值（从选择的有限域上），例如，用
+123 去乘以 <em>a</em>：</p>
+<p><span class="math inline">\(\textcolor{green}{1 \cdot a} \times
+\textcolor{blue}{123 \cdot v_{one}} = \textcolor{red}{1 \cdot
+r}\)</span></p>
 <blockquote>
-<p>even@安比实验室: 这里将原本由 prover 赋值的一些变量改为由拿到 verifier 赋值，使得prover 不得不与 verifier 保持相同的输入。这不仅解决了 Verifier 参数输入的问题，也间接解决了常数赋值的问题。</p>
+<p>even@安比实验室: 这里将原本由 prover 赋值的一些变量改为由拿到
+verifier 赋值，使得prover 不得不与 verifier 保持相同的输入。这不仅解决了
+Verifier 参数输入的问题，也间接解决了常数赋值的问题。</p>
 </blockquote>
 <h2 id="零知识计算">零知识计算</h2>
 <h3 id="计算的零知识证明">计算的零知识证明</h3>
-<p>自从引入通用计算协议（<strong>计算的证明</strong>这一章节），我们一直放弃了<em>零知识</em> 的性质，这是为了让协议的改进变得更简单。至此，我们已经构建了可验证的计算协议。</p>
-<p>以前我们使用随机数<em>δ</em>-转换来构造多项式的“零知识” 证明，这种方法能够使得证明与随机数无法区分（<strong>零知识</strong>这一章节）：</p>
-<p><span class="math display">\[\delta p(s ) = t(s) \cdot \delta h(s) \]</span></p>
+<p>自从引入通用计算协议（<strong>计算的证明</strong>这一章节），我们一直放弃了<em>零知识</em>
+的性质，这是为了让协议的改进变得更简单。至此，我们已经构建了可验证的计算协议。</p>
+<p>以前我们使用随机数<em>δ</em>-转换来构造多项式的“零知识”
+证明，这种方法能够使得证明与随机数无法区分（<strong>零知识</strong>这一章节）：</p>
+<p><span class="math display">\[\delta p(s ) = t(s) \cdot \delta h(s)
+\]</span></p>
 <p>通过计算我们证明了：</p>
-<p><span class="math display">\[L(s) \cdot R(s) - O(s)= p(s)h(s)\]</span></p>
-<p>尽管我们可以通过用相同 <em>δ</em> 乘以多项式的方法来调整解决方案，即提供随机值 <em>δL</em>(<em>s</em>)<em>， δR</em>(<em>s</em>)<em>， δ</em>²<em>O</em>(<em>s</em>)<em>， δ</em>²<em>h</em>(<em>s</em>)，这依然能够通过<em>有效计算检查</em> 来满足配对验证：</p>
-<p><span class="math inline">\(e(g,g)^{\delta^2L(s)R(s)}=e(g,g)^{\delta^2(t(s)h(s)+O(s))}\)</span></p>
-<p>但是问题是使用相同的 <em>δ</em> 会妨碍安全性，因为我们在证明中分别用了以下这些值：</p>
+<p><span class="math display">\[L(s) \cdot R(s) - O(s)=
+p(s)h(s)\]</span></p>
+<p>尽管我们可以通过用相同 <em>δ</em>
+乘以多项式的方法来调整解决方案，即提供随机值
+<em>δL</em>(<em>s</em>)<em>， δR</em>(<em>s</em>)<em>，
+δ</em>²<em>O</em>(<em>s</em>)<em>，
+δ</em>²<em>h</em>(<em>s</em>)，这依然能够通过<em>有效计算检查</em>
+来满足配对验证：</p>
+<p><span
+class="math inline">\(e(g,g)^{\delta^2L(s)R(s)}=e(g,g)^{\delta^2(t(s)h(s)+O(s))}\)</span></p>
+<p>但是问题是使用相同的 <em>δ</em>
+会妨碍安全性，因为我们在证明中分别用了以下这些值：</p>
 <ul>
 <li><p>其他人可以很容易得辨认出两个不同的多项式值是否相同，以此来获取一些知识，即：g<sup>δL(s)</sup>=g<sup>δR(s)</sup></p></li>
-<li><p><em>L</em>(<em>s</em>) 和 <em>R</em>(<em>s</em>) 的不同值之间潜在的微小关系可能会通过暴力破解来区分开来，例如如果 <em>L</em>(<em>s</em>) = 5<em>R</em>(<em>s</em>)，就可以对 <em>i ∈ {1…N}</em> 取值反复校验 g<sup>L(s)</sup>=(g<sup>R(s)</sup>)<sup>i</sup> ，只需要执行 5 步就可以揭示出两者 5 倍区别的关系。同样的暴力破解也可以用在破解加密值的加法运算上，如：<em>g<sup>L(s)</sup> = g<sup>R(s)+5</sup></em></p></li>
-<li><p>证明元素之间的其它关系也可能会被发现，例如，如果 e(g<sup>δL(s)</sup>,g<sup>δR(s)</sup>) = e(g<sup>δ<sup>2</sup>O(s)</sup>,g)，那么也就表示 <em>L</em>(<em>x</em>) ⋅ <em>R</em>(<em>x</em>) = <em>O</em>(<em>x</em>)。</p></li>
+<li><p><em>L</em>(<em>s</em>) 和 <em>R</em>(<em>s</em>)
+的不同值之间潜在的微小关系可能会通过暴力破解来区分开来，例如如果
+<em>L</em>(<em>s</em>) = 5<em>R</em>(<em>s</em>)，就可以对 <em>i ∈
+{1…N}</em> 取值反复校验 g<sup>L(s)</sup>=(g<sup>R(s)</sup>)<sup>i</sup>
+，只需要执行 5 步就可以揭示出两者 5
+倍区别的关系。同样的暴力破解也可以用在破解加密值的加法运算上，如：<em>g<sup>L(s)</sup>
+= g<sup>R(s)+5</sup></em></p></li>
+<li><p>证明元素之间的其它关系也可能会被发现，例如，如果
+e(g<sup>δL(s)</sup>,g<sup>δR(s)</sup>) =
+e(g<sup>δ<sup>2</sup>O(s)</sup>,g)，那么也就表示 <em>L</em>(<em>x</em>)
+⋅ <em>R</em>(<em>x</em>) = <em>O</em>(<em>x</em>)。</p></li>
 </ul>
 <blockquote>
-<p>注意：<strong>一致性检查优化</strong> 使得挖掘数据关系变得更加困难了，但是依然能够发现一些关系 ，且不说 verifier 可以选择特定 ρ<sub>l</sub>， ρ<sub>r</sub> 来为揭示知识提供便利（只要这不是一个多样化的 setup）。</p>
+<p>注意：<strong>一致性检查优化</strong>
+使得挖掘数据关系变得更加困难了，但是依然能够发现一些关系 ，且不说
+verifier 可以选择特定 ρ<sub>l</sub>， ρ<sub>r</sub>
+来为揭示知识提供便利（只要这不是一个多样化的 setup）。</p>
 </blockquote>
-<p>最终，我们需要对每一个多项式的值使用不同的随机数 (<em>δ<sub>s</sub></em>) ，例如：</p>
-<p><em>δ<sub>l</sub>L(s) ·δ<sub>r</sub>R(s) - δ<sub>o</sub>O(s) =t(s)·(△?⃝ h(s))</em></p>
-<p>为了解决等式右边不相等的问题，我们不必改变协议，只要修改证明的值 <em>h(s)</em>即可。 这里 Delta (Δ) 代表为了平衡方程另一侧的随机性而对 <em>h(s)</em> 做的处理，?⃝代表乘法运算或者加法运算（这个反过来也适应了除法和减法）。如果我们选择用乘法 (?⃝ = ×) 来计算 Δ ，也就意味着不太可能有较大的概率可以找到一个 Δ ，因为存在随机性：</p>
-<p><span class="math inline">\(\Delta = \frac{\delta_lL(s) \cdot \delta_rR(s) - \delta_oO(s)}{t(s)h(s)}\)</span></p>
-<p>设置 <span class="math inline">\(\delta_o = \delta_l \cdot \delta_r\)</span>，于是就变成了：</p>
-<p><span class="math inline">\(\Delta = \frac{\delta_l \delta_r(L(s) \cdot R(s) - O(s))}{t(s)h(s)} = \delta_l \delta_r\)</span></p>
-<p>但是如前文所述，这个妨碍了零知识的性质，更重要的是这个结构也不再适合 verifier 的输入多项式，因为它们必须是 <em>δ<sub>s</sub></em>相应的倍数，这就需要额外的交互了。</p>
-<p>我们可以尝试把随机数加到变量上：<em>(L(s)+δ<sub>l</sub>) ·(R(s)+δ<sub>r</sub>) - (O(s)+δ<sub>o</sub>) = t(s) ·(△ × h(s))</em></p>
-<p><span class="math display">\[\Delta = \frac{\overbrace{L(s)R(s)-O(s)}^{t(s)h(x)} + \delta_rL(s) + \delta_lR(s) + \delta_l \delta_r - \delta_o}{t(s)h(s)} = 1+ \frac{\delta_rL(s) + \delta_lR(s) + \delta_l \delta_r -\delta_o}{t(s)h(s)}\]</span></p>
-<p>但是随机数是不可除尽的。尽管我们可以用 <em>t</em>(<em>s</em>)<em>h</em>(<em>s</em>) 去乘以每一个 <em>δ</em> ，但由于我们已经用了 <span class="math inline">\(\Delta\)</span> 乘以 <em>h</em>(<em>s</em>) ， <span class="math inline">\(\Delta\)</span> 是组成加密结果的一部分（即<em>E</em>(<em>L</em>(<em>s</em>))等），因此在没有使用配对（它的结果在另一个数值空间内）的情况下是不能计算出g<sup>△h(s)</sup> 的。同样也不能使用 <em>s</em> 的幂（从 1 到 <em>d</em>）的加密值对 Δ<em>h</em>(<em>x</em>) 的进行加密计算，Δ<em>h</em>(<em>x</em>) 的阶将达到 2<em>d</em>。并且，基于上述同样的原因也无法计算这个随机操作数多项式的值：<em>g<sup>L(s)+δ<sub>l</sub>t(s)h(s)</sup></em>。</p>
-<p>于是我们应该用加法(?⃝ = +)来使用 <span class="math inline">\(\Delta\)</span>，因为它可以同态地计算。</p>
-<p><span class="math inline">\((L(s)+ \delta_l) \cdot (R(s) +\delta_r) - (O(s) + \delta_o) = t(s) \cdot (\Delta + h(s))\)</span></p>
-<p><span class="math inline">\(\Delta = \frac{L(s)R(s)-O(s)+\delta_rL(s) + \delta_lR(s) + \delta_l \delta_r - \delta_o - t(s)h(s)}{t(s)} =&gt;\)</span></p>
-<p><span class="math inline">\(\Delta = \frac{\delta_rL(s)+ \delta_lR(s) + \delta_l \delta_r -\delta_o}{t(s)}\)</span></p>
-<p>分子中的每一项都是 <em>δ</em> 的倍数，因而我们可以将其与 <em>t</em>(<em>s</em>) 相乘使它可以被分母整除：</p>
-<p><span class="math inline">\((L(s)+ \delta_l t(s)) \cdot (R(s) + \delta_r t(s)) -(O(s) + \delta_o t(s)) = t(s) \cdot (\Delta + h(s))\)</span></p>
-<p><span class="math inline">\(\cancel{L(s)R(s)-O(s)} +t(s)(\delta_rL(s) + \delta_lR(s) + \delta_l \delta_rt(s) - \delta_o) = t(s)\Delta + \cancel{t(s)h(s)}\)</span></p>
-<p><span class="math inline">\(\Delta = \delta_rL(s) + \delta_lR(s) + \delta_l \delta_r t(s) -\delta_o\)</span></p>
+<p>最终，我们需要对每一个多项式的值使用不同的随机数
+(<em>δ<sub>s</sub></em>) ，例如：</p>
+<p><em>δ<sub>l</sub>L(s) ·δ<sub>r</sub>R(s) - δ<sub>o</sub>O(s)
+=t(s)·(△?⃝ h(s))</em></p>
+<p>为了解决等式右边不相等的问题，我们不必改变协议，只要修改证明的值
+<em>h(s)</em>即可。 这里 Delta (Δ) 代表为了平衡方程另一侧的随机性而对
+<em>h(s)</em>
+做的处理，?⃝代表乘法运算或者加法运算（这个反过来也适应了除法和减法）。如果我们选择用乘法
+(?⃝ = ×) 来计算 Δ ，也就意味着不太可能有较大的概率可以找到一个 Δ
+，因为存在随机性：</p>
+<p><span class="math inline">\(\Delta = \frac{\delta_lL(s) \cdot
+\delta_rR(s) - \delta_oO(s)}{t(s)h(s)}\)</span></p>
+<p>设置 <span class="math inline">\(\delta_o = \delta_l \cdot
+\delta_r\)</span>，于是就变成了：</p>
+<p><span class="math inline">\(\Delta = \frac{\delta_l \delta_r(L(s)
+\cdot R(s) - O(s))}{t(s)h(s)} = \delta_l \delta_r\)</span></p>
+<p>但是如前文所述，这个妨碍了零知识的性质，更重要的是这个结构也不再适合
+verifier 的输入多项式，因为它们必须是
+<em>δ<sub>s</sub></em>相应的倍数，这就需要额外的交互了。</p>
+<p>我们可以尝试把随机数加到变量上：<em>(L(s)+δ<sub>l</sub>)
+·(R(s)+δ<sub>r</sub>) - (O(s)+δ<sub>o</sub>) = t(s) ·(△ × h(s))</em></p>
+<p><span class="math display">\[\Delta =
+\frac{\overbrace{L(s)R(s)-O(s)}^{t(s)h(x)} + \delta_rL(s) + \delta_lR(s)
++ \delta_l \delta_r - \delta_o}{t(s)h(s)} = 1+ \frac{\delta_rL(s) +
+\delta_lR(s) + \delta_l \delta_r -\delta_o}{t(s)h(s)}\]</span></p>
+<p>但是随机数是不可除尽的。尽管我们可以用
+<em>t</em>(<em>s</em>)<em>h</em>(<em>s</em>) 去乘以每一个 <em>δ</em>
+，但由于我们已经用了 <span class="math inline">\(\Delta\)</span> 乘以
+<em>h</em>(<em>s</em>) ， <span class="math inline">\(\Delta\)</span>
+是组成加密结果的一部分（即<em>E</em>(<em>L</em>(<em>s</em>))等），因此在没有使用配对（它的结果在另一个数值空间内）的情况下是不能计算出g<sup>△h(s)</sup>
+的。同样也不能使用 <em>s</em> 的幂（从 1 到 <em>d</em>）的加密值对
+Δ<em>h</em>(<em>x</em>) 的进行加密计算，Δ<em>h</em>(<em>x</em>)
+的阶将达到
+2<em>d</em>。并且，基于上述同样的原因也无法计算这个随机操作数多项式的值：<em>g<sup>L(s)+δ<sub>l</sub>t(s)h(s)</sup></em>。</p>
+<p>于是我们应该用加法(?⃝ = +)来使用 <span
+class="math inline">\(\Delta\)</span>，因为它可以同态地计算。</p>
+<p><span class="math inline">\((L(s)+ \delta_l) \cdot (R(s) +\delta_r) -
+(O(s) + \delta_o) = t(s) \cdot (\Delta + h(s))\)</span></p>
+<p><span class="math inline">\(\Delta = \frac{L(s)R(s)-O(s)+\delta_rL(s)
++ \delta_lR(s) + \delta_l \delta_r - \delta_o - t(s)h(s)}{t(s)}
+=&gt;\)</span></p>
+<p><span class="math inline">\(\Delta = \frac{\delta_rL(s)+ \delta_lR(s)
++ \delta_l \delta_r -\delta_o}{t(s)}\)</span></p>
+<p>分子中的每一项都是 <em>δ</em> 的倍数，因而我们可以将其与
+<em>t</em>(<em>s</em>) 相乘使它可以被分母整除：</p>
+<p><span class="math inline">\((L(s)+ \delta_l t(s)) \cdot (R(s) +
+\delta_r t(s)) -(O(s) + \delta_o t(s)) = t(s) \cdot (\Delta +
+h(s))\)</span></p>
+<p><span class="math inline">\(\cancel{L(s)R(s)-O(s)} +t(s)(\delta_rL(s)
++ \delta_lR(s) + \delta_l \delta_rt(s) - \delta_o) = t(s)\Delta +
+\cancel{t(s)h(s)}\)</span></p>
+<p><span class="math inline">\(\Delta = \delta_rL(s) + \delta_lR(s) +
+\delta_l \delta_r t(s) -\delta_o\)</span></p>
 <p>这样就可以在加密的空间中进行“有效计算检查”了：</p>
-<p><span class="math inline">\(g^{L(s)+ \delta_lt(s)} = g^{L(s)} \cdot (g^{t(s)})^{\delta_l}\)</span>，等。</p>
-<p><span class="math inline">\(g^{\Delta} = (g^{L(s)})^{\delta_r} \cdot (g^{R(s)})^{\delta_l} \cdot (g^{t(s)})^{\delta_l \delta_r} g^{-\delta_o}\)</span></p>
+<p><span class="math inline">\(g^{L(s)+ \delta_lt(s)} = g^{L(s)} \cdot
+(g^{t(s)})^{\delta_l}\)</span>，等。</p>
+<p><span class="math inline">\(g^{\Delta} = (g^{L(s)})^{\delta_r} \cdot
+(g^{R(s)})^{\delta_l} \cdot (g^{t(s)})^{\delta_l \delta_r}
+g^{-\delta_o}\)</span></p>
 <p>于是既隐藏了加密值，又使得等式可以通过<em>有效计算</em> 的检查。</p>
-<p><span class="math inline">\(L \cdot R -O + \textcolor{magenta}{t(\delta_rL + \delta_lR + \delta_l \delta_r t - \delta_o)} = t(s)h+ \textcolor{magenta}{t(s)(\delta_rL+\delta_lR+\delta_l \delta_rt-\delta_o)}\)</span></p>
-<p>这个结构就是统计学上的零知识 因为增加了 <em>δ<sub>l</sub>, δ</em><sub>r</sub><em>, δ<sub>o</sub></em> 的均匀随机倍数（参见[Gen+12] 中的定理 13）。</p>
+<p><span class="math inline">\(L \cdot R -O +
+\textcolor{magenta}{t(\delta_rL + \delta_lR + \delta_l \delta_r t -
+\delta_o)} = t(s)h+
+\textcolor{magenta}{t(s)(\delta_rL+\delta_lR+\delta_l
+\delta_rt-\delta_o)}\)</span></p>
+<p>这个结构就是统计学上的零知识 因为增加了 <em>δ<sub>l</sub>,
+δ</em><sub>r</sub><em>, δ<sub>o</sub></em> 的均匀随机倍数（参见[Gen+12]
+中的定理 13）。</p>
 <blockquote>
-<p>注意：这种方法和 verfier 的操作数也是一致的，即：g<sub>l</sub><sup>L<sub>p</sub>+δ<sub>l</sub>t </sup>·g<sub>l</sub><sup>L<sub>v</sub></sup> = g<sup>L<sub>p</sub>+L<sub>v</sub>+δ<sub>l</sub>t</sup>。</p>
-<p>因而当且仅当 prover 使用了 verifier 的值来构造证明(即， Δ = δ<sub>r</sub>(L<sub>p</sub> + L<sub>v</sub>) + δ<sub>l</sub>(R<sub>p</sub>+ R<sub>v</sub> ) + δ<sub>l</sub>δ<sub>r</sub>t – δ<sub>o</sub>)，这个有效计算的检查依然是成立的，更多的细节看下一部分。</p>
+<p>注意：这种方法和 verfier
+的操作数也是一致的，即：g<sub>l</sub><sup>L<sub>p</sub>+δ<sub>l</sub>t
+</sup>·g<sub>l</sub><sup>L<sub>v</sub></sup> =
+g<sup>L<sub>p</sub>+L<sub>v</sub>+δ<sub>l</sub>t</sup>。</p>
+<p>因而当且仅当 prover 使用了 verifier 的值来构造证明(即， Δ =
+δ<sub>r</sub>(L<sub>p</sub> + L<sub>v</sub>) +
+δ<sub>l</sub>(R<sub>p</sub>+ R<sub>v</sub> ) +
+δ<sub>l</sub>δ<sub>r</sub>t –
+δ<sub>o</sub>)，这个有效计算的检查依然是成立的，更多的细节看下一部分。</p>
 </blockquote>
-<p>为了使得 “变量多项式限制” 和 “变量值一致性”检查与 <em>零知识</em> 的修改一致，就有必要去增加以下的参数到 <em>proving key</em> 中：</p>
-<p><span class="math inline">\(g_l^{t(s)}, g_r^{t(s)},g_o^{t(s)}, g_l^{α_lt(s)}, g_r^{α_rt(s)},g_o^{α_ot(s)}, g_l^{βt(s)}, g_r^{βt(s)},g_o^{βt(s)}\)</span></p>
-<p>非常奇怪的是最初的 Pinocchio 协议[Par+13]主要关注可验证的计算，而较少涉及 <em>零知识</em> 性质，这其实只需要一点点小修改，这个几乎是没有什么成本的。</p>
+<p>为了使得 “变量多项式限制” 和 “变量值一致性”检查与 <em>零知识</em>
+的修改一致，就有必要去增加以下的参数到 <em>proving key</em> 中：</p>
+<p><span class="math inline">\(g_l^{t(s)}, g_r^{t(s)},g_o^{t(s)},
+g_l^{α_lt(s)}, g_r^{α_rt(s)},g_o^{α_ot(s)}, g_l^{βt(s)},
+g_r^{βt(s)},g_o^{βt(s)}\)</span></p>
+<p>非常奇怪的是最初的 Pinocchio
+协议[Par+13]主要关注可验证的计算，而较少涉及 <em>零知识</em>
+性质，这其实只需要一点点小修改，这个几乎是没有什么成本的。</p>
 <blockquote>
-<p>even@安比实验室: 与前文中的零知方案不同，这里通过相加而不是相乘的方式来确保 prover 知识的零知性。</p>
-<p>Pinocchio 协议是针对 GGPR 论文的改进，在3.1节中也提到了实现零知识只需要沿用 GGPR 论文的方法即可，并不是这篇论文的贡献。另外，Pinocchio 协议论文侧重工程实践，在2013年时，零知识证明还并没有得到应用。真正的应用还是自从匿名币ZCash起。</p>
+<p>even@安比实验室:
+与前文中的零知方案不同，这里通过相加而不是相乘的方式来确保 prover
+知识的零知性。</p>
+<p>Pinocchio 协议是针对 GGPR
+论文的改进，在3.1节中也提到了实现零知识只需要沿用 GGPR
+论文的方法即可，并不是这篇论文的贡献。另外，Pinocchio
+协议论文侧重工程实践，在2013年时，零知识证明还并没有得到应用。真正的应用还是自从匿名币ZCash起。</p>
 </blockquote>
 <h2 id="zk-snark-协议">zk-SNARK 协议</h2>
-<p>在这一步步的改进之后，我们得到了最终版本的zkSNARK，又名 Pinocchio [Par + 13]，协议 （<em>零知识</em> 部分是可选的并用<em>不同的颜色</em> 标注出来了），就是：</p>
+<p>在这一步步的改进之后，我们得到了最终版本的zkSNARK，又名 Pinocchio
+[Par + 13]，协议 （<em>零知识</em> 部分是可选的并用<em>不同的颜色</em>
+标注出来了），就是：</p>
 <ul>
 <li><p>Setup</p>
 <ul>
 <li><p>选择生成元 <em>g</em> 和加密配对 <em>e</em></p></li>
-<li><p>将变量总数为 <em>n</em> 其中输入/输出变量数位 <em>m</em> 的函数 <em>f(u) = y</em>，转换为阶数为 <em>d</em> 大小为 <em>n+1</em> 的多项式形式（QAP）（<span class="math inline">\(\{l_i(x),r_i(x),o_i(x)\}_{i \in \{0,……,n\}},t(x)\)</span>）</p></li>
-<li><p>选择随机数 <span class="math inline">\(s, \rho_l, \rho_r, \alpha_l, \alpha_r, \alpha_o, \beta, \gamma\)</span></p></li>
-<li><p>设置 <span class="math inline">\(\rho_o = \rho_l \cdot \rho_r\)</span> 和操作数生成元 <span class="math inline">\(g_l=g^{\rho_l}, g_r = g^{\rho_r}, g_o = g^{\rho_o}\)</span></p></li>
+<li><p>将变量总数为 <em>n</em> 其中输入/输出变量数位 <em>m</em> 的函数
+<em>f(u) = y</em>，转换为阶数为 <em>d</em> 大小为 <em>n+1</em>
+的多项式形式（QAP）（<span
+class="math inline">\(\{l_i(x),r_i(x),o_i(x)\}_{i \in
+\{0,……,n\}},t(x)\)</span>）</p></li>
+<li><p>选择随机数 <span class="math inline">\(s, \rho_l, \rho_r,
+\alpha_l, \alpha_r, \alpha_o, \beta, \gamma\)</span></p></li>
+<li><p>设置 <span class="math inline">\(\rho_o = \rho_l \cdot
+\rho_r\)</span> 和操作数生成元 <span
+class="math inline">\(g_l=g^{\rho_l}, g_r = g^{\rho_r}, g_o =
+g^{\rho_o}\)</span></p></li>
 <li><p>设置 <em>proving key</em>：</p>
-<p><span class="math inline">\((\{g^{s^k}\}_{k \in [d]}, \{g_l^{l_i(s)},g_r^{r_i(s)},g_o^{o_i(s)}\}_{i \in {0,…,n}}), \{g_l^{\alpha_ll_i(s)},g_r^{\alpha_rr_i(s)},\)</span></p>
-<p><span class="math inline">\(g_o^{\alpha_oo_i(s)},g_l^{\beta l_i(s)},g_r^{\beta r_i(s)},g_o^{\beta o_i(s)}\}_{i \in \{m+1,…,n\}},\)</span></p>
-<p><span class="math inline">\(\textcolor{magenta}{g_l^{t(s)}, g_r^{t(s)}, g_o^{t(s)}, g_l^{\alpha_l t(s)}, g_r^{\alpha_r t(s)}, g_o^{\alpha_o t(s)}, g_l^{\beta t(s)},g_r^{\beta t(s)}, g_o^{\beta t(s)}} )\)</span></p></li>
+<p><span class="math inline">\((\{g^{s^k}\}_{k \in [d]},
+\{g_l^{l_i(s)},g_r^{r_i(s)},g_o^{o_i(s)}\}_{i \in {0,…,n}}),
+\{g_l^{\alpha_ll_i(s)},g_r^{\alpha_rr_i(s)},\)</span></p>
+<p><span class="math inline">\(g_o^{\alpha_oo_i(s)},g_l^{\beta
+l_i(s)},g_r^{\beta r_i(s)},g_o^{\beta o_i(s)}\}_{i \in
+\{m+1,…,n\}},\)</span></p>
+<p><span class="math inline">\(\textcolor{magenta}{g_l^{t(s)},
+g_r^{t(s)}, g_o^{t(s)}, g_l^{\alpha_l t(s)}, g_r^{\alpha_r t(s)},
+g_o^{\alpha_o t(s)}, g_l^{\beta t(s)},g_r^{\beta t(s)}, g_o^{\beta
+t(s)}} )\)</span></p></li>
 <li><p>设置 <em>verfication key</em>：</p>
-<p><span class="math inline">\((g^1,g_o^{t(s)},\{g_l^{l_i(s)},g_r^{r_i(s)},g_o^{o_i(s)}\}_{i \in \{0,…,m\}},g^{α_l},g^{\alpha_r},g^{\alpha_o},g^{\gamma},g^{\beta \gamma})\)</span></p></li>
+<p><span
+class="math inline">\((g^1,g_o^{t(s)},\{g_l^{l_i(s)},g_r^{r_i(s)},g_o^{o_i(s)}\}_{i
+\in \{0,…,m\}},g^{α_l},g^{\alpha_r},g^{\alpha_o},g^{\gamma},g^{\beta
+\gamma})\)</span></p></li>
 </ul></li>
 <li><p>Proving</p>
 <ul>
-<li><p>代入输入值 <em>u</em>，执行 <em>f(u)</em> 计算获取所有的中间变量值 <span class="math inline">\(\{v_i\}_{i \in \{m+1,……，n\}}\)</span></p></li>
-<li><p>把所有未加密的变量多项式赋值给$ L(x) = l_0(x) + _{i=1}^n {v_i l_i(x)}$，并对 <span class="math inline">\(R(x)\)</span> 和 <span class="math inline">\(O(x)\)</span> 做同样的计算</p></li>
-<li><p><span class="math inline">\(\textcolor{magenta}{选择随机数 \delta_l ,\delta_r 和 \delta_o}\)</span></p></li>
-<li><p>计算 <span class="math inline">\(h(x) = \frac{L(x)R(x)-O(x)}{t(x)} \textcolor{magenta}{+ \delta_r L(x) + \delta_lR(x) + \delta_l \delta_r t(x) - \delta_o}\)</span></p></li>
-<li><p>将 prover 的变量值赋值给加密的可变多项式 <span class="math inline">\(\textcolor{magenta}{并进行零知识的 \delta-转换}\quad g_l^{L_p(s)}= \textcolor{magenta}{(g_l^{t(s)})^{\delta_l}} \cdot \prod_{i=m+1}^n{(g_l^{l_i(s)})^{v_i}}\)</span>，再用同样的方式计算 <span class="math inline">\(g_r^{R_p(s)}\)</span> 和 <span class="math inline">\(g_o^{O_p(s)}\)</span>。</p></li>
-<li><p>为其 <em>α-</em>变换赋值 <span class="math inline">\(g_l^{L_p&#39;(s)}= \textcolor{magenta}{(g_l^{\alpha _l t(s)})^{\delta_l}} \cdot \prod_{i=m+1}^n{(g_l^{\alpha _l l_i(s)})^{v_i}}\)</span>，再用同样的方式计算 <span class="math inline">\(g_r^{R_p&#39;(s)}\)</span> 和 <span class="math inline">\(g_o^{O_p&#39;(s)}\)</span>。</p></li>
+<li><p>代入输入值 <em>u</em>，执行 <em>f(u)</em>
+计算获取所有的中间变量值 <span class="math inline">\(\{v_i\}_{i \in
+\{m+1,……，n\}}\)</span></p></li>
+<li><p>把所有未加密的变量多项式赋值给$ L(x) = l_0(x) + _{i=1}^n {v_i
+l_i(x)}$，并对 <span class="math inline">\(R(x)\)</span> 和 <span
+class="math inline">\(O(x)\)</span> 做同样的计算</p></li>
+<li><p><span class="math inline">\(\textcolor{magenta}{选择随机数
+\delta_l ,\delta_r 和 \delta_o}\)</span></p></li>
+<li><p>计算 <span class="math inline">\(h(x) =
+\frac{L(x)R(x)-O(x)}{t(x)} \textcolor{magenta}{+ \delta_r L(x) +
+\delta_lR(x) + \delta_l \delta_r t(x) - \delta_o}\)</span></p></li>
+<li><p>将 prover 的变量值赋值给加密的可变多项式 <span
+class="math inline">\(\textcolor{magenta}{并进行零知识的
+\delta-转换}\quad g_l^{L_p(s)}=
+\textcolor{magenta}{(g_l^{t(s)})^{\delta_l}} \cdot
+\prod_{i=m+1}^n{(g_l^{l_i(s)})^{v_i}}\)</span>，再用同样的方式计算 <span
+class="math inline">\(g_r^{R_p(s)}\)</span> 和 <span
+class="math inline">\(g_o^{O_p(s)}\)</span>。</p></li>
+<li><p>为其 <em>α-</em>变换赋值 <span
+class="math inline">\(g_l^{L_p&#39;(s)}=
+\textcolor{magenta}{(g_l^{\alpha _l t(s)})^{\delta_l}} \cdot
+\prod_{i=m+1}^n{(g_l^{\alpha _l
+l_i(s)})^{v_i}}\)</span>，再用同样的方式计算 <span
+class="math inline">\(g_r^{R_p&#39;(s)}\)</span> 和 <span
+class="math inline">\(g_o^{O_p&#39;(s)}\)</span>。</p></li>
 <li><p>为变量值一致性多项式赋值</p>
-<p><span class="math inline">\(g^{Z(s) = \textcolor{magenta}{(g_l^{\beta t(s)})^{\delta_l}(g_r^{\beta t(s)})^{\delta_r}(g_o^{\beta t(s)})^{\delta_o}}} \cdot \prod_{i=m+1}^n{(g_l^{\beta l_i(s)}g_r^{\beta r_i(s)}g_o^{\beta o_i(s)})^{v_i}}\)</span></p></li>
-<li><p>计算证明 <span class="math inline">\((g_l^{L_p(s)}, g_r^{R_p(s)}, g_o^{O_p(s)}, g^{h(s)}, g_l^{L_p&#39;(s)}, g_r^{R_p&#39;(s)}, g_o^{O_p&#39;(s)}, g^Z)\)</span></p></li>
+<p><span class="math inline">\(g^{Z(s) = \textcolor{magenta}{(g_l^{\beta
+t(s)})^{\delta_l}(g_r^{\beta t(s)})^{\delta_r}(g_o^{\beta
+t(s)})^{\delta_o}}} \cdot \prod_{i=m+1}^n{(g_l^{\beta l_i(s)}g_r^{\beta
+r_i(s)}g_o^{\beta o_i(s)})^{v_i}}\)</span></p></li>
+<li><p>计算证明 <span class="math inline">\((g_l^{L_p(s)}, g_r^{R_p(s)},
+g_o^{O_p(s)}, g^{h(s)}, g_l^{L_p&#39;(s)}, g_r^{R_p&#39;(s)},
+g_o^{O_p&#39;(s)}, g^Z)\)</span></p></li>
 </ul></li>
 <li><p>Verification</p>
 <ul>
-<li><p>解析提供的证明为 <span class="math inline">\((g_l^{L_p},g_r^{R_p},g_o^{O_p},g^h,g_l^{L_p&#39;},g_r^{R_p&#39;},g_o^{O_p&#39;},g^Z)\)</span></p></li>
+<li><p>解析提供的证明为 <span
+class="math inline">\((g_l^{L_p},g_r^{R_p},g_o^{O_p},g^h,g_l^{L_p&#39;},g_r^{R_p&#39;},g_o^{O_p&#39;},g^Z)\)</span></p></li>
 <li><p>将输入/输出值赋值给 verifier 的加密多项式并加 1：</p>
-<p><span class="math inline">\(g_l^{L_v(s)} = g_l^{l_o(s)} \cdot \prod_{i=1}^m{(g_l^{l_i(s)})^{v_i}}\)</span>，并对 <span class="math inline">\(g_r^{R_v(s)}\)</span> 和 <span class="math inline">\(g_o^{O_v(s)}\)</span> 做同样的计算</p></li>
+<p><span class="math inline">\(g_l^{L_v(s)} = g_l^{l_o(s)} \cdot
+\prod_{i=1}^m{(g_l^{l_i(s)})^{v_i}}\)</span>，并对 <span
+class="math inline">\(g_r^{R_v(s)}\)</span> 和 <span
+class="math inline">\(g_o^{O_v(s)}\)</span> 做同样的计算</p></li>
 <li><p>可变多项式约束检查：</p>
-<p><span class="math inline">\(e(g_l^{L_p},g^{\alpha_l}) = e(g_l^{L_p&#39;},g)\)</span>，并对 <span class="math inline">\(g_r^{R_p}\)</span> 和 <span class="math inline">\(g_o^{O_p}\)</span> 做同样的检查</p></li>
+<p><span class="math inline">\(e(g_l^{L_p},g^{\alpha_l}) =
+e(g_l^{L_p&#39;},g)\)</span>，并对 <span
+class="math inline">\(g_r^{R_p}\)</span> 和 <span
+class="math inline">\(g_o^{O_p}\)</span> 做同样的检查</p></li>
 <li><p>变量值一致性检查：</p>
-<p><span class="math inline">\(e(g_l^{L_p},g_r^{R_p},g_o^{O_p},g^{\beta \gamma}) = e(g^Z, g^{\gamma})\)</span></p></li>
+<p><span class="math inline">\(e(g_l^{L_p},g_r^{R_p},g_o^{O_p},g^{\beta
+\gamma}) = e(g^Z, g^{\gamma})\)</span></p></li>
 <li><p>有效的计算检查：</p>
-<p><span class="math inline">\(e(g_l^{L_p}g_l^{L_v(s)},g_r^{R_p}g_r^{R_v(s)}) = e(g_o^{t(s)},g^h) \cdot e(g_o^{O_p}g_o^{O_v(s)},g)\)</span></p></li>
+<p><span
+class="math inline">\(e(g_l^{L_p}g_l^{L_v(s)},g_r^{R_p}g_r^{R_v(s)}) =
+e(g_o^{t(s)},g^h) \cdot e(g_o^{O_p}g_o^{O_v(s)},g)\)</span></p></li>
 </ul></li>
 </ul>
 <h2 id="结论">结论</h2>
 <p>我们最终完成了一个允许证明计算的有效协议：</p>
 <ul>
-<li><p>简明 (Succinctly) —— 独立于计算量，证明是恒定的，小尺寸的</p></li>
-<li><p>非交互性 (Non-interactive) —— 证明只要一经计算就可以在不直接与 prover 交互的前提下使任意数量的 verifier 确信</p></li>
-<li><p>可论证的知识 (with Argument of Knowledge) —— 对于陈述是正确的这点有不可忽略的概率，即无法构造假证据；并且 prover 知道正确陈述的对应值（即：证据），例如，如果陈述是 “B 是 sha256(a) 的结果” 那么就说明 prover 知道一些值 a 能够使得 B = sha256(a) 成立，因为 B 只能够通过 a 的知识计算出来，换句话说就是无法通过 B 来反算出 a（假定 a 的熵足够）。</p></li>
-<li><p>陈述有不可忽略的概率是正确的 (even@安比实验室: 这里指Soundness可靠性)，即，构造假证据是不可行的</p></li>
-<li><p><em>零知识</em>( zero-knowledge) —— 很“难”从证明中提取任何知识，即，它与随机数无法区分。</p></li>
+<li><p>简明 (Succinctly) ——
+独立于计算量，证明是恒定的，小尺寸的</p></li>
+<li><p>非交互性 (Non-interactive) —— 证明只要一经计算就可以在不直接与
+prover 交互的前提下使任意数量的 verifier 确信</p></li>
+<li><p>可论证的知识 (with Argument of Knowledge) ——
+对于陈述是正确的这点有不可忽略的概率，即无法构造假证据；并且 prover
+知道正确陈述的对应值（即：证据），例如，如果陈述是 “B 是 sha256(a)
+的结果” 那么就说明 prover 知道一些值 a 能够使得 B = sha256(a) 成立，因为
+B 只能够通过 a 的知识计算出来，换句话说就是无法通过 B 来反算出 a（假定 a
+的熵足够）。</p></li>
+<li><p>陈述有不可忽略的概率是正确的 (even@安比实验室:
+这里指Soundness可靠性)，即，构造假证据是不可行的</p></li>
+<li><p><em>零知识</em>( zero-knowledge) ——
+很“难”从证明中提取任何知识，即，它与随机数无法区分。</p></li>
 </ul>
 <blockquote>
-<p>even@安比实验室: 所谓Argument——论证，区别于 Proof —— 证明。Pinocchio 协议是 Argument 而非 Proof。这是因为 Pinocchio的可靠性是 Computational Soundness，Statistical ZK，这一类的证明系统被称为 Argument。所谓的 Computational Soundness 暗含了这样的事实：如果 Prover 计算能力足够强大的话，可以破坏可靠性。</p>
+<p>even@安比实验室: 所谓Argument——论证，区别于 Proof —— 证明。Pinocchio
+协议是 Argument 而非 Proof。这是因为 Pinocchio的可靠性是 Computational
+Soundness，Statistical ZK，这一类的证明系统被称为 Argument。所谓的
+Computational Soundness 暗含了这样的事实：如果 Prover
+计算能力足够强大的话，可以破坏可靠性。</p>
 </blockquote>
 <p>基于多项式的特殊性质，模运算，同态加密，椭圆曲线密码学，加密配对和发明者的聪明才智才使得这个协议得以实现。</p>
 <p>这个协议证明了一个特殊有限执行机制的计算，即在一次运算中可以将几乎任意数量的变量加在一起但是只能执行一次乘法，因而就有机会优化程序以有效地利用这种特性的同时也使用这个结构最大限度地减少计算次数。</p>
-<p>为了验证一个证明， <strong>verifier 并不需要知道所有的秘密数据，这一点很关键</strong>，这就使得任何人都可以以非交互式方式发布和使用正确构造的 <em>verification key</em>。这一点与只能让一个参与者确信证明的“指定 verifier”方案相反，因而它的信任是不可转移的。在 <em>zkSNARK</em> 中，如果不可信或由单方生成密钥对，则可以实现这个属性。</p>
-<p>零知识证明构造领域正在不断发展，包括引入了优化（[BCTV13, Gro16, GM17]），改进例如可更新的 <em>proving key</em> 和 <em>verification key</em>（[Gro+18]），以及新的构造方法（Bulletproofs [Bün+17], ZK-STARK [Ben+18], Sonic [Mal+19]）。</p>
+<p>为了验证一个证明， <strong>verifier
+并不需要知道所有的秘密数据，这一点很关键</strong>，这就使得任何人都可以以非交互式方式发布和使用正确构造的
+<em>verification key</em>。这一点与只能让一个参与者确信证明的”指定
+verifier”方案相反，因而它的信任是不可转移的。在 <em>zkSNARK</em>
+中，如果不可信或由单方生成密钥对，则可以实现这个属性。</p>
+<p>零知识证明构造领域正在不断发展，包括引入了优化（[BCTV13, Gro16,
+GM17]），改进例如可更新的 <em>proving key</em> 和 <em>verification
+key</em>（[Gro+18]），以及新的构造方法（Bulletproofs [Bün+17], ZK-STARK
+[Ben+18], Sonic [Mal+19]）。</p>
 <blockquote>
-<p>even@安比实验室：至此,本系列文章的介绍已经全部结束，大家是不是已经对zkSNARK协议（Pinocchio 协议）了如指掌了？其实任何复杂的协议掌握了核心思想，都可以抽丝剥茧将其变得通俗易懂。</p>
+<p>even@安比实验室：至此,本系列文章的介绍已经全部结束，大家是不是已经对zkSNARK协议（Pinocchio
+协议）了如指掌了？其实任何复杂的协议掌握了核心思想，都可以抽丝剥茧将其变得通俗易懂。</p>
 <p>零知识证明的学习还有很长的路要走，本文只是一个入门的资料，正如文章中所述，零知识证明构造领域正在不断发展，不断的有新的研究突破呈现在我们面前。这是一个非常有趣的领域，后续也非常欢迎小伙伴跟我们一起继续学习和研究零知识证明技术。</p>
-<p>再次感谢 Maksym Petkus 大神的分享和授权。文章翻译存在不足之处，欢迎纠正，补充，指导。</p>
+<p>再次感谢 Maksym Petkus
+大神的分享和授权。文章翻译存在不足之处，欢迎纠正，补充，指导。</p>
 </blockquote>
 <p><strong>原文链接</strong></p>
 <p>https://arxiv.org/pdf/1906.07221.pdf</p>
-<p>https://medium.com/<span class="citation" data-cites="imolfar/why-and-how-zk-snark-works-7-constraints-and-public-inputs-e95f6596dd1c">@imolfar/why-and-how-zk-snark-works-7-constraints-and-public-inputs-e95f6596dd1c</span></p>
-<p>https://medium.com/<span class="citation" data-cites="imolfar/why-and-how-zk-snark-works-8-zero-knowledge-computation-f120339c2c55">@imolfar/why-and-how-zk-snark-works-8-zero-knowledge-computation-f120339c2c55</span></p>
+<p>https://medium.com/<span class="citation"
+data-cites="imolfar/why-and-how-zk-snark-works-7-constraints-and-public-inputs-e95f6596dd1c">@imolfar/why-and-how-zk-snark-works-7-constraints-and-public-inputs-e95f6596dd1c</span></p>
+<p>https://medium.com/<span class="citation"
+data-cites="imolfar/why-and-how-zk-snark-works-8-zero-knowledge-computation-f120339c2c55">@imolfar/why-and-how-zk-snark-works-8-zero-knowledge-computation-f120339c2c55</span></p>
 <p><strong>参考文献</strong></p>
-<p>[con18] — Wikipedia contributors. <em>Constraint satisfaction</em>. Wikipedia, The Free Encyclopedia. 2018.</p>
-<p>[Gen+12] — Rosario Gennaro, Craig Gentry, Bryan Parno, and Mariana Raykova. <em>Quadratic</em> <em>Span Programs and Succinct NIZKs without PCPs</em>. Cryptology ePrint Archive, Report 2012/215. https://eprint.iacr.org/2012/215. 2012.</p>
-<p>[Par+13] — Bryan Parno, Craig Gentry, Jon Howell, and Mariana Raykova. <em>Pinocchio: Nearly</em> <em>Practical Verifiable Computation</em>. Cryptology ePrint Archive, Report 2013/279. https://eprint.iacr.org/2013/279. 2013.</p>
-<p>[BCTV13] — Eli Ben-Sasson, Alessandro Chiesa, Eran Tromer, Madars Virza. <em>Succinct Non-Interactive Zero Knowledge for a von Neumann Architecture</em>. Cryptology ePrint Archive, Report 2013/879. https://eprint.iacr.org/2013/879. 2013.</p>
-<p>[Gro10] — Jens Groth. “Short pairing-based non-interactive zero-knowledge arguments”. In: <em>International Conference on the Theory and Application of Cryptology and</em> <em>Information Security</em>. Springer. 2010, pp. 321–340.</p>
-<p>[GM17] — Jens Groth, Mary Maller. <em>Snarky Signatures: Minimal Signatures of Knowledge from Simulation-Extractable SNARKs</em>. Cryptology ePrint Archive, Report 2017/540. https://eprint.iacr.org/2017/540. 2017.</p>
-<p>[Gro+18] — Jens Groth, Markulf Kohlweiss, Mary Maller, Sarah Meiklejohn, and Ian Miers. <em>Updatable and</em> <em>Universal Common Reference Strings with Applications to zk-SNARKs</em>. Cryptology ePrint Archive, Report 2018/280. https://eprint.iacr.org/2018/280. 2018.</p>
-<p>[Bün+17] — Benedikt Bünz, Jonathan Bootle, Dan Boneh, Andrew Poelstra, Pieter Wuille, and Greg Maxwell. <em>Bulletproofs: Short</em> <em>Proofs for Confidential Transactions and More</em>. Cryptology ePrint Archive, Report 2017/1066. https://eprint.iacr.org/2017/1066. 2017.</p>
-<p>[Ben+18] — Eli Ben-Sasson, Iddo Bentov, Yinon Horesh, and Michael Riabzev. <em>Scalable,</em> <em>transparent, and post-quantum secure computational integrity</em>. Cryptology ePrint Archive, Report 2018/046. https://eprint.iacr.org/2018/046. 2018.</p>
-<p>[Mal+19] — Mary Maller, Sean Bowe, Markulf Kohlweiss, and Sarah Meiklejohn. <em>Sonic: Zero-Knowledge SNARKs from Linear-Size Universal</em> <em>and Updateable Structured Reference Strings</em>. Cryptology ePrint Archive, Report 2019/099. https://eprint.iacr.org/2019/099. 2019.</p>
+<p>[con18] — Wikipedia contributors. <em>Constraint satisfaction</em>.
+Wikipedia, The Free Encyclopedia. 2018.</p>
+<p>[Gen+12] — Rosario Gennaro, Craig Gentry, Bryan Parno, and Mariana
+Raykova. <em>Quadratic</em> <em>Span Programs and Succinct NIZKs without
+PCPs</em>. Cryptology ePrint Archive, Report 2012/215.
+https://eprint.iacr.org/2012/215. 2012.</p>
+<p>[Par+13] — Bryan Parno, Craig Gentry, Jon Howell, and Mariana
+Raykova. <em>Pinocchio: Nearly</em> <em>Practical Verifiable
+Computation</em>. Cryptology ePrint Archive, Report 2013/279.
+https://eprint.iacr.org/2013/279. 2013.</p>
+<p>[BCTV13] — Eli Ben-Sasson, Alessandro Chiesa, Eran Tromer, Madars
+Virza. <em>Succinct Non-Interactive Zero Knowledge for a von Neumann
+Architecture</em>. Cryptology ePrint Archive, Report 2013/879.
+https://eprint.iacr.org/2013/879. 2013.</p>
+<p>[Gro10] — Jens Groth. “Short pairing-based non-interactive
+zero-knowledge arguments”. In: <em>International Conference on the
+Theory and Application of Cryptology and</em> <em>Information
+Security</em>. Springer. 2010, pp. 321–340.</p>
+<p>[GM17] — Jens Groth, Mary Maller. <em>Snarky Signatures: Minimal
+Signatures of Knowledge from Simulation-Extractable SNARKs</em>.
+Cryptology ePrint Archive, Report 2017/540.
+https://eprint.iacr.org/2017/540. 2017.</p>
+<p>[Gro+18] — Jens Groth, Markulf Kohlweiss, Mary Maller, Sarah
+Meiklejohn, and Ian Miers. <em>Updatable and</em> <em>Universal Common
+Reference Strings with Applications to zk-SNARKs</em>. Cryptology ePrint
+Archive, Report 2018/280. https://eprint.iacr.org/2018/280. 2018.</p>
+<p>[Bün+17] — Benedikt Bünz, Jonathan Bootle, Dan Boneh, Andrew
+Poelstra, Pieter Wuille, and Greg Maxwell. <em>Bulletproofs: Short</em>
+<em>Proofs for Confidential Transactions and More</em>. Cryptology
+ePrint Archive, Report 2017/1066. https://eprint.iacr.org/2017/1066.
+2017.</p>
+<p>[Ben+18] — Eli Ben-Sasson, Iddo Bentov, Yinon Horesh, and Michael
+Riabzev. <em>Scalable,</em> <em>transparent, and post-quantum secure
+computational integrity</em>. Cryptology ePrint Archive, Report
+2018/046. https://eprint.iacr.org/2018/046. 2018.</p>
+<p>[Mal+19] — Mary Maller, Sean Bowe, Markulf Kohlweiss, and Sarah
+Meiklejohn. <em>Sonic: Zero-Knowledge SNARKs from Linear-Size
+Universal</em> <em>and Updateable Structured Reference Strings</em>.
+Cryptology ePrint Archive, Report 2019/099.
+https://eprint.iacr.org/2019/099. 2019.</p>
 
-    </div>
+        </div>
 
-    
-    
+        
+        
 <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
@@ -691,58 +1000,66 @@ if (!doNotTrack) {
 </div>
 
 
-    
-    
 
-    <footer class="post-footer">
-      <div class="post-tags">
-          <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
-          <a href="https://sec-bit.github.io/blog/tags/tutorials/">tutorials</a>
-          <a href="https://sec-bit.github.io/blog/tags/zksnarks/">zkSNARKs</a>
+        
+        
+
+
+        <footer class="post-footer">
+          <div class="post-tags">
+              <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
+                <a href="https://sec-bit.github.io/blog/tags/tutorials/">tutorials</a>
+                <a href="https://sec-bit.github.io/blog/tags/zksnarks/">zkSNARKs</a>
+                
+            </div>
+
+
           
-        </div>
-
-      
-      <nav class="post-nav">
-        
-        
-          <a class="next" href="/blog/2020/01/15/learn-zk-snark-from-zero-part-four/">
-            <span class="next-text nav-default">从零开始学习 zk-SNARK（四）——多项式的约束</span>
-            <span class="prev-text nav-mobile">下一篇</span>
+          <nav class="post-nav">
             
-            <i class="iconfont">
-              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+            
+              <a class="next" href="/blog/2020/01/15/learn-zk-snark-from-zero-part-four/">
+                <span class="next-text nav-default">从零开始学习 zk-SNARK（四）——多项式的约束</span>
+                <span class="prev-text nav-mobile">下一篇</span>
+                
+                <i class="iconfont">
+                  <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="18" height="18">
   <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
 </svg>
 
-            </i>
-          </a>
-      </nav>
-    </footer>
-  </article>
+                </i>
+              </a>
+          </nav>
+        </footer>
+      </article>
+
+      
+      
+        
+      
+
+
+      
+      
+
+  
 
   
   
 
   
   
-
-  
-
-  
-  
-    <div class="post bg-white">
-      <script src="https://utteranc.es/client.js"
-            repo= "sec-bit/comments-for-secbit-blog"
-            issue-term="pathname"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-      </script>
-    </div>
-  
+    <div class="post">
+  <script src="https://utteranc.es/client.js"
+        repo= "sec-bit/comments-for-secbit-blog"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+</div>
 
   
 
@@ -754,12 +1071,21 @@ if (!doNotTrack) {
 
   
 
-        </div>
-      </div>
-    </main>
+  
 
-    <footer id="footer" class="footer">
-      <div class="icon-links">
+
+    </div>
+
+    
+    
+
+
+  </div>
+
+      </main>
+
+      <footer id="footer" class="footer">
+        <div class="icon-links">
   
   
     <a href="mailto:hi@secbit.io" rel="me noopener" class="iconfont"
@@ -816,7 +1142,7 @@ if (!doNotTrack) {
 </svg>
 
   </a>
-   
+  
 </div>
 
 <div class="copyright">
@@ -832,7 +1158,7 @@ if (!doNotTrack) {
     &copy;
     
       2018 -
-    2020
+    2023
     <span class="heart">
       
       <i class="iconfont">
@@ -855,28 +1181,30 @@ if (!doNotTrack) {
   
 </div>
 
-    </footer>
+      </footer>
 
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont">
-        
-        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+      <div class="button__back-to-top">
+        <a href="#back-to-top">
+          <i class="iconfont">
+            
+            <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="35" height="35">
   <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
 </svg>
 
-      </i>
+          </i>
+        </a>
+      </div>
     </div>
-  </div>
-  
+    
 <script type="text/javascript" src="/blog/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/blog/lib/slideout/slideout-1.0.1.min.js"></script>
 
 
 
 
-<script type="text/javascript" src="/blog/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/blog/js/main.8f212fb6e092bf9e169cea5934d935af61b1e0d48702c784602d318f3bb1cc67.js" integrity="sha256-jyEvtuCSv54WnOpZNNk1r2Gx4NSHAseEYC0xjzuxzGc=" crossorigin="anonymous"></script>
 
 
 
@@ -914,10 +1242,11 @@ if (!doNotTrack) {
 
 
   
-    <script type="text/javascript" src="/blog/js/load-photoswipe.js"></script>
     <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe.min.js"></script>
     <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe-ui-default.min.js"></script>
   
+
+
 
 
 
@@ -950,5 +1279,5 @@ if (!doNotTrack) {
 
 
 
-</body>
+  </body>
 </html>

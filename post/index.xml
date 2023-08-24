@@ -5,6 +5,7 @@
     <link>https://sec-bit.github.io/blog/post/</link>
     <description>Recent content in Posts on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
     <lastBuildDate>Wed, 22 Jan 2020 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>从零开始学习 zk-SNARK（五）——Pinocchio 协议</title>
@@ -12,7 +13,8 @@
       <pubDate>Wed, 22 Jan 2020 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/2020/01/22/learn-zk-snark-from-zero-part-five/</guid>
-      <description>作为本系列的最后一篇文章，本文继续对 zk-SNARK 协议进行完善，最终形成一个完整的 zk-SNARK 协议。</description>
+      <description>作为本系列的最后一篇文章，本文继续对 zk-SNARK
+协议进行完善，最终形成一个完整的 zk-SNARK 协议。</description>
     </item>
     
     <item>
@@ -25,21 +27,21 @@
     </item>
     
     <item>
-      <title>云中「秘密」：构建非交互式零知识证明</title>
-      <link>https://sec-bit.github.io/blog/2020/01/08/nizk-by-crs/</link>
-      <pubDate>Wed, 08 Jan 2020 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/2020/01/08/nizk-by-crs/</guid>
-      <description>之前我们介绍了如何采用「随机预言机」来扮演一个虚拟的「第三方」角色，实现虚拟的「交互」与「随机挑战」。本文将深入讲述另一种方法实现非交互式零知识证明，即如何通过一段共享的字符串去除「交互」与「隐藏随机性」。这个字符串必须事先由「第三方」来随机产生，这就是传说中的「公共参考串」（Common Reference String，简称 CRS）。</description>
-    </item>
-    
-    <item>
       <title>从零开始学习 zk-SNARK（三）——从程序到多项式的构造</title>
       <link>https://sec-bit.github.io/blog/2020/01/08/learn-zk-snark-from-zero-part-three/</link>
       <pubDate>Wed, 08 Jan 2020 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/2020/01/08/learn-zk-snark-from-zero-part-three/</guid>
       <description>前文主要介绍了如何构造多项式的零知识证明协议，现在将开始探讨如何构造更通用的协议。本节主要是讲如何将一组计算的证明转换为多项式进行证明。本文重点主要包括：多项式的算术性质，多项式插值等。</description>
+    </item>
+    
+    <item>
+      <title>云中「秘密」：构建非交互式零知识证明</title>
+      <link>https://sec-bit.github.io/blog/2020/01/08/nizk-by-crs/</link>
+      <pubDate>Wed, 08 Jan 2020 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2020/01/08/nizk-by-crs/</guid>
+      <description>之前我们介绍了如何采用「随机预言机」来扮演一个虚拟的「第三方」角色，实现虚拟的「交互」与「随机挑战」。本文将深入讲述另一种方法实现非交互式零知识证明，即如何通过一段共享的字符串去除「交互」与「隐藏随机性」。这个字符串必须事先由「第三方」来随机产生，这就是传说中的「公共参考串」（Common Reference String，简称 CRS）。</description>
     </item>
     
     <item>
@@ -57,7 +59,9 @@
       <pubDate>Wed, 01 Jan 2020 08:00:00 +0800</pubDate>
       
       <guid>https://sec-bit.github.io/blog/2020/01/01/learn-zk-snark-from-zero-part-two/</guid>
-      <description>even@安比实验室: 上一篇文章中，作者介绍了如何利用多项式的性质来证明某个多项式的知识，相信大家已经对构造证明有了一些基本的认识。目前的证明协议仍然存在一些缺陷，本文将会针对这些薄弱项进行改进，进而最终构造出关于多项式的零知识证明协议。本文重点：KEA，交互式零知识证明，非交互式零知识证明和 Setup。</description>
+      <description>even@安比实验室:
+上一篇文章中，作者介绍了如何利用多项式的性质来证明某个多项式的知识，相信大家已经对构造证明有了一些基本的认识。目前的证明协议仍然存在一些缺陷，本文将会针对这些薄弱项进行改进，进而最终构造出关于多项式的零知识证明协议。本文重点：KEA，交互式零知识证明，非交互式零知识证明和
+Setup。</description>
     </item>
     
     <item>

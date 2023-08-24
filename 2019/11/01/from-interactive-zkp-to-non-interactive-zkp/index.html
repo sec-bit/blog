@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" itemscope itemtype="http://schema.org/WebPage">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>亚瑟王的「随机」挑战：从交互到非交互式零知识证明 - SECBIT Blog</title>
-  
+<html
+  lang="zh-cn"
+  itemscope
+  itemtype="http://schema.org/WebPage"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>
+          亚瑟王的「随机」挑战：从交互到非交互式零知识证明 - SECBIT Blog
+        </title>
+    
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +38,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.75.1" />
+<meta name="generator" content="Hugo 0.117.0" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/" />
@@ -53,7 +59,9 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.d8d87b982993a745e5e7b6a6cbf257be8c3e82aab5e485f0908ad7e6c3501ab2.css" integrity="sha256-2Nh7mCmTp0Xl57amy/JXvow&#43;gqq15IXwkIrX5sNQGrI=" media="screen" crossorigin="anonymous">
+
+
 
 
 
@@ -64,21 +72,14 @@
 <meta property="og:title" content="亚瑟王的「随机」挑战：从交互到非交互式零知识证明" />
 <meta property="og:description" content="通过随机数挑战是交互式零知识证明的「信任根基」。但，「交互过程」会限制应用场景。如果能将交互式零知识证明变成「非交互」？这会非常非常激动人心。所谓的非交互可以看成是只有「一轮」的证明过程，即Alice 直接发一个证明给 Bob 进行验证。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/" />
-<meta property="og:image" content="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/cover.jpg"/>
+<meta property="og:url" content="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/" /><meta property="og:image" content="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/cover.jpg"/><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2019-11-01T08:00:00+08:00" />
-<meta property="article:modified_time" content="2019-11-01T18:07:38+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
+<meta property="article:modified_time" content="2019-11-01T18:07:38+08:00" />
 <meta itemprop="name" content="亚瑟王的「随机」挑战：从交互到非交互式零知识证明">
-<meta itemprop="description" content="通过随机数挑战是交互式零知识证明的「信任根基」。但，「交互过程」会限制应用场景。如果能将交互式零知识证明变成「非交互」？这会非常非常激动人心。所谓的非交互可以看成是只有「一轮」的证明过程，即Alice 直接发一个证明给 Bob 进行验证。">
-<meta itemprop="datePublished" content="2019-11-01T08:00:00+08:00" />
+<meta itemprop="description" content="通过随机数挑战是交互式零知识证明的「信任根基」。但，「交互过程」会限制应用场景。如果能将交互式零知识证明变成「非交互」？这会非常非常激动人心。所谓的非交互可以看成是只有「一轮」的证明过程，即Alice 直接发一个证明给 Bob 进行验证。"><meta itemprop="datePublished" content="2019-11-01T08:00:00+08:00" />
 <meta itemprop="dateModified" content="2019-11-01T18:07:38+08:00" />
-<meta itemprop="wordCount" content="9967">
-<meta itemprop="image" content="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/cover.jpg">
-
-
-
-<meta itemprop="keywords" content="Zero Knowledge Proof,Fiat-Shamir,Public-Coin,Common Reference String,Random Oracle Model,NIZK," />
-<meta name="twitter:card" content="summary_large_image"/>
+<meta itemprop="wordCount" content="9967"><meta itemprop="image" content="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/cover.jpg">
+<meta itemprop="keywords" content="Zero Knowledge Proof,Fiat-Shamir,Public-Coin,Common Reference String,Random Oracle Model,NIZK," /><meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://sec-bit.github.io/blog/2019/11/01/from-interactive-zkp-to-non-interactive-zkp/cover.jpg"/>
 <meta name="twitter:title" content="亚瑟王的「随机」挑战：从交互到非交互式零知识证明"/>
 <meta name="twitter:description" content="通过随机数挑战是交互式零知识证明的「信任根基」。但，「交互过程」会限制应用场景。如果能将交互式零知识证明变成「非交互」？这会非常非常激动人心。所谓的非交互可以看成是只有「一轮」的证明过程，即Alice 直接发一个证明给 Bob 进行验证。"/>
@@ -93,16 +94,16 @@
 <![endif]-->
 
 
-<script type="application/javascript">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CVGF90VYL2"></script>
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-149859278-1', 'auto');
-	
-	ga('send', 'pageview');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-CVGF90VYL2', { 'anonymize_ip': false });
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -117,11 +118,13 @@ if (!doNotTrack) {
     });
 </script>
 
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
+  </head>
+  <body>
+    <div id="back-to-top"></div>
+
+    <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/blog/" class="logo">SECBIT Blog</a>
+    <a href="/" class="logo">SECBIT Blog</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -211,8 +214,8 @@ if (!doNotTrack) {
 </nav>
 
 
-  
     
+      
 
 
 
@@ -269,10 +272,10 @@ if (!doNotTrack) {
     </div>
 </div>
 
-  
-
-  
     
+
+    
+      
 <div class="modal-dialog">
     
     <div class="modal-content">
@@ -299,13 +302,14 @@ if (!doNotTrack) {
     </div>
 </div>
 
-  
+    
 
-  
+    
 
-  <header id="header" class="header container">
-    <div class="logo-wrapper">
-  <a href="/blog/" class="logo">
+
+    <header id="header" class="header">
+      <div class="logo-wrapper">
+  <a href="/" class="logo">
     
       SECBIT Blog
     
@@ -377,7 +381,7 @@ if (!doNotTrack) {
         <ul class="submenu">
           
             
-              <li>
+              <li class="submenu-item">
                 <a href="https://sec-bit.github.io/blog/en/">English</a>
               </li>
             
@@ -406,66 +410,60 @@ if (!doNotTrack) {
   </ul>
 </nav>
 
-  </header>
-
-  <div id="mobile-panel">
-    <main id="main" class="main bg-llight">
-      <div class="content-wrapper">
-        <div id="content" class="content container">
-          <article class="post bg-white">
-    
-    <header class="post-header">
-      <h1 class="post-title">亚瑟王的「随机」挑战：从交互到非交互式零知识证明</h1>
-      
-      <div class="post-meta">
-        <time datetime="2019-11-01" class="post-time">
-          2019-11-01
-        </time>
-        <div class="post-category">
-            <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
-            
-          </div>
-        <span class="more-meta"> 约 9967 字 </span>
-          <span class="more-meta"> 预计阅读 20 分钟 </span>
-
-        
-        
-
-        
-        
-      </div>
     </header>
 
+    <div id="mobile-panel">
+      <main id="main" class="main bg-llight wallpaper">
+        <div class="content-wrapper">
+    <div id="content" class="content">
+      <article class="post">
+        
+        <header class="post-header">
+          <h1 class="post-title">亚瑟王的「随机」挑战：从交互到非交互式零知识证明</h1>
+          
+
+          <div class="post-meta">
+  <div class="post-meta-author">
+    by
+      郭宇
+    
+  </div>
+
+  <div class="post-meta-time">
+    <time datetime="2019-11-01">
+      2019-11-01
+    </time>
+  </div>
+
+  
+
+
+  <div class="post-meta__right">
+    <span class="post-meta-more">
+        约 9967 字 -
+        预计阅读 20 分钟
+      </span>
+
+    <div class="post-meta-category">
+        <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
+          
+      </div>
+
+
     
     
-<div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#交互与挑战">交互与挑战</a></li>
-    <li><a href="#非交互带来的困惑">「非交互」带来的困惑</a></li>
-    <li><a href="#回顾-schnorr-协议">回顾 Schnorr 协议</a></li>
-    <li><a href="#从-nizk-角度看数字签名">从 NIZK 角度看数字签名</a></li>
-    <li><a href="#重建信任--随机预言精灵">重建信任 —— 随机预言精灵</a></li>
-    <li><a href="#构造根基--被绑架的精灵">构造根基 —— 被绑架的精灵</a></li>
-    <li><a href="#fiat-shamir-变换--从-public-coin-到-nizk">Fiat-Shamir 变换 —— 从 Public-Coin 到 NIZK</a></li>
-    <li><a href="#小心fiat-shamir-变换中的安全隐患">小心：Fiat-Shamir 变换中的安全隐患</a></li>
-    <li><a href="#交互的威力">交互的威力</a></li>
-    <li><a href="#公共参考串--另一种信任根基">公共参考串 —— 另一种「信任根基」</a></li>
-    <li><a href="#未完待续">未完待续</a>
-      <ul>
-        <li><a href="#参考文献">参考文献</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+
+
+    
+    
   </div>
 </div>
 
-    
-    <div class="post-content">
-      <p><em>探索零知识证明系列（四）</em></p>
+        </header>
+
+        
+        <div class="post-content">
+          <p><em>探索零知识证明系列（四）</em></p>
 <blockquote>
 <p>“Challenges are at times an indication of Lord&rsquo;s trust in you.”   挑战，有时是上天信任你的一种表现。― <strong>D. Todd Christofferson</strong></p>
 </blockquote>
@@ -529,11 +527,11 @@ if (!doNotTrack) {
 <p>看一下 Schnorr 协议的第二步，Bob 需要给出一个随机的挑战数 <code>c</code>，这里我们可以让 Alice 用下面这个式子来计算这个挑战数，从而达到去除协议第二步的目的。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">c = Hash(PK, R)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">c = Hash(PK, R)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中 <code>R</code> 是 Alice 发给 Bob 的椭圆曲线点，<code>PK</code> 是公钥。大家可以好好看看这个利用 Hash 算法计算 <code>c</code> 的式子。这个式子达到了两个目的：</p>
 <ol>
@@ -551,13 +549,13 @@ if (!doNotTrack) {
 <p>那么如何和这句唐诗关联呢？我们修改下计算 <code>c</code> 的过程：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">m = &#34;白日依山尽，黄河入海流&#34;
-c = Hash(m, R)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">m = &#34;白日依山尽，黄河入海流&#34;
+</span></span><span class="line"><span class="cl">c = Hash(m, R)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里为了保证攻击者不能随意伪造签名，正是利用了离散对数难题（DLP）与 Hash 函数满足抗第二原象（Secondary Preimage Resistance ）这个假设。</p>
 <p><em>注：这里严格点讲，为了保证数字签名的不可伪造性，需要证明 Schnorr 协议满足「Simulation Soundness」这个更强的性质。这点请参考文献[2]</em></p>
@@ -628,11 +626,11 @@ c = Hash(m, R)
 <p>接下来我们证明这个这个协议的「可靠性」。设想在另一个「理想世界」中，一个叫做「抽取器」的玩意儿，也同样绑架了精灵。当无辜 Alice 的向「精灵」索要一个随机数时，「精灵」返回了一个 <code>c1</code>，「抽取器」从精灵的表格中偷窥到了<code>c1</code>，当 Alice 计算出来 <code>z1</code> 之后，然后这时候「抽取器」仍然可以发动「时间倒流」超能力，让 Alice 倒退到第二步，再次向「精灵」要一个随机数，Alice 发送的字符串显然和第一次发送的字符串是相同的，<code>(R, m)</code>。按道理，因为 <code>(R, m)</code> 已经写在精灵表格的「左栏」里，所以一个诚实的「精灵」应该返回 <code>c1</code>。但是，「抽取器」绑架了精灵，他把表格中对应 <code>(R, m)</code> 这一行的「右栏」改成了一个不同的数 <code>c2</code>。当 Alice 计算出另一个 <code>z2</code> 之后，抽取器就完成了任务，通过下面的方程计算出 Alice 的私钥 <code>sk</code>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">sk = (z1 - z2)/(c1 - c2)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sk = (z1 - z2)/(c1 - c2)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="fiat-shamir-变换--从-public-coin-到-nizk">Fiat-Shamir 变换 —— 从 Public-Coin 到 NIZK</h2>
 <p>不仅仅对于 Schnorr 协议，对于任意的 「Public-Coin 协议」，都可以用 Fiat-Shamir 变换来把整个协议「压缩」成一步交互，也就是一个非交互式的证明系统，这个变换技巧最早来自于 Amos Fiat 与 Adi Shamir 两人的论文『How to Prove Yourself: Practical Solutions to Identification and Signature Problems.』，发表在 1986 年的 Crypto 会议上[5]。也有一说，这个技巧来源于 Manuel Blum[6].</p>
@@ -728,10 +726,10 @@ c = Hash(m, R)
 </li>
 </ul>
 
-    </div>
+        </div>
 
-    
-    
+        
+        
 <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
@@ -759,74 +757,82 @@ c = Hash(m, R)
 </div>
 
 
-    
-    
 
-    <footer class="post-footer">
-      <div class="post-tags">
-          <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
-          <a href="https://sec-bit.github.io/blog/tags/fiat-shamir/">Fiat-Shamir</a>
-          <a href="https://sec-bit.github.io/blog/tags/public-coin/">Public-Coin</a>
-          <a href="https://sec-bit.github.io/blog/tags/common-reference-string/">Common Reference String</a>
-          <a href="https://sec-bit.github.io/blog/tags/random-oracle-model/">Random Oracle Model</a>
-          <a href="https://sec-bit.github.io/blog/tags/nizk/">NIZK</a>
-          
-        </div>
-
-      
-      <nav class="post-nav">
         
-          <a class="prev" href="/blog/2019/11/07/zkp-learning-resources/">
+        
+
+
+        <footer class="post-footer">
+          <div class="post-tags">
+              <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
+                <a href="https://sec-bit.github.io/blog/tags/fiat-shamir/">Fiat-Shamir</a>
+                <a href="https://sec-bit.github.io/blog/tags/public-coin/">Public-Coin</a>
+                <a href="https://sec-bit.github.io/blog/tags/common-reference-string/">Common Reference String</a>
+                <a href="https://sec-bit.github.io/blog/tags/random-oracle-model/">Random Oracle Model</a>
+                <a href="https://sec-bit.github.io/blog/tags/nizk/">NIZK</a>
+                
+            </div>
+
+
+          
+          <nav class="post-nav">
             
-            <i class="iconfont">
-              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+              <a class="prev" href="/blog/2019/11/07/zkp-learning-resources/">
+                
+                <i class="iconfont">
+                  <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="18" height="18">
   <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
 </svg>
 
-            </i>
-            <span class="prev-text nav-default">零知识证明学习资源汇总</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        
-          <a class="next" href="/blog/2019/10/28/bitcoin-safety-in-the-coming-era-of-quantum-computing/">
-            <span class="next-text nav-default">如果量子计算时代到来，我们的比特币安全吗？</span>
-            <span class="prev-text nav-mobile">下一篇</span>
+                </i>
+                <span class="prev-text nav-default">零知识证明学习资源汇总</span>
+                <span class="prev-text nav-mobile">上一篇</span>
+              </a>
             
-            <i class="iconfont">
-              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+              <a class="next" href="/blog/2019/10/28/bitcoin-safety-in-the-coming-era-of-quantum-computing/">
+                <span class="next-text nav-default">如果量子计算时代到来，我们的比特币安全吗？</span>
+                <span class="prev-text nav-mobile">下一篇</span>
+                
+                <i class="iconfont">
+                  <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="18" height="18">
   <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
 </svg>
 
-            </i>
-          </a>
-      </nav>
-    </footer>
-  </article>
+                </i>
+              </a>
+          </nav>
+        </footer>
+      </article>
+
+      
+      
+        
+      
+
+
+      
+      
+
+  
 
   
   
 
   
   
-
-  
-
-  
-  
-    <div class="post bg-white">
-      <script src="https://utteranc.es/client.js"
-            repo= "sec-bit/comments-for-secbit-blog"
-            issue-term="pathname"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-      </script>
-    </div>
-  
+    <div class="post">
+  <script src="https://utteranc.es/client.js"
+        repo= "sec-bit/comments-for-secbit-blog"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+</div>
 
   
 
@@ -838,12 +844,44 @@ c = Hash(m, R)
 
   
 
-        </div>
-      </div>
-    </main>
+  
 
-    <footer id="footer" class="footer">
-      <div class="icon-links">
+
+    </div>
+
+    
+    <nav class="toc" id="toc">
+    <div class="toc-title">文章目录</div>
+    <div class="toc-content custom-scrollbar">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#交互与挑战">交互与挑战</a></li>
+    <li><a href="#非交互带来的困惑">「非交互」带来的困惑</a></li>
+    <li><a href="#回顾-schnorr-协议">回顾 Schnorr 协议</a></li>
+    <li><a href="#从-nizk-角度看数字签名">从 NIZK 角度看数字签名</a></li>
+    <li><a href="#重建信任--随机预言精灵">重建信任 —— 随机预言精灵</a></li>
+    <li><a href="#构造根基--被绑架的精灵">构造根基 —— 被绑架的精灵</a></li>
+    <li><a href="#fiat-shamir-变换--从-public-coin-到-nizk">Fiat-Shamir 变换 —— 从 Public-Coin 到 NIZK</a></li>
+    <li><a href="#小心fiat-shamir-变换中的安全隐患">小心：Fiat-Shamir 变换中的安全隐患</a></li>
+    <li><a href="#交互的威力">交互的威力</a></li>
+    <li><a href="#公共参考串--另一种信任根基">公共参考串 —— 另一种「信任根基」</a></li>
+    <li><a href="#未完待续">未完待续</a>
+      <ul>
+        <li><a href="#参考文献">参考文献</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </nav>
+
+
+  </div>
+
+      </main>
+
+      <footer id="footer" class="footer">
+        <div class="icon-links">
   
   
     <a href="mailto:hi@secbit.io" rel="me noopener" class="iconfont"
@@ -900,7 +938,7 @@ c = Hash(m, R)
 </svg>
 
   </a>
-   
+  
 </div>
 
 <div class="copyright">
@@ -916,7 +954,7 @@ c = Hash(m, R)
     &copy;
     
       2018 -
-    2020
+    2023
     <span class="heart">
       
       <i class="iconfont">
@@ -939,28 +977,30 @@ c = Hash(m, R)
   
 </div>
 
-    </footer>
+      </footer>
 
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont">
-        
-        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+      <div class="button__back-to-top">
+        <a href="#back-to-top">
+          <i class="iconfont">
+            
+            <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="35" height="35">
   <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
 </svg>
 
-      </i>
+          </i>
+        </a>
+      </div>
     </div>
-  </div>
-  
+    
 <script type="text/javascript" src="/blog/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/blog/lib/slideout/slideout-1.0.1.min.js"></script>
 
 
 
 
-<script type="text/javascript" src="/blog/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/blog/js/main.8f212fb6e092bf9e169cea5934d935af61b1e0d48702c784602d318f3bb1cc67.js" integrity="sha256-jyEvtuCSv54WnOpZNNk1r2Gx4NSHAseEYC0xjzuxzGc=" crossorigin="anonymous"></script>
 
 
 
@@ -998,10 +1038,11 @@ c = Hash(m, R)
 
 
   
-    <script type="text/javascript" src="/blog/js/load-photoswipe.js"></script>
     <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe.min.js"></script>
     <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe-ui-default.min.js"></script>
   
+
+
 
 
 
@@ -1034,5 +1075,5 @@ c = Hash(m, R)
 
 
 
-</body>
+  </body>
 </html>

@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" itemscope itemtype="http://schema.org/WebPage">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>从「模拟」理解零知识证明：平行宇宙与时光倒流 - SECBIT Blog</title>
-  
+<html
+  lang="zh-cn"
+  itemscope
+  itemtype="http://schema.org/WebPage"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>
+          从「模拟」理解零知识证明：平行宇宙与时光倒流 - SECBIT Blog
+        </title>
+    
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +38,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.75.1" />
+<meta name="generator" content="Hugo 0.117.0" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/" />
@@ -53,7 +59,9 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.d8d87b982993a745e5e7b6a6cbf257be8c3e82aab5e485f0908ad7e6c3501ab2.css" integrity="sha256-2Nh7mCmTp0Xl57amy/JXvow&#43;gqq15IXwkIrX5sNQGrI=" media="screen" crossorigin="anonymous">
+
+
 
 
 
@@ -64,19 +72,14 @@
 <meta property="og:title" content="从「模拟」理解零知识证明：平行宇宙与时光倒流" />
 <meta property="og:description" content="相信很多人都听说过零知识证明，但是只有极少数人听说过模拟，然而模拟是理解零知识的关键。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/" />
+<meta property="og:url" content="https://sec-bit.github.io/blog/2019/08/06/understand-zero-knowledge-proof-by-simulator/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2019-08-06T08:00:00+08:00" />
-<meta property="article:modified_time" content="2019-10-12T18:48:30+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
+<meta property="article:modified_time" content="2019-10-12T18:48:30+08:00" />
 <meta itemprop="name" content="从「模拟」理解零知识证明：平行宇宙与时光倒流">
-<meta itemprop="description" content="相信很多人都听说过零知识证明，但是只有极少数人听说过模拟，然而模拟是理解零知识的关键。">
-<meta itemprop="datePublished" content="2019-08-06T08:00:00+08:00" />
+<meta itemprop="description" content="相信很多人都听说过零知识证明，但是只有极少数人听说过模拟，然而模拟是理解零知识的关键。"><meta itemprop="datePublished" content="2019-08-06T08:00:00+08:00" />
 <meta itemprop="dateModified" content="2019-10-12T18:48:30+08:00" />
 <meta itemprop="wordCount" content="8814">
-
-
-
-<meta itemprop="keywords" content="Zero Knowledge Proof,Zero Knowledge,Simulator," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="Zero Knowledge Proof,Zero Knowledge,Simulator," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="从「模拟」理解零知识证明：平行宇宙与时光倒流"/>
 <meta name="twitter:description" content="相信很多人都听说过零知识证明，但是只有极少数人听说过模拟，然而模拟是理解零知识的关键。"/>
 
@@ -90,16 +93,16 @@
 <![endif]-->
 
 
-<script type="application/javascript">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CVGF90VYL2"></script>
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-149859278-1', 'auto');
-	
-	ga('send', 'pageview');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-CVGF90VYL2', { 'anonymize_ip': false });
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -114,11 +117,13 @@ if (!doNotTrack) {
     });
 </script>
 
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
+  </head>
+  <body>
+    <div id="back-to-top"></div>
+
+    <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/blog/" class="logo">SECBIT Blog</a>
+    <a href="/" class="logo">SECBIT Blog</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -208,8 +213,8 @@ if (!doNotTrack) {
 </nav>
 
 
-  
     
+      
 
 
 
@@ -266,10 +271,10 @@ if (!doNotTrack) {
     </div>
 </div>
 
-  
-
-  
     
+
+    
+      
 <div class="modal-dialog">
     
     <div class="modal-content">
@@ -296,13 +301,14 @@ if (!doNotTrack) {
     </div>
 </div>
 
-  
+    
 
-  
+    
 
-  <header id="header" class="header container">
-    <div class="logo-wrapper">
-  <a href="/blog/" class="logo">
+
+    <header id="header" class="header">
+      <div class="logo-wrapper">
+  <a href="/" class="logo">
     
       SECBIT Blog
     
@@ -374,7 +380,7 @@ if (!doNotTrack) {
         <ul class="submenu">
           
             
-              <li>
+              <li class="submenu-item">
                 <a href="https://sec-bit.github.io/blog/en/">English</a>
               </li>
             
@@ -403,67 +409,65 @@ if (!doNotTrack) {
   </ul>
 </nav>
 
-  </header>
-
-  <div id="mobile-panel">
-    <main id="main" class="main bg-llight">
-      <div class="content-wrapper">
-        <div id="content" class="content container">
-          <article class="post bg-white">
-    
-    <header class="post-header">
-      <h1 class="post-title">从「模拟」理解零知识证明：平行宇宙与时光倒流</h1>
-      
-      <div class="post-meta">
-        <time datetime="2019-08-06" class="post-time">
-          2019-08-06
-        </time>
-        <div class="post-category">
-            <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
-            
-          </div>
-        <span class="more-meta"> 约 8814 字 </span>
-          <span class="more-meta"> 预计阅读 18 分钟 </span>
-
-        
-        
-
-        
-        
-      </div>
     </header>
 
+    <div id="mobile-panel">
+      <main id="main" class="main bg-llight wallpaper">
+        <div class="content-wrapper">
+    <div id="content" class="content">
+      <article class="post">
+        
+        <header class="post-header">
+          <h1 class="post-title">从「模拟」理解零知识证明：平行宇宙与时光倒流</h1>
+          
+
+          <div class="post-meta">
+  <div class="post-meta-author">
+    by
+      郭宇
+    
+  </div>
+
+  <div class="post-meta-time">
+    <time datetime="2019-08-06">
+      2019-08-06
+    </time>
+  </div>
+
+  
+    <div class="post-meta-lastmod">
+      (上次更新:
+      2019-10-12)
+    </div>
+  
+
+
+  <div class="post-meta__right">
+    <span class="post-meta-more">
+        约 8814 字 -
+        预计阅读 18 分钟
+      </span>
+
+    <div class="post-meta-category">
+        <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
+          
+      </div>
+
+
     
     
-<div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#安全的定义与不可区分性">安全的定义与不可区分性</a></li>
-    <li><a href="#遇见模拟器">遇见模拟器</a></li>
-    <li><a href="#区分两个世界">区分两个世界</a></li>
-    <li><a href="#地图三染色问题的零知识证明">地图三染色问题的零知识证明</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-    <li><a href="#阿里巴巴洞穴与芝麻开门">阿里巴巴、洞穴与芝麻开门</a></li>
-    <li><a href="#模拟与图灵机">模拟与图灵机</a></li>
-    <li><a href="#柏拉图的洞穴寓言">柏拉图的洞穴寓言</a></li>
-    <li><a href="#未完待续">未完待续</a>
-      <ul>
-        <li><a href="#参考文献">参考文献</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+
+
+    
+    
   </div>
 </div>
 
-    
-    <div class="post-content">
-      <blockquote>
+        </header>
+
+        
+        <div class="post-content">
+          <blockquote>
 <p><em>探索零知识证明系列（二）</em></p>
 </blockquote>
 <blockquote>
@@ -627,10 +631,10 @@ if (!doNotTrack) {
 <li>[11] Matthew Green. Zero Knowledge Proofs: An illustrated primer, Part 2. 2017. <a href="https://blog.cryptographyengineering.com/2017/01/21/zero-knowledge-proofs-an-illustrated-primer-part-2/">https://blog.cryptographyengineering.com/2017/01/21/zero-knowledge-proofs-an-illustrated-primer-part-2/</a></li>
 </ul>
 
-    </div>
+        </div>
 
-    
-    
+        
+        
 <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
@@ -658,71 +662,79 @@ if (!doNotTrack) {
 </div>
 
 
-    
-    
 
-    <footer class="post-footer">
-      <div class="post-tags">
-          <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
-          <a href="https://sec-bit.github.io/blog/tags/zero-knowledge/">Zero Knowledge</a>
-          <a href="https://sec-bit.github.io/blog/tags/simulator/">Simulator</a>
-          
-        </div>
-
-      
-      <nav class="post-nav">
         
-          <a class="prev" href="/blog/2019/08/28/extractor-and-proof-of-knowledge/">
+        
+
+
+        <footer class="post-footer">
+          <div class="post-tags">
+              <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
+                <a href="https://sec-bit.github.io/blog/tags/zero-knowledge/">Zero Knowledge</a>
+                <a href="https://sec-bit.github.io/blog/tags/simulator/">Simulator</a>
+                
+            </div>
+
+
+          
+          <nav class="post-nav">
             
-            <i class="iconfont">
-              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+              <a class="prev" href="/blog/2019/08/28/extractor-and-proof-of-knowledge/">
+                
+                <i class="iconfont">
+                  <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="18" height="18">
   <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
 </svg>
 
-            </i>
-            <span class="prev-text nav-default">读心术：从零知识证明中提取「知识」</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        
-          <a class="next" href="/blog/2019/07/31/zero-knowledge-and-proof/">
-            <span class="next-text nav-default">初识「零知识」与「证明」</span>
-            <span class="prev-text nav-mobile">下一篇</span>
+                </i>
+                <span class="prev-text nav-default">读心术：从零知识证明中提取「知识」</span>
+                <span class="prev-text nav-mobile">上一篇</span>
+              </a>
             
-            <i class="iconfont">
-              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+              <a class="next" href="/blog/2019/07/31/zero-knowledge-and-proof/">
+                <span class="next-text nav-default">初识「零知识」与「证明」</span>
+                <span class="prev-text nav-mobile">下一篇</span>
+                
+                <i class="iconfont">
+                  <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="18" height="18">
   <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
 </svg>
 
-            </i>
-          </a>
-      </nav>
-    </footer>
-  </article>
+                </i>
+              </a>
+          </nav>
+        </footer>
+      </article>
+
+      
+      
+        
+      
+
+
+      
+      
+
+  
 
   
   
 
   
   
-
-  
-
-  
-  
-    <div class="post bg-white">
-      <script src="https://utteranc.es/client.js"
-            repo= "sec-bit/comments-for-secbit-blog"
-            issue-term="pathname"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-      </script>
-    </div>
-  
+    <div class="post">
+  <script src="https://utteranc.es/client.js"
+        repo= "sec-bit/comments-for-secbit-blog"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+</div>
 
   
 
@@ -734,12 +746,45 @@ if (!doNotTrack) {
 
   
 
-        </div>
-      </div>
-    </main>
+  
 
-    <footer id="footer" class="footer">
-      <div class="icon-links">
+
+    </div>
+
+    
+    <nav class="toc" id="toc">
+    <div class="toc-title">文章目录</div>
+    <div class="toc-content custom-scrollbar">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#安全的定义与不可区分性">安全的定义与不可区分性</a></li>
+    <li><a href="#遇见模拟器">遇见模拟器</a></li>
+    <li><a href="#区分两个世界">区分两个世界</a></li>
+    <li><a href="#地图三染色问题的零知识证明">地图三染色问题的零知识证明</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#阿里巴巴洞穴与芝麻开门">阿里巴巴、洞穴与芝麻开门</a></li>
+    <li><a href="#模拟与图灵机">模拟与图灵机</a></li>
+    <li><a href="#柏拉图的洞穴寓言">柏拉图的洞穴寓言</a></li>
+    <li><a href="#未完待续">未完待续</a>
+      <ul>
+        <li><a href="#参考文献">参考文献</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </nav>
+
+
+  </div>
+
+      </main>
+
+      <footer id="footer" class="footer">
+        <div class="icon-links">
   
   
     <a href="mailto:hi@secbit.io" rel="me noopener" class="iconfont"
@@ -796,7 +841,7 @@ if (!doNotTrack) {
 </svg>
 
   </a>
-   
+  
 </div>
 
 <div class="copyright">
@@ -812,7 +857,7 @@ if (!doNotTrack) {
     &copy;
     
       2018 -
-    2020
+    2023
     <span class="heart">
       
       <i class="iconfont">
@@ -835,28 +880,30 @@ if (!doNotTrack) {
   
 </div>
 
-    </footer>
+      </footer>
 
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont">
-        
-        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+      <div class="button__back-to-top">
+        <a href="#back-to-top">
+          <i class="iconfont">
+            
+            <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="35" height="35">
   <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
 </svg>
 
-      </i>
+          </i>
+        </a>
+      </div>
     </div>
-  </div>
-  
+    
 <script type="text/javascript" src="/blog/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/blog/lib/slideout/slideout-1.0.1.min.js"></script>
 
 
 
 
-<script type="text/javascript" src="/blog/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/blog/js/main.8f212fb6e092bf9e169cea5934d935af61b1e0d48702c784602d318f3bb1cc67.js" integrity="sha256-jyEvtuCSv54WnOpZNNk1r2Gx4NSHAseEYC0xjzuxzGc=" crossorigin="anonymous"></script>
 
 
 
@@ -894,10 +941,11 @@ if (!doNotTrack) {
 
 
   
-    <script type="text/javascript" src="/blog/js/load-photoswipe.js"></script>
     <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe.min.js"></script>
     <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe-ui-default.min.js"></script>
   
+
+
 
 
 
@@ -930,5 +978,5 @@ if (!doNotTrack) {
 
 
 
-</body>
+  </body>
 </html>

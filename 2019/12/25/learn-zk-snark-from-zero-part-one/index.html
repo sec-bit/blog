@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" itemscope itemtype="http://schema.org/WebPage">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>从零开始学习 zk-SNARK（一）——多项式的性质与证明 - SECBIT Blog</title>
-  
+<html
+  lang="zh-cn"
+  itemscope
+  itemtype="http://schema.org/WebPage"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>
+          从零开始学习 zk-SNARK（一）——多项式的性质与证明 - SECBIT Blog
+        </title>
+    
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +38,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.75.1" />
+<meta name="generator" content="Hugo 0.117.0" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2019/12/25/learn-zk-snark-from-zero-part-one/" />
@@ -53,7 +59,9 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.d8d87b982993a745e5e7b6a6cbf257be8c3e82aab5e485f0908ad7e6c3501ab2.css" integrity="sha256-2Nh7mCmTp0Xl57amy/JXvow&#43;gqq15IXwkIrX5sNQGrI=" media="screen" crossorigin="anonymous">
+
+
 
 
 
@@ -64,19 +72,14 @@
 <meta property="og:title" content="从零开始学习 zk-SNARK（一）——多项式的性质与证明" />
 <meta property="og:description" content="当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要就基于一些实例简洁明了地阐明 zk-SNARK ，并对这里面的很多问题做出了解释，并利用这种方式分享了我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sec-bit.github.io/blog/2019/12/25/learn-zk-snark-from-zero-part-one/" />
+<meta property="og:url" content="https://sec-bit.github.io/blog/2019/12/25/learn-zk-snark-from-zero-part-one/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2019-12-25T08:00:00+08:00" />
-<meta property="article:modified_time" content="2020-06-06T13:56:17+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
+<meta property="article:modified_time" content="2020-06-06T13:56:17+08:00" />
 <meta itemprop="name" content="从零开始学习 zk-SNARK（一）——多项式的性质与证明">
-<meta itemprop="description" content="当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要就基于一些实例简洁明了地阐明 zk-SNARK ，并对这里面的很多问题做出了解释，并利用这种方式分享了我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。">
-<meta itemprop="datePublished" content="2019-12-25T08:00:00+08:00" />
+<meta itemprop="description" content="当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要就基于一些实例简洁明了地阐明 zk-SNARK ，并对这里面的很多问题做出了解释，并利用这种方式分享了我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。"><meta itemprop="datePublished" content="2019-12-25T08:00:00+08:00" />
 <meta itemprop="dateModified" content="2020-06-06T13:56:17+08:00" />
-<meta itemprop="wordCount" content="8890">
-
-
-
-<meta itemprop="keywords" content="Zero Knowledge Proof,tutorials,zkSNARKs," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="wordCount" content="8894">
+<meta itemprop="keywords" content="Zero Knowledge Proof,tutorials,zkSNARKs," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="从零开始学习 zk-SNARK（一）——多项式的性质与证明"/>
 <meta name="twitter:description" content="当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要就基于一些实例简洁明了地阐明 zk-SNARK ，并对这里面的很多问题做出了解释，并利用这种方式分享了我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。"/>
 
@@ -90,16 +93,16 @@
 <![endif]-->
 
 
-<script type="application/javascript">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CVGF90VYL2"></script>
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-149859278-1', 'auto');
-	
-	ga('send', 'pageview');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-CVGF90VYL2', { 'anonymize_ip': false });
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -114,11 +117,13 @@ if (!doNotTrack) {
     });
 </script>
 
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
+  </head>
+  <body>
+    <div id="back-to-top"></div>
+
+    <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/blog/" class="logo">SECBIT Blog</a>
+    <a href="/" class="logo">SECBIT Blog</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -208,8 +213,8 @@ if (!doNotTrack) {
 </nav>
 
 
-  
     
+      
 
 
 
@@ -266,10 +271,10 @@ if (!doNotTrack) {
     </div>
 </div>
 
-  
-
-  
     
+
+    
+      
 <div class="modal-dialog">
     
     <div class="modal-content">
@@ -296,13 +301,14 @@ if (!doNotTrack) {
     </div>
 </div>
 
-  
+    
 
-  
+    
 
-  <header id="header" class="header container">
-    <div class="logo-wrapper">
-  <a href="/blog/" class="logo">
+
+    <header id="header" class="header">
+      <div class="logo-wrapper">
+  <a href="/" class="logo">
     
       SECBIT Blog
     
@@ -374,7 +380,7 @@ if (!doNotTrack) {
         <ul class="submenu">
           
             
-              <li>
+              <li class="submenu-item">
                 <a href="https://sec-bit.github.io/blog/en/">English</a>
               </li>
             
@@ -403,64 +409,66 @@ if (!doNotTrack) {
   </ul>
 </nav>
 
-  </header>
-
-  <div id="mobile-panel">
-    <main id="main" class="main bg-llight">
-      <div class="content-wrapper">
-        <div id="content" class="content container">
-          <article class="post bg-white">
-    
-    <header class="post-header">
-      <h1 class="post-title">从零开始学习 zk-SNARK（一）——多项式的性质与证明</h1>
-      
-      <div class="post-meta">
-        <time datetime="2019-12-25" class="post-time">
-          2019-12-25
-        </time>
-        <div class="post-category">
-            <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
-            <a href="https://sec-bit.github.io/blog/categories/zksnarks/"> zkSNARKs </a>
-            
-          </div>
-        <span class="more-meta"> 约 8890 字 </span>
-          <span class="more-meta"> 预计阅读 18 分钟 </span>
-
-        
-        
-
-        
-        
-      </div>
     </header>
 
+    <div id="mobile-panel">
+      <main id="main" class="main bg-llight wallpaper">
+        <div class="content-wrapper">
+    <div id="content" class="content">
+      <article class="post">
+        
+        <header class="post-header">
+          <h1 class="post-title">从零开始学习 zk-SNARK（一）——多项式的性质与证明</h1>
+          
+
+          <div class="post-meta">
+  <div class="post-meta-author">
+    by
+      Maksym Petkus，翻译 & 注解：even@安比实验室（even@secbit.io）
+    
+  </div>
+
+  <div class="post-meta-time">
+    <time datetime="2019-12-25">
+      2019-12-25
+    </time>
+  </div>
+
+  
+    <div class="post-meta-lastmod">
+      (上次更新:
+      2020-06-06)
+    </div>
+  
+
+
+  <div class="post-meta__right">
+    <span class="post-meta-more">
+        约 8894 字 -
+        预计阅读 18 分钟
+      </span>
+
+    <div class="post-meta-category">
+        <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
+          <a href="https://sec-bit.github.io/blog/categories/zksnarks/"> zkSNARKs </a>
+          
+      </div>
+
+
     
     
-<div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#序言和介绍">序言和介绍</a></li>
-    <li><a href="#证明的媒介">证明的媒介</a></li>
-    <li><a href="#证明多项式的知识">证明多项式的知识</a></li>
-    <li><a href="#因式分解">因式分解</a></li>
-    <li><a href="#模糊计算">模糊计算</a>
-      <ul>
-        <li><a href="#同态加密">同态加密</a></li>
-        <li><a href="#模运算">模运算</a></li>
-        <li><a href="#强同态加密">强同态加密</a></li>
-        <li><a href="#加密多项式">加密多项式</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+
+
+    
+    
   </div>
 </div>
 
-    
-    <div class="post-content">
-      <blockquote>
+        </header>
+
+        
+        <div class="post-content">
+          <blockquote>
 <p>@Maksym（作者）： 不管是原始的论文[Bit+11]; [Par+13] 还是原理讲解 [Rei16]; [But16]; [But17]; [Gab17]，其实市面上已经有大量关于 zk-SNARK 的学习资源了 。zk-SNARK 由大量的可变模块组成，所以对很多人来说它依然像一个黑盒子一样很难懂。这些资料对 zk-SNARK 中的一些技术难题部分做出了解释，但由于缺少了对应的其它环节的解释，大家还是很难通过这些资料了解到 zk-SNARK 的全貌。</p>
 <p>当我第一次了解到 zk-SNARK 技术是如何将这些东西完美地融合在一起的时候，就被数学之美震撼到了，并且随着我发现的维度越多，好奇心就越强烈。在这篇文章中，我主要就基于一些实例简洁明了地阐明 zk-SNARK ，并对这里面的很多问题做出了解释，并利用这种方式分享了我的经验，进而让更多人也能够欣赏到这项最先进的技术以及它的创新之处，最终欣赏到数学之美。</p>
 <p>这篇文章的主要贡献是比较简洁明了的解释了其中相当复杂的技术，这些简单的解释对于在不具备任何与之相关的先决知识，比如密码学和高等数学，的前提下理解 zk-SNARK 是很有必要的。文章中并不仅仅只解释 zk-SNARK 是如何工作的，还解释了为什么这样就可以工作，以及它是怎么来的。</p>
@@ -565,7 +573,7 @@ if (!doNotTrack) {
 <p>$$
 c_{n} x^{n}+\ldots \ldots+c_{1} x^{1}+c_{0} x^{0}
 $$</p>
-<p>如果一个人说他或她知道一个一阶多项式（即：$c_{1} x^{1} + c_{0} = 0$），那么这就意味着他或她确实*知道* 系数 $c_{0}$, $c_{1}$ 的值。这个系数可以是包括 0 在内的任意值。</p>
+<p>如果一个人说他或她知道一个一阶多项式（即：$c_{1} x^{1} + c_{0} = 0$），那么这就意味着他或她确实<em>知道</em> 系数 $c_{0}$, $c_{1}$ 的值。这个系数可以是包括 0 在内的任意值。</p>
 <p>假设证明者声称他知道一个包含 <em>x=1</em> 和 <em>x=2</em> 两个解的三阶多项式。满足此条件的一个有效的多项式就是 <em>x3 – 3x2+ 2x= 0</em>。因为<em>x= 1: 1 – 3 + 2 = 0</em>，<em>x= 2: 8 – 12 + 4 = 0</em>。</p>
 <p>我们先来仔细得研究一下这个答案的结构。</p>
 <blockquote>
@@ -608,7 +616,7 @@ $$</p>
 <p>相反，如果 prover 使用一个不同的 <em>p</em>′(<em>x</em>) ，它并不包含必要的因式，例如 <em>p′(x) = 2x³ – 3x² + 2x</em>, 那么：</p>
 <p><img src="img/1_heV9wqxECa2N4rG0OpvItQ.png" alt=""></p>
 <blockquote>
-<p>@Maksym（作者）：虽然为了简化而使用了一组数学符号，但是如果忽视这个无处不在的基本符号：’(上撇)的话将不利于理解。这个符号本质目的是为了强调一个经过初始变量变换或者推导得到的新变量。即，如果我们想要将 v 乘以 2 并给将它赋值给一个新的变量，我们可以使用：v'= <em>2</em> ⋅ v。</p>
+<p>@Maksym（作者）：虽然为了简化而使用了一组数学符号，但是如果忽视这个无处不在的基本符号：’(上撇)的话将不利于理解。这个符号本质目的是为了强调一个经过初始变量变换或者推导得到的新变量。即，如果我们想要将 v 乘以 2 并给将它赋值给一个新的变量，我们可以使用：v&rsquo;= <em>2</em> ⋅ v。</p>
 </blockquote>
 <p>我们算出结果<em>2x + 3</em> 和余数<em>7x – 6</em>，即：<em>p(x) = t(x) × (2x+ 3) + 7x – 6</em>。这就意味着 verifier 为了计算出结果他不得不用 余数除以<em>t(x)</em>， $h(x) = 2x+3+\frac{7x-6}{t(x)}$。</p>
 <p>不过由于 <em>x</em> 是 verifier 随机选择的，就有极低的概率余数 <em>7x – 6</em> 最终可以被 <em>t(x)</em> 整除。如果后面 verifier 要另外再检查 p 和 h 必须是整数的话，这个证明才会被拒绝。不过要这么校验就同时要求多项式系数也是整数，这对协议产生了极大的限制。</p>
@@ -747,7 +755,7 @@ $$</p>
 <p>[Rei16] — Christian Reitwiessner. <em>zkSNARKs in a Nutshell</em>. 2016. url: <a href="https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/">https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/</a></p>
 <p>[But16] — Vitalik Buterin. <em>Quadratic Arithmetic Programs: from Zero to</em> <em>Hero</em>. 2016. url: <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</a></p>
 <p>[But17] — Vitalik Buterin. <em>zk-SNARKs: Under the Hood</em>. 2017. url: <a href="https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6">https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6</a></p>
-<p>[Gab17] — Ariel Gabizon. <em>Explaining SNARKs</em>. 2017. url: https://z.cash/blog/snark-explain/</p>
+<p>[Gab17] — Ariel Gabizon. <em>Explaining SNARKs</em>. 2017. url: <a href="https://z.cash/blog/snark-explain/">https://z.cash/blog/snark-explain/</a></p>
 <p>[Ben+14] — Eli Ben-Sasson, Alessandro Chiesa, Christina Garman, Matthew Green, Ian Miers, Eran Tromer, and Madars Virza. <em>Zerocash: Decentralized</em> <em>Anonymous Payments from Bitcoin</em>. Cryptology ePrint Archive, Report 2014/349. <a href="https://eprint.iacr.org/2014/349">https://eprint.iacr.org/2014/349</a>. 2014</p>
 <p>[GMR85] — S Goldwasser, S Micali, and C Rackoff. “The Knowledge Complexity of Interactive Proof-systems”. In: <em>Proceedings of the Seventeenth Annual ACM</em> <em>Symposium on Theory of Computing</em>. STOC ’85. Providence, Rhode Island, USA: ACM, 1985, pp. 291–304. isbn: 0–89791–151–2. doi: <a href="https://doi.org/10.1145/22145.22178">10.1145/22145.22178</a>. url: <a href="http://doi.acm.org/10.1145/22145.22178">http://doi.acm.org/10.1145/22145.22178</a></p>
 <p>[BFM88] — Manuel Blum, Paul Feldman, and Silvio Micali. “Non-interactive Zero-knowledge and Its Applications”. In: <em>Proceedings of the Twentieth Annual ACM</em> <em>Symposium on Theory of Computing</em>. STOC ’88. Chicago, Illinois, USA: ACM, 1988, pp. 103–112. isbn: 0–89791–264–0. doi: <a href="https://doi.org/10.1145/62212.62222">10.1145/62212.62222</a>. url: <a href="http://doi.acm.org/10.1145/62212.62222">http://doi.acm.org/10.1145/62212.62222</a></p>
@@ -756,10 +764,10 @@ $$</p>
 <p>[Pik13] — Scott Pike. <em>Evaluating Polynomial Functions</em>. 2013. url: <a href="http://www.mesacc.edu/~scotz47781/mat120/notes/polynomials/evaluating/evaluating.html">http://www.mesacc.edu/~scotz47781/mat120/notes/polynomials/evaluating/evaluating.html</a></p>
 <p>[Pik14] — Scott Pike. <em>Dividing by a Polynomial</em>. 2014. url: <a href="http://www.mesacc.edu/~scotz47781/mat120/notes/divide_poly/long_division/long_division.html">http://www.mesacc.edu/~scotz47781/mat120/notes/divide_poly/long_division/long_division.html</a></p>
 
-    </div>
+        </div>
 
-    
-    
+        
+        
 <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
@@ -787,71 +795,79 @@ $$</p>
 </div>
 
 
-    
-    
 
-    <footer class="post-footer">
-      <div class="post-tags">
-          <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
-          <a href="https://sec-bit.github.io/blog/tags/tutorials/">tutorials</a>
-          <a href="https://sec-bit.github.io/blog/tags/zksnarks/">zkSNARKs</a>
-          
-        </div>
-
-      
-      <nav class="post-nav">
         
-          <a class="prev" href="/blog/2020/01/01/learn-zk-snark-from-zero-part-two/">
+        
+
+
+        <footer class="post-footer">
+          <div class="post-tags">
+              <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
+                <a href="https://sec-bit.github.io/blog/tags/tutorials/">tutorials</a>
+                <a href="https://sec-bit.github.io/blog/tags/zksnarks/">zkSNARKs</a>
+                
+            </div>
+
+
+          
+          <nav class="post-nav">
             
-            <i class="iconfont">
-              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+              <a class="prev" href="/blog/2020/01/01/learn-zk-snark-from-zero-part-two/">
+                
+                <i class="iconfont">
+                  <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="18" height="18">
   <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
 </svg>
 
-            </i>
-            <span class="prev-text nav-default">从零开始学习 zk-SNARK（二）——多项式的非交互式零知识证明</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        
-          <a class="next" href="/blog/2019/12/19/onchain-privacy-and-mixer/">
-            <span class="next-text nav-default">链上富人寻「隐私」记（一：Mixer 篇）</span>
-            <span class="prev-text nav-mobile">下一篇</span>
+                </i>
+                <span class="prev-text nav-default">从零开始学习 zk-SNARK（二）——多项式的非交互式零知识证明</span>
+                <span class="prev-text nav-mobile">上一篇</span>
+              </a>
             
-            <i class="iconfont">
-              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+              <a class="next" href="/blog/2019/12/19/onchain-privacy-and-mixer/">
+                <span class="next-text nav-default">链上富人寻「隐私」记（一：Mixer 篇）</span>
+                <span class="prev-text nav-mobile">下一篇</span>
+                
+                <i class="iconfont">
+                  <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="18" height="18">
   <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
 </svg>
 
-            </i>
-          </a>
-      </nav>
-    </footer>
-  </article>
+                </i>
+              </a>
+          </nav>
+        </footer>
+      </article>
+
+      
+      
+        
+      
+
+
+      
+      
+
+  
 
   
   
 
   
   
-
-  
-
-  
-  
-    <div class="post bg-white">
-      <script src="https://utteranc.es/client.js"
-            repo= "sec-bit/comments-for-secbit-blog"
-            issue-term="pathname"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-      </script>
-    </div>
-  
+    <div class="post">
+  <script src="https://utteranc.es/client.js"
+        repo= "sec-bit/comments-for-secbit-blog"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+</div>
 
   
 
@@ -863,12 +879,41 @@ $$</p>
 
   
 
-        </div>
-      </div>
-    </main>
+  
 
-    <footer id="footer" class="footer">
-      <div class="icon-links">
+
+    </div>
+
+    
+    <nav class="toc" id="toc">
+    <div class="toc-title">文章目录</div>
+    <div class="toc-content custom-scrollbar">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#序言和介绍">序言和介绍</a></li>
+    <li><a href="#证明的媒介">证明的媒介</a></li>
+    <li><a href="#证明多项式的知识">证明多项式的知识</a></li>
+    <li><a href="#因式分解">因式分解</a></li>
+    <li><a href="#模糊计算">模糊计算</a>
+      <ul>
+        <li><a href="#同态加密">同态加密</a></li>
+        <li><a href="#模运算">模运算</a></li>
+        <li><a href="#强同态加密">强同态加密</a></li>
+        <li><a href="#加密多项式">加密多项式</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </nav>
+
+
+  </div>
+
+      </main>
+
+      <footer id="footer" class="footer">
+        <div class="icon-links">
   
   
     <a href="mailto:hi@secbit.io" rel="me noopener" class="iconfont"
@@ -925,7 +970,7 @@ $$</p>
 </svg>
 
   </a>
-   
+  
 </div>
 
 <div class="copyright">
@@ -941,7 +986,7 @@ $$</p>
     &copy;
     
       2018 -
-    2020
+    2023
     <span class="heart">
       
       <i class="iconfont">
@@ -964,28 +1009,30 @@ $$</p>
   
 </div>
 
-    </footer>
+      </footer>
 
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont">
-        
-        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+      <div class="button__back-to-top">
+        <a href="#back-to-top">
+          <i class="iconfont">
+            
+            <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="35" height="35">
   <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
 </svg>
 
-      </i>
+          </i>
+        </a>
+      </div>
     </div>
-  </div>
-  
+    
 <script type="text/javascript" src="/blog/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/blog/lib/slideout/slideout-1.0.1.min.js"></script>
 
 
 
 
-<script type="text/javascript" src="/blog/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/blog/js/main.8f212fb6e092bf9e169cea5934d935af61b1e0d48702c784602d318f3bb1cc67.js" integrity="sha256-jyEvtuCSv54WnOpZNNk1r2Gx4NSHAseEYC0xjzuxzGc=" crossorigin="anonymous"></script>
 
 
 
@@ -1023,10 +1070,11 @@ $$</p>
 
 
   
-    <script type="text/javascript" src="/blog/js/load-photoswipe.js"></script>
     <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe.min.js"></script>
     <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe-ui-default.min.js"></script>
   
+
+
 
 
 
@@ -1059,5 +1107,5 @@ $$</p>
 
 
 
-</body>
+  </body>
 </html>

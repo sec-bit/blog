@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" itemscope itemtype="http://schema.org/WebPage">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>从世界杯小组赛消极比赛，到矿工博弈及共识算法，博弈论解释了一切 - SECBIT Blog</title>
-  
+<html
+  lang="zh-cn"
+  itemscope
+  itemtype="http://schema.org/WebPage"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>
+          从世界杯小组赛消极比赛，到矿工博弈及共识算法，博弈论解释了一切 - SECBIT Blog
+        </title>
+    
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +38,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.75.1" />
+<meta name="generator" content="Hugo 0.117.0" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2018/08/03/worldcup-miner-dilemma/" />
@@ -53,7 +59,9 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.fa3d941d1d0e0ddc985804227feabffea55c89883eb0af34e0532a7ae9135151.css" integrity="sha256-&#43;j2UHR0ODdyYWAQif&#43;q//qVciYg&#43;sK804FMqeukTUVE=" media="screen" crossorigin="anonymous">
+<link rel="stylesheet" href="/blog/sass/jane.min.d8d87b982993a745e5e7b6a6cbf257be8c3e82aab5e485f0908ad7e6c3501ab2.css" integrity="sha256-2Nh7mCmTp0Xl57amy/JXvow&#43;gqq15IXwkIrX5sNQGrI=" media="screen" crossorigin="anonymous">
+
+
 
 
 
@@ -64,19 +72,14 @@
 <meta property="og:title" content="从世界杯小组赛消极比赛，到矿工博弈及共识算法，博弈论解释了一切" />
 <meta property="og:description" content="诺贝尔经济学奖获得者约翰.纳什(John F. Nash)在他的博士论文中提出的“纳什均衡”概念，完全颠覆了传统经济学家的固有观念，因此“纳什均衡”对经济学的影响被类比为“DNA双螺旋结构对生物科学的影响”。纳什均衡提供了一种分析社会和经济参与者行为的工具，安比(SECBIT)实验室的研究员利用均衡的概念来揭示世界杯比赛中消极比赛、比特币系统中矿工挖矿博弈，以及共识系统所面临的挑战背后所蕴含的均衡模型。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sec-bit.github.io/blog/2018/08/03/worldcup-miner-dilemma/" />
+<meta property="og:url" content="https://sec-bit.github.io/blog/2018/08/03/worldcup-miner-dilemma/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2018-08-03T08:00:00+08:00" />
-<meta property="article:modified_time" content="2019-10-12T18:48:30+08:00" /><meta property="og:site_name" content="SECBIT Blog" />
+<meta property="article:modified_time" content="2019-10-12T18:48:30+08:00" />
 <meta itemprop="name" content="从世界杯小组赛消极比赛，到矿工博弈及共识算法，博弈论解释了一切">
-<meta itemprop="description" content="诺贝尔经济学奖获得者约翰.纳什(John F. Nash)在他的博士论文中提出的“纳什均衡”概念，完全颠覆了传统经济学家的固有观念，因此“纳什均衡”对经济学的影响被类比为“DNA双螺旋结构对生物科学的影响”。纳什均衡提供了一种分析社会和经济参与者行为的工具，安比(SECBIT)实验室的研究员利用均衡的概念来揭示世界杯比赛中消极比赛、比特币系统中矿工挖矿博弈，以及共识系统所面临的挑战背后所蕴含的均衡模型。">
-<meta itemprop="datePublished" content="2018-08-03T08:00:00+08:00" />
+<meta itemprop="description" content="诺贝尔经济学奖获得者约翰.纳什(John F. Nash)在他的博士论文中提出的“纳什均衡”概念，完全颠覆了传统经济学家的固有观念，因此“纳什均衡”对经济学的影响被类比为“DNA双螺旋结构对生物科学的影响”。纳什均衡提供了一种分析社会和经济参与者行为的工具，安比(SECBIT)实验室的研究员利用均衡的概念来揭示世界杯比赛中消极比赛、比特币系统中矿工挖矿博弈，以及共识系统所面临的挑战背后所蕴含的均衡模型。"><meta itemprop="datePublished" content="2018-08-03T08:00:00+08:00" />
 <meta itemprop="dateModified" content="2019-10-12T18:48:30+08:00" />
 <meta itemprop="wordCount" content="5631">
-
-
-
-<meta itemprop="keywords" content="World Cup,Miner,Game Theory,Consensus," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="World Cup,Miner,Game Theory,Consensus," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="从世界杯小组赛消极比赛，到矿工博弈及共识算法，博弈论解释了一切"/>
 <meta name="twitter:description" content="诺贝尔经济学奖获得者约翰.纳什(John F. Nash)在他的博士论文中提出的“纳什均衡”概念，完全颠覆了传统经济学家的固有观念，因此“纳什均衡”对经济学的影响被类比为“DNA双螺旋结构对生物科学的影响”。纳什均衡提供了一种分析社会和经济参与者行为的工具，安比(SECBIT)实验室的研究员利用均衡的概念来揭示世界杯比赛中消极比赛、比特币系统中矿工挖矿博弈，以及共识系统所面临的挑战背后所蕴含的均衡模型。"/>
 
@@ -90,16 +93,16 @@
 <![endif]-->
 
 
-<script type="application/javascript">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CVGF90VYL2"></script>
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-149859278-1', 'auto');
-	
-	ga('send', 'pageview');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-CVGF90VYL2', { 'anonymize_ip': false });
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -114,11 +117,13 @@ if (!doNotTrack) {
     });
 </script>
 
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
+  </head>
+  <body>
+    <div id="back-to-top"></div>
+
+    <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/blog/" class="logo">SECBIT Blog</a>
+    <a href="/" class="logo">SECBIT Blog</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -208,8 +213,8 @@ if (!doNotTrack) {
 </nav>
 
 
-  
     
+      
 
 
 
@@ -266,10 +271,10 @@ if (!doNotTrack) {
     </div>
 </div>
 
-  
-
-  
     
+
+    
+      
 <div class="modal-dialog">
     
     <div class="modal-content">
@@ -296,13 +301,14 @@ if (!doNotTrack) {
     </div>
 </div>
 
-  
+    
 
-  
+    
 
-  <header id="header" class="header container">
-    <div class="logo-wrapper">
-  <a href="/blog/" class="logo">
+
+    <header id="header" class="header">
+      <div class="logo-wrapper">
+  <a href="/" class="logo">
     
       SECBIT Blog
     
@@ -374,7 +380,7 @@ if (!doNotTrack) {
         <ul class="submenu">
           
             
-              <li>
+              <li class="submenu-item">
                 <a href="https://sec-bit.github.io/blog/en/">English</a>
               </li>
             
@@ -403,61 +409,66 @@ if (!doNotTrack) {
   </ul>
 </nav>
 
-  </header>
-
-  <div id="mobile-panel">
-    <main id="main" class="main bg-llight">
-      <div class="content-wrapper">
-        <div id="content" class="content container">
-          <article class="post bg-white">
-    
-    <header class="post-header">
-      <h1 class="post-title">从世界杯小组赛消极比赛，到矿工博弈及共识算法，博弈论解释了一切</h1>
-      
-      <div class="post-meta">
-        <time datetime="2018-08-03" class="post-time">
-          2018-08-03
-        </time>
-        <div class="post-category">
-            <a href="https://sec-bit.github.io/blog/categories/blockchain/"> Blockchain </a>
-            <a href="https://sec-bit.github.io/blog/categories/game-theory/"> Game Theory </a>
-            
-          </div>
-        <span class="more-meta"> 约 5631 字 </span>
-          <span class="more-meta"> 预计阅读 12 分钟 </span>
-
-        
-        
-
-        
-        
-      </div>
     </header>
 
+    <div id="mobile-panel">
+      <main id="main" class="main bg-llight wallpaper">
+        <div class="content-wrapper">
+    <div id="content" class="content">
+      <article class="post">
+        
+        <header class="post-header">
+          <h1 class="post-title">从世界杯小组赛消极比赛，到矿工博弈及共识算法，博弈论解释了一切</h1>
+          
+
+          <div class="post-meta">
+  <div class="post-meta-author">
+    by
+      SECBIT Labs
+    
+  </div>
+
+  <div class="post-meta-time">
+    <time datetime="2018-08-03">
+      2018-08-03
+    </time>
+  </div>
+
+  
+    <div class="post-meta-lastmod">
+      (上次更新:
+      2019-10-12)
+    </div>
+  
+
+
+  <div class="post-meta__right">
+    <span class="post-meta-more">
+        约 5631 字 -
+        预计阅读 12 分钟
+      </span>
+
+    <div class="post-meta-category">
+        <a href="https://sec-bit.github.io/blog/categories/blockchain/"> Blockchain </a>
+          <a href="https://sec-bit.github.io/blog/categories/game-theory/"> Game Theory </a>
+          
+      </div>
+
+
     
     
-<div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#世界杯消极比赛与重复剔除的占优战略均衡">世界杯消极比赛与重复剔除的占优战略均衡</a></li>
-    <li><a href="#矿工博弈">矿工博弈</a>
-      <ul>
-        <li><a href="#区块截留攻击">区块截留攻击</a></li>
-      </ul>
-    </li>
-    <li><a href="#贿赂攻击者模型与共识算法">贿赂攻击者模型与共识算法</a></li>
-    <li><a href="#结语">结语</a></li>
-    <li><a href="#参考文献">参考文献</a></li>
-  </ul>
-</nav>
+
+
+    
+    
   </div>
 </div>
 
-    
-    <div class="post-content">
-      <p>博弈论被认为是20世纪经济学最伟大的成果之一，其思想被广泛的应用到经济学，政治学，计算机科学，生物学，运筹学等学科。通过分析博弈各方的收益情况而对参与者的行为进行预测，博弈论已经被应用于处理国际关系、研究军事战略、制定公司经营策略等领域。诺贝尔经济学奖获得者约翰.纳什(John F. Nash)在他的博士论文中提出的“纳什均衡”概念，完全颠覆了传统经济学家的固有观念，因此“纳什均衡”对经济学的影响被类比为“DNA双螺旋结构对生物科学的影响”。纳什均衡提供了一种分析社会和经济参与者行为的工具，安比(SECBIT)实验室的研究员利用均衡的概念来揭示世界杯比赛中消极比赛、比特币系统中矿工挖矿博弈，以及共识系统所面临的挑战背后所蕴含的均衡模型。</p>
+        </header>
+
+        
+        <div class="post-content">
+          <p>博弈论被认为是20世纪经济学最伟大的成果之一，其思想被广泛的应用到经济学，政治学，计算机科学，生物学，运筹学等学科。通过分析博弈各方的收益情况而对参与者的行为进行预测，博弈论已经被应用于处理国际关系、研究军事战略、制定公司经营策略等领域。诺贝尔经济学奖获得者约翰.纳什(John F. Nash)在他的博士论文中提出的“纳什均衡”概念，完全颠覆了传统经济学家的固有观念，因此“纳什均衡”对经济学的影响被类比为“DNA双螺旋结构对生物科学的影响”。纳什均衡提供了一种分析社会和经济参与者行为的工具，安比(SECBIT)实验室的研究员利用均衡的概念来揭示世界杯比赛中消极比赛、比特币系统中矿工挖矿博弈，以及共识系统所面临的挑战背后所蕴含的均衡模型。</p>
 <p><img src="johnnash.jpg" alt="alt text" title="约翰纳什"></p>
 <p>6月26日，第21届世界杯小组赛C组法国对战丹麦队的比赛由于两个国家队踢默契球而引起了球迷的抱怨，安比(SECBIT)实验室的研究人员通过博弈论的分析方法来讨论比赛规则对球队行为的影响，从而说明规则会影响参与者的行为。接着，我们描述了在比特币挖矿的情境下，矿池之间存在的博弈现象。最后，我们讨论了比特币系统共识算法所面临的潜在威胁。通过对这些实例的分析，安比(SECBIT)实验室希望将博弈论的思想引用到智能合约的部署中，当开发人员在设计有多个参与者参加的智能合约时，通过添加智能合约的博弈论属性来预测参与者的行为。</p>
 <h2 id="世界杯消极比赛与重复剔除的占优战略均衡">世界杯消极比赛与重复剔除的占优战略均衡</h2>
@@ -519,10 +530,10 @@ if (!doNotTrack) {
 <p>安比（SECBIT）实验室专注于区块链与智能合约安全问题，全方位监控智能合约安全漏洞、提供专业合约安全审计服务，在智能合约安全技术上开展全方位深入研究，致力于参与共建共识、可信、有序的区块链经济体。</p>
 <p>安比（SECBIT）实验室创始人郭宇，中国科学技术大学博士、耶鲁大学访问学者、曾任中科大副教授。专注于形式化证明与系统软件研究领域十余年，具有丰富的金融安全产品研发经验，是国内早期关注并研究比特币与区块链技术的科研人员之一。研究专长：区块链技术、形式化验证、程序语言理论、操作系统内核、计算机病毒。</p>
 
-    </div>
+        </div>
 
-    
-    
+        
+        
 <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
@@ -550,72 +561,80 @@ if (!doNotTrack) {
 </div>
 
 
-    
-    
 
-    <footer class="post-footer">
-      <div class="post-tags">
-          <a href="https://sec-bit.github.io/blog/tags/world-cup/">World Cup</a>
-          <a href="https://sec-bit.github.io/blog/tags/miner/">Miner</a>
-          <a href="https://sec-bit.github.io/blog/tags/game-theory/">Game Theory</a>
-          <a href="https://sec-bit.github.io/blog/tags/consensus/">Consensus</a>
-          
-        </div>
-
-      
-      <nav class="post-nav">
         
-          <a class="prev" href="/blog/2018/08/20/last-winner-of-lastwinner/">
+        
+
+
+        <footer class="post-footer">
+          <div class="post-tags">
+              <a href="https://sec-bit.github.io/blog/tags/world-cup/">World Cup</a>
+                <a href="https://sec-bit.github.io/blog/tags/miner/">Miner</a>
+                <a href="https://sec-bit.github.io/blog/tags/game-theory/">Game Theory</a>
+                <a href="https://sec-bit.github.io/blog/tags/consensus/">Consensus</a>
+                
+            </div>
+
+
+          
+          <nav class="post-nav">
             
-            <i class="iconfont">
-              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+              <a class="prev" href="/blog/2018/08/20/last-winner-of-lastwinner/">
+                
+                <i class="iconfont">
+                  <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="18" height="18">
   <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
 </svg>
 
-            </i>
-            <span class="prev-text nav-default">Last Winner 的最后赢家 - 智能合约超大规模黑客攻击手法曝光</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        
-          <a class="next" href="/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/">
-            <span class="next-text nav-default">ERC223及ERC827实现代码欠缺安全考虑</span>
-            <span class="prev-text nav-mobile">下一篇</span>
+                </i>
+                <span class="prev-text nav-default">Last Winner 的最后赢家 - 智能合约超大规模黑客攻击手法曝光</span>
+                <span class="prev-text nav-mobile">上一篇</span>
+              </a>
             
-            <i class="iconfont">
-              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+              <a class="next" href="/blog/2018/06/24/lacking-insights-in-erc223-erc827-implementation/">
+                <span class="next-text nav-default">ERC223及ERC827实现代码欠缺安全考虑</span>
+                <span class="prev-text nav-mobile">下一篇</span>
+                
+                <i class="iconfont">
+                  <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="18" height="18">
   <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
 </svg>
 
-            </i>
-          </a>
-      </nav>
-    </footer>
-  </article>
+                </i>
+              </a>
+          </nav>
+        </footer>
+      </article>
+
+      
+      
+        
+      
+
+
+      
+      
+
+  
 
   
   
 
   
   
-
-  
-
-  
-  
-    <div class="post bg-white">
-      <script src="https://utteranc.es/client.js"
-            repo= "sec-bit/comments-for-secbit-blog"
-            issue-term="pathname"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-      </script>
-    </div>
-  
+    <div class="post">
+  <script src="https://utteranc.es/client.js"
+        repo= "sec-bit/comments-for-secbit-blog"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+</div>
 
   
 
@@ -627,12 +646,38 @@ if (!doNotTrack) {
 
   
 
-        </div>
-      </div>
-    </main>
+  
 
-    <footer id="footer" class="footer">
-      <div class="icon-links">
+
+    </div>
+
+    
+    <nav class="toc" id="toc">
+    <div class="toc-title">文章目录</div>
+    <div class="toc-content custom-scrollbar">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#世界杯消极比赛与重复剔除的占优战略均衡">世界杯消极比赛与重复剔除的占优战略均衡</a></li>
+    <li><a href="#矿工博弈">矿工博弈</a>
+      <ul>
+        <li><a href="#区块截留攻击">区块截留攻击</a></li>
+      </ul>
+    </li>
+    <li><a href="#贿赂攻击者模型与共识算法">贿赂攻击者模型与共识算法</a></li>
+    <li><a href="#结语">结语</a></li>
+    <li><a href="#参考文献">参考文献</a></li>
+  </ul>
+</nav>
+    </div>
+  </nav>
+
+
+  </div>
+
+      </main>
+
+      <footer id="footer" class="footer">
+        <div class="icon-links">
   
   
     <a href="mailto:hi@secbit.io" rel="me noopener" class="iconfont"
@@ -689,7 +734,7 @@ if (!doNotTrack) {
 </svg>
 
   </a>
-   
+  
 </div>
 
 <div class="copyright">
@@ -705,7 +750,7 @@ if (!doNotTrack) {
     &copy;
     
       2018 -
-    2020
+    2023
     <span class="heart">
       
       <i class="iconfont">
@@ -728,28 +773,30 @@ if (!doNotTrack) {
   
 </div>
 
-    </footer>
+      </footer>
 
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont">
-        
-        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+      <div class="button__back-to-top">
+        <a href="#back-to-top">
+          <i class="iconfont">
+            
+            <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   width="35" height="35">
   <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
 </svg>
 
-      </i>
+          </i>
+        </a>
+      </div>
     </div>
-  </div>
-  
+    
 <script type="text/javascript" src="/blog/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/blog/lib/slideout/slideout-1.0.1.min.js"></script>
 
 
 
 
-<script type="text/javascript" src="/blog/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/blog/js/main.8f212fb6e092bf9e169cea5934d935af61b1e0d48702c784602d318f3bb1cc67.js" integrity="sha256-jyEvtuCSv54WnOpZNNk1r2Gx4NSHAseEYC0xjzuxzGc=" crossorigin="anonymous"></script>
 
 
 
@@ -787,10 +834,11 @@ if (!doNotTrack) {
 
 
   
-    <script type="text/javascript" src="/blog/js/load-photoswipe.js"></script>
     <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe.min.js"></script>
     <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe-ui-default.min.js"></script>
   
+
+
 
 
 
@@ -823,5 +871,5 @@ if (!doNotTrack) {
 
 
 
-</body>
+  </body>
 </html>
