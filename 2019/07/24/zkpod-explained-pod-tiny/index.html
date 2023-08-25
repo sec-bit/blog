@@ -499,12 +499,12 @@ if (!doNotTrack) {
 <h2 id="锁定数据的特征authenticator">锁定数据的特征：Authenticator</h2>
 <p>对于<strong>关键问题(1)</strong>，我们需要一个锚点，什么是你想要的数据。这里简单起见，假设我们事先约定了一个数据文件的唯一标签，或者特征。然后你购买的数据需要能和这个标签一一对应。</p>
 <p>一般来说，大家喜欢用 Hash 来标记对一个字符串的特征，比如计算</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-1">1</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">h = MD5(&#34;hello,zkPoD!&#34;)
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>h = MD5(&#34;hello,zkPoD!&#34;)
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>我们看下这个字符串  <code>&quot;hello,zkPoD!&quot;</code> 总共有 12 个字节大小，也就是 96 个 bit。于是我们可以将这 12 个字节转换成一个有限域上的整数（这里我们假设有限域的大小接近 256 bit ）。这样我们可以把这个字符串编码成一个整数，我们姑且用一个符号表示这个整数， 假设是 $m$。</p>

@@ -529,49 +529,49 @@ if (!doNotTrack) {
 </ol>
 <p>不妨用一个十分简短（简化）的例子，来对照上面四个步骤。该例子模仿自<a href="https://media.consensys.net/introduction-to-zksnarks-with-examples-3283b554fc3b">这篇文章</a>。</p>
 <p>有这样一个函数 <code>C(x, out)</code>，用于判断秘密 <code>x</code> 是否满足等式 <code>x^3 + x + 5 == out</code>，若满足则返回 <code>true</code>。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-3">3</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">C</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">out</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">(</span> <span class="nx">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">==</span> <span class="nx">out</span> <span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">C</span>(<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">out</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> ( <span style="color:#a6e22e">x</span><span style="color:#f92672">^</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">out</span> );
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>第一步</strong>，我们需要将函数 <code>C(x, out)</code> 在 libsnark 中进行表达。此处先省略，后面介绍详细过程。</p>
 <p><strong>第二步</strong>，对应下面的 Generator 函数（<em><strong>G</strong></em>），<code>lambda</code> 为随机产生，也就是常说的 trusted setup 过程中产生的 &ldquo;toxic waste&rdquo;。人们喜欢称它为“有毒废物”，是因为它必须被妥善处理（如必须销毁，不能让任何人知道），否则会影响证明协议安全。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-3">3</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">lambda</span> <span class="o">&lt;-</span> <span class="nx">random</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nx">pk</span><span class="p">,</span> <span class="nx">vk</span><span class="p">)</span> <span class="o">=</span> <span class="nx">G</span><span class="p">(</span><span class="nx">C</span><span class="p">,</span> <span class="nx">lambda</span><span class="p">)</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">lambda</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">random</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(<span style="color:#a6e22e">pk</span>, <span style="color:#a6e22e">vk</span>) <span style="color:#f92672">=</span> <span style="color:#a6e22e">G</span>(<span style="color:#a6e22e">C</span>, <span style="color:#a6e22e">lambda</span>)
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>最终生成 proving key (<code>pk</code>) 和 verification key (<code>vk</code>)。</p>
 <p><strong>第三步</strong>，对应使用 Prove 函数（<em><strong>P</strong></em>）生成证明。这里想证明的是 prover 知道一个秘密值 <code>x</code> 和计算结果 <code>out</code> 可使等式满足。因此将 <code>x</code>、<code>out</code> 还有 <code>pk</code> 作为输入一起传给 <em><strong>P</strong></em>，最终生成证明 <code>proof</code>。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-1">1</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">proof</span> <span class="o">=</span> <span class="nx">P</span><span class="p">(</span><span class="nx">pk</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">proof</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">P</span>(<span style="color:#a6e22e">pk</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">x</span>)
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>第四步</strong>，对应使用 Verify 函数（<em><strong>V</strong></em>）验证证明，将 <code>proof</code>、<code>out</code> 还有 <code>vk</code> 传给 <em><strong>G</strong></em>，即可在不暴露秘密的情况下证明存在一个秘密值可使等式满足。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-1">1</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">V</span><span class="p">(</span><span class="nx">vk</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">proof</span><span class="p">)</span> <span class="o">?=</span> <span class="kc">true</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">V</span>(<span style="color:#a6e22e">vk</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">proof</span>) <span style="color:#f92672">?=</span> <span style="color:#66d9ef">true</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>而<strong>开发者主要工作量就集中在第一步</strong>，需要按照 libsnark 的接口规则手写 C++ 电路代码来描述命题，由代码构造 R1CS 约束。整个过程也即对应下图的 Computation -&gt; Arithmetic Circuit -&gt; R1CS。</p>
@@ -579,82 +579,82 @@ if (!doNotTrack) {
 <h2 id="3-搭建-zk-snarks-应用开发环境">3. 搭建 zk-SNARKs 应用开发环境</h2>
 <p>下面进入动手环节，快速上手 libsnark，跑通例子。</p>
 <p>先下载本文对应的 libsnark 最小可用例子代码库 <code>libsnark_abc</code>。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-1">1</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone https://github.com/sec-bit/libsnark_abc.git
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git clone https://github.com/sec-bit/libsnark_abc.git
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="img/github.png" alt="github"></p>
 <p>通过 git submodule 拉取 libsnark 代码。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-2">2</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> libsnark_abc
-</span></span><span class="line"><span class="cl">git submodule update --init --recursive
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd libsnark_abc
+</span></span><span style="display:flex;"><span>git submodule update --init --recursive
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>参考 libsnark <a href="https://github.com/scipr-lab/libsnark#dependencies">项目文档</a>完成相关依赖安装。以 Ubuntu 16.04 LTS 为例，需安装以下组件：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-6-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-6-1">1</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo apt-get install build-essential cmake git libgmp3-dev libprocps4-dev python-markdown libboost-all-dev libssl-dev
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo apt-get install build-essential cmake git libgmp3-dev libprocps4-dev python-markdown libboost-all-dev libssl-dev
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>初始化 <code>build</code> 文件夹。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-7-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-7-1">1</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build <span class="o">&amp;&amp;</span> cmake ..
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build <span style="color:#f92672">&amp;&amp;</span> cmake ..
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这步在 macOS 系统可能会遇到问题，参考<a href="https://github.com/scipr-lab/libsnark/issues/99#issuecomment-367677834">这个 issue</a> 处理。或尝试使用以下命令：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-8-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-8-1">1</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build <span class="o">&amp;&amp;</span> <span class="nv">CPPFLAGS</span><span class="o">=</span>-I/usr/local/opt/openssl/include <span class="nv">LDFLAGS</span><span class="o">=</span>-L/usr/local/opt/openssl/lib <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span>/usr/local/opt/openssl/lib/pkgconfig cmake -DWITH_PROCPS<span class="o">=</span>OFF -DWITH_SUPERCOP<span class="o">=</span>OFF ..
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build <span style="color:#f92672">&amp;&amp;</span> CPPFLAGS<span style="color:#f92672">=</span>-I/usr/local/opt/openssl/include LDFLAGS<span style="color:#f92672">=</span>-L/usr/local/opt/openssl/lib PKG_CONFIG_PATH<span style="color:#f92672">=</span>/usr/local/opt/openssl/lib/pkgconfig cmake -DWITH_PROCPS<span style="color:#f92672">=</span>OFF -DWITH_SUPERCOP<span style="color:#f92672">=</span>OFF ..
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>成功后，依旧在 <code>build</code> 目录进行编译。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-9-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-9-1">1</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">make
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>make
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>编译成功后，在 <code>build/src</code> 目录中可看到 3 个二进制文件。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-10-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-10-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-10-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-10-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-10-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-10-3">3</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">main
-</span></span><span class="line"><span class="cl">range
-</span></span><span class="line"><span class="cl"><span class="nb">test</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>main
+</span></span><span style="display:flex;"><span>range
+</span></span><span style="display:flex;"><span>test
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>到这儿，你就以及完成示例项目的编译啦。尝试运行示例代码吧。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-11-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-11-1">1</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./src/main
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>./src/main
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>最终出现如下日志，则说明一切正常。<strong>你已顺利拥有了 zkSNARK 应用开发环境，并成功跑了第一个 zk-SNARKs 的 demo</strong>。</p>
@@ -664,189 +664,189 @@ if (!doNotTrack) {
 <p>下面我们一起来仔细瞅瞅代码。示例项目包含了 3 份代码（也可查看文末附录）。</p>
 <p><strong>不妨先看看 <code>src/main.cpp</code></strong>。这个例子来自 Howard Wu 的 <a href="https://github.com/howardwu/libsnark-tutorial">libsnark_tutorial</a>，他也是 libsnark 作者之一哦。本文 <code>libsnark_abc</code> 的项目结构就是依照他的 <code>libsnark_tutorial</code> 搭建，属于“官方推荐风格” ，请放心食用 😆。</p>
 <p>只有区区几十行代码，其中 <code>run_r1cs_gg_ppzksnark()</code> 是主要部分。很容易发现，真正起作用的实质代码只有下面 5 行。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-12-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-12-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-12-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-12-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-12-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-12-3">3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-12-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-12-4">4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-12-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-12-5">5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-12-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-12-6">6</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-12-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-12-7">7</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-12-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-12-8">8</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-12-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-12-9">9</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">r1cs_gg_ppzksnark_keypair</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">keypair</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_generator</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example</span><span class="p">.</span><span class="n">constraint_system</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">r1cs_gg_ppzksnark_processed_verification_key</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">pvk</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_verifier_process_vk</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">vk</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">r1cs_gg_ppzksnark_proof</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span> <span class="n">proof</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_prover</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">pk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">auxiliary_input</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">bool</span> <span class="n">ans</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_verifier_strong_IC</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">keypair</span><span class="p">.</span><span class="n">vk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">proof</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">bool</span> <span class="n">ans2</span> <span class="o">=</span> <span class="n">r1cs_gg_ppzksnark_online_verifier_strong_IC</span><span class="o">&lt;</span><span class="n">ppT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pvk</span><span class="p">,</span> <span class="n">example</span><span class="p">.</span><span class="n">primary_input</span><span class="p">,</span> <span class="n">proof</span><span class="p">);</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>r1cs_gg_ppzksnark_keypair<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span> keypair <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_generator<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(example.constraint_system);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r1cs_gg_ppzksnark_processed_verification_key<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span> pvk <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_verifier_process_vk<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(keypair.vk);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r1cs_gg_ppzksnark_proof<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span> proof <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_prover<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(keypair.pk, example.primary_input, example.auxiliary_input);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">bool</span> ans <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_verifier_strong_IC<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(keypair.vk, example.primary_input, proof);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">bool</span> ans2 <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_online_verifier_strong_IC<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(pvk, example.primary_input, proof);
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>仅从“超长”的函数名就能看出来每步是在做什么，但是却看不到如何构造电路的细节。实际上这里仅仅是调用了自带的 <code>r1cs_example</code>，隐去了实现细节。</p>
 <p>既然如此，<strong>那让我们通过一个更直观的例子来学习电路细节</strong>。研究 <code>src/test.cpp</code>，这个例子改编自 Christian Lundkvist 的 <a href="https://github.com/christianlundkvist/libsnark-tutorial">libsnark-tutorial</a>。</p>
 <p>代码开头仅引用了三个头文件，分别是：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-13-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-13-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-13-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-13-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-13-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-13-3">3</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;libsnark/gadgetlib1/pb_variable.hpp&gt;</span><span class="cp">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/gadgetlib1/pb_variable.hpp&gt;</span><span style="color:#75715e">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>前面提到 <code>r1cs_gg_ppzksnark</code> 对应的是 Groth16 方案。这里加了 <code>gg</code> 是为了区别 <code>r1cs_ppzksnark</code>（也就是 BCTV14a 方案），表示 Generic Group Model（通用群模型）。Groth16 安全性证明依赖 Generic Group Model，以更强的安全假设换得了更好的性能和更短的证明。</p>
 <p>第一个头文件是为了引入 <code>default_r1cs_gg_ppzksnark_pp</code> 类型，第二个则为了引入证明相关的各个接口。<code>pb_variable</code> 则是用来定义电路相关的变量。</p>
 <p>下面需要进行一些初始化，定义使用的有限域，并初始化曲线参数。这是相当于每次的准备工作。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-14-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-14-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-14-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-14-2">2</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="n">libff</span><span class="o">::</span><span class="n">Fr</span><span class="o">&lt;</span><span class="n">default_r1cs_gg_ppzksnark_pp</span><span class="o">&gt;</span> <span class="n">FieldT</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="n">default_r1cs_gg_ppzksnark_pp</span><span class="o">::</span><span class="n">init_public_params</span><span class="p">();</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> libff<span style="color:#f92672">::</span>Fr<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> FieldT;
+</span></span><span style="display:flex;"><span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">::</span>init_public_params();
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>接下来就需要明确「待证命题」是什么。这里不妨沿用之前的例子，证明秘密 <code>x</code> 满足等式 <code>x^3 + x + 5 == out</code>。这实际也是 Vitalik 博文 <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">&ldquo;Quadratic Arithmetic Programs: from Zero to Hero&rdquo;</a> 中用的例子。如果对下面的变化陌生，可尝试阅读该博文。</p>
 <p>通过引入中间变量 <code>sym_1</code>、<code>y</code>、<code>sym_2</code> 将 <code>x^3 + x + 5 = out</code> 扁平化为若干个二次方程式，几个只涉及简单乘法或加法的式子，<strong>对应到算术电路中就是乘法门和加法门</strong>。你可以很容易地在纸上画出对应的电路。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-15-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-15-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-15-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-15-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-15-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-15-3">3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-15-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-15-4">4</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">x * x = sym_1
-</span></span><span class="line"><span class="cl">sym_1 * x = y
-</span></span><span class="line"><span class="cl">y + x = sym_2
-</span></span><span class="line"><span class="cl">sym_2 + 5 = out
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>x * x = sym_1
+</span></span><span style="display:flex;"><span>sym_1 * x = y
+</span></span><span style="display:flex;"><span>y + x = sym_2
+</span></span><span style="display:flex;"><span>sym_2 + 5 = out
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>通常文章到这里便会顺着介绍如何按照 R1CS 的形式编排上面的几个等式，并一步步推导出具体对应的向量。这对理解如何把 Gate 转换为 R1CS 有帮助，然而却不是本文的核心目的。所以此处省略一百字。</p>
 <p>下面定义与命题相关的变量。首先创建的 <code>protoboard</code> 是 libsnark 中的一个重要概念，顾名思义就是<strong>原型板</strong>或者<strong>面包板</strong>，用来快速搭建电路，在 zk-SNARKs 电路中则是用来关联所有变量、组件和约束。接下来的代码定义了所有需要外部输入的变量以及中间变量。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-16-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-16-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-16-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-16-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-16-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-16-3">3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-16-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-16-4">4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-16-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-16-5">5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-16-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-16-6">6</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-16-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-16-7">7</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-16-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-16-8">8</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-16-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-16-9">9</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// Create protoboard
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">protoboard</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">pb</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// Define variables
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">x</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">sym_1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">y</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">sym_2</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="n">pb_variable</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span> <span class="n">out</span><span class="p">;</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C++" data-lang="C++"><span style="display:flex;"><span><span style="color:#75715e">// Create protoboard
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>protoboard<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> pb;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Define variables
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> x;
+</span></span><span style="display:flex;"><span>pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> sym_1;
+</span></span><span style="display:flex;"><span>pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> y;
+</span></span><span style="display:flex;"><span>pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> sym_2;
+</span></span><span style="display:flex;"><span>pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> out;
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>下面将各个变量与 <code>protoboard</code> 连接，相当于把各个元器件插到“面包板”上。<code>allocate()</code> 函数的第二个 string 类型变量仅是用来方便 DEBUG 时的注释，方便 DEBUG 时查看日志。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-17-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-17-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-17-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-17-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-17-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-17-3">3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-17-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-17-4">4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-17-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-17-5">5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-17-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-17-6">6</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="n">out</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;out&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="n">x</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;x&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="n">sym_1</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;sym_1&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="n">y</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;y&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="n">sym_2</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span> <span class="s">&#34;sym_2&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="n">pb</span><span class="p">.</span><span class="n">set_input_sizes</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C++" data-lang="C++"><span style="display:flex;"><span>out.allocate(pb, <span style="color:#e6db74">&#34;out&#34;</span>);
+</span></span><span style="display:flex;"><span>x.allocate(pb, <span style="color:#e6db74">&#34;x&#34;</span>);
+</span></span><span style="display:flex;"><span>sym_1.allocate(pb, <span style="color:#e6db74">&#34;sym_1&#34;</span>);
+</span></span><span style="display:flex;"><span>y.allocate(pb, <span style="color:#e6db74">&#34;y&#34;</span>);
+</span></span><span style="display:flex;"><span>sym_2.allocate(pb, <span style="color:#e6db74">&#34;sym_2&#34;</span>);
+</span></span><span style="display:flex;"><span>pb.set_input_sizes(<span style="color:#ae81ff">1</span>);
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>注意，<strong>此处第一个与 <code>pb</code> 连接的是 <code>out</code> 变量</strong>。我们知道 zk-SNARKs 中有 public input 和 private witness 的概念，分别对应 libsnark 中的 primary 和 auxiliary 变量。那么如何在代码中进行区分呢？我们需要借助 <code>set_input_sizes(n)</code> 来声明与 protoboard 连接的 public/primary 变量的个数 <code>n</code>。在这里 <code>n = 1</code>，表明与 <code>pb</code> 连接的<strong>前 <code>n = 1</code> 个变量</strong>是 public 的，其余都是 private 的。</p>
 <p>至此， 所有变量都已经顺利与 protoboard 相连，下面需要确定的是这些变量间的约束关系。这个也很好理解，类似元器件插至面包板后，需要根据电路需求确定他们之间的关系再连线焊接。如下调用 protoboard 的 <code>add_r1cs_constraint()</code> 函数，为 <code>pb</code> 添加形如 <code>a * b = c</code> 的 <code>r1cs_constraint</code>。即 <code>r1cs_constraint&lt;FieldT&gt;(a, b, c)</code> 中参数应该满足 <code>a * b = c</code>。根据注释不难理解每个等式和约束之间的关系。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-18-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-18-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-18-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-18-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-18-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-18-3">3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-18-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-18-4">4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-18-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-18-5">5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-18-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-18-6">6</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-18-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-18-7">7</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-18-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-18-8">8</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// x*x = sym_1
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">sym_1</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// sym_1 * x = y
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">sym_1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// y + x = sym_2
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sym_2</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// sym_2 + 5 = ~out
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pb</span><span class="p">.</span><span class="n">add_r1cs_constraint</span><span class="p">(</span><span class="n">r1cs_constraint</span><span class="o">&lt;</span><span class="n">FieldT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">sym_2</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">out</span><span class="p">));</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C++" data-lang="C++"><span style="display:flex;"><span><span style="color:#75715e">// x*x = sym_1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>pb.add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(x, x, sym_1));
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// sym_1 * x = y
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>pb.add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(sym_1, x, y));
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// y + x = sym_2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>pb.add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(y <span style="color:#f92672">+</span> x, <span style="color:#ae81ff">1</span>, sym_2));
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// sym_2 + 5 = ~out
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>pb.add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(sym_2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, out));
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>至此，变量间的约束也已添加完成，针对命题的电路已构建完毕。下面进入前文提到的“四个步骤”中的<strong>第二步</strong>：使用生成算法（<em><strong>G</strong></em>）为该命题生成公共参数（<code>pk</code> 和 <code>vk</code>），即 trusted setup。生成出来的 proving key 和 verification key 分别可以通过 <code>keypair.pk</code> 和 <code>keypair.vk</code> 获得。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-19-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-19-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-19-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-19-2">2</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
-</span></span><span class="line"><span class="cl">const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
+</span></span><span style="display:flex;"><span>const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>进入<strong>第三步</strong>，生成证明。先为 public input 以及 witness 提供具体数值。不难发现，<code>x = 3, out = 35</code> 是原始方程的一个解。则依次为 <code>x</code>、<code>out</code> 以及各个中间变量赋值。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-20-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-20-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-20-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-20-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-20-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-20-3">3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-20-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-20-4">4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-20-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-20-5">5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-20-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-20-6">6</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">pb.val(out) = 35;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">pb.val(x) = 3;
-</span></span><span class="line"><span class="cl">pb.val(sym_1) = 9;
-</span></span><span class="line"><span class="cl">pb.val(y) = 27;
-</span></span><span class="line"><span class="cl">pb.val(sym_2) = 30;
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>pb.val(out) = 35;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pb.val(x) = 3;
+</span></span><span style="display:flex;"><span>pb.val(sym_1) = 9;
+</span></span><span style="display:flex;"><span>pb.val(y) = 27;
+</span></span><span style="display:flex;"><span>pb.val(sym_2) = 30;
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>再把 public input 以及 witness 的数值传给 prover 函数进行证明，可分别通过 <code>pb.primary_input()</code> 和 <code>pb.auxiliary_input()</code> 访问。生成的证明用 <code>proof</code> 变量保存。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-21-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-21-1">1</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后我们使用 verifier 函数校验证明。如果 <code>verified = true</code> 则说明证明验证成功。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-22-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-22-1">1</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>从日志输出中可以看出验证结果为 <code>true</code>，R1CS 约束数量为 4，public input 和 private input 数量分别为 1 和 4。日志输出符合预期。</p>
@@ -860,76 +860,76 @@ if (!doNotTrack) {
 <p>zk-SNARKs 电路开发的主要工作量和难点在于如何用代码“精确”地描述命题中的所有约束。一旦描述不“精确”，则要么是漏掉约束、要么是写错约束，最终电路想要证明的内容则会与原命题相差甚远。上一节的例子只涉及简单的乘法和加法，与 <code>r1cs_constraint</code> 最基本的形式一致，因此约束的表达相对容易。除此之外几乎所有的约束都不是很直观，作为初学者很难正确地描述约束细节。</p>
 <p>幸好 libsnark 已经为我们实现了大量基础电路小组件。<code>gadgetlib1</code> 和 <code>gadgetlib2</code> 下提供了许多可以直接使用的 gadget。其中 <code>gadgetlib1</code> 更常用一些，里面收集了包括 <code>sha256</code> 在内的 hash 计算、merkle tree、pairing 等电路实现。</p>
 <p><em>DangDangDang</em>，<code>gadgetlib1/gadgets/basic_gadgets.hpp</code> 中的 <code>comparison_gadget</code> 正是我们所需。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-23-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-23-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-23-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-23-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-23-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-23-3">3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-23-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-23-4">4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-23-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-23-5">5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-23-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-23-6">6</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-23-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-23-7">7</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">comparison_gadget(protoboard&lt;FieldT&gt;&amp; pb,
-</span></span><span class="line"><span class="cl">                    const size_t n,
-</span></span><span class="line"><span class="cl">                    const pb_linear_combination&lt;FieldT&gt; &amp;A,
-</span></span><span class="line"><span class="cl">                    const pb_linear_combination&lt;FieldT&gt; &amp;B,
-</span></span><span class="line"><span class="cl">                    const pb_variable&lt;FieldT&gt; &amp;less,
-</span></span><span class="line"><span class="cl">                    const pb_variable&lt;FieldT&gt; &amp;less_or_eq,
-</span></span><span class="line"><span class="cl">                    const std::string &amp;annotation_prefix=&#34;&#34;)
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>comparison_gadget(protoboard&lt;FieldT&gt;&amp; pb,
+</span></span><span style="display:flex;"><span>                    const size_t n,
+</span></span><span style="display:flex;"><span>                    const pb_linear_combination&lt;FieldT&gt; &amp;A,
+</span></span><span style="display:flex;"><span>                    const pb_linear_combination&lt;FieldT&gt; &amp;B,
+</span></span><span style="display:flex;"><span>                    const pb_variable&lt;FieldT&gt; &amp;less,
+</span></span><span style="display:flex;"><span>                    const pb_variable&lt;FieldT&gt; &amp;less_or_eq,
+</span></span><span style="display:flex;"><span>                    const std::string &amp;annotation_prefix=&#34;&#34;)
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>该 gadget 需要传入的参数较多：<code>n</code> 表示位数，<code>A</code> 和 <code>B</code> 分别为需要比较的两个数，<code>less</code> 和 <code>less_or_eq</code> 用来标记两个数的关系是「小于」还是「小于或等于」。该 gadget 实现的原理简单来讲是把 <code>A</code> 和 <code>B</code> 的比较，转化为 <code>2^n + B - A</code> 按位表示。具体实现还用到了其余多个基础 gadget，可以通过 <code>comparison_gadget&lt;FieldT&gt;::generate_r1cs_constraints()</code> 研究。</p>
 <p>这里需要创建以下变量，并将 <code>x</code> 和 <code>max</code> 与 <code>pb</code> 相连，把 <code>max</code> 值设为 <code>60</code>，代表数值上限。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-24-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-24-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-24-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-24-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-24-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-24-3">3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-24-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-24-4">4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-24-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-24-5">5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-24-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-24-6">6</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-24-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-24-7">7</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-24-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-24-8">8</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-24-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-24-9">9</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">protoboard&lt;FieldT&gt; pb;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">pb_variable&lt;FieldT&gt; x, max;
-</span></span><span class="line"><span class="cl">pb_variable&lt;FieldT&gt; less, less_or_eq;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">x.allocate(pb, &#34;x&#34;);
-</span></span><span class="line"><span class="cl">max.allocate(pb, &#34;max&#34;);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">pb.val(max)= 60;
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>protoboard&lt;FieldT&gt; pb;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pb_variable&lt;FieldT&gt; x, max;
+</span></span><span style="display:flex;"><span>pb_variable&lt;FieldT&gt; less, less_or_eq;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x.allocate(pb, &#34;x&#34;);
+</span></span><span style="display:flex;"><span>max.allocate(pb, &#34;max&#34;);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pb.val(max)= 60;
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>使用 <code>comparison_gadget</code> 创建 <code>cmp</code>，并把前面的参数填入，并调用 gadget 自带的 <code>generate_r1cs_constraints()</code> 方法。同时另外添加一个约束，要求 <code>less * 1 = 1</code>，也就是 <code>less</code> 必须为 <code>true</code>。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-25-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-25-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-25-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-25-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-25-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-25-3">3</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">comparison_gadget&lt;FieldT&gt; cmp(pb, 10, x, max, less, less_or_eq, &#34;cmp&#34;);
-</span></span><span class="line"><span class="cl">cmp.generate_r1cs_constraints();
-</span></span><span class="line"><span class="cl">pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(less, 1, FieldT::one()));
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>comparison_gadget&lt;FieldT&gt; cmp(pb, 10, x, max, less, less_or_eq, &#34;cmp&#34;);
+</span></span><span style="display:flex;"><span>cmp.generate_r1cs_constraints();
+</span></span><span style="display:flex;"><span>pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(less, 1, FieldT::one()));
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>输入 witness（秘密值 x），比如让 <code>x = 18</code>。这里还需要调用 <code>comparison_gadget</code> 的 <code>generate_r1cs_witness</code> 方法。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-26-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-26-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-26-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-26-2">2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-26-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-26-3">3</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// Add witness values
-</span></span><span class="line"><span class="cl">pb.val(x) = 18; // secret
-</span></span><span class="line"><span class="cl">cmp.generate_r1cs_witness();
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>// Add witness values
+</span></span><span style="display:flex;"><span>pb.val(x) = 18; // secret
+</span></span><span style="display:flex;"><span>cmp.generate_r1cs_witness();
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>其余部分和上一个例子一致，即可在不泄露秘密数字大小的前提下，证明某数字小于 <code>60</code>。同理，就实现一个对数值作最大和最小值限定的 “range proof”。</p>
@@ -945,390 +945,390 @@ if (!doNotTrack) {
 <h2 id="7-附录">7. 附录</h2>
 <h3 id="maincpp"><code>main.cpp</code></h3>
 <p>第一个例子 <code>main.cpp</code>，调用 libsnark 官方 example 的示例代码。通过该例子可了解 libsnark 的基本使用流程和主要函数。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-1"> 1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-2"> 2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-3"> 3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-4"> 4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-5"> 5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-6"> 6</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-7"> 7</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-8"> 8</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-9"> 9</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-10">10</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-11">11</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-12"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-12">12</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-13"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-13">13</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-14"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-14">14</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-15"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-15">15</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-16"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-16">16</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-17"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-17">17</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-18"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-18">18</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-19"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-19">19</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-20"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-20">20</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-21"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-21">21</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-22"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-22">22</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-23"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-23">23</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-24"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-24">24</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-25"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-25">25</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-26"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-26">26</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-27"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-27">27</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-28"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-28">28</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-29"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-29">29</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-30"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-30">30</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-31"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-31">31</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-32"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-32">32</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-33"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-33">33</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-34"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-34">34</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-35"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-35">35</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-36"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-36">36</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-37"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-37">37</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-38"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-38">38</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-39"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-39">39</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-40"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-40">40</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-41"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-41">41</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-42"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-42">42</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-43"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-43">43</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-44"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-44">44</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-45"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-45">45</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-46"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-46">46</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-47"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-47">47</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-48"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-48">48</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-49"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-49">49</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-50"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-50">50</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-51"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-51">51</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-52"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-52">52</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-53"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-53">53</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-54"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-54">54</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-55"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-55">55</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-56"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-56">56</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-57"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-57">57</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-58"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-58">58</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-59"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-59">59</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#include &lt;libff/common/default_types/ec_pp.hpp&gt;
-</span></span><span class="line"><span class="cl">#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
-</span></span><span class="line"><span class="cl">#include &lt;libsnark/relations/constraint_satisfaction_problems/r1cs/examples/r1cs_examples.hpp&gt;
-</span></span><span class="line"><span class="cl">#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">using namespace libsnark;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">/**
-</span></span><span class="line"><span class="cl"> * The code below provides an example of all stages of running a R1CS GG-ppzkSNARK.
-</span></span><span class="line"><span class="cl"> *
-</span></span><span class="line"><span class="cl"> * Of course, in a real-life scenario, we would have three distinct entities,
-</span></span><span class="line"><span class="cl"> * mangled into one in the demonstration below. The three entities are as follows.
-</span></span><span class="line"><span class="cl"> * (1) The &#34;generator&#34;, which runs the ppzkSNARK generator on input a given
-</span></span><span class="line"><span class="cl"> *     constraint system CS to create a proving and a verification key for CS.
-</span></span><span class="line"><span class="cl"> * (2) The &#34;prover&#34;, which runs the ppzkSNARK prover on input the proving key,
-</span></span><span class="line"><span class="cl"> *     a primary input for CS, and an auxiliary input for CS.
-</span></span><span class="line"><span class="cl"> * (3) The &#34;verifier&#34;, which runs the ppzkSNARK verifier on input the verification key,
-</span></span><span class="line"><span class="cl"> *     a primary input for CS, and a proof.
-</span></span><span class="line"><span class="cl"> */
-</span></span><span class="line"><span class="cl">template&lt;typename ppT&gt;
-</span></span><span class="line"><span class="cl">bool run_r1cs_gg_ppzksnark(const r1cs_example&lt;libff::Fr&lt;ppT&gt; &gt; &amp;example)
-</span></span><span class="line"><span class="cl">{
-</span></span><span class="line"><span class="cl">    libff::print_header(&#34;R1CS GG-ppzkSNARK Generator&#34;);
-</span></span><span class="line"><span class="cl">    r1cs_gg_ppzksnark_keypair&lt;ppT&gt; keypair = r1cs_gg_ppzksnark_generator&lt;ppT&gt;(example.constraint_system);
-</span></span><span class="line"><span class="cl">    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after generator&#34;);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    libff::print_header(&#34;Preprocess verification key&#34;);
-</span></span><span class="line"><span class="cl">    r1cs_gg_ppzksnark_processed_verification_key&lt;ppT&gt; pvk = r1cs_gg_ppzksnark_verifier_process_vk&lt;ppT&gt;(keypair.vk);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    libff::print_header(&#34;R1CS GG-ppzkSNARK Prover&#34;);
-</span></span><span class="line"><span class="cl">    r1cs_gg_ppzksnark_proof&lt;ppT&gt; proof = r1cs_gg_ppzksnark_prover&lt;ppT&gt;(keypair.pk, example.primary_input, example.auxiliary_input);
-</span></span><span class="line"><span class="cl">    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after prover&#34;);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    libff::print_header(&#34;R1CS GG-ppzkSNARK Verifier&#34;);
-</span></span><span class="line"><span class="cl">    const bool ans = r1cs_gg_ppzksnark_verifier_strong_IC&lt;ppT&gt;(keypair.vk, example.primary_input, proof);
-</span></span><span class="line"><span class="cl">    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after verifier&#34;);
-</span></span><span class="line"><span class="cl">    printf(&#34;* The verification result is: %s\n&#34;, (ans ? &#34;PASS&#34; : &#34;FAIL&#34;));
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    libff::print_header(&#34;R1CS GG-ppzkSNARK Online Verifier&#34;);
-</span></span><span class="line"><span class="cl">    const bool ans2 = r1cs_gg_ppzksnark_online_verifier_strong_IC&lt;ppT&gt;(pvk, example.primary_input, proof);
-</span></span><span class="line"><span class="cl">    assert(ans == ans2);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    return ans;
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">template&lt;typename ppT&gt;
-</span></span><span class="line"><span class="cl">void test_r1cs_gg_ppzksnark(size_t num_constraints, size_t input_size)
-</span></span><span class="line"><span class="cl">{
-</span></span><span class="line"><span class="cl">    r1cs_example&lt;libff::Fr&lt;ppT&gt; &gt; example = generate_r1cs_example_with_binary_input&lt;libff::Fr&lt;ppT&gt; &gt;(num_constraints, input_size);
-</span></span><span class="line"><span class="cl">    const bool bit = run_r1cs_gg_ppzksnark&lt;ppT&gt;(example);
-</span></span><span class="line"><span class="cl">    assert(bit);
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">int main () {
-</span></span><span class="line"><span class="cl">    default_r1cs_gg_ppzksnark_pp::init_public_params();
-</span></span><span class="line"><span class="cl">    test_r1cs_gg_ppzksnark&lt;default_r1cs_gg_ppzksnark_pp&gt;(1000, 100);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    return 0;
-</span></span><span class="line"><span class="cl">}
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#include &lt;libff/common/default_types/ec_pp.hpp&gt;
+</span></span><span style="display:flex;"><span>#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
+</span></span><span style="display:flex;"><span>#include &lt;libsnark/relations/constraint_satisfaction_problems/r1cs/examples/r1cs_examples.hpp&gt;
+</span></span><span style="display:flex;"><span>#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>using namespace libsnark;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>/**
+</span></span><span style="display:flex;"><span> * The code below provides an example of all stages of running a R1CS GG-ppzkSNARK.
+</span></span><span style="display:flex;"><span> *
+</span></span><span style="display:flex;"><span> * Of course, in a real-life scenario, we would have three distinct entities,
+</span></span><span style="display:flex;"><span> * mangled into one in the demonstration below. The three entities are as follows.
+</span></span><span style="display:flex;"><span> * (1) The &#34;generator&#34;, which runs the ppzkSNARK generator on input a given
+</span></span><span style="display:flex;"><span> *     constraint system CS to create a proving and a verification key for CS.
+</span></span><span style="display:flex;"><span> * (2) The &#34;prover&#34;, which runs the ppzkSNARK prover on input the proving key,
+</span></span><span style="display:flex;"><span> *     a primary input for CS, and an auxiliary input for CS.
+</span></span><span style="display:flex;"><span> * (3) The &#34;verifier&#34;, which runs the ppzkSNARK verifier on input the verification key,
+</span></span><span style="display:flex;"><span> *     a primary input for CS, and a proof.
+</span></span><span style="display:flex;"><span> */
+</span></span><span style="display:flex;"><span>template&lt;typename ppT&gt;
+</span></span><span style="display:flex;"><span>bool run_r1cs_gg_ppzksnark(const r1cs_example&lt;libff::Fr&lt;ppT&gt; &gt; &amp;example)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    libff::print_header(&#34;R1CS GG-ppzkSNARK Generator&#34;);
+</span></span><span style="display:flex;"><span>    r1cs_gg_ppzksnark_keypair&lt;ppT&gt; keypair = r1cs_gg_ppzksnark_generator&lt;ppT&gt;(example.constraint_system);
+</span></span><span style="display:flex;"><span>    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after generator&#34;);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    libff::print_header(&#34;Preprocess verification key&#34;);
+</span></span><span style="display:flex;"><span>    r1cs_gg_ppzksnark_processed_verification_key&lt;ppT&gt; pvk = r1cs_gg_ppzksnark_verifier_process_vk&lt;ppT&gt;(keypair.vk);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    libff::print_header(&#34;R1CS GG-ppzkSNARK Prover&#34;);
+</span></span><span style="display:flex;"><span>    r1cs_gg_ppzksnark_proof&lt;ppT&gt; proof = r1cs_gg_ppzksnark_prover&lt;ppT&gt;(keypair.pk, example.primary_input, example.auxiliary_input);
+</span></span><span style="display:flex;"><span>    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after prover&#34;);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    libff::print_header(&#34;R1CS GG-ppzkSNARK Verifier&#34;);
+</span></span><span style="display:flex;"><span>    const bool ans = r1cs_gg_ppzksnark_verifier_strong_IC&lt;ppT&gt;(keypair.vk, example.primary_input, proof);
+</span></span><span style="display:flex;"><span>    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after verifier&#34;);
+</span></span><span style="display:flex;"><span>    printf(&#34;* The verification result is: %s\n&#34;, (ans ? &#34;PASS&#34; : &#34;FAIL&#34;));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    libff::print_header(&#34;R1CS GG-ppzkSNARK Online Verifier&#34;);
+</span></span><span style="display:flex;"><span>    const bool ans2 = r1cs_gg_ppzksnark_online_verifier_strong_IC&lt;ppT&gt;(pvk, example.primary_input, proof);
+</span></span><span style="display:flex;"><span>    assert(ans == ans2);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    return ans;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>template&lt;typename ppT&gt;
+</span></span><span style="display:flex;"><span>void test_r1cs_gg_ppzksnark(size_t num_constraints, size_t input_size)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    r1cs_example&lt;libff::Fr&lt;ppT&gt; &gt; example = generate_r1cs_example_with_binary_input&lt;libff::Fr&lt;ppT&gt; &gt;(num_constraints, input_size);
+</span></span><span style="display:flex;"><span>    const bool bit = run_r1cs_gg_ppzksnark&lt;ppT&gt;(example);
+</span></span><span style="display:flex;"><span>    assert(bit);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>int main () {
+</span></span><span style="display:flex;"><span>    default_r1cs_gg_ppzksnark_pp::init_public_params();
+</span></span><span style="display:flex;"><span>    test_r1cs_gg_ppzksnark&lt;default_r1cs_gg_ppzksnark_pp&gt;(1000, 100);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    return 0;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="testcpp"><code>test.cpp</code></h3>
 <p>第二个例子 <code>test.cpp</code>。这个例子具体展示了如何利用 libsnark 构建一个最简单的电路。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span><span class="lnt">71
-</span><span class="lnt">72
-</span><span class="lnt">73
-</span><span class="lnt">74
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-1"> 1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-2"> 2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-3"> 3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-4"> 4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-5"> 5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-6"> 6</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-7"> 7</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-8"> 8</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-9"> 9</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-10">10</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-11">11</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-12"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-12">12</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-13"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-13">13</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-14"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-14">14</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-15"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-15">15</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-16"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-16">16</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-17"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-17">17</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-18"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-18">18</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-19"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-19">19</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-20"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-20">20</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-21"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-21">21</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-22"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-22">22</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-23"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-23">23</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-24"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-24">24</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-25"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-25">25</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-26"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-26">26</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-27"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-27">27</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-28"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-28">28</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-29"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-29">29</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-30"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-30">30</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-31"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-31">31</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-32"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-32">32</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-33"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-33">33</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-34"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-34">34</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-35"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-35">35</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-36"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-36">36</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-37"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-37">37</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-38"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-38">38</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-39"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-39">39</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-40"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-40">40</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-41"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-41">41</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-42"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-42">42</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-43"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-43">43</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-44"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-44">44</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-45"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-45">45</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-46"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-46">46</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-47"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-47">47</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-48"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-48">48</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-49"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-49">49</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-50"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-50">50</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-51"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-51">51</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-52"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-52">52</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-53"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-53">53</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-54"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-54">54</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-55"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-55">55</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-56"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-56">56</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-57"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-57">57</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-58"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-58">58</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-59"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-59">59</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-60"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-60">60</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-61"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-61">61</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-62"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-62">62</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-63"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-63">63</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-64"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-64">64</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-65"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-65">65</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-66"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-66">66</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-67"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-67">67</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-68"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-68">68</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-69"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-69">69</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-70"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-70">70</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-71"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-71">71</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-72"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-72">72</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-73"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-73">73</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-74"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-74">74</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
-</span></span><span class="line"><span class="cl">#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
-</span></span><span class="line"><span class="cl">#include &lt;libsnark/gadgetlib1/pb_variable.hpp&gt;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">using namespace libsnark;
-</span></span><span class="line"><span class="cl">using namespace std;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">int main () {
-</span></span><span class="line"><span class="cl">    typedef libff::Fr&lt;default_r1cs_gg_ppzksnark_pp&gt; FieldT;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // Initialize the curve parameters
-</span></span><span class="line"><span class="cl">    default_r1cs_gg_ppzksnark_pp::init_public_params();
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">    // Create protoboard
-</span></span><span class="line"><span class="cl">    protoboard&lt;FieldT&gt; pb;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // Define variables
-</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; x;
-</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; sym_1;
-</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; y;
-</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; sym_2;
-</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; out;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // Allocate variables to protoboard
-</span></span><span class="line"><span class="cl">    // The strings (like &#34;x&#34;) are only for debugging purposes    
-</span></span><span class="line"><span class="cl">    out.allocate(pb, &#34;out&#34;);
-</span></span><span class="line"><span class="cl">    x.allocate(pb, &#34;x&#34;);
-</span></span><span class="line"><span class="cl">    sym_1.allocate(pb, &#34;sym_1&#34;);
-</span></span><span class="line"><span class="cl">    y.allocate(pb, &#34;y&#34;);
-</span></span><span class="line"><span class="cl">    sym_2.allocate(pb, &#34;sym_2&#34;);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // This sets up the protoboard variables
-</span></span><span class="line"><span class="cl">    // so that the first one (out) represents the public
-</span></span><span class="line"><span class="cl">    // input and the rest is private input
-</span></span><span class="line"><span class="cl">    pb.set_input_sizes(1);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // Add R1CS constraints to protoboard
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // x*x = sym_1
-</span></span><span class="line"><span class="cl">    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(x, x, sym_1));
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // sym_1 * x = y
-</span></span><span class="line"><span class="cl">    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(sym_1, x, y));
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // y + x = sym_2
-</span></span><span class="line"><span class="cl">    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(y + x, 1, sym_2));
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // sym_2 + 5 = ~out
-</span></span><span class="line"><span class="cl">    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(sym_2 + 5, 1, out));
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // generate keypair
-</span></span><span class="line"><span class="cl">    const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // Add public input and witness values
-</span></span><span class="line"><span class="cl">    pb.val(out) = 35;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    pb.val(x) = 3;
-</span></span><span class="line"><span class="cl">    pb.val(sym_1) = 9;
-</span></span><span class="line"><span class="cl">    pb.val(y) = 27;
-</span></span><span class="line"><span class="cl">    pb.val(sym_2) = 30;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // generate proof
-</span></span><span class="line"><span class="cl">    const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // verify
-</span></span><span class="line"><span class="cl">    bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Number of R1CS constraints: &#34; &lt;&lt; constraint_system.num_constraints() &lt;&lt; endl;
-</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Primary (public) input: &#34; &lt;&lt; pb.primary_input() &lt;&lt; endl;
-</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Auxiliary (private) input: &#34; &lt;&lt; pb.auxiliary_input() &lt;&lt; endl;
-</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Verification status: &#34; &lt;&lt; verified &lt;&lt; endl;
-</span></span><span class="line"><span class="cl">}
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
+</span></span><span style="display:flex;"><span>#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
+</span></span><span style="display:flex;"><span>#include &lt;libsnark/gadgetlib1/pb_variable.hpp&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>using namespace libsnark;
+</span></span><span style="display:flex;"><span>using namespace std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>int main () {
+</span></span><span style="display:flex;"><span>    typedef libff::Fr&lt;default_r1cs_gg_ppzksnark_pp&gt; FieldT;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // Initialize the curve parameters
+</span></span><span style="display:flex;"><span>    default_r1cs_gg_ppzksnark_pp::init_public_params();
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    // Create protoboard
+</span></span><span style="display:flex;"><span>    protoboard&lt;FieldT&gt; pb;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // Define variables
+</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; x;
+</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; sym_1;
+</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; y;
+</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; sym_2;
+</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; out;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // Allocate variables to protoboard
+</span></span><span style="display:flex;"><span>    // The strings (like &#34;x&#34;) are only for debugging purposes    
+</span></span><span style="display:flex;"><span>    out.allocate(pb, &#34;out&#34;);
+</span></span><span style="display:flex;"><span>    x.allocate(pb, &#34;x&#34;);
+</span></span><span style="display:flex;"><span>    sym_1.allocate(pb, &#34;sym_1&#34;);
+</span></span><span style="display:flex;"><span>    y.allocate(pb, &#34;y&#34;);
+</span></span><span style="display:flex;"><span>    sym_2.allocate(pb, &#34;sym_2&#34;);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // This sets up the protoboard variables
+</span></span><span style="display:flex;"><span>    // so that the first one (out) represents the public
+</span></span><span style="display:flex;"><span>    // input and the rest is private input
+</span></span><span style="display:flex;"><span>    pb.set_input_sizes(1);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // Add R1CS constraints to protoboard
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // x*x = sym_1
+</span></span><span style="display:flex;"><span>    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(x, x, sym_1));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // sym_1 * x = y
+</span></span><span style="display:flex;"><span>    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(sym_1, x, y));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // y + x = sym_2
+</span></span><span style="display:flex;"><span>    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(y + x, 1, sym_2));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // sym_2 + 5 = ~out
+</span></span><span style="display:flex;"><span>    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(sym_2 + 5, 1, out));
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // generate keypair
+</span></span><span style="display:flex;"><span>    const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // Add public input and witness values
+</span></span><span style="display:flex;"><span>    pb.val(out) = 35;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    pb.val(x) = 3;
+</span></span><span style="display:flex;"><span>    pb.val(sym_1) = 9;
+</span></span><span style="display:flex;"><span>    pb.val(y) = 27;
+</span></span><span style="display:flex;"><span>    pb.val(sym_2) = 30;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // generate proof
+</span></span><span style="display:flex;"><span>    const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // verify
+</span></span><span style="display:flex;"><span>    bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Number of R1CS constraints: &#34; &lt;&lt; constraint_system.num_constraints() &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Primary (public) input: &#34; &lt;&lt; pb.primary_input() &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Auxiliary (private) input: &#34; &lt;&lt; pb.auxiliary_input() &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Verification status: &#34; &lt;&lt; verified &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="rangecpp"><code>range.cpp</code></h3>
 <p>第三个例子 <code>range.cpp</code>。该例子利用了 libsnark 自带的 <code>comparison_gadget</code> 来实现取值范围证明。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-1"> 1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-2"> 2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-3"> 3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-4"> 4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-5"> 5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-6"> 6</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-7"> 7</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-8"> 8</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-9"> 9</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-10">10</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-11">11</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-12"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-12">12</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-13"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-13">13</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-14"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-14">14</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-15"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-15">15</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-16"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-16">16</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-17"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-17">17</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-18"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-18">18</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-19"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-19">19</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-20"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-20">20</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-21"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-21">21</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-22"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-22">22</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-23"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-23">23</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-24"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-24">24</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-25"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-25">25</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-26"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-26">26</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-27"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-27">27</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-28"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-28">28</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-29"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-29">29</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-30"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-30">30</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-31"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-31">31</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-32"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-32">32</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-33"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-33">33</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-34"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-34">34</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-35"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-35">35</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-36"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-36">36</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-37"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-37">37</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-38"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-38">38</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-39"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-39">39</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-40"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-40">40</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-41"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-41">41</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-42"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-42">42</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-43"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-43">43</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-44"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-44">44</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-45"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-45">45</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-46"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-46">46</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-47"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-47">47</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-48"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-48">48</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-49"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-49">49</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
-</span></span><span class="line"><span class="cl">#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
-</span></span><span class="line"><span class="cl">#include &lt;libsnark/gadgetlib1/pb_variable.hpp&gt;
-</span></span><span class="line"><span class="cl">#include &lt;libsnark/gadgetlib1/gadgets/basic_gadgets.hpp&gt;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">using namespace libsnark;
-</span></span><span class="line"><span class="cl">using namespace std;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">int main () {
-</span></span><span class="line"><span class="cl">    typedef libff::Fr&lt;default_r1cs_gg_ppzksnark_pp&gt; FieldT;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // Initialize the curve parameters
-</span></span><span class="line"><span class="cl">    default_r1cs_gg_ppzksnark_pp::init_public_params();
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">    // Create protoboard
-</span></span><span class="line"><span class="cl">    protoboard&lt;FieldT&gt; pb;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; x, max;
-</span></span><span class="line"><span class="cl">    pb_variable&lt;FieldT&gt; less, less_or_eq;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    x.allocate(pb, &#34;x&#34;);
-</span></span><span class="line"><span class="cl">    max.allocate(pb, &#34;max&#34;);
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    pb.val(max)= 60;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    comparison_gadget&lt;FieldT&gt; cmp(pb, 10, x, max, less, less_or_eq, &#34;cmp&#34;);
-</span></span><span class="line"><span class="cl">    cmp.generate_r1cs_constraints();
-</span></span><span class="line"><span class="cl">    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(less, 1, FieldT::one()));
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // generate keypair
-</span></span><span class="line"><span class="cl">    const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // Add witness values
-</span></span><span class="line"><span class="cl">    pb.val(x) = 18; // secret
-</span></span><span class="line"><span class="cl">    cmp.generate_r1cs_witness();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // generate proof
-</span></span><span class="line"><span class="cl">    const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // verify
-</span></span><span class="line"><span class="cl">    bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Number of R1CS constraints: &#34; &lt;&lt; constraint_system.num_constraints() &lt;&lt; endl;
-</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Primary (public) input: &#34; &lt;&lt; pb.primary_input() &lt;&lt; endl;
-</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Auxiliary (private) input: &#34; &lt;&lt; pb.auxiliary_input() &lt;&lt; endl;
-</span></span><span class="line"><span class="cl">    cout &lt;&lt; &#34;Verification status: &#34; &lt;&lt; verified &lt;&lt; endl;
-</span></span><span class="line"><span class="cl">}
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
+</span></span><span style="display:flex;"><span>#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
+</span></span><span style="display:flex;"><span>#include &lt;libsnark/gadgetlib1/pb_variable.hpp&gt;
+</span></span><span style="display:flex;"><span>#include &lt;libsnark/gadgetlib1/gadgets/basic_gadgets.hpp&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>using namespace libsnark;
+</span></span><span style="display:flex;"><span>using namespace std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>int main () {
+</span></span><span style="display:flex;"><span>    typedef libff::Fr&lt;default_r1cs_gg_ppzksnark_pp&gt; FieldT;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // Initialize the curve parameters
+</span></span><span style="display:flex;"><span>    default_r1cs_gg_ppzksnark_pp::init_public_params();
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    // Create protoboard
+</span></span><span style="display:flex;"><span>    protoboard&lt;FieldT&gt; pb;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; x, max;
+</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; less, less_or_eq;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    x.allocate(pb, &#34;x&#34;);
+</span></span><span style="display:flex;"><span>    max.allocate(pb, &#34;max&#34;);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    pb.val(max)= 60;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    comparison_gadget&lt;FieldT&gt; cmp(pb, 10, x, max, less, less_or_eq, &#34;cmp&#34;);
+</span></span><span style="display:flex;"><span>    cmp.generate_r1cs_constraints();
+</span></span><span style="display:flex;"><span>    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(less, 1, FieldT::one()));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // generate keypair
+</span></span><span style="display:flex;"><span>    const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // Add witness values
+</span></span><span style="display:flex;"><span>    pb.val(x) = 18; // secret
+</span></span><span style="display:flex;"><span>    cmp.generate_r1cs_witness();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // generate proof
+</span></span><span style="display:flex;"><span>    const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // verify
+</span></span><span style="display:flex;"><span>    bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Number of R1CS constraints: &#34; &lt;&lt; constraint_system.num_constraints() &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Primary (public) input: &#34; &lt;&lt; pb.primary_input() &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Auxiliary (private) input: &#34; &lt;&lt; pb.auxiliary_input() &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Verification status: &#34; &lt;&lt; verified &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
 </div>

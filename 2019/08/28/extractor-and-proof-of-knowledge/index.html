@@ -534,12 +534,12 @@ if (!doNotTrack) {
 <p>第一步：为了保证零知识，Alice 需要先产生一个随机数，<code>r</code>，这个随机数的用途是用来保护私钥无法被 Bob 抽取出来。这个随机数也需要映射到椭圆曲线群上，<code>rG</code>。</p>
 <p>第二步：Bob 要提供一个随机数进行挑战，我们把它称为 <code>c</code>。</p>
 <p>第三步：Alice 根据挑战数计算 <code>z = r + a * c</code>，同时把 <code>z</code>发给 Bob，Bob通过下面的式子进行检验：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-1">1</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">z*G ?= R + c*PK = rG + c*(aG)
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>z*G ?= R + c*PK = rG + c*(aG)
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>大家可以看到 Bob  在第三步「同态地」检验 <code>z</code> 的计算过程。如果这个式子成立，那么就能证明 Alice 确实有私钥 <code>a</code>。可是，这是为什么呢？</p>
@@ -618,28 +618,28 @@ if (!doNotTrack) {
 <p>江湖上流传着一个说法：ECDSA 签名方案有个严重的安全隐患，如果在两次签名中使用了同一个随机数，那么签名者的私钥将会暴露出来。其实 Schnorr 签名方案也有同样的问题。</p>
 <p>当年 Sony  PlayStation 3 的工程师在调用 ECDSA 库函数时，本来应该输入随机数的参数位置上，却传入了一个常数。熟悉密码学的黑客们发现了这个严重的后门。2011年1月，神奇小子 Geohot 公开发布了 Sony PS3 的主私钥，这意味着任何用户都可以轻松拿到游戏机的 root 权限。Sony 随后大为光火…… （后续故事大家可以上网搜）</p>
 <p>如果 Alice 在两次交互过程中使用了同一个 <code>K</code>，那么 Bob 可以通过发送两个不同的 <code>c</code> 和 <code>c'</code> 来得到 <code>s</code> 和 <code>s'</code>，然后通过下面的公式算出私钥 <code>a</code>：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-2">2</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">k = (c - c&#39;)/(s - s&#39;)
-</span></span><span class="line"><span class="cl">a = (k * s - c)/e
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>k = (c - c&#39;)/(s - s&#39;)
+</span></span><span style="display:flex;"><span>a = (k * s - c)/e
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>那么我们应该怎么来看这个「安全后门」呢？大家想想看，这个安全后门和我们前面证明过的 Schnorr 协议的可靠性证明几乎一模一样！这个算法正是 ECDSA 认证协议的「可靠性」证明中的「抽取器」算法。只不过在可靠性证明中，为了让 Alice 使用同一个随机数 <code>k</code> 来认证两次，「抽取器」需要利用「时间倒流」的超能力。</p>
 <p>但是在 Sony PS3 系统中，随机数被不明所以的工程师写成了一个固定不变的值，这样相当于直接赋予了黑客「超能力」，而这是在「现实世界」中。或者说，黑客在不需要「时间倒流」的情况下就能实现「抽取器」。</p>
 <p>提醒下，不仅仅是随机数不能重复的问题。而是随机数必须是具有密码学安全强度的随机数。</p>
 <p>设想下，如果随机数 <code>r</code> 是通过一个利用「线性同余」原理的伪随机数生成器产生，虽然 <code>r</code>的值一直在变化，但是仍然不能阻止「知识抽取」。假设线性同余算法为 <code>r2= d*r1 + e (mod m)</code>，还回到 Schnorr 协议的第三步：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-1">1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-2">2</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1: z1 = r1 + c1*a
-</span></span><span class="line"><span class="cl">2: z2 = r2 + c2*a
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1: z1 = r1 + c1*a
+</span></span><span style="display:flex;"><span>2: z2 = r2 + c2*a
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果攻击者让 Alice 连续做两次签名，那么将 <code>r2</code> 代入  <code>r1</code> 之后，就出现了两个线性方程求解两个未知数 <code>(r1, a)</code> 的情况，<code>z1, z2, c1, c2, d, e</code> 对于 攻击者是已知的，这个方程组只用初中数学知识就可以求解。</p>

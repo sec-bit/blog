@@ -508,40 +508,40 @@ if (!doNotTrack) {
 <p><strong>很多 zkSNARKs 合约尤其是混币合约，核心逻辑都与第 82 行和 83 行类似，因此都存在同样的安全问题，可利用「输入假名」漏洞进行攻击。</strong></p>
 <h2 id="漏洞解析一笔钱如何匿名地重复花-5-次">漏洞解析：一笔钱如何匿名地重复花 5 次？</h2>
 <p>上面 <code>verifyProof(a, b, c, input)</code> 函数的作用是根据传入的数值在椭圆曲线上进行计算校验，核心用到了名为 <code>scalar_mul()</code> 的函数，<a href="https://github.com/iden3/snarkjs/blob/0349d90824bd25688e3013ca26f7f73b51bc7755/templates/verifier_groth.sol#L202">实现了椭圆曲线上的标量乘法</a>[4]。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-1"> 1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-2"> 2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-3"> 3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-4"> 4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-5"> 5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-6"> 6</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-7"> 7</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-8"> 8</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-9"> 9</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-10">10</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-11">11</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-12"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-12">12</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-13"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-13">13</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-14"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-14">14</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-15"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-15">15</a>
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl">    <span class="c1">/// @return the product of a point on G1 and a scalar, i.e.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">/// p == p.scalar_mul(1) and p.add(p) == p.scalar_mul(2) for all points p.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nx">scalar_mul</span><span class="p">(</span><span class="nx">G1Point</span> <span class="nx">point</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">s</span><span class="p">)</span> <span class="nx">internal</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">G1Point</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">uint</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="nx">memory</span> <span class="nx">input</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">X</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">input</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">Y</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">input</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nx">s</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">bool</span> <span class="nx">success</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">assembly</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nx">success</span> <span class="o">:=</span> <span class="nx">call</span><span class="p">(</span><span class="nx">sub</span><span class="p">(</span><span class="nx">gas</span><span class="p">,</span> <span class="mi">2000</span><span class="p">),</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">input</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Use &#34;invalid&#34; to make gas estimation work
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">switch</span> <span class="nx">success</span> <span class="k">case</span> <span class="mi">0</span> <span class="p">{</span> <span class="nx">invalid</span><span class="p">()</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">require</span> <span class="p">(</span><span class="nx">success</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>    <span style="color:#75715e">/// @return the product of a point on G1 and a scalar, i.e.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">/// p == p.scalar_mul(1) and p.add(p) == p.scalar_mul(2) for all points p.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">scalar_mul</span>(<span style="color:#a6e22e">G1Point</span> <span style="color:#a6e22e">point</span>, <span style="color:#a6e22e">uint</span> <span style="color:#a6e22e">s</span>) <span style="color:#a6e22e">internal</span> <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">G1Point</span> <span style="color:#a6e22e">r</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">uint</span>[<span style="color:#ae81ff">3</span>] <span style="color:#a6e22e">memory</span> <span style="color:#a6e22e">input</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">input</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">X</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">input</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Y</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">input</span>[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">s</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">bool</span> <span style="color:#a6e22e">success</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">assembly</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">success</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">call</span>(<span style="color:#a6e22e">sub</span>(<span style="color:#a6e22e">gas</span>, <span style="color:#ae81ff">2000</span>), <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">input</span>, <span style="color:#ae81ff">0x80</span>, <span style="color:#a6e22e">r</span>, <span style="color:#ae81ff">0x60</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Use &#34;invalid&#34; to make gas estimation work
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">success</span> <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">0</span> { <span style="color:#a6e22e">invalid</span>() }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">require</span> (<span style="color:#a6e22e">success</span>);
+</span></span><span style="display:flex;"><span>    }
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>我们知道以太坊内置了多个预编译合约，进行椭圆曲线上的密码学运算，降低 zkSNARKs 验证在链上的 Gas 消耗。函数 <code>scalar_mul()</code> 的实现则调用了以太坊预编译 7 号合约，根据 <a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-196.md">EIP 196</a> 实现了椭圆曲线 alt_bn128 上的标量乘法[5]。下图为黄皮书中对该操作的定义，我们常称之为 ECMUL 或 ecc_mul。</p>
