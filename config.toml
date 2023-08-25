@@ -11,12 +11,6 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
 enableGitInfo = true # use git commit log to generate lastmod record # 可根据 Git 中的提交生成最近更新记录。
 # uglyURLs = true
 
-# Highlight options. See https://gohugo.io/content-management/syntax-highlighting/
-pygmentsCodeFences = true # Enable syntax highlighting with GitHub flavoured code fences
-pygmentsUseClasses = true # Use CSS classes to format highlighted code
-pygmentsCodefencesGuessSyntax = true
-pygmentsOptions = "linenos=table"
-
 # language support en / zh-cn / other... translations present in i18n/
 defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multilingual support)
 [langusges]
@@ -195,3 +189,26 @@ defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multil
   [security.http]
     methods = ['(?i)GET|POST']
     urls = ['.*']
+
+# more information https://gohugo.io/getting-started/configuration-markup/#goldmark
+[markup]
+  defaultMarkdownHandler = "goldmark"  # blackfriday or goldmark
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+  # Highlight options. See https://gohugo.io/content-management/syntax-highlighting/
+  [markup.highlight]
+    anchorLineNos = true
+    codeFences = true
+    guessSyntax = true
+    hl_Lines = ''
+    hl_inline = false
+    lineAnchors = ''
+    lineNoStart = 1
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = true
+    noHl = false
+    style = 'monokai'
+    tabWidth = 4
