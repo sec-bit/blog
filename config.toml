@@ -146,10 +146,25 @@ defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multil
     url = "http://commento.example.com"
 
   [params.utteranc]         # utteranc is a comment system based on GitHub issues. see https://utteranc.es
-    enable = true
+    enable = false
     repo = "sec-bit/comments-for-secbit-blog"    # The repo to store comments
     issueTerm = "pathname"
     theme = "github-light"                           # theme: github-light, github-dark, github-dark-orange, icy-dark, dark-blue, photon-dark
+
+  [params.giscus]         # giscus is a comment system based on GitHub Discussions. see https://giscus.app
+    enable = true
+    repo = "sec-bit/comments-for-secbit-blog"
+    repoId = "MDEwOlJlcG9zaXRvcnkyMTQ2MDkzNjM="
+    category = "Comments"
+    categoryId = "DIC_kwDODMqt084CY2v-"
+    mapping = "pathname"
+    strict = 0
+    reactionsEnabled = 1
+    emitMetadata = 0
+    inputPosition = "top"
+    theme = "light"
+    lang = "en"
+    lazyLoading = true
 
   [params.search.google]    # google custom search, see https://cse.google.com
     enable = true
