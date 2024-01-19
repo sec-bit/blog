@@ -12,6 +12,10 @@ contentCopyright: "If you need to reprint, please indicate the author and source
 
 >Authors: [p0n1](https://twitter.com/ErrNil) and [outoflegend](https://twitter.com/outoflegend) from [SECBIT Labs](https://secbit.io/)
 
+Read highlights, join the discussion, and share your thoughts on Twitter!
+
+👉👉👉 https://twitter.com/ErrNil/status/1748203326561509601 👈👈👈
+
 ## How Did Our Investigation Begin?
 
 On 2023-07-12, numerous ETH wallets were hacked, and the funds were transferred to the address 0xAa8B55e21ef3df5f15adf4d0F49D3bfa854e9125. Victims claimed to have used different crypto wallets, some even claiming they hadn't accessed their wallets for a long time. Some even said their wallets were air-gapped or used as cold storage.
