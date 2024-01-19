@@ -6,16 +6,22 @@
     <description>Recent content in Fomo3D on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 23 Aug 2018 08:00:00 +0800</lastBuildDate><atom:link href="https://sec-bit.github.io/blog/en/tags/fomo3d/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Jan 2024 11:00:00 +0800</lastBuildDate>
+    <atom:link href="https://sec-bit.github.io/blog/en/tags/fomo3d/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Trust Wallet&#39;s Fomo3D Summer: Fresh Discovery of Low Entropy Flaw From 2018</title>
+      <link>https://sec-bit.github.io/blog/en/2024/01/19/trust-wallets-fomo3d-summer-vuln/</link>
+      <pubDate>Fri, 19 Jan 2024 11:00:00 +0800</pubDate>
+      <guid>https://sec-bit.github.io/blog/en/2024/01/19/trust-wallets-fomo3d-summer-vuln/</guid>
+      <description>In July 2023, numerous ETH wallets were hacked, leading to an investigation that uncovered a low entropy flaw in Trust Wallet dating back to 2018. This vulnerability, linked to a predictable random number generation issue in Trust Wallet&amp;rsquo;s code, resulted in easily guessable wallet keys. The exploit affected over 2100 victims, causing a loss of over 1360 ETH and potentially millions of dollars across various blockchains. Evidence suggests that most affected users were Trust Wallet users or users of Trust Wallet fork products. This incident highlights the importance of secure random number generation in wallet security.</description>
+    </item>
     <item>
       <title>How the winner got Fomo3D prize - A Detailed Explanation</title>
       <link>https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/</link>
       <pubDate>Thu, 23 Aug 2018 08:00:00 +0800</pubDate>
-      
       <guid>https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/</guid>
       <description>The first round of Fomo3D has ended and the winner&amp;rsquo;s address is 0xa169, with a prize of 10,469.66 ethers.
 You may think that the winner is just an ordinary participant.</description>
     </item>
-    
   </channel>
 </rss>

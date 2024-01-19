@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  itemscope
+  itemtype="http://schema.org/WebPage"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>
+          Trust Wallet&#39;s Fomo3D Summer: Fresh Discovery of Low Entropy Flaw From 2018 - SECBIT Blog
+        </title>
+    
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="p0n1 and outoflegend" />
+  <meta name="description" content="In July 2023, numerous ETH wallets were hacked, leading to an investigation that uncovered a low entropy flaw in Trust Wallet dating back to 2018. This vulnerability, linked to a predictable random number generation issue in Trust Wallet&amp;rsquo;s code, resulted in easily guessable wallet keys. The exploit affected over 2100 victims, causing a loss of over 1360 ETH and potentially millions of dollars across various blockchains. Evidence suggests that most affected users were Trust Wallet users or users of Trust Wallet fork products. This incident highlights the importance of secure random number generation in wallet security." />
+
+  <meta name="keywords" content="Blockchain, Smart Contract, Zero Knowledge Proof" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.120.4" />
+
+
+<link rel="canonical" href="https://sec-bit.github.io/blog/en/2024/01/19/trust-wallets-fomo3d-summer-vuln/" />
+
+
+
+
+
+<link rel="icon" href="/blog/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/sass/jane.min.cb76cda4c6286b015fd7f3fbe9eb5efe14bc7cc74cb6e2888ddc36bb35ca96f5.css" integrity="sha256-y3bNpMYoawFf1/P76ete/hS8fMdMtuKIjdw2uzXKlvU=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/css/custom.css">
+
+
+<meta property="og:title" content="Trust Wallet&#39;s Fomo3D Summer: Fresh Discovery of Low Entropy Flaw From 2018" />
+<meta property="og:description" content="In July 2023, numerous ETH wallets were hacked, leading to an investigation that uncovered a low entropy flaw in Trust Wallet dating back to 2018. This vulnerability, linked to a predictable random number generation issue in Trust Wallet&rsquo;s code, resulted in easily guessable wallet keys. The exploit affected over 2100 victims, causing a loss of over 1360 ETH and potentially millions of dollars across various blockchains. Evidence suggests that most affected users were Trust Wallet users or users of Trust Wallet fork products. This incident highlights the importance of secure random number generation in wallet security." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sec-bit.github.io/blog/en/2024/01/19/trust-wallets-fomo3d-summer-vuln/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-01-19T11:00:00+08:00" />
+<meta property="article:modified_time" content="2024-01-19T12:09:19+08:00" />
+
+<meta itemprop="name" content="Trust Wallet&#39;s Fomo3D Summer: Fresh Discovery of Low Entropy Flaw From 2018">
+<meta itemprop="description" content="In July 2023, numerous ETH wallets were hacked, leading to an investigation that uncovered a low entropy flaw in Trust Wallet dating back to 2018. This vulnerability, linked to a predictable random number generation issue in Trust Wallet&rsquo;s code, resulted in easily guessable wallet keys. The exploit affected over 2100 victims, causing a loss of over 1360 ETH and potentially millions of dollars across various blockchains. Evidence suggests that most affected users were Trust Wallet users or users of Trust Wallet fork products. This incident highlights the importance of secure random number generation in wallet security."><meta itemprop="datePublished" content="2024-01-19T11:00:00+08:00" />
+<meta itemprop="dateModified" content="2024-01-19T12:09:19+08:00" />
+<meta itemprop="wordCount" content="4240">
+<meta itemprop="keywords" content="Trust Wallet,Fomo3D,Low Entropy,Vulnerability,Hacking,Binance,Crypto Wallet,Mnemonic,Seed,Random Number,Libbitcoin,Milk Sad," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Trust Wallet&#39;s Fomo3D Summer: Fresh Discovery of Low Entropy Flaw From 2018"/>
+<meta name="twitter:description" content="In July 2023, numerous ETH wallets were hacked, leading to an investigation that uncovered a low entropy flaw in Trust Wallet dating back to 2018. This vulnerability, linked to a predictable random number generation issue in Trust Wallet&rsquo;s code, resulted in easily guessable wallet keys. The exploit affected over 2100 victims, causing a loss of over 1360 ETH and potentially millions of dollars across various blockchains. Evidence suggests that most affected users were Trust Wallet users or users of Trust Wallet fork products. This incident highlights the importance of secure random number generation in wallet security."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CVGF90VYL2"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-CVGF90VYL2', { 'anonymize_ip': false });
+}
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.body,
+            {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                ]
+            }
+        );
+    });
+</script>
+
+  </head>
+  <body>
+    <div id="back-to-top"></div>
+
+    <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/blog/en" class="logo">SECBIT Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/">Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/post/">Archives</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/categories/">Categories</a>
+          
+        
+      </li>
+    <li class="mobile-menu-item">
+        
+        <div class="mobile-menu-parent mobile-menu-item-lang">
+          <span class="mobile-submenu-open"></span>
+          <a href="#">
+            
+            <i class="iconfont">
+              <svg height="16" width="16" version="1.1" viewBox="0 0 128 128">
+  <path d="m 64.719501,1.4279814 c -34.694029,0 -62.8192028,28.1251726 -62.8192028,62.8192016 0,34.694036 28.1251738,62.819207 62.8192028,62.819207 4.245691,0 8.392744,-0.42239 12.402214,-1.2253 -1.616124,-0.77296 -1.792473,-6.57213 -0.194346,-9.87848 1.779059,-3.68082 7.361625,-13.00555 1.840404,-16.134231 -5.521221,-3.12869 -3.98755,-4.53968 -7.361625,-8.15914 -3.374083,-3.61947 -1.994181,-4.16357 -2.208492,-5.09179 -0.736158,-3.19004 3.251385,-7.975096 3.435429,-8.465866 0.184043,-0.490781 0.184043,-2.331182 0.122689,-2.883308 -0.06131,-0.552125 -2.515051,-2.024446 -3.12852,-2.085791 -0.613469,-0.06133 -0.920209,0.98154 -1.77906,1.042896 -0.858856,0.06133 -4.601018,-2.269838 -5.39853,-2.883308 -0.797504,-0.61346 -1.165591,-2.085792 -2.269828,-3.190033 -1.104247,-1.104252 -1.226945,-0.24539 -2.944651,-0.920206 -1.717714,-0.674812 -7.238935,-2.69926 -11.471867,-4.416975 -4.23294,-1.717714 -4.601019,-4.125615 -4.662365,-5.827954 -0.06131,-1.702333 -2.57657,-4.171587 -3.756227,-5.950646 -1.179335,-1.77906 -1.396914,-4.232932 -1.826339,-3.680809 -0.429425,0.552114 2.208484,6.993538 1.77906,7.177582 -0.429425,0.184043 -1.349635,-1.77906 -2.576572,-3.374083 -1.226936,-1.595016 1.28829,-0.736159 -2.637915,-8.465864 -3.926198,-7.729705 1.226944,-11.671284 1.472324,-15.704806 0.24539,-4.033514 3.312738,1.472325 1.717715,-1.104238 -1.595016,-2.576571 0.122697,-7.975094 -1.104246,-9.938197 -1.226936,-1.963102 -8.220475,2.208492 -8.220475,2.208492 0.184036,-1.901758 6.134682,-5.153142 10.428966,-8.1591366 4.294277,-3.005996 6.91682,-0.674813 10.367621,0.4294236 3.450803,1.104246 3.680817,0.736167 2.515226,-0.368079 -1.165591,-1.1042446 0.49077,-1.6563686 3.190031,-1.2269356 2.699269,0.429425 3.435428,3.6808086 7.545669,3.3740746 4.110242,-0.306735 0.429425,0.797511 0.981548,1.840412 0.552123,1.042892 -0.613468,0.920202 -3.312729,2.760607 -2.699262,1.840403 0.06131,1.840403 4.846407,5.337177 4.785055,3.496773 3.312729,-2.331183 2.821952,-4.907753 -0.490777,-2.576563 3.496773,-0.552115 3.496773,-0.552115 2.944651,1.963094 2.400546,0.107972 4.547684,0.782784 2.147139,0.674814 7.967076,5.597286 7.967076,5.597286 -7.300273,3.98755 -2.699261,4.416975 -1.472325,5.337178 1.226937,0.920202 -2.515218,2.699261 -2.515218,2.699261 -1.53367,-1.53367 -1.779059,0.06131 -2.760614,0.613476 -0.981548,0.552115 -0.06131,1.963095 -0.06131,1.963095 -5.076415,0.797512 -3.926198,6.13469 -3.864852,7.422971 0.06131,1.288289 -3.251385,3.251384 -4.110242,5.091796 -0.858857,1.840405 2.208491,5.827948 0.613468,6.073336 -1.595016,0.24539 -3.190031,-6.011991 -11.778601,-3.680808 -2.589322,0.702954 -8.343174,3.680808 -5.275824,9.754153 3.06734,6.073336 8.15913,-1.717714 9.876843,-0.858857 1.717714,0.858857 -0.490778,4.72371 -0.122691,4.785055 0.368079,0.06131 4.8464,0.168662 5.09179,5.398522 0.245388,5.229868 6.809502,4.785065 8.220482,4.907755 1.410972,0.12269 6.134682,-3.864859 6.809502,-4.048894 0.674815,-0.184034 3.374076,-2.453876 9.263377,0.920195 5.889301,3.374089 8.895296,2.883308 10.919743,4.294285 2.02445,1.410987 0.61347,4.232939 2.51523,5.153134 1.90175,0.920217 9.50876,-0.306736 11.41051,2.821966 1.90176,3.1287 -7.8524,18.833491 -10.91974,20.551201 -3.06734,1.71772 -4.478321,5.64392 -7.545665,8.15913 -3.067349,2.51523 -7.361625,5.62854 -11.410522,8.03646 -3.583968,2.1311 -4.228845,5.949 -5.825333,7.15419 28.11404,-6.24545 49.13623,-31.328971 49.13623,-61.323497 0,-34.694029 -28.125171,-62.8192016 -62.819206,-62.8192016 z M 79.442753,60.382331 c -0.858857,0.245389 -2.637917,1.840405 -6.993547,-0.736166 -4.35563,-2.576564 -7.361625,-2.085794 -7.729705,-2.515218 0,0 -0.368079,-1.0429 1.533671,-1.226937 3.905098,-0.378065 8.833951,3.619464 9.938196,3.680809 1.104246,0.06131 1.656361,-1.104245 3.619464,-0.471631 1.963103,0.631953 0.490777,1.023755 -0.368079,1.269143 z M 58.891546,7.6853614 c -0.427786,-0.311152 0.354344,-0.669418 0.82058,-1.288281 0.269103,-0.357613 0.0695,-0.951289 0.406356,-1.28829 0.92021,-0.920203 5.459876,-2.208485 4.572225,0.306734 -0.887321,2.515226 -5.12434,2.760614 -5.799161,2.269837 z m 10.98109,7.9750936 c -1.533672,-0.06131 -5.14381,-0.442837 -4.478321,-1.104246 2.591952,-2.576563 -0.981548,-3.312729 -3.190039,-3.496766 -2.208485,-0.184043 -3.128687,-1.4109786 -2.02444,-1.5336776 1.104237,-0.12269 5.521213,0.06139 6.257379,0.6748206 0.736158,0.613469 4.723709,2.208485 4.969099,3.374076 0.24538,1.16559 0,2.147138 -1.533678,2.085793 z M 83.184914,15.23103 c -1.226943,0.981547 -7.400887,-3.521968 -8.588569,-4.539674 -5.153134,-4.4169746 -7.913742,-2.9446486 -8.995903,-3.6808086 -1.082485,-0.736166 -0.696897,-1.717713 0.959464,-3.190039 1.656369,-1.472325 6.318732,0.490778 9.017994,0.797512 2.699262,0.306734 5.827955,2.392527 5.889301,4.871925 0.06131,2.4792256 2.944649,4.7595296 1.717713,5.7410846 z" />
+</svg>
+
+            </i>
+            Language
+          </a>
+        </div>
+        <ul class="mobile-submenu-list">
+          
+            <li>
+              
+                <a href="https://sec-bit.github.io/blog/en/"><strong>English</strong></a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="https://sec-bit.github.io/blog/">中文</a>
+              
+            </li>
+          
+        </ul>
+      </li>
+
+    
+      <li class="mobile-menu-item">
+        <a id="openSearchMobile" class="mobile-menu-item-link menu-item-search" href="#">
+          <i class="iconfont">
+            <svg version="1.1" viewBox="0 0 1024 1024"
+  xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M973.81454219 973.81454219a91.78207815 91.78207815 0 0 1-129.80999631 0l-161.97482118-161.97482118a425.48527711 425.48527711 0 0 1-230.35931791 68.16531768 428.3346319 428.3346319 0 1 1 428.3346319-428.3346319 425.48527711 425.48527711 0 0 1-68.16531768 230.35931791l162.02961656 161.97482118a91.83687354 91.83687354 0 0 1-0.05479538 129.80999631zM451.67040679 145.69361559a305.97679241 305.97679241 0 1 0 0 611.95358361 305.97679241 305.97679241 0 0 0 0-611.95358361z">
+  </path>
+</svg>
+
+          </i>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+
+    
+      
+
+
+
+
+
+
+  <link rel="stylesheet" href="/blog/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/blog/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+    
+
+    
+      
+<div class="modal-dialog">
+    
+    <div class="modal-content">
+      <div id="closeSearch" title="Close" class="close">X</div>
+      <div class="modal-header">
+        <div class="modal-title">Search</div>
+      </div>
+      <div class="modal-body">
+          <script>
+            (function() {
+              var cx = '013402755253274635861:4rj70y1whw3';
+              var gcse = document.createElement('script');
+              gcse.type = 'text/javascript';
+              gcse.async = true;
+              gcse.src = (document.location.protocol == 'https:' ? 'https:' :
+                  'http:') +
+                '//cse.google.com/cse.js?cx=' + cx;
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(gcse, s);
+            })();
+          </script>
+          <gcse:search></gcse:search>
+      </div>
+    </div>
+</div>
+
+    
+
+    
+
+
+    <header id="header" class="header">
+      <div class="logo-wrapper">
+  <a href="/blog/en" class="logo">
+    
+      SECBIT Blog
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/">Home</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    <li class="menu-item">
+        
+        <a class="menu-item-link menu-parent menu-item-lang" href="#">
+          
+          <i class="iconfont">
+            <svg height="16" width="16" version="1.1" viewBox="0 0 128 128">
+  <path d="m 64.719501,1.4279814 c -34.694029,0 -62.8192028,28.1251726 -62.8192028,62.8192016 0,34.694036 28.1251738,62.819207 62.8192028,62.819207 4.245691,0 8.392744,-0.42239 12.402214,-1.2253 -1.616124,-0.77296 -1.792473,-6.57213 -0.194346,-9.87848 1.779059,-3.68082 7.361625,-13.00555 1.840404,-16.134231 -5.521221,-3.12869 -3.98755,-4.53968 -7.361625,-8.15914 -3.374083,-3.61947 -1.994181,-4.16357 -2.208492,-5.09179 -0.736158,-3.19004 3.251385,-7.975096 3.435429,-8.465866 0.184043,-0.490781 0.184043,-2.331182 0.122689,-2.883308 -0.06131,-0.552125 -2.515051,-2.024446 -3.12852,-2.085791 -0.613469,-0.06133 -0.920209,0.98154 -1.77906,1.042896 -0.858856,0.06133 -4.601018,-2.269838 -5.39853,-2.883308 -0.797504,-0.61346 -1.165591,-2.085792 -2.269828,-3.190033 -1.104247,-1.104252 -1.226945,-0.24539 -2.944651,-0.920206 -1.717714,-0.674812 -7.238935,-2.69926 -11.471867,-4.416975 -4.23294,-1.717714 -4.601019,-4.125615 -4.662365,-5.827954 -0.06131,-1.702333 -2.57657,-4.171587 -3.756227,-5.950646 -1.179335,-1.77906 -1.396914,-4.232932 -1.826339,-3.680809 -0.429425,0.552114 2.208484,6.993538 1.77906,7.177582 -0.429425,0.184043 -1.349635,-1.77906 -2.576572,-3.374083 -1.226936,-1.595016 1.28829,-0.736159 -2.637915,-8.465864 -3.926198,-7.729705 1.226944,-11.671284 1.472324,-15.704806 0.24539,-4.033514 3.312738,1.472325 1.717715,-1.104238 -1.595016,-2.576571 0.122697,-7.975094 -1.104246,-9.938197 -1.226936,-1.963102 -8.220475,2.208492 -8.220475,2.208492 0.184036,-1.901758 6.134682,-5.153142 10.428966,-8.1591366 4.294277,-3.005996 6.91682,-0.674813 10.367621,0.4294236 3.450803,1.104246 3.680817,0.736167 2.515226,-0.368079 -1.165591,-1.1042446 0.49077,-1.6563686 3.190031,-1.2269356 2.699269,0.429425 3.435428,3.6808086 7.545669,3.3740746 4.110242,-0.306735 0.429425,0.797511 0.981548,1.840412 0.552123,1.042892 -0.613468,0.920202 -3.312729,2.760607 -2.699262,1.840403 0.06131,1.840403 4.846407,5.337177 4.785055,3.496773 3.312729,-2.331183 2.821952,-4.907753 -0.490777,-2.576563 3.496773,-0.552115 3.496773,-0.552115 2.944651,1.963094 2.400546,0.107972 4.547684,0.782784 2.147139,0.674814 7.967076,5.597286 7.967076,5.597286 -7.300273,3.98755 -2.699261,4.416975 -1.472325,5.337178 1.226937,0.920202 -2.515218,2.699261 -2.515218,2.699261 -1.53367,-1.53367 -1.779059,0.06131 -2.760614,0.613476 -0.981548,0.552115 -0.06131,1.963095 -0.06131,1.963095 -5.076415,0.797512 -3.926198,6.13469 -3.864852,7.422971 0.06131,1.288289 -3.251385,3.251384 -4.110242,5.091796 -0.858857,1.840405 2.208491,5.827948 0.613468,6.073336 -1.595016,0.24539 -3.190031,-6.011991 -11.778601,-3.680808 -2.589322,0.702954 -8.343174,3.680808 -5.275824,9.754153 3.06734,6.073336 8.15913,-1.717714 9.876843,-0.858857 1.717714,0.858857 -0.490778,4.72371 -0.122691,4.785055 0.368079,0.06131 4.8464,0.168662 5.09179,5.398522 0.245388,5.229868 6.809502,4.785065 8.220482,4.907755 1.410972,0.12269 6.134682,-3.864859 6.809502,-4.048894 0.674815,-0.184034 3.374076,-2.453876 9.263377,0.920195 5.889301,3.374089 8.895296,2.883308 10.919743,4.294285 2.02445,1.410987 0.61347,4.232939 2.51523,5.153134 1.90175,0.920217 9.50876,-0.306736 11.41051,2.821966 1.90176,3.1287 -7.8524,18.833491 -10.91974,20.551201 -3.06734,1.71772 -4.478321,5.64392 -7.545665,8.15913 -3.067349,2.51523 -7.361625,5.62854 -11.410522,8.03646 -3.583968,2.1311 -4.228845,5.949 -5.825333,7.15419 28.11404,-6.24545 49.13623,-31.328971 49.13623,-61.323497 0,-34.694029 -28.125171,-62.8192016 -62.819206,-62.8192016 z M 79.442753,60.382331 c -0.858857,0.245389 -2.637917,1.840405 -6.993547,-0.736166 -4.35563,-2.576564 -7.361625,-2.085794 -7.729705,-2.515218 0,0 -0.368079,-1.0429 1.533671,-1.226937 3.905098,-0.378065 8.833951,3.619464 9.938196,3.680809 1.104246,0.06131 1.656361,-1.104245 3.619464,-0.471631 1.963103,0.631953 0.490777,1.023755 -0.368079,1.269143 z M 58.891546,7.6853614 c -0.427786,-0.311152 0.354344,-0.669418 0.82058,-1.288281 0.269103,-0.357613 0.0695,-0.951289 0.406356,-1.28829 0.92021,-0.920203 5.459876,-2.208485 4.572225,0.306734 -0.887321,2.515226 -5.12434,2.760614 -5.799161,2.269837 z m 10.98109,7.9750936 c -1.533672,-0.06131 -5.14381,-0.442837 -4.478321,-1.104246 2.591952,-2.576563 -0.981548,-3.312729 -3.190039,-3.496766 -2.208485,-0.184043 -3.128687,-1.4109786 -2.02444,-1.5336776 1.104237,-0.12269 5.521213,0.06139 6.257379,0.6748206 0.736158,0.613469 4.723709,2.208485 4.969099,3.374076 0.24538,1.16559 0,2.147138 -1.533678,2.085793 z M 83.184914,15.23103 c -1.226943,0.981547 -7.400887,-3.521968 -8.588569,-4.539674 -5.153134,-4.4169746 -7.913742,-2.9446486 -8.995903,-3.6808086 -1.082485,-0.736166 -0.696897,-1.717713 0.959464,-3.190039 1.656369,-1.472325 6.318732,0.490778 9.017994,0.797512 2.699262,0.306734 5.827955,2.392527 5.889301,4.871925 0.06131,2.4792256 2.944649,4.7595296 1.717713,5.7410846 z" />
+</svg>
+
+          </i>
+          English
+        </a>
+        <ul class="submenu">
+          
+            
+          
+            
+              <li class="submenu-item">
+                <a href="https://sec-bit.github.io/blog/">中文</a>
+              </li>
+            
+          
+        </ul>
+      </li>
+    
+
+    
+      <li class="menu-item">
+        <a id="openSearch" class="menu-item-link menu-item-search" href="#">
+          <i class="iconfont">
+            <svg version="1.1" viewBox="0 0 1024 1024"
+  xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M973.81454219 973.81454219a91.78207815 91.78207815 0 0 1-129.80999631 0l-161.97482118-161.97482118a425.48527711 425.48527711 0 0 1-230.35931791 68.16531768 428.3346319 428.3346319 0 1 1 428.3346319-428.3346319 425.48527711 425.48527711 0 0 1-68.16531768 230.35931791l162.02961656 161.97482118a91.83687354 91.83687354 0 0 1-0.05479538 129.80999631zM451.67040679 145.69361559a305.97679241 305.97679241 0 1 0 0 611.95358361 305.97679241 305.97679241 0 0 0 0-611.95358361z">
+  </path>
+</svg>
+
+          </i>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+    </header>
+
+    <div id="mobile-panel">
+      <main id="main" class="main bg-llight wallpaper">
+        <div class="content-wrapper">
+    <div id="content" class="content">
+      <article class="post">
+        
+        <header class="post-header">
+          <h1 class="post-title">Trust Wallet&#39;s Fomo3D Summer: Fresh Discovery of Low Entropy Flaw From 2018</h1>
+          
+
+          <div class="post-meta">
+  <div class="post-meta-author">
+    by
+      p0n1 and outoflegend
+    
+  </div>
+
+  <div class="post-meta-time">
+    <time datetime="2024-01-19">
+      2024-01-19
+    </time>
+  </div>
+
+  
+
+
+  <div class="post-meta__right">
+    
+
+    <div class="post-meta-category">
+        <a href="https://sec-bit.github.io/blog/en/categories/crypto-wallet/"> Crypto Wallet </a>
+          <a href="https://sec-bit.github.io/blog/en/categories/vulnerability/"> Vulnerability </a>
+          
+      </div>
+
+
+    
+    
+
+
+    
+    
+  </div>
+</div>
+
+        </header>
+
+        
+        <div class="post-content">
+          <blockquote>
+<p>Authors: <a href="https://twitter.com/ErrNil">p0n1</a> and <a href="https://twitter.com/outoflegend">outoflegend</a> from <a href="https://secbit.io/">SECBIT Labs</a></p>
+</blockquote>
+<h2 id="how-did-our-investigation-begin">How Did Our Investigation Begin?</h2>
+<p>On 2023-07-12, numerous ETH wallets were hacked, and the funds were transferred to the address 0xAa8B55e21ef3df5f15adf4d0F49D3bfa854e9125. Victims claimed to have used different crypto wallets, some even claiming they hadn&rsquo;t accessed their wallets for a long time. Some even said their wallets were air-gapped or used as cold storage.</p>
+<p>These claims raised questions in our minds, hinting at something more significant. These questions prompted us to start the investigation.</p>
+<h2 id="were-single-or-multiple-wallet-providers-affected-why">Were Single or Multiple Wallet Providers Affected? Why?</h2>
+<p>We have seen user reports on social media with at least three types of wallets, including Trust Wallet and Klever Wallet. Fortunately, @klever_io quickly responded to this hack, pointing out that it was related to an already-known exploit caused by low entropy mnemonic. It was similar to the one reported by <a href="https://blog.ledger.com/Funds-of-every-wallet-created-with-the-Trust-Wallet-browser-extension-could-have-been-stolen">Trust Wallet&rsquo;s browser extension in April 2023</a>. They also stated that this issue was not exclusive to Klever. Reports suggested that multiple wallet providers were affected, providing insight and direction into the possible reasons behind the hacking. However, <strong>no other wallets</strong> except @klever_io have confirmed the issue.</p>
+<h2 id="when-were-the-affected-wallets-created">When Were the Affected Wallets Created?</h2>
+<p>Investigating a crypto wallet hack requires detailed user reports, including wallet creation dates and the wallet brand or product version used. Unfortunately, we couldn&rsquo;t find enough affected users online, as many were unaware of the hack, and others couldn&rsquo;t recall their wallet creation details accurately. We opted to utilize on-chain data for quick analysis.</p>
+<p>You can find more details and findings in our previous tweet thread <a href="https://twitter.com/ErrNil/status/1679533412112293888">here</a>.</p>
+<blockquote>
+<p>1/🧵 Investigating the recent hack&hellip; many wallets created between 2017-06-30 and 2023-06-04 were affected! The most victims are from July 2018. Please check if you&rsquo;re one of them.</p>
+</blockquote>
+<p>The hack is not limited to a single wallet. Many victims were hacked, transferring funds to 0xAa8B55e21ef3df5f15adf4d0F49D3bfa854e9125. A lack of reports online could be due to the affected addresses being old and unchecked.</p>
+<p>Quick research on on-chain data using @DuneAnalytics provided important findings. The analytics dashboard can be found <a href="https://dune.com/echo/2023-07-12-low-entropy-wallets-hack-analysis">here</a>.</p>
+<p>Most intriguing was the wallet creation date. A common vulnerability might link the hacked addresses. Some addresses never sent out any transactions, only receiving funds. The oldest wallet hacked was created on 2017-06-30, and the latest on 2023-06-04. It provides significant evidence that not a single provider was targeted, and the vulnerable product might still be in production. <strong>Most addresses were created in 2018/2019, with the most being created in July and August 2018.</strong></p>
+<p><img src="./img/wallet-creation-date-by-month.png" alt="Wallet Creation Date By Month"></p>
+<p>However, this may not cover all the affected wallets, as the hacker might have scanned for addresses with value, and some wallets may still be unknown.</p>
+<p>As a result, we encouraged users whose wallets were created during this period and who were using the reported products to check for themselves.</p>
+<h2 id="is-trust-wallet-involved-once-again">Is Trust Wallet Involved Once Again?</h2>
+<p>As most victims claimed to use Trust Wallet, one of the most active crypto wallets in 2018, even <a href="https://techcrunch.com/2018/07/31/crypto-exchange-binance-buys-trust-wallet-in-first-acquisition-deal">acquired by Binance in July 2018</a>, we suspected some underlying issues in their code.</p>
+<p>Trust Wallet had <a href="https://community.trustwallet.com/t/browser-extension-wasm-vulnerability-postmortem/750787">disclosed a low entropy vulnerability</a> in their browser extension in April 2023. Could something similar have occurred in their wallet history?</p>
+<p>We expected their team to recognize the potential issue and initiate a self-check if enough users reported the hack or if they saw the news about it.</p>
+<p>With that in mind, we set it aside for the moment and returned to our own work.</p>
+<h2 id="a-new-disclosure-called-milk-sad-brings-us-back">A New Disclosure Called Milk Sad Brings Us Back</h2>
+<p>On 2023-08-09, an article captured our attention. Researchers <a href="https://milksad.info/disclosure.html">uncovered</a> a cryptographic weakness in the Libbitcoin Explorer (bx) cryptocurrency wallet tool, leading to recent wallet thefts. After carefully reviewing their detailed writeup, we believe this vulnerability is closely related to the hack we previously investigated. Both incidents occurred on July 12, providing an excellent reason to suspect they originated from the same hacker.</p>
+<p>On August 11, 2023, @cz_binance <a href="https://twitter.com/cz_binance/status/1689891966249541632">wrote about this vulnerability</a> asserted that Trust Wallet was unaffected.</p>
+<blockquote>
+<p>This vulnerability is due to the random number generator using a 32-bit seed, which is not sufficiently random against modern cracking techniques such as GPUs. @Trustwallet and @Binance wallets do not use this for seed phrase generation. 🙏</p>
+</blockquote>
+<p>However, we became convinced that the libbitcoin vulnerability <strong>was not solely responsible</strong> for the hack we had previously analyzed. It mainly affected Bitcoin users, and the amount of money involved was considerably smaller.</p>
+<p>With these new insights, we decided to reopen the investigation.</p>
+<h2 id="dig-on-trust-wallet">Dig on Trust Wallet</h2>
+<p>Given our previous observations, many compromised wallets were created in July and August 2018, and many users reported using Trust Wallet. The open-source nature of Trust Wallet allowed us to delve into its code from that period.</p>
+<p>Upon reviewing the repositories they might have utilized at the time for iOS, we had to navigate through a few dependencies due to the separate repositories in use.</p>
+<p>Trust Wallet&rsquo;s iOS platform relied on the <a href="https://github.com/trezor/trezor-crypto/"><code>trezor-crypto</code></a> library to generate BIP39 mnemonic words.</p>
+<p>In <code>trezor-crypto/bip39.c</code>, we noticed:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-1"> 1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-2"> 2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-3"> 3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-4"> 4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-5"> 5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-6"> 6</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-7"> 7</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-8"> 8</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-9"> 9</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-10">10</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-11">11</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">mnemonic_generate</span>(<span style="color:#66d9ef">int</span> strength)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (strength <span style="color:#f92672">%</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">||</span> strength <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">128</span> <span style="color:#f92672">||</span> strength <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">256</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint8_t</span> data[<span style="color:#ae81ff">32</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">random_buffer</span>(data, <span style="color:#ae81ff">32</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>r <span style="color:#f92672">=</span> <span style="color:#a6e22e">mnemonic_from_data</span>(data, strength <span style="color:#f92672">/</span> <span style="color:#ae81ff">8</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">memzero</span>(data, <span style="color:#66d9ef">sizeof</span>(data));
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> r;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This function hinges on the <code>trezor-crypto</code> library to generate a random number, the seed/entropy for producing mnemonic words.</p>
+<p>The <code>trezor-crypto/rand.c</code> section, however, is where things get intriguing:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-1"> 1</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-2"> 2</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-3"> 3</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-4"> 4</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-5"> 5</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-6"> 6</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-7"> 7</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-8"> 8</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-9"> 9</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-10">10</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-11">11</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-12"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-12">12</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-13"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-13">13</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-14"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-14">14</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-15"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-15">15</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-16"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-16">16</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-17"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-17">17</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-18"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-18">18</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-19"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-19">19</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-20"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-20">20</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-21"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-21">21</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-22"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-22">22</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-23"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-23">23</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-24"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-24">24</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-25"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-25">25</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-26"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-26">26</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-27"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-27">27</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-28"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-28">28</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-29"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-29">29</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-30"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-30">30</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-31"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-31">31</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-32"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-32">32</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-33"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-33">33</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-34"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-34">34</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-35"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-35">35</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-36"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-36">36</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-37"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-37">37</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-38"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-38">38</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-39"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-39">39</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-40"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-40">40</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-41"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-41">41</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-42"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-42">42</a>
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-43"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-43">43</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;rand.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifndef RAND_PLATFORM_INDEPENDENT
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#pragma message(&#34;NOT SUITABLE FOR PRODUCTION USE!&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// The following code is not supposed to be used in a production environment.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// It&#39;s included only to make the library testable.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// The message above tries to prevent any accidental use outside of the test environment.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// You are supposed to replace the random32() function with your own secure code.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// There is also a possibility to replace the random_buffer() function as it is defined as a weak symbol.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;time.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uint32_t</span> <span style="color:#a6e22e">random32</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> initialized <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>initialized) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">srand</span>((<span style="color:#66d9ef">unsigned</span>)<span style="color:#a6e22e">time</span>(NULL));
+</span></span><span style="display:flex;"><span>        initialized <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ((<span style="color:#a6e22e">rand</span>() <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>) <span style="color:#f92672">|</span> ((<span style="color:#a6e22e">rand</span>() <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">8</span>) <span style="color:#f92672">|</span> ((<span style="color:#a6e22e">rand</span>() <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">16</span>) <span style="color:#f92672">|</span> ((<span style="color:#66d9ef">uint32_t</span>) (<span style="color:#a6e22e">rand</span>() <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">24</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif </span><span style="color:#75715e">/* RAND_PLATFORM_INDEPENDENT */</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// The following code is platform independent
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">__attribute__</span>((weak)) <span style="color:#a6e22e">random_buffer</span>(<span style="color:#66d9ef">uint8_t</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">size_t</span> len)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint32_t</span> r <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">size_t</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> len; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">%</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>            r <span style="color:#f92672">=</span> <span style="color:#a6e22e">random32</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        buf[i] <span style="color:#f92672">=</span> (r <span style="color:#f92672">&gt;&gt;</span> ((i <span style="color:#f92672">%</span> <span style="color:#ae81ff">4</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span>)) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The answer, it turned out, was right there in front of us!</p>
+<h2 id="what-was-the-root-cause-of-the-vulnerability">What Was the Root Cause of the Vulnerability?</h2>
+<p>Breaking down the original code, it incorporates two distinct functions: <code>random32()</code> and <code>random_buffer()</code>.</p>
+<p>The <code>random32()</code> function initializes the random seed only once, using the current time in seconds. This seed is then used to generate a 32-bit random value through the repeated calling of the <code>rand()</code> function. Notably, the <code>rand()</code> function is not suitable for cryptographic purposes, as many implementations of it are easily <a href="https://crypto.stackexchange.com/questions/52000/how-can-c-rand-be-exploited-if-a-secure-seed-is-used">broken or exploited</a>. The core security weakness here is the usage of <code>srand((unsigned)time(NULL))</code>, which seeds the random number generator based on the current time. This predictable value could allow an attacker to guess the state of the random number generator if they have an idea of when the generator was seeded. If two users generate mnemonic words at the exact same second, they will get the same seed, leading to identical wallet addresses. This weakened seeding reduces the key space, making wallet keys very predictable.</p>
+<p>The <code>random_buffer()</code> function functions by filling a buffer with arbitrary bytes via repeated calls to <code>random32()</code>, extracting 8-bit chunks from the resultant 32-bit value. Its frailty is intrinsically linked to <code>random32()</code>&rsquo;s aforementioned vulnerability, whereby its predictability is its downfall.</p>
+<p>Deploying this code unaltered for BIP39 mnemonic word generation would inherently limit the key space. Instead of an expansive array of mnemonic combinations, the key space would merely extend to unique timestamps in seconds. A shrewd hacker could exploit this by systemically generating mnemonics for each timestamp within a conceivable timeframe, linking them to specific wallet addresses. This strategy could trigger large-scale wallet breaches and unauthorized fund transfers if executed broadly.</p>
+<p>The code provides an unequivocal warning that it isn&rsquo;t tailored for production use, and it emphatically recommends supplanting the random functions with more secure counterparts. Overlooking this warning and deploying the code in an authentic environment represents a critical error. The sanctity of cryptographic keys hinges on robust, unforeseeable random number generation, and this code fails to meet that benchmark.</p>
+<p>Regrettably, Trust Wallet sidestepped these warnings, opting to implement the aforementioned code directly in a live environment. This oversight precipitated the generation of low entropy mnemonic words that were effortlessly predictable.</p>
+<h2 id="which-versions-of-trust-wallet-were-affected-and-vulnerable">Which Versions of Trust Wallet Were Affected and Vulnerable?</h2>
+<p>Trust Wallet iOS&rsquo;s vulnerability is traced back to a chain of dependencies: <code>trust-wallet-ios -&gt; trust-keystore -&gt; trust-core -&gt; trezor-crypto-ios</code>. The <a href="https://github.com/trustwallet/trezor-crypto-ios">trezor-crypto-ios</a> repository, a CocoaPods wrapper around the trezor-crypto C library, didn&rsquo;t replace the vulnerable <code>random32()</code> or <code>random_buffer()</code> functions, resulting in the previously mentioned issues.</p>
+<p>The vulnerable code was introduced in trezor-crypto-ios repository in commit 3cd6e8f647fbba8b5d8844fcd144365a086b629f, git tag 0.0.4, on February 5, 2018.</p>
+<p>The final vulnerable commit for the trezor-crypto-ios repository was b23e468d462a9556006552b1d610f6bfb300c52a with pod version <code>0.0.6</code>. Trust developers later fixed the vulnerability in commit 11ef918a089e25580fd8fa0c14a7b62a338cb2db, where they introduced the <code>util/SecRandom.m</code>. This new implementation replaced the unsafe <code>random32()</code> and <code>random_buffer()</code> functions.</p>
+<p>In the new version, <code>random32()</code> now utilizes <code>SecRandomCopyBytes()</code> to generate a 32-bit random value, employing the iOS Security framework to ensure cryptographic security. Unlike the previous function, it doesn&rsquo;t rely on time-based seeding, thus eliminating the associated security risk. Similarly, <code>random_buffer()</code> has been changed to use <code>SecRandomCopyBytes()</code>, filling the buffer with cryptographically secure random values, and overcoming the weaknesses in the original code.</p>
+<p>Trust Wallet&rsquo;s Fix Timeline:</p>
+<ul>
+<li><strong>trezor-crypto-ios</strong>: Fixed on July 16, 2018, commit 11ef918a089e25580fd8fa0c14a7b62a338cb2db, pod version 0.0.7, adding safe <code>random32()</code> and <code>random_buffer()</code> functions.</li>
+<li><strong>trust-core</strong>: Fixed on August 8, 2018, commit e8686eb9dd993dfe5f96236edad847362c21fc5c, pod version 0.1.2, by updating TrezorCrypto to 0.0.7.</li>
+<li><strong>trust-keystore</strong>: Fixed on August 8, 2018, commit eb94ba0bf728bfc8012729b99f5fc36e51256206, pod version 0.4.3, by updating trust-core to 0.1.2.</li>
+<li><strong>trust-wallet-ios</strong>: Fixed on August 21, 2018, commit 0c716fdc4b04a91e4cdb274c96aef45952f7e354, by updating dependencies.</li>
+</ul>
+<p>However, the date and version when the fixed wallet was released to the iOS App Store <strong>remain uncertain</strong>. Additionally, the situation concerning the Trust Wallet Android version is unclear due to a lack of commit history, leaving questions about whether it was affected similarly.</p>
+<h2 id="are-there-any-wallets-and-products-still-vulnerable-in-production">Are There Any Wallets and Products Still Vulnerable in Production?</h2>
+<p>Though Trust Wallet fixed the identified vulnerability in 2018, users employing outdated app versions could still be at risk if they have not updated to the secure version.</p>
+<p>Numerous wallets have forked from Trust Wallet, and they may historically be or continue to be vulnerable.</p>
+<p>It&rsquo;s alarming that users may still use wallets created during the vulnerable period. Without awareness of the issue, they may face further loss of funds.</p>
+<p>Our analysis of on-chain data reveals that wallets created between June 30, 2017, and June 4, 2023, were compromised. This evidence suggests that vulnerable wallets and products may still be in use. Additionally, a similar vulnerability known as the &ldquo;Milk Sad&rdquo; in libbitcoin may have contributed to these breaches and remains a live concern.</p>
+<p>Investigations into other potential vulnerable wallet providers are ongoing.</p>
+<h2 id="some-fun-facts-about-what-is-trust-wallets-fomo3d-summer">Some Fun Facts About What Is Trust Wallet&rsquo;s &ldquo;Fomo3D Summer&rdquo;</h2>
+<p>Examining <a href="https://dune.com/echo/2023-07-12-low-entropy-wallets-hack-analysis">on-chain data</a>, we discovered a surge in victims in July and August 2018, peaking precisely within those months and declining after that. Wallets compromised before July 2018 were rare, possibly indicating a major crypto wallet provider&rsquo;s release of a vulnerable product version in July, followed by a fixed version in August.</p>
+<p><img src="img/wallet-creation-date-by-day.png" alt="Wallet Creation Date By Day"></p>
+<p>A staggering 119 wallets were created on July 21, 2018. Analyzing these wallet addresses reveals that most of them were involved in <a href="https://etherscan.io/address/0xa62142888aba8370742be823c1782d17a0389da1">the famous Fomo3D</a> <a href="https://secbit.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/">game</a>, popular at that time. Evidence can still be found of people writing about Fomo3D and providing <a href="https://hackmd.io/s/r18NzXQSQ">tutorials</a> on participating in the game <strong>using Trust Wallet</strong>, a well-designed wallet that enabled interaction with DApps. Trust Wallet&rsquo;s popularity during this &ldquo;DApp summer&rdquo; even led to its acquisition by Binance.</p>
+<p><img src="img/FOMO3D.jpeg" alt="Fomo3D"></p>
+<p>This on-chain story aligns with Trust Wallet&rsquo;s Git history, inspiring us to label this vulnerability and associated incident &ldquo;Trust Wallet&rsquo;s Fomo3D Summer.&rdquo;</p>
+<p><img src="img/etherscan-fomo3d.png" alt="Fomo3D Balance on Etherscan"></p>
+<h2 id="what-has-been-the-impact-of-this-vulnerability">What Has Been the Impact of This Vulnerability?</h2>
+<p>Trust Wallet, boasting a significant user base, is among the most prominent mobile crypto wallet providers. Due to its extensive reach and open-source nature from the start, numerous public and private forks may have adopted its vulnerable versions.</p>
+<p>Through analyzing the earnings of the address 0xAa8B55e21ef3df5f15adf4d0F49D3bfa854e9125 on the ETH mainnet, we discovered that assets have been stolen from over 2100 victims, resulting in a loss of more than 1360 ETH. This only accounts for the ETH mainnet loss. Theft also occurred on other chains, including but not limited to Bitcoin, Binance chain, Arbitrum, Polygon, and Optimism, leading to losses across different hacker addresses.</p>
+<p><img src="img/bloxy-hacker.png" alt="Hacker on Bloxy"></p>
+<p>Suppose these thefts all originated from the same or similar vulnerability, and there is strong evidence to suggest they did. In that case, the total loss must exceed $3 million at the time of writing. However, Trust Wallet is unlikely to be the sole cause of these breaches. Some users claim to have used other wallets, although these could be forks of Trust Wallet.</p>
+<p>Calculating the precise loss is a complex task requiring substantial time, computation, and query resources. The challenges include early theft before massive hacks, ongoing theft, stolen funds across multiple blockchains and addresses, and shared vulnerability across different wallets. All these factors complicate a clear assessment of the total impact.</p>
+<p>Besides, hackers <strong>are watching all</strong> those vulnerable wallets in all blockchains. They will sweep away the assets in the affected wallets in a short time when anyone deposits funds into them.</p>
+<h2 id="timeline">Timeline</h2>
+<ul>
+<li><strong>2023/07/12:</strong> The low entropy wallet hack occurred and was observed.</li>
+<li><strong>2023/07/13:</strong> Klever Wallet disclosed that this hack affected their product and stated that the issue was not exclusive to them. <a href="https://twitter.com/klever_io/status/1679267565434986501">Tweet</a></li>
+<li><strong>2023/07/14:</strong> We initially analyzed the low-entropy wallet hack. <a href="https://twitter.com/ErrNil/status/1679533412112293888">Tweet</a></li>
+<li><strong>2023/07/15:</strong> Trust Wallet&rsquo;s CEO clarified that the vulnerability was unrelated to them and that they were still investigating. <a href="https://twitter.com/EowynChen/status/1680013484216524802">Tweet</a></li>
+<li><strong>2023/08/09:</strong> Attention was drawn to a vulnerability called &ldquo;Milk Sad&rdquo; in Libbitcoin, which was disclosed. <a href="https://milksad.info/disclosure.html">Details</a></li>
+<li><strong>2023/08/11:</strong> CZ claimed that Trust Wallet was not affected by the low entropy vulnerability in seed generation, prompting us to reopen our investigation into the hack. <a href="https://twitter.com/cz_binance/status/1689891966249541632">Tweet</a></li>
+<li><strong>2023/08/14:</strong> We identified the predictable random number generation issue in Trust Wallet&rsquo;s code in 2018 and completed a PoC.</li>
+<li><strong>2023/08/16:</strong> We reported the vulnerability to the Binance Trust Wallet team.</li>
+<li><strong>2023/08/17:</strong> Binance confirmed our report and said they would discuss and further investigate the issue.</li>
+</ul>
+<p>The timeline becomes boring when we converse with the Binance Team in the following <strong>FIVE months</strong>. But it is still essential because it clarifies what the Binance or Trust Wallet team and we have done during the past months. So, we summarize it here with Mistral LLM. We may publish the entire conversation history if anyone is interested in the details.</p>
+<ul>
+<li><strong>2023/08/21:</strong> We inquired about the progress related to the vulnerability.</li>
+<li><strong>2023/08/23:</strong> We reminded Binance about the vulnerability and informed them that we were considering applying for a CVE ID to standardize vulnerability disclosure.</li>
+<li><strong>2023/08/30:</strong> We updated Binance about resolving the issue mentioned earlier on the 2018-07-XX issue. Now, we could restore many wallets created before that date. We asked Binance to share their progress or plans.</li>
+<li><strong>2023/09/05:</strong> Binance requested active addresses vulnerable to the issue for verification purposes.</li>
+<li><strong>2023/09/06:</strong> We explained the challenges in identifying active addresses, as it required sending many requests to nodes and was time-consuming. We provided Binance with a list of vulnerable ETH mainnet addresses created during a specific period that met the active description.</li>
+<li><strong>2023/09/20:</strong> We asked Binance for updates, as we had been waiting to receive news for two weeks. We also informed them that we could provide all potential vulnerable ETH addresses from Trust Wallet.</li>
+<li><strong>2023/09/21:</strong> Binance requested all potential vulnerable addresses. We shared the link to a file called <code>eth_addrs</code>.</li>
+<li><strong>2023/09/27:</strong> We noticed that Binance had yet to download the data we provided and inquired if they had encountered any issues.</li>
+<li><strong>2023/10/03:</strong> Binance informed us that the link had expired and requested a new one.</li>
+<li><strong>2023/10/07:</strong> We provided Binance with a new link.</li>
+<li><strong>2023/10/19:</strong> We followed up with Binance, requesting an update on the current status of the vulnerability&rsquo;s resolution, an estimated timeline for complete resolution and public disclosure, and any additional information or assistance they might need from us.</li>
+<li><strong>2023/10/26:</strong> We sent a final follow-up and notice of upcoming public disclosure due to the 90-day disclosure deadline, as it had been over two months since our initial communication, and we had yet to receive a substantive update or a clear resolution timeline from Binance.</li>
+<li><strong>2023/10/27:</strong> Binance claimed they hadn&rsquo;t found any active addresses or assets in the list. They also mentioned that they were still running scans and would provide further updates once completed.</li>
+<li><strong>2023/10/27:</strong> We informed Binance that the hackers had already swept away the assets in the affected wallets and that their approach of individually notifying users after finding wallets with balance was too slow and ineffective.</li>
+<li><strong>2023/11/15:</strong> We inquired if Binance had any updates, as the time mentioned earlier for disclosure had passed. We suggested that if Binance could not handle the issue quickly or correctly, it would be better to let the community help.</li>
+<li><strong>2023/11/17:</strong> Binance informed us that there wasn&rsquo;t any remaining balance within the affected ETH addresses, and they were reviewing the BSC addresses balances. They recalled informing users of the affected wallets in 2018 and suggested relocating their funds to a safer location. They were currently identifying whether any affected wallet users were using Trust Wallet and planned to send 1-1 notifications to each user, reminding them not to employ the compromised wallets again.</li>
+<li><strong>2023/11/17:</strong> We expressed our doubts about Binance&rsquo;s claim of informing affected users in 2018 and requested evidence of such notifications. We also suggested they proactively consider and mitigate the risks of notifying affected users.</li>
+<li><strong>2023/11/22:</strong> Binance requested sample addresses compromised in the 2023-07-12 hack.</li>
+<li><strong>2023/11/22:</strong> We provided Binance with compromised sample addresses that could be found in the <code>eth_addrs</code> list we provided earlier.</li>
+<li><strong>2023/12/04:</strong> Binance informed us that there was no match with their DB on the addresses we shared, and they were still checking for the other addresses.</li>
+<li><strong>2023/12/04:</strong> We questioned the accuracy of Binance&rsquo;s DB and provided them with the addresses of two real users who created wallets using Trust Wallet and were hacked in the incident.</li>
+<li><strong>2024/01/08:</strong> Binance claimed that the 2023-07-12 incident was not unique to Trust Wallet and may be attributed to various sources that generated weak private keys. They also mentioned an extremely low percentage of matches in their database and that the incident was unlikely to target Trust Wallet users.</li>
+</ul>
+<p>Until now, too much time has been spent on dealing with and tracking this vulnerability. We cannot understand why this would take the Trust Wallet team so long to handle and ultimately lead to the conclusion that Trust Wallet users are not the primary victims.</p>
+<h2 id="what-do-we-think-about-trust-wallets-response">What Do We Think About Trust Wallet&rsquo;s Response?</h2>
+<p>We provided the Trust Wallet team with the set of potential ETH addresses generated by the vulnerable Trust Wallet code. The address set is over 28 GB. We can recover the private keys for all of these addresses. We also analyzed all of the victim addresses in the hack on July 12, 2023, and found that out of the 2112 addresses, 1756 addresses can be matched with the address set we provided. Besides, we offered two real Trust Wallet users who were victims. Therefore, we believe that most users affected in the July 12, 2023 hack were Trust Wallet users or users of Trust Wallet Fork products.</p>
+<p>However, the Trust Wallet team claims that most addresses were not found in their user database, and therefore the hack on July 12, 2023 was not targeted at Trust Wallet users.</p>
+<p>As we analyzed from multiple other angles, such as on-chain data, Git commit history, and the popularity of Fomo3D at the time, it is clear that Trust Wallet is closely related to this hack.</p>
+<p>The Trust Wallet team mentioned almost no balance on all the addresses we provided to them. In fact, all addresses with balances had been emptied by the hackers.</p>
+<p>The Trust Wallet team claimed they notified the affected wallet addresses in 2018. The number of users using Trust Wallet is huge, and such a level of notification at that time would definitely become news. However, we cannot find any evidence. We hope that Trust Wallet can provide proof.</p>
+<p>The Trust Wallet team wants to find the affected active addresses with balances. This is an impossible task because before the team finds them, the quick-acting hackers will definitely clean them out.</p>
+<p>Considering the number of Trust Wallet users and potentially affected users, it is almost impossible for the Trust Wallet team to quietly complete the notification and migration work for the affected wallets.</p>
+<p>Furthermore, we may understand that the Binance and Trust Wallet team do not have the motivation to dig into this issue. So we have decided to disclose this vulnerability now. As we previously mentioned to Trust Wallet, &ldquo;If your team can&rsquo;t handle this issue quickly/correctly, it would be better to let the community help you.&rdquo;</p>
+<p>Wallet products must prioritize user safety over any new features. We can easily find helpless victims <a href="https://www.reddit.com/r/trustwalletcommunity/comments/150qpcp/trust_wallet_hacked_trust_vulnerability/">crying</a> on the internet. What is even more terrifying is that there are still many victims and potential victims who are not aware of this issue. Transparency is crucial.</p>
+<p>In the crypto world, one of the scariest things we can imagine is that users carefully place their assets in a crypto wallet and guard them well. However, hackers can still calculate their mnemonic phrase and empty their lifetime savings, even if their device is not connected to the network and has no interaction with the outside world.</p>
+<h2 id="what-is-behind-this-vulnerability">What Is Behind This Vulnerability?</h2>
+<p>The vulnerability discovered in Trust Wallet stemmed from the misuse of the trezor-crypto library, a tool widely employed in the industry. Concerns about the potential problems arising from misusing trezor&rsquo;s library were raised by @brandonarvanaghi on May 7, 2019, in this <a href="https://medium.com/@brandonarvanaghi/analyzing-trezor-firmware-mnemonic-seed-generation-for-bitcoin-and-ethereum-4b03fbaad24d">article</a>.</p>
+<blockquote>
+<p>&ldquo;It is ill-advised to provide a default implementation of a cryptography library that is completely insecure. The git history shows that random32() at one time pulled from /dev/urandom, and another time used a predictable timestamp as the seed. Throwing an exception is the only correct option here, regardless of allowing users to &rsquo;test&rsquo; the library out of the box.&rdquo;</p>
+</blockquote>
+<p>This concern became a reality in the case of Trust Wallet, leading to a vulnerability that was forked and utilized by numerous projects, causing widespread issues.</p>
+<p>Of course, the Trust Wallet may not be the only one who misused the trezor-crypto library. There may be many other unknown projects that have similar vulnerabilities. Someone could even blame the trezor-crypto library for quietly changing to an insecure default implementation, causing fatal flaws in projects that use it as a underlying dependency.</p>
+<p>However, after several similar security incidents, every crypto wallet developer and even user should conduct a self-check and ask a simple but vital question: Where does my wallet&rsquo;s random number originate from, and is it secure enough?</p>
+<p>Realizing that their wallet mnemonic words are insecure can be deeply unsettling for users. Even with caution and using a wallet as a cold storage solution, theft can still occur. Therefore, it is imperative not to trust any single wallet unquestioningly but to conduct your own research and consider utilizing a multi-signature wallet instead.</p>
+<h2 id="whats-next">What&rsquo;s Next?</h2>
+<p>We have disclosed this vulnerability to the public and will continue to track the progress of the Trust Wallet team. We hope that they take this issue seriously and take action to protect their users.</p>
+<p>There is still a lot of valuable and interesting work to be done, such as analyzing all vulnerable wallet addresses that have been used, and providing a service for users to check if they are affected. There is also a challenging task, which is to find an effective way to distinguish whether an affected wallet is from Trust Wallet, a forked product of Trust Wallet, or another project that misuses the trezor-crypto library.</p>
+<p>As a wallet user, there will definitely be many <strong>new migration or compensation scams</strong> targeting Trust Wallet in the future. Please be careful and verify the authenticity of any statements. Only trust official announcements, and do not click on links carelessly. Do not share your mnemonic phrase with anyone.</p>
+<h2 id="credit">Credit</h2>
+<p>Thank you to all users who shared with us during the early investigation of the hack and vulnerability. Especially a kind-hearted user who even shared his mnemonic phrase with us, which helped us greatly confirm the vulnerability.</p>
+<p>Thank you to the Trust Wallet team for their years of open-source work, which has provided a certain degree of transparency.</p>
+<p>Credit to @brandonarvanaghi for his early warning about the trezor-crypto library.</p>
+<p>Credit to researchers who disclosed the <a href="https://milksad.info/">Milk Sad</a> vulnerability in Libbitcoin.</p>
+<p>We may also share more details about the vulnerability reproduction later on, as it&rsquo;s not that easy, and more stories will be behind it.</p>
+
+        </div>
+
+        
+        
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">p0n1 and outoflegend</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+      2024-01-19
+      
+        <a href="https://github.com/sec-bit/blog/commit/3cdbbc74db861ba798f0165c1ffff821f5a514f6" title="Add Trust Wallet FOMO3D Summer event">
+          (3cdbbc7)
+        </a>
+        
+          <br>Add Trust Wallet FOMO3D Summer event
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content">If you need to reprint, please indicate the author and source of the article.</span>
+  </p>
+</div>
+
+
+
+        
+        
+
+
+        <footer class="post-footer">
+          <div class="post-tags">
+              <a href="https://sec-bit.github.io/blog/en/tags/trust-wallet/">Trust Wallet</a>
+                <a href="https://sec-bit.github.io/blog/en/tags/fomo3d/">Fomo3D</a>
+                <a href="https://sec-bit.github.io/blog/en/tags/low-entropy/">Low Entropy</a>
+                <a href="https://sec-bit.github.io/blog/en/tags/vulnerability/">Vulnerability</a>
+                <a href="https://sec-bit.github.io/blog/en/tags/hacking/">Hacking</a>
+                <a href="https://sec-bit.github.io/blog/en/tags/binance/">Binance</a>
+                <a href="https://sec-bit.github.io/blog/en/tags/crypto-wallet/">Crypto Wallet</a>
+                <a href="https://sec-bit.github.io/blog/en/tags/mnemonic/">Mnemonic</a>
+                <a href="https://sec-bit.github.io/blog/en/tags/seed/">Seed</a>
+                <a href="https://sec-bit.github.io/blog/en/tags/random-number/">Random Number</a>
+                <a href="https://sec-bit.github.io/blog/en/tags/libbitcoin/">Libbitcoin</a>
+                <a href="https://sec-bit.github.io/blog/en/tags/milk-sad/">Milk Sad</a>
+                
+            </div>
+
+
+          
+          <nav class="post-nav">
+            
+            
+              <a class="next" href="/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/">
+                <span class="next-text nav-default">The &#39;Input Aliasing&#39; bug caused by a contract library of zkSNARKs</span>
+                <span class="prev-text nav-mobile">Next</span>
+                
+                <i class="iconfont">
+                  <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+                </i>
+              </a>
+          </nav>
+        </footer>
+      </article>
+
+      
+      
+        
+      
+
+
+      
+      
+
+  
+
+  
+  
+    <div class="post">
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="sec-bit/comments-for-secbit-blog"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkyMTQ2MDkzNjM="
+    data-category="Comments"
+    data-category-id="DIC_kwDODMqt084CY2v-"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="en"
+    
+      data-loading="lazy"
+    
+    crossorigin="anonymous"
+    async
+  ></script>
+</div>
+
+  
+
+  
+  
+
+  
+
+  
+
+    
+
+  
+
+  
+
+
+    </div>
+
+    
+    <nav class="toc" id="toc">
+    <div class="toc-title">Table of Contents</div>
+    <div class="toc-content custom-scrollbar">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#how-did-our-investigation-begin">How Did Our Investigation Begin?</a></li>
+    <li><a href="#were-single-or-multiple-wallet-providers-affected-why">Were Single or Multiple Wallet Providers Affected? Why?</a></li>
+    <li><a href="#when-were-the-affected-wallets-created">When Were the Affected Wallets Created?</a></li>
+    <li><a href="#is-trust-wallet-involved-once-again">Is Trust Wallet Involved Once Again?</a></li>
+    <li><a href="#a-new-disclosure-called-milk-sad-brings-us-back">A New Disclosure Called Milk Sad Brings Us Back</a></li>
+    <li><a href="#dig-on-trust-wallet">Dig on Trust Wallet</a></li>
+    <li><a href="#what-was-the-root-cause-of-the-vulnerability">What Was the Root Cause of the Vulnerability?</a></li>
+    <li><a href="#which-versions-of-trust-wallet-were-affected-and-vulnerable">Which Versions of Trust Wallet Were Affected and Vulnerable?</a></li>
+    <li><a href="#are-there-any-wallets-and-products-still-vulnerable-in-production">Are There Any Wallets and Products Still Vulnerable in Production?</a></li>
+    <li><a href="#some-fun-facts-about-what-is-trust-wallets-fomo3d-summer">Some Fun Facts About What Is Trust Wallet&rsquo;s &ldquo;Fomo3D Summer&rdquo;</a></li>
+    <li><a href="#what-has-been-the-impact-of-this-vulnerability">What Has Been the Impact of This Vulnerability?</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#what-do-we-think-about-trust-wallets-response">What Do We Think About Trust Wallet&rsquo;s Response?</a></li>
+    <li><a href="#what-is-behind-this-vulnerability">What Is Behind This Vulnerability?</a></li>
+    <li><a href="#whats-next">What&rsquo;s Next?</a></li>
+    <li><a href="#credit">Credit</a></li>
+  </ul>
+</nav>
+    </div>
+  </nav>
+
+
+  </div>
+
+      </main>
+
+      <footer id="footer" class="footer">
+        <div class="icon-links">
+  
+  
+    <a href="mailto:hi@secbit.io" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://twitter.com/SECBIT_IO" rel="me noopener" class="iconfont"
+      title="twitter"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1264 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M1229.8616 18.043658c0 0-117.852626 63.135335-164.151872 67.344358-105.225559-164.151872-505.082682-92.598492-437.738325 223.078185C278.622548 312.675223 89.216542 47.506814 89.216542 47.506814s-117.852626 189.406006 75.762402 345.139833C127.097743 396.85567 55.544363 371.601535 55.544363 371.601535S26.081207 535.753407 253.368414 615.724832c-21.045112 29.463156-113.643603 8.418045-113.643603 8.418045s25.254134 143.10676 231.496229 180.987961c-143.10676 130.479693-387.230056 92.598492-370.393967 105.225559 206.242095 189.406006 1119.599946 231.496229 1128.01799-643.98042C1179.353331 249.539887 1263.533778 123.269217 1263.533778 123.269217s-130.479693 37.881201-138.897738 33.672179C1225.652577 98.015083 1229.8616 18.043658 1229.8616 18.043658"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/sec-bit" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/org/secbit/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://sec-bit.github.io/blog/en/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+  
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2018 -
+    2024
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        SECBIT Labs
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+      </footer>
+
+      <div class="button__back-to-top">
+        <a href="#back-to-top">
+          <i class="iconfont">
+            
+            <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+          </i>
+        </a>
+      </div>
+    </div>
+    
+<script type="text/javascript" src="/blog/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/blog/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/blog/js/main.8f212fb6e092bf9e169cea5934d935af61b1e0d48702c784602d318f3bb1cc67.js" integrity="sha256-jyEvtuCSv54WnOpZNNk1r2Gx4NSHAseEYC0xjzuxzGc=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css"
+    integrity="sha384-BdGj8xC2eZkQaxoQ8nSLefg4AV4/AwB3Fj+8SUSo7pnKP6Eoy18liIKTPn9oBYNG"
+    crossorigin="anonymous">
+
+  
+  <script defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.js"
+    integrity="sha384-JiKN5O8x9Hhs/UE5cT5AAJqieYlOZbGT3CHws/y97o3ty4R7/O5poG9F3JoiOYw1"
+    crossorigin="anonymous"></script>
+
+  
+  <script defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/contrib/auto-render.min.js"
+    integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+    crossorigin="anonymous" onload="renderMathInElement(document.body);">
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      renderMathInElement(document.body, {
+        
+      });
+    });
+  </script>
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+    $("#openSearch, #openSearchMobile").click(function(){
+      $(".modal-dialog").addClass("visible");
+    });
+
+    $("#closeSearch").click(function(){
+      $(".modal-dialog").removeClass("visible");
+    });
+
+    $(document).click(function(event) {
+    
+      if (!$(event.target).closest(".modal-content, #openSearch, #openSearchMobile").length) {
+        $("body").find(".modal-dialog").removeClass("visible");
+      }
+    });
+  </script>
+
+
+
+
+
+  </body>
+</html>

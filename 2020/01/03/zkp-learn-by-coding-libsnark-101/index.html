@@ -38,7 +38,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.117.0" />
+<meta name="generator" content="Hugo 0.120.4" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/" />
@@ -75,6 +75,7 @@
 <meta property="og:url" content="https://sec-bit.github.io/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2020-01-03T08:00:00+08:00" />
 <meta property="article:modified_time" content="2020-03-24T13:12:58+08:00" />
+
 <meta itemprop="name" content="零知识证明 Learn by Coding：libsnark 入门篇">
 <meta itemprop="description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。"><meta itemprop="datePublished" content="2020-01-03T08:00:00+08:00" />
 <meta itemprop="dateModified" content="2020-03-24T13:12:58+08:00" />
@@ -805,8 +806,8 @@ if (!doNotTrack) {
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-19-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-19-2">2</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
-</span></span><span style="display:flex;"><span>const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> r1cs_constraint_system<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> constraint_system <span style="color:#f92672">=</span> pb<span style="color:#f92672">.</span>get_constraint_system();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> r1cs_gg_ppzksnark_keypair<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> keypair <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_generator<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(constraint_system);
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>进入<strong>第三步</strong>，生成证明。先为 public input 以及 witness 提供具体数值。不难发现，<code>x = 3, out = 35</code> 是原始方程的一个解。则依次为 <code>x</code>、<code>out</code> 以及各个中间变量赋值。</p>
@@ -834,7 +835,7 @@ if (!doNotTrack) {
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-21-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-21-1">1</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> r1cs_gg_ppzksnark_proof<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> proof <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_prover<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(keypair<span style="color:#f92672">.</span>pk, pb<span style="color:#f92672">.</span>primary_input(), pb<span style="color:#f92672">.</span>auxiliary_input());
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后我们使用 verifier 函数校验证明。如果 <code>verified = true</code> 则说明证明验证成功。</p>
@@ -868,13 +869,13 @@ if (!doNotTrack) {
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-23-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-23-7">7</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>comparison_gadget(protoboard&lt;FieldT&gt;&amp; pb,
-</span></span><span style="display:flex;"><span>                    const size_t n,
-</span></span><span style="display:flex;"><span>                    const pb_linear_combination&lt;FieldT&gt; &amp;A,
-</span></span><span style="display:flex;"><span>                    const pb_linear_combination&lt;FieldT&gt; &amp;B,
-</span></span><span style="display:flex;"><span>                    const pb_variable&lt;FieldT&gt; &amp;less,
-</span></span><span style="display:flex;"><span>                    const pb_variable&lt;FieldT&gt; &amp;less_or_eq,
-</span></span><span style="display:flex;"><span>                    const std::string &amp;annotation_prefix=&#34;&#34;)
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>comparison_gadget(protoboard<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;&amp;</span> pb,
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">const</span> size_t n,
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">const</span> pb_linear_combination<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span>A,
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">const</span> pb_linear_combination<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span>B,
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">const</span> pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span>less,
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">const</span> pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span>less_or_eq,
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">const</span> std::string <span style="color:#f92672">&amp;</span>annotation_prefix<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>该 gadget 需要传入的参数较多：<code>n</code> 表示位数，<code>A</code> 和 <code>B</code> 分别为需要比较的两个数，<code>less</code> 和 <code>less_or_eq</code> 用来标记两个数的关系是「小于」还是「小于或等于」。该 gadget 实现的原理简单来讲是把 <code>A</code> 和 <code>B</code> 的比较，转化为 <code>2^n + B - A</code> 按位表示。具体实现还用到了其余多个基础 gadget，可以通过 <code>comparison_gadget&lt;FieldT&gt;::generate_r1cs_constraints()</code> 研究。</p>
@@ -892,15 +893,15 @@ if (!doNotTrack) {
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-24-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-24-9">9</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>protoboard&lt;FieldT&gt; pb;
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>protoboard<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> pb;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>pb_variable&lt;FieldT&gt; x, max;
-</span></span><span style="display:flex;"><span>pb_variable&lt;FieldT&gt; less, less_or_eq;
+</span></span><span style="display:flex;"><span>pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> x, max;
+</span></span><span style="display:flex;"><span>pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> less, less_or_eq;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>x.allocate(pb, &#34;x&#34;);
-</span></span><span style="display:flex;"><span>max.allocate(pb, &#34;max&#34;);
+</span></span><span style="display:flex;"><span>x<span style="color:#f92672">.</span>allocate(pb, <span style="color:#e6db74">&#34;x&#34;</span>);
+</span></span><span style="display:flex;"><span>max<span style="color:#f92672">.</span>allocate(pb, <span style="color:#e6db74">&#34;max&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>pb.val(max)= 60;
+</span></span><span style="display:flex;"><span>pb<span style="color:#f92672">.</span>val(max)<span style="color:#f92672">=</span> <span style="color:#ae81ff">60</span>;
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>使用 <code>comparison_gadget</code> 创建 <code>cmp</code>，并把前面的参数填入，并调用 gadget 自带的 <code>generate_r1cs_constraints()</code> 方法。同时另外添加一个约束，要求 <code>less * 1 = 1</code>，也就是 <code>less</code> 必须为 <code>true</code>。</p>
@@ -911,9 +912,9 @@ if (!doNotTrack) {
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-25-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-25-3">3</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>comparison_gadget&lt;FieldT&gt; cmp(pb, 10, x, max, less, less_or_eq, &#34;cmp&#34;);
-</span></span><span style="display:flex;"><span>cmp.generate_r1cs_constraints();
-</span></span><span style="display:flex;"><span>pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(less, 1, FieldT::one()));
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>comparison_gadget<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> cmp(pb, <span style="color:#ae81ff">10</span>, x, max, less, less_or_eq, <span style="color:#e6db74">&#34;cmp&#34;</span>);
+</span></span><span style="display:flex;"><span>cmp<span style="color:#f92672">.</span>generate_r1cs_constraints();
+</span></span><span style="display:flex;"><span>pb<span style="color:#f92672">.</span>add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(less, <span style="color:#ae81ff">1</span>, FieldT::one()));
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>输入 witness（秘密值 x），比如让 <code>x = 18</code>。这里还需要调用 <code>comparison_gadget</code> 的 <code>generate_r1cs_witness</code> 方法。</p>
@@ -1005,64 +1006,64 @@ if (!doNotTrack) {
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-59"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-59">59</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#include &lt;libff/common/default_types/ec_pp.hpp&gt;
-</span></span><span style="display:flex;"><span>#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
-</span></span><span style="display:flex;"><span>#include &lt;libsnark/relations/constraint_satisfaction_problems/r1cs/examples/r1cs_examples.hpp&gt;
-</span></span><span style="display:flex;"><span>#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libff/common/default_types/ec_pp.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/relations/constraint_satisfaction_problems/r1cs/examples/r1cs_examples.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> libsnark;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>using namespace libsnark;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>/**
-</span></span><span style="display:flex;"><span> * The code below provides an example of all stages of running a R1CS GG-ppzkSNARK.
-</span></span><span style="display:flex;"><span> *
-</span></span><span style="display:flex;"><span> * Of course, in a real-life scenario, we would have three distinct entities,
-</span></span><span style="display:flex;"><span> * mangled into one in the demonstration below. The three entities are as follows.
-</span></span><span style="display:flex;"><span> * (1) The &#34;generator&#34;, which runs the ppzkSNARK generator on input a given
-</span></span><span style="display:flex;"><span> *     constraint system CS to create a proving and a verification key for CS.
-</span></span><span style="display:flex;"><span> * (2) The &#34;prover&#34;, which runs the ppzkSNARK prover on input the proving key,
-</span></span><span style="display:flex;"><span> *     a primary input for CS, and an auxiliary input for CS.
-</span></span><span style="display:flex;"><span> * (3) The &#34;verifier&#34;, which runs the ppzkSNARK verifier on input the verification key,
-</span></span><span style="display:flex;"><span> *     a primary input for CS, and a proof.
-</span></span><span style="display:flex;"><span> */
-</span></span><span style="display:flex;"><span>template&lt;typename ppT&gt;
-</span></span><span style="display:flex;"><span>bool run_r1cs_gg_ppzksnark(const r1cs_example&lt;libff::Fr&lt;ppT&gt; &gt; &amp;example)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * The code below provides an example of all stages of running a R1CS GG-ppzkSNARK.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Of course, in a real-life scenario, we would have three distinct entities,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * mangled into one in the demonstration below. The three entities are as follows.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * (1) The &#34;generator&#34;, which runs the ppzkSNARK generator on input a given
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *     constraint system CS to create a proving and a verification key for CS.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * (2) The &#34;prover&#34;, which runs the ppzkSNARK prover on input the proving key,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *     a primary input for CS, and an auxiliary input for CS.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * (3) The &#34;verifier&#34;, which runs the ppzkSNARK verifier on input the verification key,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *     a primary input for CS, and a proof.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> ppT<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> run_r1cs_gg_ppzksnark(<span style="color:#66d9ef">const</span> r1cs_example<span style="color:#f92672">&lt;</span>libff<span style="color:#f92672">::</span>Fr<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span>example)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    libff::print_header(&#34;R1CS GG-ppzkSNARK Generator&#34;);
-</span></span><span style="display:flex;"><span>    r1cs_gg_ppzksnark_keypair&lt;ppT&gt; keypair = r1cs_gg_ppzksnark_generator&lt;ppT&gt;(example.constraint_system);
-</span></span><span style="display:flex;"><span>    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after generator&#34;);
+</span></span><span style="display:flex;"><span>    libff<span style="color:#f92672">::</span>print_header(<span style="color:#e6db74">&#34;R1CS GG-ppzkSNARK Generator&#34;</span>);
+</span></span><span style="display:flex;"><span>    r1cs_gg_ppzksnark_keypair<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span> keypair <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_generator<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(example.constraint_system);
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>); libff<span style="color:#f92672">::</span>print_indent(); libff<span style="color:#f92672">::</span>print_mem(<span style="color:#e6db74">&#34;after generator&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    libff::print_header(&#34;Preprocess verification key&#34;);
-</span></span><span style="display:flex;"><span>    r1cs_gg_ppzksnark_processed_verification_key&lt;ppT&gt; pvk = r1cs_gg_ppzksnark_verifier_process_vk&lt;ppT&gt;(keypair.vk);
+</span></span><span style="display:flex;"><span>    libff<span style="color:#f92672">::</span>print_header(<span style="color:#e6db74">&#34;Preprocess verification key&#34;</span>);
+</span></span><span style="display:flex;"><span>    r1cs_gg_ppzksnark_processed_verification_key<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span> pvk <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_verifier_process_vk<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(keypair.vk);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    libff::print_header(&#34;R1CS GG-ppzkSNARK Prover&#34;);
-</span></span><span style="display:flex;"><span>    r1cs_gg_ppzksnark_proof&lt;ppT&gt; proof = r1cs_gg_ppzksnark_prover&lt;ppT&gt;(keypair.pk, example.primary_input, example.auxiliary_input);
-</span></span><span style="display:flex;"><span>    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after prover&#34;);
+</span></span><span style="display:flex;"><span>    libff<span style="color:#f92672">::</span>print_header(<span style="color:#e6db74">&#34;R1CS GG-ppzkSNARK Prover&#34;</span>);
+</span></span><span style="display:flex;"><span>    r1cs_gg_ppzksnark_proof<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span> proof <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_prover<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(keypair.pk, example.primary_input, example.auxiliary_input);
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>); libff<span style="color:#f92672">::</span>print_indent(); libff<span style="color:#f92672">::</span>print_mem(<span style="color:#e6db74">&#34;after prover&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    libff::print_header(&#34;R1CS GG-ppzkSNARK Verifier&#34;);
-</span></span><span style="display:flex;"><span>    const bool ans = r1cs_gg_ppzksnark_verifier_strong_IC&lt;ppT&gt;(keypair.vk, example.primary_input, proof);
-</span></span><span style="display:flex;"><span>    printf(&#34;\n&#34;); libff::print_indent(); libff::print_mem(&#34;after verifier&#34;);
-</span></span><span style="display:flex;"><span>    printf(&#34;* The verification result is: %s\n&#34;, (ans ? &#34;PASS&#34; : &#34;FAIL&#34;));
+</span></span><span style="display:flex;"><span>    libff<span style="color:#f92672">::</span>print_header(<span style="color:#e6db74">&#34;R1CS GG-ppzkSNARK Verifier&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">bool</span> ans <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_verifier_strong_IC<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(keypair.vk, example.primary_input, proof);
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>); libff<span style="color:#f92672">::</span>print_indent(); libff<span style="color:#f92672">::</span>print_mem(<span style="color:#e6db74">&#34;after verifier&#34;</span>);
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;* The verification result is: %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, (ans <span style="color:#f92672">?</span> <span style="color:#e6db74">&#34;PASS&#34;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;FAIL&#34;</span>));
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    libff::print_header(&#34;R1CS GG-ppzkSNARK Online Verifier&#34;);
-</span></span><span style="display:flex;"><span>    const bool ans2 = r1cs_gg_ppzksnark_online_verifier_strong_IC&lt;ppT&gt;(pvk, example.primary_input, proof);
-</span></span><span style="display:flex;"><span>    assert(ans == ans2);
+</span></span><span style="display:flex;"><span>    libff<span style="color:#f92672">::</span>print_header(<span style="color:#e6db74">&#34;R1CS GG-ppzkSNARK Online Verifier&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">bool</span> ans2 <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_online_verifier_strong_IC<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(pvk, example.primary_input, proof);
+</span></span><span style="display:flex;"><span>    assert(ans <span style="color:#f92672">==</span> ans2);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    return ans;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ans;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>template&lt;typename ppT&gt;
-</span></span><span style="display:flex;"><span>void test_r1cs_gg_ppzksnark(size_t num_constraints, size_t input_size)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> ppT<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> test_r1cs_gg_ppzksnark(size_t num_constraints, size_t input_size)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    r1cs_example&lt;libff::Fr&lt;ppT&gt; &gt; example = generate_r1cs_example_with_binary_input&lt;libff::Fr&lt;ppT&gt; &gt;(num_constraints, input_size);
-</span></span><span style="display:flex;"><span>    const bool bit = run_r1cs_gg_ppzksnark&lt;ppT&gt;(example);
+</span></span><span style="display:flex;"><span>    r1cs_example<span style="color:#f92672">&lt;</span>libff<span style="color:#f92672">::</span>Fr<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span> example <span style="color:#f92672">=</span> generate_r1cs_example_with_binary_input<span style="color:#f92672">&lt;</span>libff<span style="color:#f92672">::</span>Fr<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span>(num_constraints, input_size);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">bool</span> bit <span style="color:#f92672">=</span> run_r1cs_gg_ppzksnark<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(example);
 </span></span><span style="display:flex;"><span>    assert(bit);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>int main () {
-</span></span><span style="display:flex;"><span>    default_r1cs_gg_ppzksnark_pp::init_public_params();
-</span></span><span style="display:flex;"><span>    test_r1cs_gg_ppzksnark&lt;default_r1cs_gg_ppzksnark_pp&gt;(1000, 100);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span> () {
+</span></span><span style="display:flex;"><span>    default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">::</span>init_public_params();
+</span></span><span style="display:flex;"><span>    test_r1cs_gg_ppzksnark<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">100</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    return 0;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
@@ -1146,79 +1147,79 @@ if (!doNotTrack) {
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-74"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-74">74</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
-</span></span><span style="display:flex;"><span>#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
-</span></span><span style="display:flex;"><span>#include &lt;libsnark/gadgetlib1/pb_variable.hpp&gt;
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/gadgetlib1/pb_variable.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> libsnark;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>using namespace libsnark;
-</span></span><span style="display:flex;"><span>using namespace std;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span> () {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">typedef</span> libff<span style="color:#f92672">::</span>Fr<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> FieldT;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>int main () {
-</span></span><span style="display:flex;"><span>    typedef libff::Fr&lt;default_r1cs_gg_ppzksnark_pp&gt; FieldT;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // Initialize the curve parameters
-</span></span><span style="display:flex;"><span>    default_r1cs_gg_ppzksnark_pp::init_public_params();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Initialize the curve parameters
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">::</span>init_public_params();
 </span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    // Create protoboard
-</span></span><span style="display:flex;"><span>    protoboard&lt;FieldT&gt; pb;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Create protoboard
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    protoboard<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> pb;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // Define variables
-</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; x;
-</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; sym_1;
-</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; y;
-</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; sym_2;
-</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; out;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Define variables
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> x;
+</span></span><span style="display:flex;"><span>    pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> sym_1;
+</span></span><span style="display:flex;"><span>    pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> y;
+</span></span><span style="display:flex;"><span>    pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> sym_2;
+</span></span><span style="display:flex;"><span>    pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> out;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // Allocate variables to protoboard
-</span></span><span style="display:flex;"><span>    // The strings (like &#34;x&#34;) are only for debugging purposes    
-</span></span><span style="display:flex;"><span>    out.allocate(pb, &#34;out&#34;);
-</span></span><span style="display:flex;"><span>    x.allocate(pb, &#34;x&#34;);
-</span></span><span style="display:flex;"><span>    sym_1.allocate(pb, &#34;sym_1&#34;);
-</span></span><span style="display:flex;"><span>    y.allocate(pb, &#34;y&#34;);
-</span></span><span style="display:flex;"><span>    sym_2.allocate(pb, &#34;sym_2&#34;);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Allocate variables to protoboard
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// The strings (like &#34;x&#34;) are only for debugging purposes    
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    out.allocate(pb, <span style="color:#e6db74">&#34;out&#34;</span>);
+</span></span><span style="display:flex;"><span>    x.allocate(pb, <span style="color:#e6db74">&#34;x&#34;</span>);
+</span></span><span style="display:flex;"><span>    sym_1.allocate(pb, <span style="color:#e6db74">&#34;sym_1&#34;</span>);
+</span></span><span style="display:flex;"><span>    y.allocate(pb, <span style="color:#e6db74">&#34;y&#34;</span>);
+</span></span><span style="display:flex;"><span>    sym_2.allocate(pb, <span style="color:#e6db74">&#34;sym_2&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // This sets up the protoboard variables
-</span></span><span style="display:flex;"><span>    // so that the first one (out) represents the public
-</span></span><span style="display:flex;"><span>    // input and the rest is private input
-</span></span><span style="display:flex;"><span>    pb.set_input_sizes(1);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// This sets up the protoboard variables
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// so that the first one (out) represents the public
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// input and the rest is private input
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    pb.set_input_sizes(<span style="color:#ae81ff">1</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // Add R1CS constraints to protoboard
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Add R1CS constraints to protoboard
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// x*x = sym_1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    pb.add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(x, x, sym_1));
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // x*x = sym_1
-</span></span><span style="display:flex;"><span>    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(x, x, sym_1));
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// sym_1 * x = y
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    pb.add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(sym_1, x, y));
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // sym_1 * x = y
-</span></span><span style="display:flex;"><span>    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(sym_1, x, y));
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// y + x = sym_2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    pb.add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(y <span style="color:#f92672">+</span> x, <span style="color:#ae81ff">1</span>, sym_2));
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // y + x = sym_2
-</span></span><span style="display:flex;"><span>    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(y + x, 1, sym_2));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // sym_2 + 5 = ~out
-</span></span><span style="display:flex;"><span>    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(sym_2 + 5, 1, out));
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// sym_2 + 5 = ~out
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    pb.add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(sym_2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, out));
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> r1cs_constraint_system<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> constraint_system <span style="color:#f92672">=</span> pb.get_constraint_system();
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // generate keypair
-</span></span><span style="display:flex;"><span>    const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// generate keypair
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> r1cs_gg_ppzksnark_keypair<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> keypair <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_generator<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(constraint_system);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // Add public input and witness values
-</span></span><span style="display:flex;"><span>    pb.val(out) = 35;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Add public input and witness values
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    pb.val(out) <span style="color:#f92672">=</span> <span style="color:#ae81ff">35</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    pb.val(x) = 3;
-</span></span><span style="display:flex;"><span>    pb.val(sym_1) = 9;
-</span></span><span style="display:flex;"><span>    pb.val(y) = 27;
-</span></span><span style="display:flex;"><span>    pb.val(sym_2) = 30;
+</span></span><span style="display:flex;"><span>    pb.val(x) <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
+</span></span><span style="display:flex;"><span>    pb.val(sym_1) <span style="color:#f92672">=</span> <span style="color:#ae81ff">9</span>;
+</span></span><span style="display:flex;"><span>    pb.val(y) <span style="color:#f92672">=</span> <span style="color:#ae81ff">27</span>;
+</span></span><span style="display:flex;"><span>    pb.val(sym_2) <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // generate proof
-</span></span><span style="display:flex;"><span>    const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// generate proof
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> r1cs_gg_ppzksnark_proof<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> proof <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_prover<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(keypair.pk, pb.primary_input(), pb.auxiliary_input());
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // verify
-</span></span><span style="display:flex;"><span>    bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// verify
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> verified <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_verifier_strong_IC<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(keypair.vk, pb.primary_input(), proof);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Number of R1CS constraints: &#34; &lt;&lt; constraint_system.num_constraints() &lt;&lt; endl;
-</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Primary (public) input: &#34; &lt;&lt; pb.primary_input() &lt;&lt; endl;
-</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Auxiliary (private) input: &#34; &lt;&lt; pb.auxiliary_input() &lt;&lt; endl;
-</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Verification status: &#34; &lt;&lt; verified &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Number of R1CS constraints: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> constraint_system.num_constraints() <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Primary (public) input: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> pb.primary_input() <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Auxiliary (private) input: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> pb.auxiliary_input() <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Verification status: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> verified <span style="color:#f92672">&lt;&lt;</span> endl;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
@@ -1277,54 +1278,54 @@ if (!doNotTrack) {
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-49"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-49">49</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#include &lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;
-</span></span><span style="display:flex;"><span>#include &lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;
-</span></span><span style="display:flex;"><span>#include &lt;libsnark/gadgetlib1/pb_variable.hpp&gt;
-</span></span><span style="display:flex;"><span>#include &lt;libsnark/gadgetlib1/gadgets/basic_gadgets.hpp&gt;
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/gadgetlib1/pb_variable.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/gadgetlib1/gadgets/basic_gadgets.hpp&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> libsnark;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>using namespace libsnark;
-</span></span><span style="display:flex;"><span>using namespace std;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span> () {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">typedef</span> libff<span style="color:#f92672">::</span>Fr<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> FieldT;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>int main () {
-</span></span><span style="display:flex;"><span>    typedef libff::Fr&lt;default_r1cs_gg_ppzksnark_pp&gt; FieldT;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // Initialize the curve parameters
-</span></span><span style="display:flex;"><span>    default_r1cs_gg_ppzksnark_pp::init_public_params();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Initialize the curve parameters
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">::</span>init_public_params();
 </span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    // Create protoboard
-</span></span><span style="display:flex;"><span>    protoboard&lt;FieldT&gt; pb;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Create protoboard
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    protoboard<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> pb;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; x, max;
-</span></span><span style="display:flex;"><span>    pb_variable&lt;FieldT&gt; less, less_or_eq;
+</span></span><span style="display:flex;"><span>    pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> x, max;
+</span></span><span style="display:flex;"><span>    pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> less, less_or_eq;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    x.allocate(pb, &#34;x&#34;);
-</span></span><span style="display:flex;"><span>    max.allocate(pb, &#34;max&#34;);
+</span></span><span style="display:flex;"><span>    x.allocate(pb, <span style="color:#e6db74">&#34;x&#34;</span>);
+</span></span><span style="display:flex;"><span>    max.allocate(pb, <span style="color:#e6db74">&#34;max&#34;</span>);
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    pb.val(max)= 60;
+</span></span><span style="display:flex;"><span>    pb.val(max)<span style="color:#f92672">=</span> <span style="color:#ae81ff">60</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    comparison_gadget&lt;FieldT&gt; cmp(pb, 10, x, max, less, less_or_eq, &#34;cmp&#34;);
+</span></span><span style="display:flex;"><span>    comparison_gadget<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> cmp(pb, <span style="color:#ae81ff">10</span>, x, max, less, less_or_eq, <span style="color:#e6db74">&#34;cmp&#34;</span>);
 </span></span><span style="display:flex;"><span>    cmp.generate_r1cs_constraints();
-</span></span><span style="display:flex;"><span>    pb.add_r1cs_constraint(r1cs_constraint&lt;FieldT&gt;(less, 1, FieldT::one()));
+</span></span><span style="display:flex;"><span>    pb.add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(less, <span style="color:#ae81ff">1</span>, FieldT<span style="color:#f92672">::</span>one()));
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    const r1cs_constraint_system&lt;FieldT&gt; constraint_system = pb.get_constraint_system();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> r1cs_constraint_system<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> constraint_system <span style="color:#f92672">=</span> pb.get_constraint_system();
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // generate keypair
-</span></span><span style="display:flex;"><span>    const r1cs_gg_ppzksnark_keypair&lt;default_r1cs_gg_ppzksnark_pp&gt; keypair = r1cs_gg_ppzksnark_generator&lt;default_r1cs_gg_ppzksnark_pp&gt;(constraint_system);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// generate keypair
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> r1cs_gg_ppzksnark_keypair<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> keypair <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_generator<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(constraint_system);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // Add witness values
-</span></span><span style="display:flex;"><span>    pb.val(x) = 18; // secret
-</span></span><span style="display:flex;"><span>    cmp.generate_r1cs_witness();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Add witness values
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    pb.val(x) <span style="color:#f92672">=</span> <span style="color:#ae81ff">18</span>; <span style="color:#75715e">// secret
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    cmp.generate_r1cs_witness();
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // generate proof
-</span></span><span style="display:flex;"><span>    const r1cs_gg_ppzksnark_proof&lt;default_r1cs_gg_ppzksnark_pp&gt; proof = r1cs_gg_ppzksnark_prover&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.pk, pb.primary_input(), pb.auxiliary_input());
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// generate proof
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> r1cs_gg_ppzksnark_proof<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> proof <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_prover<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(keypair.pk, pb.primary_input(), pb.auxiliary_input());
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // verify
-</span></span><span style="display:flex;"><span>    bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// verify
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> verified <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_verifier_strong_IC<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(keypair.vk, pb.primary_input(), proof);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Number of R1CS constraints: &#34; &lt;&lt; constraint_system.num_constraints() &lt;&lt; endl;
-</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Primary (public) input: &#34; &lt;&lt; pb.primary_input() &lt;&lt; endl;
-</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Auxiliary (private) input: &#34; &lt;&lt; pb.auxiliary_input() &lt;&lt; endl;
-</span></span><span style="display:flex;"><span>    cout &lt;&lt; &#34;Verification status: &#34; &lt;&lt; verified &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Number of R1CS constraints: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> constraint_system.num_constraints() <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Primary (public) input: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> pb.primary_input() <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Auxiliary (private) input: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> pb.auxiliary_input() <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Verification status: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> verified <span style="color:#f92672">&lt;&lt;</span> endl;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
@@ -1565,7 +1566,7 @@ if (!doNotTrack) {
     &copy;
     
       2018 -
-    2023
+    2024
     <span class="heart">
       
       <i class="iconfont">

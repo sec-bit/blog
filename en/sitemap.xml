@@ -2,22 +2,134 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/binance/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://sec-bit.github.io/blog/en/categories/</loc>
-    <lastmod>2019-12-31T17:00:52+08:00</lastmod>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/crypto-wallet/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/categories/crypto-wallet/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/fomo3d/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/hacking/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/libbitcoin/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/low-entropy/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/milk-sad/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/mnemonic/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/post/</loc>
-    <lastmod>2019-12-31T17:00:52+08:00</lastmod>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/random-number/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/</loc>
-    <lastmod>2019-12-31T17:00:52+08:00</lastmod>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/seed/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/trust-wallet/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/2024/01/19/trust-wallets-fomo3d-summer-vuln/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/vulnerability/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/categories/vulnerability/</loc>
+    <lastmod>2024-01-19T12:09:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -30,22 +142,8 @@
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/en/tags/</loc>
-    <lastmod>2019-12-31T17:00:52+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://sec-bit.github.io/blog/en/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/</loc>
     <lastmod>2019-10-28T17:10:04+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://sec-bit.github.io/blog/en/tags/vulnerability/</loc>
-    <lastmod>2019-12-31T17:00:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -142,13 +240,6 @@
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/en/tags/fomo3d/</loc>
-    <lastmod>2019-12-31T17:00:52+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://sec-bit.github.io/blog/en/tags/game/</loc>
     <lastmod>2019-12-31T17:00:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -157,13 +248,6 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/</loc>
-    <lastmod>2019-12-31T17:00:52+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://sec-bit.github.io/blog/en/categories/vulnerability/</loc>
     <lastmod>2019-12-31T17:00:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
