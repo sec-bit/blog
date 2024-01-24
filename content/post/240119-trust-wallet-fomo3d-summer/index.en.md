@@ -16,6 +16,8 @@ Read highlights, join the discussion, and share your thoughts on Twitter!
 
 👉👉👉 https://twitter.com/ErrNil/status/1748203326561509601 👈👈👈
 
+Update on 2024-01-24: The security researchers who disclosed the [Milk Sad](https://milksad.info/) vulnerability in Libbitcoin have reviewed our analysis and reproduced this vulnerability. Their awesome writeup can be found [here](https://milksad.info/posts/research-update-5/).
+
 ## How Did Our Investigation Begin?
 
 On 2023-07-12, numerous ETH wallets were hacked, and the funds were transferred to the address 0xAa8B55e21ef3df5f15adf4d0F49D3bfa854e9125. Victims claimed to have used different crypto wallets, some even claiming they hadn't accessed their wallets for a long time. Some even said their wallets were air-gapped or used as cold storage.
@@ -302,7 +304,7 @@ As a wallet user, there will definitely be many **new migration or compensation 
 
 ## Credit
 
-Thank you to all users who shared with us during the early investigation of the hack and vulnerability. Especially a kind-hearted user who even shared his mnemonic phrase with us, which helped us greatly confirm the vulnerability.
+Thank you to all users who shared with us during the early investigation of the hack and vulnerability. Especially a [kind-hearted user](https://twitter.com/ellismarkman) who even shared his mnemonic phrase with us, which helped us greatly confirm the vulnerability.
 
 Thank you to the Trust Wallet team for their years of open-source work, which has provided a certain degree of transparency.
 
