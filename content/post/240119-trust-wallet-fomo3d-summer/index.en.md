@@ -16,7 +16,8 @@ Read highlights, join the discussion, and share your thoughts on Twitter!
 
 👉👉👉 https://twitter.com/ErrNil/status/1748203326561509601 👈👈👈
 
-Update on 2024-01-25: The vulnerability has been assigned as *CVE-2024-23660*. Check [Details](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-23660).
+Update on 2024-01-25: The vulnerability has been assigned as *CVE-2024-23660*. The [CVE entry](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-23660) is now available.
+
 Update on 2024-01-24: The security researchers who disclosed the [Milk Sad](https://milksad.info/) vulnerability in Libbitcoin have reviewed our analysis and reproduced this vulnerability. Their awesome writeup can be found [here](https://milksad.info/posts/research-update-5/).
 
 ## How Did Our Investigation Begin?
