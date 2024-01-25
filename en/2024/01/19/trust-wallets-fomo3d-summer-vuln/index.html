@@ -74,12 +74,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sec-bit.github.io/blog/en/2024/01/19/trust-wallets-fomo3d-summer-vuln/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-01-19T11:00:00+08:00" />
-<meta property="article:modified_time" content="2024-01-25T00:10:58+08:00" />
+<meta property="article:modified_time" content="2024-01-25T14:47:27+08:00" />
 
 <meta itemprop="name" content="Trust Wallet&#39;s Fomo3D Summer: Fresh Discovery of Low Entropy Flaw From 2018">
 <meta itemprop="description" content="In July 2023, numerous ETH wallets were hacked, leading to an investigation that uncovered a low entropy flaw in Trust Wallet dating back to 2018. This vulnerability, linked to a predictable random number generation issue in Trust Wallet&rsquo;s code, resulted in easily guessable wallet keys. The exploit affected over 2100 victims, causing a loss of over 1360 ETH and potentially millions of dollars across various blockchains. Evidence suggests that most affected users were Trust Wallet users or users of Trust Wallet fork products. This incident highlights the importance of secure random number generation in wallet security."><meta itemprop="datePublished" content="2024-01-19T11:00:00+08:00" />
-<meta itemprop="dateModified" content="2024-01-25T00:10:58+08:00" />
-<meta itemprop="wordCount" content="4283">
+<meta itemprop="dateModified" content="2024-01-25T14:47:27+08:00" />
+<meta itemprop="wordCount" content="4299">
 <meta itemprop="keywords" content="Trust Wallet,Fomo3D,Low Entropy,Vulnerability,Hacking,Binance,Crypto Wallet,Mnemonic,Seed,Random Number,Libbitcoin,Milk Sad," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Trust Wallet&#39;s Fomo3D Summer: Fresh Discovery of Low Entropy Flaw From 2018"/>
 <meta name="twitter:description" content="In July 2023, numerous ETH wallets were hacked, leading to an investigation that uncovered a low entropy flaw in Trust Wallet dating back to 2018. This vulnerability, linked to a predictable random number generation issue in Trust Wallet&rsquo;s code, resulted in easily guessable wallet keys. The exploit affected over 2100 victims, causing a loss of over 1360 ETH and potentially millions of dollars across various blockchains. Evidence suggests that most affected users were Trust Wallet users or users of Trust Wallet fork products. This incident highlights the importance of secure random number generation in wallet security."/>
@@ -471,6 +471,7 @@ if (!doNotTrack) {
 </blockquote>
 <p>Read highlights, join the discussion, and share your thoughts on Twitter!</p>
 <p>👉👉👉 <a href="https://twitter.com/ErrNil/status/1748203326561509601">https://twitter.com/ErrNil/status/1748203326561509601</a> 👈👈👈</p>
+<p>Update on 2024-01-25: The vulnerability has been assigned as <em>CVE-2024-23660</em>. The <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-23660">CVE entry</a> is now available.</p>
 <p>Update on 2024-01-24: The security researchers who disclosed the <a href="https://milksad.info/">Milk Sad</a> vulnerability in Libbitcoin have reviewed our analysis and reproduced this vulnerability. Their awesome writeup can be found <a href="https://milksad.info/posts/research-update-5/">here</a>.</p>
 <h2 id="how-did-our-investigation-begin">How Did Our Investigation Begin?</h2>
 <p>On 2023-07-12, numerous ETH wallets were hacked, and the funds were transferred to the address 0xAa8B55e21ef3df5f15adf4d0F49D3bfa854e9125. Victims claimed to have used different crypto wallets, some even claiming they hadn&rsquo;t accessed their wallets for a long time. Some even said their wallets were air-gapped or used as cold storage.</p>
@@ -753,11 +754,11 @@ if (!doNotTrack) {
     <span class="item-content">
       2024-01-25
       
-        <a href="https://github.com/sec-bit/blog/commit/b337f02c3e70caaf65353b7003da17d881c92b48" title="add reproduction">
-          (b337f02)
+        <a href="https://github.com/sec-bit/blog/commit/58b7a803ed40e5ea014b85098f1369dc50ca3541" title="minor on format">
+          (58b7a80)
         </a>
         
-          <br>add reproduction
+          <br>minor on format
         
       
     </span>
