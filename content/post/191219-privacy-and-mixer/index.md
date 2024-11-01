@@ -130,7 +130,7 @@ Tornado Mixer 由 Peppersec 团队开发，同样基于零知识证明，利用 
 
 ![tornado](img/tornado.png)
 
-值得一提的是，Tornado 团队在开发 Mixer 过程中，还发现了影响很多零知识证明项目（包括很多 Mixer）的“双花漏洞”。具体讨论可以参考安比实验室此前的分析文章👇。
+值得一提的是，Tornado 团队在开发 Mixer 过程中，还发现了影响很多零知识证明项目（包括很多 Mixer）的“双花漏洞”。具体讨论可以参考安比实验室此前的分析文章👇。
 
 https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/
 
