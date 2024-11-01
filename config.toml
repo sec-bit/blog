@@ -67,8 +67,7 @@ defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multil
   url = "/categories/"
 
 
-[author]                  # essential                     # 必需
-  name = "SECBIT Labs"
+
 
 [sitemap]                 # essential                     # 必需
   changefreq = "weekly"
@@ -110,8 +109,10 @@ defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multil
   toc = true                                                                            # 是否开启目录
   photoswipe = true         # see https://github.com/dimsemenov/PhotoSwipe            # 是否启用PhotoSwipe（图片可点击）
   bootcdn = false           # In china. @Deprecated: use [params.publicCDN]             # 是否使用bootcdn(@Deprecated: 请使用[params.publicCDN])
-  mathjax = false           # see https://www.mathjax.org/                              # 是否使用mathjax（数学公式）
-  katex = true             # see https://github.com/KaTeX/KaTeX
+  # https://gohugo.io/content-management/mathematics/#engines
+  mathjax = true           # see https://www.mathjax.org/                              # 是否使用mathjax（数学公式）
+  katex = false             # see https://github.com/KaTeX/KaTeX
+  math = true              # https://gohugo.io/content-management/mathematics/
 
 #  contentCopyright = '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'
   contentCopyright = '如需转载请注明文章作者和出处。'
@@ -126,9 +127,11 @@ defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multil
 
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
-  customCSS = ['custom.css']            # if ['custom.css'], load '/static/css/custom.css' file
-  customJS = []             # if ['custom.js'], load '/static/js/custom.js' file
+  customCSS = ['']            # if ['custom.css'], load '/static/css/custom.css' file
+  customJS = ['custom.js']             # if ['custom.js'], load '/static/js/custom.js' file
 
+  [params.author]                  # essential                     # 必需
+    name = "SECBIT Labs"
 
   [params.publicCDN]        # load these files from public cdn                          # 启用公共CDN，需自行定义
     enable = false
@@ -195,7 +198,7 @@ defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multil
 [security]
   enableInlineShortcodes = false
   [security.exec]
-    allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^npx$', '^postcss$', 'pandoc']
+    allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^npx$', '^postcss$', 'pandoc', 'git']
     osEnv = ['(?i)^((HTTPS?|NO)_PROXY|PATH(EXT)?|APPDATA|TE?MP|TERM|GO\w+|(XDG_CONFIG_)?HOME|USERPROFILE|SSH_AUTH_SOCK|DISPLAY|LANG)$']
   [security.funcs]
     getenv = ['^HUGO_', '^CI$']
@@ -209,8 +212,14 @@ defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multil
 [markup]
   defaultMarkdownHandler = "goldmark"  # blackfriday or goldmark
   [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
+    # https://discourse.gohugo.io/t/multilingual-mode-not-rendering-the-shared-page-bundle-images/49698
+    duplicateResourceFiles = true # https://gohugo.io/content-management/page-resources/#multilingual 
+    [markup.goldmark.extensions] # https://gohugo.io/content-management/mathematics/#step-1
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)'], ['$', '$']]
 
   # Highlight options. See https://gohugo.io/content-management/syntax-highlighting/
   [markup.highlight]
