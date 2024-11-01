@@ -6,10 +6,672 @@
     <description>Recent content on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 19 Jan 2024 11:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 01 Nov 2024 08:00:00 +0800</lastBuildDate>
     
         <atom:link href="https://sec-bit.github.io/blog/en/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Notes on Binius (Part II): Subspace Polynomial</title>
+      <link>https://sec-bit.github.io/blog/en/2024/11/01/binius-02/</link>
+      <pubDate>Fri, 01 Nov 2024 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/en/2024/11/01/binius-02/</guid>
+      
+        <description>&lt;ul&gt;
+&lt;li&gt;Yu Guo &lt;a href=&#34;mailto:yu.guo@secbit.io&#34;&gt;yu.guo@secbit.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Jade Xie &lt;a href=&#34;mailto:jade@secbit.io&#34;&gt;jade@secbit.io&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The FRI-Binus paper [DP24] discusses the Additive FFT algorithm based on Subspace Polynomial and provides a perspective to understand the Additive FFT algorithm based on Novel Polynomial Basis in [LCH14] using odd-even decomposition. This article directly introduces the Subspace Polynomial, and then introduces the Additive FFT algorithm from the perspective of odd-even decomposition. This article omits the definition of Normalized Subspace Polynomial for easier understanding. Normalization only affects the performance of the FFT algorithm and has no essential difference from the simplified algorithm introduced in this article.&lt;/p&gt;
+&lt;p&gt;Since the algebraic structure on which Additive FFT relies is very similar to Multiplicative FFT on prime fields, knowledge of Multiplicative FFT will help understand the content of this article.&lt;/p&gt;
+&lt;h2 id=&#34;linear-subspace-polynomial&#34;&gt;Linear Subspace Polynomial&lt;/h2&gt;
+&lt;p&gt;We continue to explore the Extension Field $\mathbb{F}_{2^m}$ based on $\mathbb{F}_2$. Regardless of how $\mathbb{F}_{2^m}$ is constructed, all elements form a vector space, denoted as $V_m$, and there exists a Basis $(\beta_0, \beta_1, \ldots, \beta_{m-1})$ that spans this vector space, denoted as $V_m=\mathsf{Span}(\beta_0, \beta_1, \ldots, \beta_{m-1})$, or represented by the symbol $\langle \cdots \rangle$:&lt;/p&gt;
+$$
+V_m = \langle \beta_0, \beta_1, \ldots, \beta_{m-1} \rangle
+$$&lt;p&gt;Thus, any element $ \theta\in\mathbb{F}_{2^m}$ can be written as a linear combination of Basis components:&lt;/p&gt;
+$$
+\theta = c_0\cdot \beta_0 + c_1\cdot \beta_1 + \ldots + c_{m-1}\cdot \beta_{m-1}, \text{ where $c_i\in \mathbb{F}_2$}
+$$&lt;p&gt;At the same time, $V_m$ is also an additive group with the identity element $V_0=\{0\}$. If $V_k$ is a linear subspace of $V_m$, then $V_k$ is also an additive subgroup of $V_m$. For $V_k$, we can use a polynomial to encode all its elements, i.e., the root set of this polynomial exactly corresponds to the set of all elements of $V_k$. We denote this polynomial as $s_k(X)$. This polynomial is also called the &amp;ldquo;Subspace Polynomial&amp;rdquo;:&lt;/p&gt;
+$$
+s_k(X) = \prod_{i=0}^{2^k-1}(X-\theta_i), \text{ where $\theta_i\in V_k$ }
+$$&lt;p&gt;The polynomial $s_k(X)$ can also be seen as the Vanishing Polynomial on the Domain $V_k$, because for any $\theta\in V_k$, it satisfies:&lt;/p&gt;
+$$
+s_k(\theta) = 0
+$$&lt;h3 id=&#34;linearized-polynomial&#34;&gt;Linearized Polynomial&lt;/h3&gt;
+&lt;p&gt;The Subspace polynomial introduced above is a so-called Linearized Polynomial because its definition satisfies the following form:&lt;/p&gt;
+$$
+L(X) = \sum_{i=0}^{n-1} c_i\cdot X^{q^i}, \quad c_i\in \mathbb{F}_{q}
+$$&lt;p&gt;The polynomial $L(X)$ is called a Linearized Polynomial because each $L(X)$ corresponds to a linear operator on the extension field $K$ of $\mathbb{F}_{q}$. If all roots of $L(X)$ are in the extension field $K=\mathbb{F}_{q^s}$, then for all $\theta\in K$, we have $L(\theta)\in K$. Moreover, if $\theta\neq\theta&#39;$, then $L(\theta)\neq L(\theta&#39;)$. Each $L(X)$ can be viewed as a matrix $B\in \mathbb{F}_q^{s\times s}$, completing a linear transformation on the vector space $\mathbb{F}^s_q$, such that:&lt;/p&gt;
+$$
+(c_0, c_1, \ldots, c_{s-1}) B = (d_0, d_1, \ldots, d_{s-1})
+$$&lt;p&gt;For Subspace Polynomials, each $s_k(X)$ is a Linearized Polynomial. Conversely, for any Linearized polynomial $L(X)\in \mathbb{F}_{q^m}[X]$, all its roots form a linear subspace $V_n\subset V_m$. For detailed proof, please refer to [LN97].&lt;/p&gt;
+&lt;h3 id=&#34;linear-properties&#34;&gt;Linear Properties&lt;/h3&gt;
+&lt;p&gt;Since each term of $s_k(X)$ is of the form $a_i\cdot X^{2^i}$, it has additive homomorphism:&lt;/p&gt;
+$$
+\begin{align*}
+s_k(x + y) &amp;= s_k(x) + s_k(y), &amp;\quad \forall x, y \in \mathbb{F}_{2^m}\\
+s_k(c\cdot x) &amp;= c\cdot s_k(x), &amp;\quad \forall x\in \mathbb{F}_{2^m}, \forall c\in \mathbb{F}_2
+\end{align*}
+$$&lt;p&gt;Let&amp;rsquo;s try to prove the first equation simply. According to a common theorem in finite field theory (Freshman&amp;rsquo;s dream):&lt;/p&gt;
+$$
+(x + y)^{2} = x^2 + 2xy + y^2 = x^{2} + y^{2}, \quad\text{where $x, y\in \mathbb{F}_{2^m}$}
+$$&lt;p&gt;Obviously, $2xy=0$, because in binary fields, $2=0$. So the following equation also holds:&lt;/p&gt;
+$$
+(x + y)^{2^i} = x^{2^i} + y^{2^i}
+$$&lt;p&gt;Next, let&amp;rsquo;s verify the additive homomorphism of $s_k(X)$:&lt;/p&gt;
+$$
+s_k(x + y) = \sum_{i=0}^{k} a_i\cdot (x+y)^{2^i}  = \sum_{i=0}^{k} a_i\cdot \big(x^{2^i} + y^{2^i}\big) = s_k(x) + s_k(y)
+$$&lt;h3 id=&#34;recursive-formula-of-subspace-polynomial&#34;&gt;Recursive Formula of Subspace Polynomial&lt;/h3&gt;
+&lt;p&gt;For the subspace $V_k$, it can be split into two disjoint sets:&lt;/p&gt;
+$$
+V_k = V_{k-1} \cup (\beta_{k-1}+V_{k-1})
+$$&lt;p&gt;Here $V_k=\langle \beta_0, \beta_1, \ldots, \beta_{k-1} \rangle$ , $V_{k-1}=\langle \beta_0, \beta_1, \ldots, \beta_{k-2} \rangle $ ,
+then the subspace polynomials corresponding to $V_k$, $V_{k-1}$, $\beta_{k-1}+V_{k-1}$ satisfy the following relationship:&lt;/p&gt;
+$$
+s_k(X) = s_{k-1}(X) \cdot s_{k-1}(X+\beta_{k-1})
+$$&lt;p&gt;Let&amp;rsquo;s take a simple example, assuming $k=3$, $V_3=\langle \beta_0,\beta_1,\beta_2\rangle $ consists of two parts, one part is $V_2=\langle \beta_0,\beta_1\rangle $, the other part is each element in $V_2$ plus ${\color{blue}\beta_2}$. Therefore, the number of elements in $V_3$ is $2^2 + 2^2 = 8$. Here are all the elements of $V_3$:&lt;/p&gt;
+$$
+V_3 = \{0, \beta_0, \beta_1, \beta_0+\beta_1\} \cup \{{\color{blue}\beta_2}, \beta_0+{\color{blue}\beta_2}, \beta_1+{\color{blue}\beta_2}, (\beta_0+\beta_1)+{\color{blue}\beta_2}\}
+$$&lt;p&gt;We can easily verify: $s_3(X) = s_{2}(X) \cdot s_{2}(X+\beta_{k-1})$. Of course, $s_{2}(X)$ can also be split into the product of $s_1(X)$ and $s_1(X+\beta_1)$. Let&amp;rsquo;s try to break it down to the bottom:&lt;/p&gt;
+$$
+\begin{split}
+s_3(X) &amp; = s_2(X)\cdot s_2(X + \beta_2) \\
+&amp; = s_2(X)^2 + \beta_2\cdot s_2(X) \\
+&amp; = s_1(X)\cdot s_1(X + \beta_1)\cdot s_1(X)\cdot s_1(X + \beta_1) + \beta_2\cdot s_1(X)\cdot s_1(X + \beta_1) \\
+&amp; = (s_1(X)^2 + \beta_1\cdot s_1(X))^2 + \beta_2\cdot s_1(X)^2 + \beta_1\beta_2\cdot s_1(X) \\
+&amp; = s_1(X)^4 + \beta_1^2\cdot s_1(X)^2 + \beta_2\cdot s_1(X)^2 + \beta_1\beta_2\cdot s_1(X) \\
+&amp; = s_1(X)^4 + (\beta_1^2+\beta_2)\cdot s_1(X)^2 + \beta_1\beta_2\cdot s_1(X) \\
+&amp; = (X\cdot(X+\beta_0))^4 + (\beta_1^2+\beta_2)\cdot (X\cdot(X + \beta_0))^2 + \beta_1\beta_2\cdot (X\cdot(X + \beta_0)) \\
+&amp; = (X^2 + \beta_0\cdot X)^4 + (\beta_1^2+\beta_2)\cdot (X^2 + \beta_0\cdot X)^2 + \beta_1\beta_2\cdot (X^2 + \beta_0\cdot X) \\
+&amp; = X^8  + \beta_0^4X^4 + (\beta_1^2+\beta_2)X^4 + \beta_0^2(\beta_1^2+\beta_2)X^2 + \beta_1\beta_2X^2 + \beta_0\beta_1\beta_2X \\
+\end{split}
+$$&lt;p&gt;Finally, the expansion of $s_3(X)$ satisfies the pattern of $\sum_{i=0}^{k} a_i\cdot X^{2^i}$, which is consistent with our conclusion above.&lt;/p&gt;
+&lt;h2 id=&#34;homomorphic-mapping-on-subspace&#34;&gt;Homomorphic Mapping on Subspace&lt;/h2&gt;
+&lt;p&gt;Because Subspace Polynomial is actually a kind of Vanishing Polynomial, and it also has additive homomorphism, we can use Subspace Polynomial to define homomorphic mapping between subspaces.&lt;/p&gt;
+&lt;p&gt;For example, for $V_3=\langle \beta_0, \beta_1, \beta_2\rangle$, we define the subspace $V_1=\{0, \beta_0\}$ of $V_3$ and its Subspace Polynomial $s_1(X)$&lt;/p&gt;
+$$
+s_1(X) = X\cdot (X+\beta_0)
+$$&lt;p&gt;Obviously, $s_1(V_1)=\{0, 0\}$. If we apply $s_1(X)$ to $V_3$, we will get the following result:&lt;/p&gt;
+$$
+\begin{split}
+s_1(0) &amp;= 0\\
+s_1(\beta_0) &amp; = 0 \\
+s_1(\beta_1) &amp; = \beta_0\beta_1 + \beta_1^2\\
+s_1(\beta_0+\beta_1) &amp; = \beta_0\beta_1 + \beta_1^2\\
+s_1(\beta_2) &amp;= \beta_0\beta_2 + \beta_2^2\\
+s_1(\beta_0+\beta_2) &amp;= \beta_0\beta_2 + \beta_2^2\\
+s_1(\beta_1+\beta_2) &amp;= \beta_0\beta_1 + \beta_1^2 + \beta_0\beta_2 + \beta_2^2\\
+s_1(\beta_0+\beta_1+\beta_2) &amp;= \beta_0\beta_1 + \beta_1^2 + \beta_0\beta_2 + \beta_2^2\\
+\end{split}
+$$&lt;p&gt;The above equations show that $s_1(V_3)$ is mapped to a set that is only half the size of $V_3$, denoted as $V_2$. This set is also a subspace, $V_2= \langle \beta&#39;_0, \beta&#39;_1\rangle = \langle \beta_0\beta_1 + \beta_1^2, \beta_0\beta_2 + \beta_2^2 \rangle $, with dimension 2.&lt;/p&gt;
+&lt;p&gt;This is not a coincidence. According to the group isomorphism theorem, the Image $G$ of the homomorphic mapping $\phi: H \to G$ satisfies $G\cong H/Ker(\phi)$, where $G$ is a quotient group, and $|G| = |H|/|Ker(\phi)|$. In the above example, $s_1: V_3\to V_2$ is a homomorphic mapping, $V_1=Ker(s_1)$.&lt;/p&gt;
+&lt;h3 id=&#34;chain-of-mappings&#34;&gt;Chain of Mappings&lt;/h3&gt;
+&lt;p&gt;For $V_2 = s_1(V_3)$, we can still construct a Subspace Polynomial of Degree 2,&lt;/p&gt;
+$$
+s_1&#39;(X) = X\cdot (X+\beta_0\beta_1 + \beta_1^2)
+$$&lt;p&gt;We can continue to map $V_2$ to a one-dimensional subspace $V_1=\langle \beta&#39;&#39;\rangle$. We only need to calculate $s_1(\beta&#39;_0)$ and $s_1(\beta&#39;_1)$, these Basis components constitute $V_2$:&lt;/p&gt;
+$$
+\begin{split}
+s_1&#39;(\beta_0\beta_1 + \beta_1^2) &amp;= 0 \\
+s_1&#39;(\beta_0\beta_1 + \beta_1^2 + \beta_0\beta_2 + \beta_2^2)&amp; = \beta_0^2\beta_1\beta_2 + \beta_0\beta_1^2\beta_2 + \beta_0^2\beta_2^2 + \beta_0\beta_1\beta_2^2 + \beta_1^2\beta_2^2 + \beta_2^4 \\
+ &amp; = \beta&#39;&#39;
+\end{split}
+$$&lt;p&gt;Where the first component of the Basis $(\beta&#39;_0, \beta&#39;_1)$ of $V_2$ will be mapped to $0$, and the second component is mapped to $\beta&#39;&#39;$.&lt;/p&gt;
+&lt;p&gt;So far, we have obtained a chain of mappings:&lt;/p&gt;
+$$
+V_3 \overset{s_1}{\longrightarrow} V_2 \overset{s&#39;_1}{\longrightarrow} V_1
+$$&lt;p&gt;Or it can be written as:&lt;/p&gt;
+$$
+\langle \beta_0, \beta_1, \beta_2 \rangle \overset{s_1}{\longrightarrow} \langle s_1(\beta_1), s_1(\beta_2) \rangle
+\overset{s&#39;_1}{\longrightarrow} \langle s&#39;_1(s_1(\beta_2)) \rangle
+$$&lt;p&gt;And each mapping reduces the dimension of the linear subspace by one, i.e., halves the size of the set. This algebraic structure is key to our subsequent construction of FFT and FRI protocols.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s not hard to prove that for any linear subspace, as long as we choose a Basis, we can construct Subspace Polynomials of Degree 2 as mapping functions in sequence, then obtain a subspace with dimension reduced by 1 through mapping, and repeat this process until the subspace is reduced to 1 dimension. Of course, different choices of Basis and different choices of Subspace Polynomial will lead to different mapping chains. Choosing the appropriate mapping chain can significantly improve the efficiency of computation.&lt;/p&gt;
+&lt;h2 id=&#34;composition-of-s_1-mappings&#34;&gt;Composition of ${s}_1$ Mappings&lt;/h2&gt;
+&lt;p&gt;We define the initial subspace of the mapping chain as $S^{(0)}$, the subspace after mapping as $S^{(1)}$, and the subspace after $i$ mappings as $S^{(i)}$:&lt;/p&gt;
+$$
+S^{(0)} \overset{s_1}{\longrightarrow} S^{(1)} \overset{s^{(1)}_1}{\longrightarrow} \cdots \overset{s^{(n-1)}_1}{\longrightarrow} S^{(n)}
+$$&lt;p&gt;Given a set of Basis for $S^{(i)}$, assumed to be $B^{(i)}=(\beta^{(i)}_0, \beta^{(i)}_1,\ldots, \beta^{(i)}_s)$, define Subspace Polynomial ${s}^{(i)}_1$ on the Basis, and use it as the group homomorphism mapping function to reduce $S^{(i)}$ to $S^{(i+1)}$. The Basis of the reduced linear subspace $S^{(i+1)}$ needs to transform the Basis of $S^{(i)}$ along with ${s}^{(i)}_1$ to a new Basis. After switching to the new Basis, we can define a new set of Subspace Polynomials ${s}^{(i+1)}_i(X)$.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s assume we start with $S^{(0)}=\langle \beta_0, \beta_1, \ldots, \beta_{k-1}\rangle $, given a set of Basis $B_k$, after mapping by ${s}_1$, we get $S^{(1)}$, and its Basis $B^{(1)}$:&lt;/p&gt;
+$$
+B^{(1)} = \langle {\color{blue}{s}_1(\beta_1)}, {\color{blue}{s}_1(\beta_2)}, \ldots, {s}_1(\beta_{k-1}) \rangle
+$$&lt;p&gt;Define ${s}^{(1)}_1(X)$ on $S^{(1)}$ again:&lt;/p&gt;
+$$
+{s}^{(1)}_1(X) = {X(X+{s}_1(\beta_1))} 
+$$&lt;p&gt;Then, what is the relationship between $S^{(2)}$ produced by mapping $S^{(1)}$ and $S^{(0)}$? For any element $a \in S^{(0)}$, it is first mapped to $S^{(1)}$ by ${s}_1$, and then mapped to an element in $S^{(2)}$ by ${s}^{(1)}_1$, so the value after two mappings can be written as the composition of two mapping functions, ${s}^{(1)}_1({s}_1(X))$. Let&amp;rsquo;s simplify this composite function:&lt;/p&gt;
+$$
+\begin{align*}
+{s}^{(1)}_1({s}_1(X)) &amp;= {s}_1(X)({s}_1(X)+{s}_1(\beta_1))
+&amp;  \\[3ex]
+&amp;= {s}_1(X)({s}_1(X+\beta_1)) &amp; (\text{additive homomorphism })\\[3ex]
+&amp;= {s}_2(X) &amp; (\text{recurrency } )
+\end{align*}
+$$&lt;p&gt;So we derived ${s}^{(1)}_1({s}_1(X))={s}_2(X)$. This means that after two 2-to-1 mappings, it is equivalent to doing one 4-to-1 mapping, and the corresponding homomorphic mapping function is ${s}_2$:&lt;/p&gt;
+$$
+\begin{split}
+{s}_2: &amp;S^{(0)} \to S^{(2)} \\[3ex]
+&amp; X \mapsto {X(X+\beta_0)(X+\beta_1)(X+\beta_1+\beta_0)} \\
+\end{split}
+$$&lt;p&gt;As shown in the figure below, both left and right mapping methods will result in $S^{(2)}$:&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Similarly, we can get the following conclusion, for the linear subspace $S^{(j)}$ after $j$ folds&lt;/p&gt;
+$$
+S^{(j)}  = \langle {s}_{j}(\beta_j), {s}_{j}(\beta_{j+1}), \ldots, {s}_{j}(\beta_{k-1}) \rangle
+$$&lt;p&gt;And ${s}_{j}$ satisfies the following composite equation:&lt;/p&gt;
+$$
+s_{j}(X) = s^{(1)}_{j-1}(s_1(X)) =  s^{(1)}_{j-1}\circ s_1
+$$&lt;p&gt;This composite mapping equation can be interpreted as: first do a $s_1$ mapping to get $S^{(1)}$, then do a $j-1$ dimensional mapping $s^{(1)}_{j-1}$, which is equivalent to directly doing a $j$ dimensional mapping $s_{j}$, both mapping to the same subspace $S^{(j)}$.&lt;/p&gt;
+&lt;p&gt;Similarly, we can also prove: if we first do a $j-1$ dimensional mapping $s_{j-1}$, and then do a one-dimensional mapping on the mapped subspace $S^{(j-1)}$, we can also get the subspace $S^{(j)}$:&lt;/p&gt;
+$$
+s_{j}(X) = s^{(1)}_{1}(s_{j-1}(X)) =  s^{(1)}_{1}\circ s_{j-1}
+$$&lt;p&gt;More generally, we can prove the following important property, that is, doing a $j$ dimensional mapping on any subspace $S^{(i)}$ is equivalent to doing $j$ consecutive 1 dimensional mappings on it:&lt;/p&gt;
+$$
+s^{(i)}_{j}(X) = s^{(i+j-1)}_1\circ s^{(i+j-2)}_1\circ \cdots \circ s^{(i)}_1
+$$&lt;h2 id=&#34;polynomial-basis&#34;&gt;Polynomial Basis&lt;/h2&gt;
+&lt;p&gt;For a univariate polynomial $f(X) \in \mathbb{F}[X]^{&lt;N}$ of degree less than $N=2^n$, it has two common forms of expression, &amp;ldquo;coefficient form&amp;rdquo; and &amp;ldquo;point value form&amp;rdquo;. The coefficient form is the most common form we see:&lt;/p&gt;
+$$
+f(X) = c_0 + c_1X + c_2X^2 + \ldots + c_{N-1}X^{N-1}
+$$&lt;p&gt;where $\vec{c}=(c_0, c_1, \ldots, c_{N-1})$ is the coefficient vector of the polynomial. In addition, the vector of unknowns $(1, X, X^2, \ldots, X^{N-1})$ forms a basis of polynomials, conventionally called the Monomial Basis, denoted as $\mathcal{B}^{mono}$:&lt;/p&gt;
+$$
+\mathcal{B}^{mono}=(1, X, X^2, \ldots, X^{N-1})
+$$&lt;p&gt;This basis vector can also be expressed in the form of Tensor Product:&lt;/p&gt;
+$$
+\mathcal{B}^{mono}=(1, X) \otimes (1, X^2) \otimes \ldots \otimes (1, X^{2^{n-1}})
+$$&lt;p&gt;The &amp;ldquo;point value form&amp;rdquo; of a univariate polynomial is called the Lagrange Basis representation. That is, we can uniquely determine a polynomial of Degree less than N using N &amp;ldquo;coefficients&amp;rdquo; (please note that the concept of coefficients here is broader than just the coefficients in the &amp;ldquo;coefficient form&amp;rdquo; representation).&lt;/p&gt;
+&lt;p&gt;Through polynomial division, we can obtain the coefficients of the polynomial on $\mathcal{B}^{mono}$. For example, for a polynomial $t(X)$ of degree 7, we can first calculate the coefficient of $X^4\cdot X^2\cdot X$, that is, calculate the polynomial division: $t(X)/(X^4\cdot X^2\cdot X)$, obtaining a coefficient $c_7$ and a remainder polynomial $t&#39;(X)$; then calculate $t&#39;(X)/(X^4\cdot X^2)$, obtaining the coefficient $c_6$ of $\mathcal{B}^{mono}_6 = X^6$, and so on. Finally, we can obtain the coefficient vector $\vec{c}=(c_0, c_1, \ldots, c_7)$ of $t(X)$ with respect to $\mathcal{B}^{mono}$, such that:&lt;/p&gt;
+$$
+t(X) = c_0 + c_1X + c_2X^2 + \ldots + c_7X^7
+$$&lt;p&gt;Using the Subspace Polynomial $s_k(X)$ discussed earlier, we can define a new set of Basis. According to its definition, the degree of $s_k(X)$ is exactly $2^k$, similar to $(1, X, X^2, X^4)$, so $(s_0(X), s_1(X), s_2(X))$ can also be used as basic materials for constructing polynomial Basis. Following the definition of $\mathcal{B}^{mono}$, we define the (Novel) Polynomial Basis $\mathcal{B}^{novel}$:&lt;/p&gt;
+$$
+\mathcal{B}^{novel} = (1, s_0(X)) \otimes (1, s_1(X)) \otimes \ldots \otimes (1, s_{n-1}(X))
+$$&lt;p&gt;Please note that unlike the papers [LCH14] and [DP24], we haven&amp;rsquo;t introduced Normalized Subspace Polynomial here for easier understanding. Returning to the above definition, we abbreviate each component $\mathcal{B}^{novel}_i$ as $\mathcal{X}_i(X)$, defined as follows:&lt;/p&gt;
+$$
+\mathcal{X}_i(X) = \prod_{j=0}^{n-1}(s_j(X))^{i_j}, \text{ where $\mathsf{bits}(i)=(i_0, i_1, \ldots, i_{n-1})$}
+$$&lt;p&gt;Here $\mathsf{bits}(i)$ means expanding the integer $i$ in binary, for example, if $i=5$, then $\mathsf{bits}(5)=(1, 0, 1)$, $\mathsf{bits}(6) = (0, 1, 1)$. For example, when $n=3, N=8$, according to the above definition, we can calculate a set of polynomial basis $\big(\mathcal{X}_0(X), \mathcal{X}_1(X),\ldots, \mathcal{X}_7(X)\big)$&lt;/p&gt;
+$$
+\begin{split}
+\mathcal{X}_0(X) &amp;= 1 \\
+\mathcal{X}_1(X) &amp;= s_0(X) = X\\
+\mathcal{X}_2(X) &amp;= s_1(X) \\
+\mathcal{X}_3(X) &amp;= s_0(X)\cdot s_1(X)\\
+\mathcal{X}_4(X) &amp;= s_2(X)\\
+\mathcal{X}_5(X) &amp;= s_0(X)\cdot s_2(X)\\
+\mathcal{X}_6(X) &amp;= s_1(X)\cdot s_2(X) \\
+\mathcal{X}_7(X) &amp;= s_0(X)\cdot s_1(X)\cdot s_2(X) \\
+\end{split}
+$$&lt;p&gt;It&amp;rsquo;s easy to verify that the Degree of each Basis component $\mathcal{X}_i(X)$ is exactly $i$, so $\mathcal{B}^{novel}$ forms a set of linearly independent polynomial Basis. For any polynomial $f(X)\in \mathbb{F}_{2^m}[X]$ of Degree less than 8:&lt;/p&gt;
+$$
+\begin{split}
+f(X) &amp;= a_0\mathcal{X}_0(X) + a_1\mathcal{X}_1(X) + \ldots + a_7\mathcal{X}_7(X)\\
+&amp;= a_0 + a_1s_0(X) + a_2s_1(X) + a_3s_0(X)\cdot {s}_1(X) \\
+&amp; + a_4s_2(X) + a_5{s}_0(X)\cdot {s}_2(X) + a_6{s}_1(X)\cdot {s}_2(X) + a_7{s}_0(X)\cdot {s}_1(X)\cdot s_2(X) \\
+\end{split}
+$$&lt;p&gt;Similarly, we can use polynomial division to convert a polynomial between $\mathcal{B}^{novel}$ and $\mathcal{B}^{mono}$.&lt;/p&gt;
+&lt;h2 id=&#34;additive-fft&#34;&gt;Additive FFT&lt;/h2&gt;
+&lt;p&gt;Similar to Multiplicative FFT, to construct Additive FFT, we need to define a mapping chain of additive subgroups in $\mathbb{F}_{2^m}$. As mentioned earlier, Subspace Polynomials can be used to construct this mapping chain. At the same time, Subspace Polynomials can also construct a set of polynomial Basis.&lt;/p&gt;
+$$
+S^{(0)} \overset{s_1}{\longrightarrow} S^{(1)} \overset{s^{(1)}_1}{\longrightarrow} \cdots \overset{s^{(n-1)}_1}{\longrightarrow} S^{(n)}
+$$&lt;p&gt;For convenience of demonstration, specify $n=3$, $S^{(0)}=\langle \beta_0, \beta_1, \beta_2\rangle$. Following the idea of Multiplicative FFT, we split the polynomial $f(X)$ (of Degree 7) represented by $\mathcal{B}^{novel}$ into two polynomials with halved degrees:&lt;/p&gt;
+$$
+\begin{split}
+f(X) &amp;= a_0\mathcal{X}_0(X) + a_1\mathcal{X}_1(X) + \ldots + a_7\mathcal{X}_7(X)\\
+&amp;= a_0 + a_1{s}_0(X) + a_2{s}_1(X) + a_3{s}_0(X)\cdot {s}_1(X) \\
+&amp; \qquad + a_4{s}_2(X) + a_5{s}_0(X)\cdot {s}_2(X) + a_6{s}_1(X)\cdot {s}_2(X) + a_7{s}_0(X)\cdot {s}_1(X)\cdot {s}_2(X) \\
+&amp; = \big(a_0 + a_2 {s}_1(X) + a_4{s}_2(X) + a_6{s}_1(X)\cdot {s}_2(X)\big) \\
+&amp; \qquad + \big(a_1 + a_3{s}_0(X)\cdot {s}_1(X) + a_5{s}_0(X)\cdot{s}_2(X) + a_7{s}_0(X)\cdot{s}_1(X)\cdot {s}_2(X)\big) \\
+&amp; = \big(a_0 + a_2 {s}_1(X) + a_4{s}_2(X) +a_6{s}_1(X)\cdot {s}_2(X)\big) \\
+&amp; \qquad + {\color{red}{s}_0(X)}\cdot \big(a_1 + a_3\cdot{s}_1(X) + a_5\cdot{s}_2(X) + a_7\cdot{s}_1(X)\cdot {s}_2(X)\big) \\
+\end{split}
+$$&lt;p&gt;Then we introduce two auxiliary polynomials $f_{even}(X), f_{odd}(X)$, they are&lt;/p&gt;
+$$
+\begin{split}
+f_{even}(X) &amp;= a_0 + a_2\cdot {s}_1(X) + a_4\cdot {s}_2(X) + a_6\cdot {s}_1(X)\cdot {s}_2(X) \\
+f_{odd}(X) &amp;= a_1 + a_3\cdot{s}_1(X) + a_5\cdot{s}_2(X) + a_7\cdot{s}_1(X)\cdot {s}_2(X) \\
+\end{split}
+$$&lt;p&gt;According to the composition property of mappings we derived earlier, $s_1(X)=s^{(1)}_0\circ s_0(X)$, $s_2(X)=s^{(1)}_1\circ s_1(X)$, so we can get:&lt;/p&gt;
+$$
+\begin{split}
+f_{even}(X) &amp;= a_0 + a_2 \cdot s^{(1)}_0(s_1(X)) + a_4 \cdot s^{(1)}_1(s_1(X)) + a_6 \cdot s^{(1)}_0(s_1(X))\cdot s^{(1)}_1(s_1(X)) \\
+ &amp; = a_0 + a_2 \cdot s^{(1)}_0({\color{blue}s_1(X)}) + a_4 \cdot s^{(1)}_1({\color{blue}s_1(X)}) + a_6 \cdot s^{(1)}_0({\color{blue}s_1(X)})\cdot s^{(1)}_1({\color{blue}s_1(X)}) \\
+f_{odd}(X) &amp;= a_1 + a_3 \cdot s^{(1)}_0(s_1(X)) + a_5 \cdot s^{(1)}_1(s_1(X)) + a_7 \cdot s^{(1)}_0(s_1(X))\cdot s^{(1)}_1(s_1(X)) \\
+ &amp; = a_1 + a_3 \cdot s^{(1)}_0({\color{blue}s_1(X)}) + a_5 \cdot s^{(1)}_1({\color{blue}s_1(X)}) + a_7 \cdot s^{(1)}_0({\color{blue}s_1(X)})\cdot s^{(1)}_1({\color{blue}s_1(X)}) \\
+\end{split}
+$$&lt;p&gt;After substituting ${\color{blue}Y=s_1(X)}$, we can split $f(X)$ into an equation about $f_{even}({\color{blue}Y})$ and $f_{odd}({\color{blue}Y})$:&lt;/p&gt;
+$$
+\begin{split}
+f(X) &amp; = f_{even}({\color{blue}Y}) +  {s}_0(X)\cdot f_{odd}({\color{blue}Y})
+\end{split}
+$$&lt;p&gt;And the polynomials $f_{even}({\color{blue}Y})$ and $f_{odd}({\color{blue}Y})$ are exactly defined on $\mathcal{X}^{(1)}$:&lt;/p&gt;
+$$
+\begin{array}{llll}
+\mathcal{X}^{(1)}_0(X) &amp;= 1 \\
+\mathcal{X}^{(1)}_1(X) &amp;= {s}^{(1)}_0(X) &amp; = {s}_0({s}_1(X)) &amp; = {s}_1(X) \\
+\mathcal{X}^{(1)}_2(X) &amp;= {s}^{(1)}_1(X) &amp; =  {s}_1({s}_1(X)) &amp; = {s}_2(X) \\
+\mathcal{X}^{(1)}_3(X) &amp;= {s}^{(1)}_0(X)\cdot {s}^{(1)}_1(X) &amp; = {s}_0({s}_1(X)) \cdot {s}_1({s}_1(X)) &amp; = {s}_1(X) \cdot {s}_2(X)\\
+\end{array}
+$$&lt;p&gt;Rewrite the odd and even polynomials:&lt;/p&gt;
+$$
+\begin{split}
+f_{even}(X) &amp;= a_0\cdot\mathcal{X}^{(1)}_0(X) + a_2\cdot \mathcal{X}^{(1)}_1(X) + a_4\cdot \mathcal{X}^{(1)}_2(X) + a_6\cdot \mathcal{X}^{(1)}_3(X) \\
+f_{odd}(X) &amp;= a_1\cdot\mathcal{X}^{(1)}_0(X) + a_3\cdot \mathcal{X}^{(1)}_1(X) + a_5\cdot \mathcal{X}^{(1)}_2(X) + a_7\cdot \mathcal{X}^{(1)}_3(X)
+\end{split}
+$$&lt;p&gt;Structurally, this equation is very similar to the split $f(X)=f_{even}(X^2) + X\cdot f_{odd}(X^2)$ in Multiplicative FFT; and the $X\mapsto X^2$ mapping also corresponds to the $s_1: X \mapsto X(X+\beta_0)$ mapping. And $S^{(0)}$ under the mapping of $s_1$ produces a subspace $S^{(1)}$ that is only half the size of the original:&lt;/p&gt;
+$$
+S^{(1)} = \langle s_1(\beta_1), s_1(\beta_2) \rangle
+$$&lt;p&gt;So we can rely on recursive calls to find $\{f_{even}(X) \mid X\in S^{(1)}\}$ and $\{ f_{odd}(X) \mid X\in S^{(1)}\}$, and then use the equation $f(X)=f_{even}(X) + s_0(X)\cdot f_{odd}(X)$ to get the value of $f(X)$ on $S^{(0)}$.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s assume the recursive call returns successfully, then we have obtained all the evaluations of $f_{even}(X)$ and $f_{odd}(X)$ on $S^{(1)}$, denoted as $\vec{u}$ and $\vec{v}$, defined as follows:&lt;/p&gt;
+$$
+\begin{split}
+(u_0, u_1, u_2, u_3) &amp;= \big(f_{even}(0), f_{even}(1), f_{even}(s_1(\beta_1)), f_{even}(s_1(\beta_1) + 1)\big)\\[2ex]
+(v_0, v_1, v_2, v_3) &amp;= \big(f_{odd}(0), f_{odd}(1), f_{odd}(s_1(\beta_1)), f_{odd}(s_1(\beta_1) + 1)\big)\\
+\end{split}
+$$&lt;p&gt;Then we can calculate all the evaluations of $f(X)$ on $S^{(0)}$, i.e., $f(X)\mid_{S^{(0)}}$:&lt;/p&gt;
+$$
+\begin{array}{rlll}
+f(0) &amp;= f_{even}({s}_1(0)) + 0\cdot f_{odd}({s}_1(0)) \\
+    &amp; = u_0\\[1ex]
+f(1) &amp;= f_{even}({s}_1(1)) + 1\cdot v_1 \\
+    &amp; = u_0 + v_1 \\[1ex]
+f(\beta_1) &amp;= f_{even}({s}_1(\beta_1)) + \beta_1\cdot f_{odd}({s}_1(\beta_1)) \\ 
+    &amp; = u_1 + \beta_1 \cdot v_1\\[1ex]
+f(\beta_1+1) &amp;= f_{even}({s}_1(\beta_1)+{s}_1(1)) + (\beta_1 +1)\cdot f_{odd}({s}_1(\beta_1)+{s}_1(1)) \\
+    &amp; = u_1 + \beta_1\cdot v_1 + v_1\\[1ex]
+f(\beta_2) &amp;= f_{even}({s}_1(\beta_2)) + \beta_2 \cdot f_{odd}({s}_1(\beta_2)) \\ 
+    &amp; = u_2 + \beta_2\cdot v_2 \\[1ex]
+f(\beta_2+1) &amp;= f_{even}({s}_1(\beta_2)+{s}_1(1)) + (\beta_2 +1) \cdot f_{odd}({s}_1(\beta_2)+{s}_1(1)) \\
+    &amp; = u_2 + \beta_2\cdot v_2 + v_2\\[1ex]
+f(\beta_2+\beta_1) &amp;= f_{even}({s}_1(\beta_2)+{s}_1(\beta_1)) + (\beta_2 + \beta_1) \cdot f_{odd}({s}_1(\beta_2)+{s}_1(\beta_1)) \\
+    &amp; = u_3 + \beta_2\cdot v_3 + \beta_1\cdot v_3 \\[1ex]
+f(\beta_2+\beta_1+1) &amp;= f_{even}({s}_1(\beta_2)+{s}_1(\beta_1)+{s}_1(1)) + (\beta_2 + \beta_1 + 1) \cdot f_{odd}({s}_1(\beta_2)+{s}_1(\beta_1)+{s}_1(1)) \\
+    &amp; = u_3 + \beta_2\cdot v_3  + \beta_1\cdot v_3 + v_3\\[1ex]
+\end{array}
+$$&lt;p&gt;We implement this Additive FFT recursive algorithm in Python code as follows:&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-1&#34;&gt; 1&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-2&#34;&gt; 2&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-3&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-3&#34;&gt; 3&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-4&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-4&#34;&gt; 4&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-5&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-5&#34;&gt; 5&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-6&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-6&#34;&gt; 6&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-7&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-7&#34;&gt; 7&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-8&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-8&#34;&gt; 8&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-9&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-9&#34;&gt; 9&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-10&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-10&#34;&gt;10&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-11&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-11&#34;&gt;11&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-12&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-12&#34;&gt;12&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-13&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-13&#34;&gt;13&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-14&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-14&#34;&gt;14&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-15&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-15&#34;&gt;15&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-16&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-16&#34;&gt;16&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-17&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-17&#34;&gt;17&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-18&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-18&#34;&gt;18&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-19&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-19&#34;&gt;19&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-20&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-20&#34;&gt;20&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-21&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-21&#34;&gt;21&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-22&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-22&#34;&gt;22&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-23&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-23&#34;&gt;23&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-24&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-24&#34;&gt;24&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-25&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-25&#34;&gt;25&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-26&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-26&#34;&gt;26&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-27&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-27&#34;&gt;27&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-28&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-28&#34;&gt;28&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-29&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-29&#34;&gt;29&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-30&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-30&#34;&gt;30&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-31&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-31&#34;&gt;31&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-32&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-32&#34;&gt;32&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;afft&lt;/span&gt;(f, k, B):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    Perform the Additive Fast Fourier Transform (AFFT) on a given polynomial.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    Args:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        f (list): Coefficients of the polynomial to be transformed.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        k (int): The depth of recursion, where 2^k is the size of the domain.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        B (list): The basis of the domain over which the polynomial is evaluated.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    Returns:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        list: The evaluations of the polynomial over the domain.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; k &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; [f[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    half &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;**&lt;/span&gt;(k&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    f_even &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; f[::&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    f_odd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; f[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;::&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    V &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; span(B)                                &lt;span style=&#34;color:#75715e&#34;&gt;# the subspace spanned by B&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    q &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x: x&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(x&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;B[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;])&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;(B[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(B[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)) &lt;span style=&#34;color:#75715e&#34;&gt;# s^(i)_1 map&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    B_half &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [q(b) &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; b &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; B[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;:]]             &lt;span style=&#34;color:#75715e&#34;&gt;# the basis of the mapped subspace&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    e_even &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; afft(f_even, k&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, B_half)  &lt;span style=&#34;color:#75715e&#34;&gt;# compute the evaluations of f_even&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    e_odd  &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; afft(f_odd, k&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, B_half)   &lt;span style=&#34;color:#75715e&#34;&gt;# compute the evaluations of f_odd&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    e &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; (&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; half)                &lt;span style=&#34;color:#75715e&#34;&gt;# initialize the list of evaluations&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, half):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        e[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;i]   &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; e_even[i] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; V[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;i] &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; e_odd[i]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        e[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;i&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; e_even[i] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; V[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;i&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; e_odd[i]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; e&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The function &lt;code&gt;afft(f, k, B)&lt;/code&gt; has three parameters in total, which are the coefficient vector of the polynomial $f(X)$ on $\mathcal{B}^{novel}$, the recursion depth $k$, and the Basis of the current subspace $S^{(0)}$.&lt;/p&gt;
+&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
+&lt;p&gt;The Additive FFT algorithm requires a mapping chain of subspaces constructed by Subspace Polynomials. The principles introduced in this article are not limited to recursively constructed binary fields, but a more general algebraic structure.
+The paper [LCH14] uses another recursive Additive FFT algorithm, we will introduce the differences between the two in the next article, as well as the iterative Additive FFT algorithm (Algorithm 2) in the [DP24] paper.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;[DP24] Benjamin E. Diamond and Jim Posen. &amp;ldquo;Polylogarithmic Proofs for Multilinears over Binary Towers&amp;rdquo;. 2024. &lt;a href=&#34;https://eprint.iacr.org/2024/504&#34;&gt;https://eprint.iacr.org/2024/504&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[LCH14] Lin, Sian-Jheng, Wei-Ho Chung, and Yunghsiang S. Han. &amp;ldquo;Novel polynomial basis and its application to Reed-Solomon erasure codes.&amp;rdquo; 2014 ieee 55th annual symposium on foundations of computer science. IEEE, 2014. &lt;a href=&#34;https://arxiv.org/abs/1404.3458&#34;&gt;https://arxiv.org/abs/1404.3458&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[LN97] Lidl, Rudolf, and Harald Niederreiter. Finite fields. No. 20. Cambridge university press, 1997.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Notes on FRI-Binius (Part I): Binary Towers</title>
+      <link>https://sec-bit.github.io/blog/en/2024/10/31/binius-01/</link>
+      <pubDate>Thu, 31 Oct 2024 11:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/en/2024/10/31/binius-01/</guid>
+      
+        <description>&lt;ul&gt;
+&lt;li&gt;Yu Guo &lt;a href=&#34;mailto:yu.guo@secbit.io&#34;&gt;yu.guo@secbit.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Jade Xie &lt;a href=&#34;mailto:jade@secbit.io&#34;&gt;jade@secbit.io&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Binary fields possess elegant internal structures, and Binius aims to fully utilize these internal structures to construct efficient SNARK proof systems. This article mainly discusses the Binary Fields that Binius relies on at its core and the construction methods of Extension Towers based on Binary Fields. Binary Fields provide smaller fields and are compatible with various tool constructions in traditional cryptography while also being able to fully utilize optimization of special instructions on hardware. There are two main advantages to choosing Extension Towers: one is that the recursive Extension construction provides a consistent and incremental Basis selection, allowing Small Fields to be embedded into Large Fields in a very natural way; the other advantage is that multiplication and inversion operations have efficient recursive algorithms.&lt;/p&gt;
+&lt;h2 id=&#34;extension-fields&#34;&gt;Extension Fields&lt;/h2&gt;
+&lt;p&gt;Let&amp;rsquo;s try to describe the concept of Extension Fields in simple language to lay the groundwork for our study of Binary Towers. For in-depth learning, please refer to the strict definitions and proofs in finite field textbooks.&lt;/p&gt;
+&lt;p&gt;The prime field $\mathbb{F}_{p}$ is a finite field with $p$ elements, where $p$ must be a prime number. It is isomorphic to $\mathbb{Z}/p\mathbb{Z}$, which means we can use the set of integers $\{0, 1, \ldots, p-1\}$ to represent all elements of $\mathbb{F}_p$.&lt;/p&gt;
+&lt;p&gt;We can form a Tuple with any two elements from the prime field, i.e., $(a, b)\in\mathbb{F}_{p}^2$, and this Tuple also forms a field with $p^2$ elements. We can verify this: $a+b\in\mathbb{F}_p$, so we define the addition of Tuples as follows:&lt;/p&gt;
+$$
+(a_1, b_1) + (a_2, b_2) = (a_1 + a_2, b_1 + b_2)
+$$&lt;p&gt;We can verify that $\mathbb{F}_{p}^2$ forms a vector space, thus it is an additive group with the zero element being $(0, 0)$. The next question is how to define multiplication. We want multiplication to be closed, i.e.:&lt;/p&gt;
+$$
+(a_1, b_1)\cdot (a_2, b_2) = (c, d)
+$$&lt;p&gt;The simplest approach would be to use Entry-wise Multiplication to define multiplication, i.e., $(a_1, b_1)\cdot (a_2, b_2) = (a_1a_2, b_1b_2)$, with the multiplicative identity being $(1, 1)$. This seems to make multiplication closed. However, this doesn&amp;rsquo;t ensure that every element has an inverse. For example, $(1, 0)$ multiplied by any Tuple can never result in $(1, 1)$, because the second part of the Tuple will always be $0$. Therefore, this kind of multiplication cannot form a &amp;ldquo;field&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;In finite field theory, the multiplication operation of Tuples is implemented through polynomial modular multiplication. That is, we view $(a_1, b_1)$ as the coefficients of a degree 1 polynomial, and similarly $(a_2, b_2)$ can be viewed as the coefficients of another degree 1 polynomial. By multiplying these two, we get a degree 2 polynomial:&lt;/p&gt;
+$$
+(a_1 + b_1\cdot X) \cdot (a_2 + b_2\cdot X) = a_1a_2 + (a_1b_2 + a_2b_1)X + b_1b_2X^2
+$$&lt;p&gt;Then we take the modulus of the resulting polynomial with an irreducible degree 2 polynomial $f(X)$, obtaining a remainder polynomial. The coefficients of this remainder polynomial are $(c, d)$. So we define the new Tuple multiplication as follows:&lt;/p&gt;
+$$
+(a_1 + b_1\cdot X) \cdot (a_2 + b_2\cdot X) = c + d\cdot X \mod f(X)
+$$&lt;p&gt;And we define $(1, 0)$ as the multiplicative identity. Here we emphasize that $f(X)$ must be an irreducible polynomial. What would happen if $f(X)$ were a reducible polynomial? For instance, if $f(X)=(u_1+u_2X)(v_1+v_2X)$, then the product of two non-zero elements $(u_1, u_2)$ and $(v_1, v_2)$ would equal $(0, 0)$, breaking out of the multiplicative group. Strictly speaking, the appearance of Zero Divisors disrupts the structure of the multiplicative group, thus failing to form a &amp;ldquo;field&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;The next question is whether there exists an irreducible degree 2 polynomial $f(X)$. If $f(X)$ doesn&amp;rsquo;t exist, then constructing a field $\mathbb{F}_{p^2}$ would be out of the question. For the prime field $\mathbb{F}_p$, take any $w\in\mathbb{F}_p$ that is not a square of any element, which in number theory belongs to the non-quadratic residue class, i.e., $w\in QNR(p)$. If $w$ exists, then $f(X)=X^2-w$ is an irreducible polynomial. Furthermore, how is the existence of $w$ guaranteed? If $p$ is an odd number, then $w$ must exist. If $p=2$, although $w$ doesn&amp;rsquo;t exist, we can specify $f(X)=X^2+X+1\in\mathbb{F}_2[X]$ as an irreducible polynomial.&lt;/p&gt;
+&lt;p&gt;We now denote the field formed by the set of Tuples $\mathbb{F}_{p}^2$, along with the defined addition and multiplication operations, as $\mathbb{F}_{p^2}$, which has $p^2$ elements. According to finite field theory, we can expand the binary Tuple to an $n$-ary Tuple, thus constructing larger finite fields $\mathbb{F}_{p^n}$.&lt;/p&gt;
+&lt;p&gt;For an irreducible polynomial $f(X) = c_0 + c_1X + X^2$ over $\mathbb{F}_p$, it can always be factored in $\mathbb{F}_{p^2}$. $f(X) = (X-\alpha)(X-\alpha&#39;)$, where $\alpha$ and $\alpha&#39;$ are conjugates of each other, and they both belong to $\mathbb{F}_{p^2}$ but not to $\mathbb{F}_p$. According to the definition of extension fields, $\mathbb{F}_p(\alpha)$ is a degree 2 algebraic extension, which is isomorphic to the finite field we constructed earlier through modular multiplication with an irreducible polynomial. Therefore, we can also use $a_1 + a_2\cdot\alpha$ to represent any element in $\mathbb{F}_{p^2}$. Or further, we can view $(1, \alpha)$ as a Basis of the $\mathbb{F}_{p^2}$ vector space, any $a\in \mathbb{F}_{p^2}$ can be represented as a linear combination of the Basis:&lt;/p&gt;
+$$
+a = a_0 \cdot 1 + a_1 \cdot \alpha, \quad a_0, a_1\in\mathbb{F}_p
+$$&lt;p&gt;This way, we can use the symbol $a_0 + a_1\cdot \alpha$ to represent elements in $\mathbb{F}_{p^2}$, rather than the polynomial representation $a_0 + a_1\cdot X$. The &amp;ldquo;polynomial representation&amp;rdquo; of elements doesn&amp;rsquo;t specify which irreducible polynomial we used to construct the extension field, while using $\alpha$, the root of the irreducible polynomial, as a way to construct the extension field eliminates any ambiguity.&lt;/p&gt;
+&lt;p&gt;Generalizing this concept to $\mathbb{F}_{p^n}$, for any element $a\in\mathbb{F}_{p^n}$, it can be represented as:&lt;/p&gt;
+$$
+a = a_0 + a_1\cdot\alpha + a_2\cdot\alpha^2 + \cdots + a_{n-1}\cdot\alpha^{n-1}
+$$&lt;p&gt;Here $\alpha$ is the root of the degree $n$ irreducible polynomial $f(X)$. Therefore, $(1, \alpha, \alpha^2, \cdots, \alpha^{n-1})$ can be viewed as a Basis of $\mathbb{F}_{p^n}$, and this Basis is called the Polynomial Basis of the finite field. Note that $\mathbb{F}_{p^n}$ as an $n$-dimensional vector space has many different Bases. We will see later that the choice of Basis is a very important step, and an appropriate Basis can greatly optimize or simplify some representations or operations.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;TODO: Fp* multiplicative cyclic group&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;binary-field&#34;&gt;Binary Field&lt;/h2&gt;
+&lt;p&gt;For $\mathbb{F}_{2^n}$, we call it a binary field because its elements can all be expressed as vectors of length $n$ composed of $0$ and $1$. $\mathbb{F}_{2^n}$ can be constructed through two types of methods: one is through an irreducible polynomial of degree $n$; the other is by repeatedly using quadratic extensions, known as an Extension Tower. There are many paths for field extension, and for $2^n$, it has multiple factors of 2, so there exist multiple construction methods between these two methods. For example, for $\mathbb{F}_{2^8}$, we can first construct $\mathbb{F}_{2^4}$, then obtain $\mathbb{F}_{2^8}$ through a quadratic extension, or we can first construct $\mathbb{F}_{2^2}$, then construct $\mathbb{F}_{2^8}$ through a quartic irreducible polynomial extension.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s warm up by constructing $\mathbb{F}_{2^2}$ using the quadratic extension method. We discussed earlier that $f(X)=X^2+X+1$ is an irreducible polynomial in $\mathbb{F}_2[X]$. Suppose $\eta$ is a root of $f(X)$, then $\mathbb{F}_{2^2}$ can be represented as $a_0 + b_0\cdot\eta$. Considering that $\mathbb{F}_{2^2}$ only has four elements, they can be listed below:&lt;/p&gt;
+$$
+\mathbb{F}_{2^2} = \{0, 1, \eta, \eta+1\}
+$$&lt;p&gt;And $\eta$ as a generator can produce the multiplicative group $\mathbb{F}_{2^2}^*=\langle \eta \rangle$, which has an Order of 3:&lt;/p&gt;
+$$
+\begin{split}
+\eta^0 &amp;= 1 \\
+\eta^1 &amp;= \eta \\
+\eta^2 &amp;= \eta+1 \\
+\end{split}
+$$&lt;p&gt;We&amp;rsquo;ll demonstrate two construction methods for $\mathbb{F}_{2^4}$. The first is to directly use a degree 4 irreducible polynomial over $\mathbb{F}_2$. In fact, there are 3 different degree 4 irreducible polynomials, so there are 3 different construction methods in total.&lt;/p&gt;
+$$
+\begin{split}
+f_1(X) &amp;= X^4 + X + 1 \\
+f_2(X) &amp;= X^4 + X^3 + 1 \\
+f_3(X) &amp;= X^4 + X^3 + X^2 + X + 1 \\
+\end{split}
+$$&lt;p&gt;Since we only need to choose one irreducible polynomial, let&amp;rsquo;s choose $f_1(X)$ to define $\mathbb{F}_{2^4}$:&lt;/p&gt;
+$$
+\mathbb{F}_{2^4} = \mathbb{F}_2[X]/\langle f_1(X)\rangle 
+$$&lt;p&gt;Let&amp;rsquo;s denote the root of $f_1(X)$ in $\mathbb{F}_{2^4}$ as $\theta$, then any element $a\in\mathbb{F}_{2^4}$ can be uniquely represented as:&lt;/p&gt;
+$$
+a = a_0 + a_1\cdot\theta + a_2\cdot\theta^2 + \cdots + a_{n-1}\cdot\theta^{n-1}
+$$&lt;p&gt;To add here, $f_1(X)$ is also a Primitive polynomial, and its root $\theta$ is also a Primitive Element of $\mathbb{F}_{2^4}$. Note that not all irreducible polynomials are Primitive polynomials, for example, $f_3(X)$ listed above is not a Primitive polynomial.&lt;/p&gt;
+&lt;p&gt;Now we can list all the elements in $\mathbb{F}_{2^4}$, each element corresponding to a 4-bit binary vector:&lt;/p&gt;
+$$
+\begin{array}{ccccccc}
+0000 &amp; 0001 &amp; 0010 &amp; 0011 &amp; 0100 &amp; 0101 &amp; 0110 &amp; 0111 \\
+0 &amp; 1 &amp; \theta &amp; \theta+1 &amp; \theta^2 &amp; \theta^2+1 &amp; \theta^2+\theta &amp; \theta^2+\theta+1 \\
+\hline
+1000 &amp; 1001 &amp; 1010 &amp; 1011 &amp; 1100 &amp; 1101 &amp; 1110 &amp; 1111 \\
+\theta^3 &amp; \theta^3+1 &amp; \theta^3+\theta &amp; \theta^3+\theta+1 &amp; \theta^3+\theta^2 &amp; \theta^3+\theta^2+1 &amp; \theta^3+\theta^2+\theta &amp; \theta^3+\theta^2+\theta+1 \\
+\end{array}
+$$&lt;p&gt;For the addition of two elements in $\mathbb{F}_{2^4}$, we only need to add their binary representations bit by bit, for example:&lt;/p&gt;
+$$
+(0101) + (1111) = (1010)
+$$&lt;p&gt;This operation is actually the XOR bitwise exclusive OR operation. As for multiplication, for example $a\cdot\theta$, it corresponds to a shift operation on the binary:&lt;/p&gt;
+$$
+\begin{split}
+(0101) &lt;&lt; 1 &amp;= (1010)\\
+(\theta^2 + 1)\cdot\theta &amp;= \theta^3 + \theta \\
+\end{split}
+$$&lt;p&gt;If we continue to multiply by $\theta$, a shift overflow situation will occur:&lt;/p&gt;
+$$
+\begin{split}
+(\theta^3 + \theta)\cdot\theta &amp;= {\color{blue}\theta^4} + \theta^2 = \theta^2 + \theta + 1 \\
+(1010) &lt;&lt; 1  &amp;= (0100) + (0011) = (0111)\\
+\end{split}
+$$&lt;p&gt;For the overflow bit, it needs to be added with $0011$, which is determined by the definition of the irreducible polynomial $f_1(X)$, $\theta^4=\theta+1$. So once the high bit overflows during shifting, an XOR operation with $0011$ needs to be performed. From this, we can see that the multiplication rules of $\mathbb{F}_{2^4}$ actually depend on the choice of the irreducible polynomial. Therefore, how to choose an appropriate irreducible polynomial is also a key step in optimizing binary field multiplication.&lt;/p&gt;
+&lt;h2 id=&#34;field-embedding&#34;&gt;Field Embedding&lt;/h2&gt;
+&lt;p&gt;If we want to construct a SNARK proof system based on binary fields, we would use smaller bit counts to represent smaller numbers, but in any case, in the challenge rounds of the protocol, the Verifier needs to give a random number in a relatively large extension field, in hopes of achieving sufficient cryptographic security strength. This requires us to encode witness information with polynomials in a small field, but perform evaluation operations on these polynomials in a larger field. Therefore, we need to find a way to &amp;ldquo;embed&amp;rdquo; the small field $K$ into the large field $L$.&lt;/p&gt;
+&lt;p&gt;The so-called embedding refers to mapping elements from one field $K$ to another field $L$, denoted as $\phi: K\to L$. This mapping is Injective and this homomorphism mapping preserves the structure of addition and multiplication operations:&lt;/p&gt;
+$$
+\begin{split}
+\phi(a+b) &amp;= \phi(a) + \phi(b) \\
+\phi(a\cdot b) &amp;= \phi(a)\cdot\phi(b)
+\end{split}
+$$&lt;p&gt;That is, if $a\in K$, then $a$ also has a unique representation in $L$. To maintain the structure of multiplication operations, we actually only need to find a Primitive Element $\alpha$ in K corresponding to an element $\beta$ in $L$, then this homomorphism mapping is uniquely determined, because any element in $K$ can be represented as a power of $\alpha$. However, usually this embedding homomorphism mapping is not easy to find. Let&amp;rsquo;s take $\mathbb{F}_{2^2}\subset\mathbb{F}_{2^4}$ as an example to see how to find the mapping of the former embedded into the latter.&lt;/p&gt;
+&lt;p&gt;Because $\eta$ is a Primitive Element in $\mathbb{F}_{2^2}$, we only need to consider the representation of $\eta$ in $\mathbb{F}_{2^4}$.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s first look at the Primitive Element $\theta$ in $\mathbb{F}_{2^4}$, is $\eta\mapsto\theta$ an embedding mapping?&lt;/p&gt;
+$$
+\eta^2 = \eta+1 \quad \text{but} \quad \theta^2 \neq \theta+1
+$$&lt;p&gt;Obviously, $\eta^2 \neq \theta^2$, so $\eta\mapsto\theta$ is not an embedding mapping. Thinking about how irreducible polynomials determine the multiplication relationship between elements, and because $\eta$ is a root of $X^2+X+1$ while $\theta$ is a root of $X^4+X+1$, the multiplication relationship between $\eta$ and $\theta$ must be different. In $\mathbb{F}_{2^4}$, there also exist two roots of $X^2+X+1$, which are $\theta^2+\theta$ and $\theta^2+\theta+1$ respectively. Readers can verify the following equation:&lt;/p&gt;
+$$
+(\theta^2+\theta)^2 + (\theta^2+\theta) + 1 = \theta^4 + \theta^2 + \theta^2 + \theta + 1 = 0
+$$&lt;p&gt;So, we define the embedding mapping:&lt;/p&gt;
+$$
+\begin{split}
+\phi &amp;: \mathbb{F}_{2^2} \to \mathbb{F}_{2^4},\quad \eta \mapsto \theta^2+\theta
+\end{split}
+$$&lt;p&gt;This means that the binary representation $(10)$ corresponds to $(0110)$ in $L=\mathbb{F}_{2^4}$; and the binary representation $(11)$ (which is $\eta+1$) corresponds to $(\theta^2+\theta+1)$ in $L$, i.e., $(0111)$. Note here that we can also use $\phi&#39;: \eta \mapsto \theta^2+\theta+1$ as another different embedding mapping. The underlying principle is that $\theta^2+\theta$ and $\theta^2+\theta+1$ are conjugates of each other, they are perfectly symmetric, so both of these mappings can serve as embedding mappings. Although they map to different elements, there is no significant difference from the overall structure.&lt;/p&gt;
+&lt;p&gt;For any $[L:K]=n$, when we embed $K$ into $L$, a direct method is to find the roots of $f(X)$ in $L$, although this calculation is not simple. Moreover, both embedding and de-embedding require additional calculations, which undoubtedly increases the complexity of the system.&lt;/p&gt;
+&lt;p&gt;The recursive Extension Tower construction method mentioned in the Binius paper, by selecting appropriate irreducible polynomials and Bases, we can obtain very direct (called Zero-cost) embedding and de-embedding mappings.&lt;/p&gt;
+&lt;h2 id=&#34;extension-tower&#34;&gt;Extension Tower&lt;/h2&gt;
+&lt;p&gt;We can construct $\mathbb{F}_{2^4}$ through two quadratic extensions. First, we choose a quadratic irreducible polynomial $f(X)=X^2+X+1$, then we can construct $\mathbb{F}_{2^2}$, then based on $\mathbb{F}_{2^2}$ we find another quadratic irreducible polynomial to construct $\mathbb{F}_{2^4}$.&lt;/p&gt;
+$$
+\mathbb{F}_{2^2} = \mathbb{F}_2[X]/\langle X^2+X+1 \rangle \cong\mathbb{F}_2(\eta)
+$$&lt;p&gt;Next, we need to find a quadratic irreducible polynomial in $\mathbb{F}_{2^2}[X]$. First note that $X^2+X+1$ can no longer be used, according to the definition of $\mathbb{F}_{2^2}$, it can already be factored. Consider $X^2+1$, it can also be factored $(X+1)(X+1)$. In fact, all quadratic polynomials in $\mathbb{F}_2[X]$ can be factored. A quadratic irreducible polynomial in $\mathbb{F}_{2^2}[X]$ must include a term with the new element $\eta$ in its coefficients.&lt;/p&gt;
+&lt;p&gt;For example, $X^2+X+\eta$ is a quadratic irreducible polynomial over $\mathbb{F}_{2^2}$. Then we can construct $\mathbb{F}_{2^4}$:&lt;/p&gt;
+$$
+\mathbb{F}_{2^4} = \mathbb{F}_{2^2}[X]/\langle X^2+X+\eta \rangle 
+$$&lt;p&gt;Let&amp;rsquo;s denote the root of $X^2+X+\eta$ in $\mathbb{F}_{2^4}$ as $\zeta$, then $\mathbb{F}_{2^4}$ can be represented as:&lt;/p&gt;
+$$
+\mathbb{F}_{2^4} = \cong \mathbb{F}_{2^2}(\zeta)  \cong \mathbb{F}_2(\eta)(\zeta) \cong \mathbb{F}_2(\eta, \zeta)
+$$&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Then all elements of $\mathbb{F}_{2^4}$ can be represented using $\eta, \zeta$:&lt;/p&gt;
+$$
+\begin{array}{ccccccc}
+\hline
+0000 &amp; 0001 &amp; 0010 &amp; 0011 &amp; 0100 &amp; 0101 &amp; 0110 &amp; 0111 \\
+0 &amp; 1 &amp; \eta &amp; \eta+1 &amp; \zeta &amp; \zeta+\eta &amp; \zeta+\eta+1 &amp; \zeta+\eta+1 \\
+\hline
+1000 &amp; 1001 &amp; 1010 &amp; 1011 &amp; 1100 &amp; 1101 &amp; 1110 &amp; 1111 \\
+\zeta\eta &amp; \zeta\eta + 1 &amp; \zeta\eta + \eta &amp; \zeta\eta + \eta + 1 &amp; \zeta\eta + \zeta &amp; \zeta\eta + \zeta +1 &amp; \zeta\eta+\zeta+\eta &amp; \zeta\eta+\zeta+\eta+1 \\
+\hline
+\end{array}
+$$&lt;p&gt;At this point, each bit in the 4-bit binary corresponds to an element in $\mathbb{F}_{2^4}$, $(1000)$ corresponds to $\zeta\eta$, $(0100)$ corresponds to $\zeta$, $(0010)$ corresponds to $\eta$, $(0001)$ corresponds to $1$. Therefore, we can use the following Basis to represent all elements in $\mathbb{F}_{2^4}$:&lt;/p&gt;
+$$
+\mathcal{B} = (1,\ \eta,\ \zeta,\ \eta\zeta)
+$$&lt;p&gt;Now, the binary representation of $\mathbb{F}_{2^2}$ directly corresponds to the &amp;ldquo;lower two bits&amp;rdquo; of the binary representation of $\mathbb{F}_{2^4}$, for example:&lt;/p&gt;
+$$
+\begin{split}
+(1010) &amp;= (10) || (10) = \zeta\eta + \eta \\
+\end{split}
+$$&lt;p&gt;Therefore, we can directly pad zeros to the higher two bits of the binary representation of $\mathbb{F}_{2^2}$ to get the corresponding element in $\mathbb{F}_{2^4}$. Conversely, by removing the two high-order zeros, an element in $\mathbb{F}_{2^4}$ directly maps back to an element in $\mathbb{F}_{2^2}$.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;As shown in the figure above, $(1011)$ is the binary representation of $\zeta\eta+\eta+1$, its lower two bits $(11)$ directly correspond to $(\eta+1)$ in $\mathbb{F}_{2^2}$. This kind of embedding is a &amp;ldquo;natural embedding&amp;rdquo;, so the Binus paper calls it Zero-cost Embedding.&lt;/p&gt;
+&lt;p&gt;However, $\mathbb{F}_{2^4}$ is still a very small field, not enough. If we continue to perform quadratic extensions upwards, how can we find suitable irreducible polynomials? The solution is not unique. Let&amp;rsquo;s first look at a scheme given in the Binius paper [DP23] — Wiedemann Tower [Wie88].&lt;/p&gt;
+&lt;h2 id=&#34;wiedemann-tower&#34;&gt;Wiedemann Tower&lt;/h2&gt;
+&lt;p&gt;The Wiedemann Tower is a recursive extension tower based on $\mathbb{F}_2$. The bottom Base Field is denoted as $\mathcal{T}_0$, with elements only $0$ and $1$:&lt;/p&gt;
+$$
+\mathcal{T}_0 = \mathbb{F}_2 \cong \{0,1\}
+$$&lt;p&gt;Then we introduce an unknown $X_0$, constructing a univariate polynomial ring $\mathbb{F}_2[X_0]$. As discussed earlier, $X^2 + X + 1$ is an irreducible polynomial over $\mathcal{T}_0$, so we can use it to construct $\mathcal{T}_1$.&lt;/p&gt;
+$$
+\mathcal{T}_1 = \mathbb{F}_2[X_0]/\langle  X_0^2+X_0+1 \rangle = \{0, 1, X_0, X_0+1\} \cong \mathbb{F}_{2^2} \cong \mathbb{F}_2(\alpha_0)
+$$&lt;p&gt;Next, we find a quadratic irreducible polynomial $X_1^2+\alpha_0\cdot X_1+1$ in $\mathcal{T}_1[X_1]$, then we can construct $\mathcal{T}_2$:&lt;/p&gt;
+$$
+\mathcal{T}_2 = \mathcal{T}_1[X_1]/\langle  X_1^2+ \alpha_0\cdot X_1+1\rangle \cong \mathbb{F}_{2^4} \cong \mathbb{F}_2(\alpha_0, \alpha_1)
+$$&lt;p&gt;And so on, we can construct $\mathcal{T}_3, \mathcal{T}_4, \cdots, \mathcal{T}_n$:&lt;/p&gt;
+$$
+\mathcal{T}_{i+1} = \mathcal{T}_i[X_i]/\langle  X_i^2+\alpha_{i-1}\cdot X_i+1\rangle \cong \mathbb{F}_{2^{2^i}} \cong \mathbb{F}_2(\alpha_0, \alpha_1, \ldots, \alpha_i),\quad i\geq 1
+$$&lt;p&gt;Here, $\alpha_0, \alpha_1, \ldots, \alpha_{n-1}$ are the roots of the successively introduced quadratic irreducible polynomials, such that:&lt;/p&gt;
+$$
+\mathcal{T}_{n} = \mathbb{F}_2(\alpha_0, \alpha_1, \ldots, \alpha_{n-1})
+$$&lt;p&gt;And $|\mathcal{T}_{n}| = 2^{2^{n}}$. The relationship between these introduced roots satisfies the following equation:&lt;/p&gt;
+$$
+\alpha_{i+1} + \alpha^{-1}_{i+1} = \alpha_i
+$$&lt;p&gt;It&amp;rsquo;s not hard to verify that $\alpha_0+\alpha^{-1}_0=1$. And the polynomial $X_i^2+X_{i-1}X_i+1$ in the multivariate polynomial ring $\mathcal{T}_0[X_0, X_1, \ldots, X_n]$ has two roots $\alpha_i$ and $\alpha^{-1}_i$:&lt;/p&gt;
+$$
+(\alpha^{-1}_i)^2 + \alpha_{i-1}\alpha^{-1}_i + 1 = \alpha^{-1}_i + \alpha_{i-1} + \alpha_i = \alpha_{i-1} + \alpha_{i-1} = 0
+$$&lt;p&gt;Moreover, $\alpha_i$ and $\alpha_{i+1}$ satisfy the following recursive relationship:&lt;/p&gt;
+$$
+\alpha_{i+1} + \alpha^{-1}_{i+1} = \alpha_i
+$$&lt;p&gt;This is because if we multiply both sides of the equation by $\alpha_{i+1}$, we get: $\alpha_{i+1}^2 + \alpha_i\alpha_{i+1} + 1 = 0$, which is exactly the irreducible polynomial we use for recursive quadratic extension construction.&lt;/p&gt;
+&lt;h3 id=&#34;multilinear-basis&#34;&gt;Multilinear Basis&lt;/h3&gt;
+&lt;p&gt;For $\mathcal{T}_{i+1}$ over $\mathbb{F}_2$, it forms an $n+1$ dimensional vector space over $\mathbb{F}_2$. We can use the roots of these irreducible polynomials to construct a Multilinear Basis:&lt;/p&gt;
+$$
+\begin{split}
+\mathcal{B}_{i+1} &amp;= (1, \alpha_0)\otimes (1, \alpha_1) \otimes \cdots \otimes (1,\alpha_i)  \\
+&amp; = (1, \alpha_0, \alpha_1, \alpha_0\alpha_1, \alpha_2,\ \ldots,\ \alpha_0\alpha_1\cdots \alpha_i)
+\end{split}
+$$&lt;p&gt;This is consistent with what we discussed earlier, using $(1, \eta, \zeta, \zeta\eta)$ as the Basis for $\mathbb{F}_{2}(\eta, \zeta)$. We can quickly verify this. First, $(1, \alpha_0)$ is the Basis of $\mathcal{T}_1$, because every element of $\mathcal{T}_1$ can be expressed as&lt;/p&gt;
+$$
+a_0 + b_0\cdot \alpha_0,  \quad a_0, b_0\in\mathcal{T}_0
+$$&lt;p&gt;After $\mathcal{T}_1$ is extended to $\mathcal{T}_2$ through $\alpha_1$, elements of $\mathcal{T}_2$ can all be expressed as:&lt;/p&gt;
+$$
+a_1 + b_1\cdot \alpha_1,  \quad a_1, b_1\in\mathcal{T}_1
+$$&lt;p&gt;Substituting $a_1=a_0+b_0\cdot \alpha_0$, $b_1=a_0&#39;+b_0&#39;\cdot \alpha_1$, we have:&lt;/p&gt;
+$$
+\begin{split}
+a_1 + b_1\cdot \alpha_1 &amp;= (a_0+b_0\cdot \alpha_0) + (a&#39;_0+b&#39;_0\cdot \alpha_0)\cdot \alpha_1 \\
+ &amp;= a_0 + b_0\alpha_0 + a&#39;_0\cdot\alpha_1+ b_0&#39;\cdot \alpha_0\alpha_1
+\end{split}
+$$&lt;p&gt;Thus, $(1, \alpha_0, \alpha_1, \alpha_0\alpha_1)$ forms the Basis of $\mathcal{T}_2$. By extension, $(1, \alpha_0, \alpha_1, \alpha_0\alpha_1, \alpha_2, \alpha_0\alpha_2, \alpha_1\alpha_2, \alpha_0\alpha_1\alpha_2)$ is the Basis of $\mathcal{T}_3$. Finally, $\mathcal{B}_{n}$ is the Basis of $\mathcal{T}_{n}$.&lt;/p&gt;
+&lt;h3 id=&#34;finding-primitive-element&#34;&gt;Finding Primitive element&lt;/h3&gt;
+&lt;p&gt;We discussed earlier that $\alpha_i$ and $\alpha^{-1}_{i}$ are conjugate roots. By Galois theory,&lt;/p&gt;
+$$
+\alpha_{i}^{2^{2^n}} = \alpha^{-1}_{i} 
+$$&lt;p&gt;Then all $\alpha_i$ satisfy the following property:&lt;/p&gt;
+$$
+\alpha_i^{F_i} = 1
+$$&lt;p&gt;Here $F_n$ represents the Fermat Number, $F_n=2^{2^n}+1$. A famous theorem is that $\mathsf{gcd}(F_i, F_j) = 1,  i\neq j$, that is, any two different Fermat numbers are coprime, so&lt;/p&gt;
+$$
+\mathsf{ord}(\alpha_0\alpha_1\cdots \alpha_i) = \mathsf{ord}(\alpha_0)\mathsf{ord}(\alpha_1)\cdots\mathsf{ord}(\alpha_i) 
+$$&lt;p&gt;Therefore, if the Fermat number $F_i$ is prime, then obviously $\mathsf{ord}(\alpha_i)=F_i$. Currently, we know that when $i\leq 4$, $F_i$ are all prime, so&lt;/p&gt;
+$$
+\begin{split}
+\mathsf{ord}(\alpha_0\cdot \alpha_1\cdot \cdots \cdot \alpha_i) &amp;= \mathsf{ord}(\alpha_0)\cdot \mathsf{ord}(\alpha_1)\cdot \cdots \cdot \mathsf{ord}(\alpha_n) \\
+&amp; = F_0\cdot F_1\cdot \cdots \cdot F_i = 2^{2^{i+1}} - 1 \\
+&amp; = |\mathcal{T}_{n+1}| -1
+\end{split}
+$$&lt;p&gt;If $\alpha_0\cdots \alpha_i, i\leq 4$, then according to the properties of finite fields, it is a Primitive Element of $\mathcal{T}_{n+1}$.&lt;/p&gt;
+&lt;p&gt;Additionally, through computer program verification, for the cases of $5\leq i \leq 8$, the Order of $\alpha_i$ is still equal to $F_i$. The $\alpha_0\cdots \alpha_8$ is of the size of the finite field $\mathbb{F}_{2^{512}}$ which can already meet the needs of proof systems like Binius. But mathematically, do all $\alpha_i$ satisfy this property? This seems to still be an unsolved problem [Wie88].&lt;/p&gt;
+&lt;h2 id=&#34;multiplication-optimization&#34;&gt;Multiplication Optimization&lt;/h2&gt;
+&lt;p&gt;Another significant advantage of adopting the Extension Tower is the optimization of multiplication operations.&lt;/p&gt;
+&lt;p&gt;The first optimization is &amp;ldquo;Small-by-large Multiplication&amp;rdquo;, that is, the multiplication operation of two numbers $a\in\mathcal{T}_\iota$ and $b\in\mathcal{T}_{\iota+\kappa}$. Since $b$ can be decomposed into $2^\kappa$ elements of $\mathcal{T}_\iota$, this multiplication operation is equivalent to $2^\kappa$ multiplication operations on $\mathcal{T}_\iota$.&lt;/p&gt;
+$$
+a \cdot (b_0, b_1, \cdots, b_{2^\kappa-1}) = (a\cdot b_0, a\cdot b_1, \cdots, a\cdot b_{\kappa-1})
+$$&lt;p&gt;Even for the multiplication of two elements in the same field, there are still optimization techniques. Suppose $a, b\in\mathcal{T}_{i+1}$, then according to the definition of Tower construction, they can be represented as $a_0 + a_1\cdot\alpha_i$ and $b_0 + b_1\cdot \alpha_i$ respectively, then their multiplication can be derived as follows:&lt;/p&gt;
+$$
+\begin{split}
+a\cdot b  &amp; = (a_0 + a_1\cdot\alpha_i)\cdot (b_0 + b_1\cdot\alpha_i) \\
+ &amp;= a_0b_0 + (a_0b_1+a_1b_0)\cdot\alpha_i + a_1b_1\cdot\alpha_i^2 \\
+&amp; = a_0b_0 + (a_0b_1+a_1b_0)\cdot\alpha_i + a_1b_1\cdot(\alpha_{i-1}\alpha_i+1) \\
+&amp; = a_0b_0  + a_1b_1 + (a_0b_1 + a_1b_0 + a_1b_1\cdot\alpha_{i-1})\cdot\alpha_i \\
+&amp; = a_0b_0  + a_1b_1 + \big((a_0+a_1)(b_0+b_1) - a_0b_0 - a_1b_1) + a_1b_1\cdot\alpha_{i-1}\big)\cdot\alpha_i
+\end{split}
+$$&lt;p&gt;Note on the right side of the above equation, we only need to calculate three multiplications on $\mathcal{T}_{i}$, namely $A=a_0b_0$, $B=(a_0+a_1)(b_0+b_1)$ and $C=a_1b_1$, then the above formula can be converted to:&lt;/p&gt;
+$$
+a\cdot b = (A + C) + (B-A-C+C\cdot \alpha_{i-1})\cdot\alpha_i 
+$$&lt;p&gt;There&amp;rsquo;s still one $C\cdot \alpha_{i-1}$ missing, which is a constant multiplication, because $\alpha_{i-1}\in\mathcal{T}_{i}$ is a constant. This constant multiplication can be reduced to a constant multiplication operation on $\mathcal{T}_{i-1}$, as shown below:&lt;/p&gt;
+$$
+\begin{split}
+C\cdot \alpha_{i-1} &amp;= (c_0 + c_1\alpha_{i-1})\cdot \alpha_{i-1} \\
+&amp; = c_0\cdot \alpha_{i-1} + c_1\cdot \alpha_{i-1}^2 \\
+&amp; = c_0\cdot \alpha_{i-1} + c_1\cdot (\alpha_{i-2}\cdot \alpha_{i-1} + 1) \\
+&amp; = c_1 + (c_0 + {\color{blue}c_1\cdot \alpha_{i-2}})\cdot \alpha_{i-1}
+\end{split}
+$$&lt;p&gt;The blue part expression, ${\color{blue}c_1\cdot \alpha_{i-2}}$ is a constant multiplication operation on $\mathcal{T}_{i-2}$ that needs to be calculated recursively. The entire recursive process only needs to perform several additions to complete.&lt;/p&gt;
+&lt;p&gt;Looking back at the $a\cdot b$ operation, we can also construct a Karatsuba-style recursive algorithm, where each layer of recursion only needs to complete three multiplication operations, one less than the four multiplication operations without optimization. Overall, the optimization effect will be very significant.&lt;/p&gt;
+&lt;p&gt;Furthermore, the multiplication inverse operation on $\mathcal{T}_{i}$ can also be greatly optimized [FP97]. Consider $a, b\in\mathcal{T}_{i+1}$, satisfying $a\cdot b=1$, expand the expressions of $a$ and $b$:&lt;/p&gt;
+$$
+\begin{split}
+a\cdot b &amp;= (a_0 + a_1\cdot\alpha_i)\cdot (b_0 + b_1\cdot\alpha_i) \\
+&amp; = a_0b_0  + a_1b_1 + \big((a_0+a_1)(b_0+b_1) - a_0b_0 - a_1b_1) + a_1b_1\cdot\alpha_{i-1}\big)\cdot\alpha_i\\
+&amp;= 1\\
+\end{split}
+$$&lt;p&gt;We can calculate to get the expressions for $b_0, b_1$:&lt;/p&gt;
+$$
+\begin{split}
+b_0 &amp;= \frac{a_0 + a_1\alpha_{i-1}}{a_0(a_0 + a_1\alpha_{i-1}) + a_1^2}  \\[2ex]
+b_1 &amp;= \frac{a_1}{a_0(a_0 + a_1\alpha_{i-1}) + a_1^2} \\
+\end{split}
+$$&lt;p&gt;So, the calculation of $b_0$ and $b_1$ includes: one inversion operation, three multiplications, two additions, one constant multiplication, and one squaring operation.&lt;/p&gt;
+$$
+\begin{split}
+d_0 &amp;= \alpha_{i-1}a_1\\
+d_1 &amp;= a_0 + d_0 \\
+d_2 &amp;= a_0 \cdot d_1 \\
+d_3 &amp;= a_1^2   \\
+d_4 &amp;= d_2 + d_3 \\
+d_5 &amp;= 1/d_4 \\
+b_0 &amp; = d_1\cdot d_5\\
+b_1 &amp; = a_1 \cdot d_5\\
+\end{split}
+$$&lt;p&gt;The inversion operation of $d_5$ can be recursively calculated layer by layer along the Extension Tower. The main computational cost in the recursive process is three multiplication operations. There&amp;rsquo;s also the squaring operation of $d_3$, which can also be calculated recursively:&lt;/p&gt;
+$$
+\begin{split}
+a_1^2 &amp;= (e_0 + e_1\cdot\alpha_{i-1})^2 \\
+&amp; = e_0^2 + e_1^2\cdot\alpha_{i-1}^2 \\
+&amp; = e_0^2 + e_1^2\cdot(\alpha_{i-2}\alpha_{i-1} + 1) \\
+&amp; = (e_0^2 + e_1^2) + (e_1^2\alpha_{i-2})\cdot\alpha_{i-1}  \\
+\end{split}
+$$&lt;p&gt;For detailed recursive efficiency analysis, please refer to [FP97]. Overall, the computational complexity is comparable to the Karatsuba algorithm, thus greatly reducing the algorithmic complexity of inversion.&lt;/p&gt;
+&lt;h2 id=&#34;artin-schreier-tower-conway-tower&#34;&gt;Artin-Schreier Tower (Conway Tower)&lt;/h2&gt;
+&lt;p&gt;There&amp;rsquo;s another method to construct Binary Towers, originating from a paper published by Amil Artin and Otto Schreier in 1927, which also appears in Conway&amp;rsquo;s book &amp;ldquo;On Numbers and Games&amp;rdquo;. For the historical origins and related theories, please refer to [CHS24].&lt;/p&gt;
+&lt;p&gt;For any $\mathbb{F}_{p^n}$, we choose $h(X_{i+1}) = X_{i+1}^p - X_{i+1} - \alpha_0\alpha_1\cdots \alpha_i$ as the irreducible polynomial for each layer of the Tower. And $\alpha_{i+1}$ is the root of $h(X_{i+1})=0$ on the previous layer of the Tower. This way we can get an Extension Tower:&lt;/p&gt;
+$$
+\mathbb{F}_2 \subset \mathbb{F}_{2^2}\cong\mathbb{F}_2(\alpha_0) \subset \mathbb{F}_{2^4}\cong\mathbb{F}_{2^2}(\alpha_1) \subset \mathbb{F}_{2^8}\cong\mathbb{F}_{2^4}(\alpha_2)
+$$&lt;p&gt;Moreover, $(1, \alpha_0)\otimes(1, \alpha_1)\otimes\cdots \otimes (1, \alpha_n)$ forms a Basis for the vector space $\mathbb{F}_{2^{2^{i+1}}}$. According to our previous discussion, this set of Bases also supports Zero-cost subfield embedding. This type of Multilinear Basis is also known as Cantor Basis [Can89].&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;[Wie88] Wiedemann, Doug. &amp;ldquo;An iterated quadratic extension of GF (2).&amp;rdquo; Fibonacci Quart 26.4 (1988): 290-295.&lt;/li&gt;
+&lt;li&gt;[DP23] Diamond, Benjamin E., and Jim Posen. &amp;ldquo;Succinct arguments over towers of binary fields.&amp;rdquo; Cryptology ePrint Archive (2023).&lt;/li&gt;
+&lt;li&gt;[DP24] Diamond, Benjamin E., and Jim Posen. &amp;ldquo;Polylogarithmic Proofs for Multilinears over Binary Towers.&amp;rdquo; Cryptology ePrint Archive (2024).&lt;/li&gt;
+&lt;li&gt;[LN97] Lidl, Rudolf, and Harald Niederreiter. Finite fields. No. 20. Cambridge university press, 1997.&lt;/li&gt;
+&lt;li&gt;[FP97] Fan, John L., and Christof Paar. &amp;ldquo;On efficient inversion in tower fields of characteristic two.&amp;rdquo; Proceedings of IEEE International Symposium on Information Theory. IEEE, 1997.&lt;/li&gt;
+&lt;li&gt;[CHS24] Cagliero, Leandro, Allen Herman, and Fernando Szechtman. &amp;ldquo;Artin-Schreier towers of finite fields.&amp;rdquo; arXiv preprint arXiv:2405.10159 (2024).&lt;/li&gt;
+&lt;li&gt;[Can89] David G. Cantor. On arithmetical algorithms over finite fields. J. Comb. Theory Ser. A, 50(2):285–300, March 1989.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+      
+    </item>
     
     <item>
       <title>Trust Wallet&#39;s Fomo3D Summer: Fresh Discovery of Low Entropy Flaw From 2018</title>

@@ -2,15 +2,85 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://sec-bit.github.io/blog/en/tags/binance/</loc>
-    <lastmod>2024-01-25T14:47:27+08:00</lastmod>
+    <loc>https://sec-bit.github.io/blog/en/tags/binius/</loc>
+    <lastmod>2024-11-01T20:31:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/categories/</loc>
-    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
+    <lastmod>2024-11-01T20:31:26+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/cryptography/</loc>
+    <lastmod>2024-11-01T20:31:26+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/finite-fields/</loc>
+    <lastmod>2024-11-01T20:31:26+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/categories/mle-pcs/</loc>
+    <lastmod>2024-11-01T20:31:26+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/2024/11/01/binius-02/</loc>
+    <lastmod>2024-11-01T20:31:26+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/post/</loc>
+    <lastmod>2024-11-01T20:31:26+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/</loc>
+    <lastmod>2024-11-01T20:31:26+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/snark/</loc>
+    <lastmod>2024-11-01T20:31:26+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/</loc>
+    <lastmod>2024-11-01T20:31:26+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/2024/10/31/binius-01/</loc>
+    <lastmod>2024-11-01T20:31:26+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://sec-bit.github.io/blog/en/tags/binance/</loc>
+    <lastmod>2024-01-25T14:47:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -72,13 +142,6 @@
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/en/post/</loc>
-    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://sec-bit.github.io/blog/en/tags/random-number/</loc>
     <lastmod>2024-01-25T14:47:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -86,22 +149,8 @@
   </url>
   
   <url>
-    <loc>https://sec-bit.github.io/blog/en/</loc>
-    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://sec-bit.github.io/blog/en/tags/seed/</loc>
     <lastmod>2024-01-25T14:47:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://sec-bit.github.io/blog/en/tags/</loc>
-    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

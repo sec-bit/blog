@@ -79,8 +79,8 @@
 
   <meta itemprop="name" content="SECBIT Blog">
   <meta itemprop="description" content="SECBIT THE WORLD">
-  <meta itemprop="datePublished" content="2024-01-19T11:00:00+08:00">
-  <meta itemprop="dateModified" content="2024-11-01T17:05:24+08:00">
+  <meta itemprop="datePublished" content="2024-11-01T08:00:00+08:00">
+  <meta itemprop="dateModified" content="2024-11-01T20:31:26+08:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="SECBIT Blog">
   <meta name="twitter:description" content="SECBIT THE WORLD">
@@ -371,6 +371,106 @@
 
   <header class="post-header">
     <h1 class="post-title">
+      <a class="post-link" href="/blog/en/2024/11/01/binius-02/">
+        Notes on Binius (Part II): Subspace Polynomial
+      </a>
+    </h1>
+    
+    
+    <div class="post-meta-list">
+      <div class="post-meta-item post-meta-author">
+        
+<svg aria-hidden="true" class="lucide lucide-user-round-pen hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M2 21a8 8 0 0 1 10.821-7.487"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="8" r="5"/></svg>
+        Yu Guo <yu.guo@secbit.io> and Jade Xie <jade@secbit.io>
+        
+      </div>
+      <div class="post-meta-item post-meta-time">
+        
+<svg aria-hidden="true" class="lucide lucide-calendar-days hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+        <time datetime=" 2024-11-01">
+          2024-11-01
+        </time>
+      </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+
+    <p>
+      
+    </p>
+
+    
+    <div class="post-summary">
+      The FRI-Binus paper [DP24] discusses the Additive FFT algorithm based on Subspace Polynomial and provides a perspective to understand the Additive FFT algorithm based on Novel Polynomial Basis in [LCH14] using odd-even decomposition. This article directly introduces the Subspace Polynomial, and then introduces the Additive FFT algorithm from the perspective of odd-even decomposition. This article omits the definition of Normalized Subspace Polynomial for easier understanding. Normalization only affects the performance of the FFT algorithm and has no essential difference from the simplified algorithm introduced in this article.
+    </div>
+
+    <div class="read-more">
+      <a role="button" href="/blog/en/2024/11/01/binius-02/" class="read-more-link outline">Read more</a>
+    </div>
+    
+  </div>
+
+</section>
+
+  
+  
+
+<section class="jane-card post">
+  
+
+  <header class="post-header">
+    <h1 class="post-title">
+      <a class="post-link" href="/blog/en/2024/10/31/binius-01/">
+        Notes on FRI-Binius (Part I): Binary Towers
+      </a>
+    </h1>
+    
+    
+    <div class="post-meta-list">
+      <div class="post-meta-item post-meta-author">
+        
+<svg aria-hidden="true" class="lucide lucide-user-round-pen hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M2 21a8 8 0 0 1 10.821-7.487"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="8" r="5"/></svg>
+        Yu Guo <yu.guo@secbit.io> and Jade Xie <jade@secbit.io>
+        
+      </div>
+      <div class="post-meta-item post-meta-time">
+        
+<svg aria-hidden="true" class="lucide lucide-calendar-days hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+        <time datetime=" 2024-10-31">
+          2024-10-31
+        </time>
+      </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+
+    <p>
+      
+    </p>
+
+    
+    <div class="post-summary">
+      Binary fields possess elegant internal structures, and Binius aims to fully utilize these internal structures to construct efficient SNARK proof systems. This article mainly discusses the Binary Fields that Binius relies on at its core and the construction methods of Extension Towers based on Binary Fields. Binary Fields provide smaller fields and are compatible with various tool constructions in traditional cryptography while also being able to fully utilize optimization of special instructions on hardware. There are two main advantages to choosing Extension Towers: one is that the recursive Extension construction provides a consistent and incremental Basis selection, allowing Small Fields to be embedded into Large Fields in a very natural way; the other advantage is that multiplication and inversion operations have efficient recursive algorithms.
+    </div>
+
+    <div class="read-more">
+      <a role="button" href="/blog/en/2024/10/31/binius-01/" class="read-more-link outline">Read more</a>
+    </div>
+    
+  </div>
+
+</section>
+
+  
+  
+
+<section class="jane-card post">
+  
+
+  <header class="post-header">
+    <h1 class="post-title">
       <a class="post-link" href="/blog/en/2024/01/19/trust-wallets-fomo3d-summer-vuln/">
         Trust Wallet&#39;s Fomo3D Summer: Fresh Discovery of Low Entropy Flaw From 2018
       </a>
@@ -514,126 +614,41 @@
 </section>
 
   
+
+
+  
   
 
-<section class="jane-card post">
-  
 
-  <header class="post-header">
-    <h1 class="post-title">
-      <a class="post-link" href="/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/">
-        How the winner got Fomo3D prize - A Detailed Explanation
-      </a>
-    </h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="pagination">
+  <ul>
     
+    <li  class="active" >
+      <a href="/blog/en/">1</a>
+    </li>
     
-    <div class="post-meta-list">
-      <div class="post-meta-item post-meta-author">
-        
-<svg aria-hidden="true" class="lucide lucide-user-round-pen hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M2 21a8 8 0 0 1 10.821-7.487"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="8" r="5"/></svg>
-        SECBIT Labs
-        
-      </div>
-      <div class="post-meta-item post-meta-time">
-        
-<svg aria-hidden="true" class="lucide lucide-calendar-days hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-        <time datetime=" 2018-08-23">
-          2018-08-23
-        </time>
-      </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-
-    <p>
-      <img src="/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/cover.jpeg"><br>
-    </p>
-
+    <li >
+      <a href="/blog/en/page/2/">2</a>
+    </li>
     
-    <div class="post-summary">
-      The first round of Fomo3D has ended and the winner&rsquo;s address is 0xa169, with a prize of 10,469.66 ethers.
-You may think that the winner is just an ordinary participant.
-    </div>
-
-    <div class="read-more">
-      <a role="button" href="/blog/en/2018/08/23/how-the-winner-got-fomo3d-prize-a-detailed-explanation/" class="read-more-link outline">Read more</a>
-    </div>
-    
-  </div>
-
-</section>
-
-  
-  
-
-<section class="jane-card post">
-  
-
-  <header class="post-header">
-    <h1 class="post-title">
-      <a class="post-link" href="/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/">
-        Lacking Insights in ERC223 &amp; ERC827 Implementation
-      </a>
-    </h1>
-    
-    
-    <div class="post-meta-list">
-      <div class="post-meta-item post-meta-author">
-        
-<svg aria-hidden="true" class="lucide lucide-user-round-pen hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M2 21a8 8 0 0 1 10.821-7.487"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="8" r="5"/></svg>
-        SECBIT Labs
-        
-      </div>
-      <div class="post-meta-item post-meta-time">
-        
-<svg aria-hidden="true" class="lucide lucide-calendar-days hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-        <time datetime=" 2018-06-24">
-          2018-06-24
-        </time>
-      </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-
-    <p>
-      <img src="/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/1.png"><br>
-    </p>
-
-    
-    <div class="post-summary">
-      This bug originates from a common practice: calling an arbitrary function appointed by the contract caller from another contract after invoking a function in the current one, while the bug in ATN contract reveals the danger of this approach: the contract caller could bypass authority checks or attack others with the identity of contract itself via this feature.
-    </div>
-
-    <div class="read-more">
-      <a role="button" href="/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/" class="read-more-link outline">Read more</a>
-    </div>
-    
-  </div>
-
-</section>
-
-  
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  </ul>
+</nav>
 
 
 

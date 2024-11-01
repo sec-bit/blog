@@ -6,8 +6,36 @@
     <description>Recent content in Tags on SECBIT Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 01 Nov 2024 16:58:03 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 01 Nov 2024 20:31:26 +0800</lastBuildDate>
     <atom:link href="https://sec-bit.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Binius</title>
+      <link>https://sec-bit.github.io/blog/tags/binius/</link>
+      <pubDate>Fri, 01 Nov 2024 08:00:00 +0800</pubDate>
+      <guid>https://sec-bit.github.io/blog/tags/binius/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cryptography</title>
+      <link>https://sec-bit.github.io/blog/tags/cryptography/</link>
+      <pubDate>Fri, 01 Nov 2024 08:00:00 +0800</pubDate>
+      <guid>https://sec-bit.github.io/blog/tags/cryptography/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Finite Fields</title>
+      <link>https://sec-bit.github.io/blog/tags/finite-fields/</link>
+      <pubDate>Fri, 01 Nov 2024 08:00:00 +0800</pubDate>
+      <guid>https://sec-bit.github.io/blog/tags/finite-fields/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SNARK</title>
+      <link>https://sec-bit.github.io/blog/tags/snark/</link>
+      <pubDate>Fri, 01 Nov 2024 08:00:00 +0800</pubDate>
+      <guid>https://sec-bit.github.io/blog/tags/snark/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Tutorials</title>
       <link>https://sec-bit.github.io/blog/tags/tutorials/</link>
@@ -118,34 +146,6 @@
       <link>https://sec-bit.github.io/blog/tags/extractor/</link>
       <pubDate>Wed, 28 Aug 2019 08:00:00 +0800</pubDate>
       <guid>https://sec-bit.github.io/blog/tags/extractor/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Zero Knowledge</title>
-      <link>https://sec-bit.github.io/blog/tags/zero-knowledge/</link>
-      <pubDate>Wed, 28 Aug 2019 08:00:00 +0800</pubDate>
-      <guid>https://sec-bit.github.io/blog/tags/zero-knowledge/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Simulator</title>
-      <link>https://sec-bit.github.io/blog/tags/simulator/</link>
-      <pubDate>Tue, 06 Aug 2019 08:00:00 +0800</pubDate>
-      <guid>https://sec-bit.github.io/blog/tags/simulator/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Proof</title>
-      <link>https://sec-bit.github.io/blog/tags/proof/</link>
-      <pubDate>Wed, 31 Jul 2019 08:00:00 +0800</pubDate>
-      <guid>https://sec-bit.github.io/blog/tags/proof/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Smart Contract</title>
-      <link>https://sec-bit.github.io/blog/tags/smart-contract/</link>
-      <pubDate>Mon, 29 Jul 2019 08:00:00 +0800</pubDate>
-      <guid>https://sec-bit.github.io/blog/tags/smart-contract/</guid>
       <description></description>
     </item>
   </channel>

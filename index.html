@@ -79,8 +79,8 @@
 
   <meta itemprop="name" content="SECBIT Blog">
   <meta itemprop="description" content="SECBIT THE WORLD">
-  <meta itemprop="datePublished" content="2020-01-22T08:00:00+08:00">
-  <meta itemprop="dateModified" content="2024-11-01T16:58:03+08:00">
+  <meta itemprop="datePublished" content="2024-11-01T08:00:00+08:00">
+  <meta itemprop="dateModified" content="2024-11-01T20:31:26+08:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="SECBIT Blog">
   <meta name="twitter:description" content="SECBIT THE WORLD">
@@ -371,6 +371,106 @@
 
   <header class="post-header">
     <h1 class="post-title">
+      <a class="post-link" href="/blog/2024/11/01/binius-02/">
+        Notes on Binius (Part II): Subspace Polynomial
+      </a>
+    </h1>
+    
+    
+    <div class="post-meta-list">
+      <div class="post-meta-item post-meta-author">
+        
+<svg aria-hidden="true" class="lucide lucide-user-round-pen hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M2 21a8 8 0 0 1 10.821-7.487"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="8" r="5"/></svg>
+        Yu Guo <yu.guo@secbit.io> and Jade Xie <jade@secbit.io>
+        
+      </div>
+      <div class="post-meta-item post-meta-time">
+        
+<svg aria-hidden="true" class="lucide lucide-calendar-days hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+        <time datetime=" 2024-11-01">
+          2024-11-01
+        </time>
+      </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+
+    <p>
+      
+    </p>
+
+    
+    <div class="post-summary">
+      FRI-Binus 论文 [DP24] 中讨论了基于 Subspace Polynomial 的 Additive FFT 算法，并给出了用奇偶项分解的视角来理解 [LCH14] 中的基于 Novel Polynomial Basis 的 Additive FFT 算法。本文直接介绍子空间多项式 Subspace Polynomial，然后据此介绍奇偶项分解视角的 Additive FFT 算法。本文省去了 Normalized Subspace Polynomial 的定义，方便读者理解。Normalization 只是影响 FFT 算法的性能，和本文介绍的简化版算法并没有本质的区别。
+    </div>
+
+    <div class="read-more">
+      <a role="button" href="/blog/2024/11/01/binius-02/" class="read-more-link outline">阅读全文</a>
+    </div>
+    
+  </div>
+
+</section>
+
+  
+  
+
+<section class="jane-card post">
+  
+
+  <header class="post-header">
+    <h1 class="post-title">
+      <a class="post-link" href="/blog/2024/10/31/binius-01/">
+        Notes on FRI-Binius (Part I): Binary Towers
+      </a>
+    </h1>
+    
+    
+    <div class="post-meta-list">
+      <div class="post-meta-item post-meta-author">
+        
+<svg aria-hidden="true" class="lucide lucide-user-round-pen hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M2 21a8 8 0 0 1 10.821-7.487"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="8" r="5"/></svg>
+        Yu Guo <yu.guo@secbit.io> and Jade Xie <jade@secbit.io>
+        
+      </div>
+      <div class="post-meta-item post-meta-time">
+        
+<svg aria-hidden="true" class="lucide lucide-calendar-days hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+        <time datetime=" 2024-10-31">
+          2024-10-31
+        </time>
+      </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+
+    <p>
+      
+    </p>
+
+    
+    <div class="post-summary">
+      二进制域拥有优美的内部结构，而 Binius 是意图充分利用这些内部结构，构造高效的 SNARK 证明系统。本文主要讨论 Binius 底层所依赖的 Binary Fields 以及 基于 Binary Fields 的 Extension Tower 的构造方法。Binary Fields 提供了更小的 Fields，并且兼容传统密码学中的各种工具构造，同时也可以充分利用硬件上的特殊指令的优化。选用 Extension Tower 优点主要有两个，一个是递归的 Extension 构造提供了一致的、增量式的 Basis 选择，从而使得 Small Field 可以以非常自然的方式嵌入到一个 Large Field 中，另一个优点是乘法和求逆运算存在高效的递归算法。
+    </div>
+
+    <div class="read-more">
+      <a role="button" href="/blog/2024/10/31/binius-01/" class="read-more-link outline">阅读全文</a>
+    </div>
+    
+  </div>
+
+</section>
+
+  
+  
+
+<section class="jane-card post">
+  
+
+  <header class="post-header">
+    <h1 class="post-title">
       <a class="post-link" href="/blog/2020/01/22/learn-zk-snark-from-zero-part-five/">
         从零开始学习 zk-SNARK（五）——Pinocchio 协议
       </a>
@@ -515,106 +615,6 @@
 </section>
 
   
-  
-
-<section class="jane-card post">
-  
-
-  <header class="post-header">
-    <h1 class="post-title">
-      <a class="post-link" href="/blog/2020/01/08/nizk-by-crs/">
-        云中「秘密」：构建非交互式零知识证明
-      </a>
-    </h1>
-    
-    
-    <div class="post-meta-list">
-      <div class="post-meta-item post-meta-author">
-        
-<svg aria-hidden="true" class="lucide lucide-user-round-pen hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M2 21a8 8 0 0 1 10.821-7.487"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="8" r="5"/></svg>
-        郭宇
-        
-      </div>
-      <div class="post-meta-item post-meta-time">
-        
-<svg aria-hidden="true" class="lucide lucide-calendar-days hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-        <time datetime=" 2020-01-08">
-          2020-01-08
-        </time>
-      </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-
-    <p>
-      <img src="/blog/2020/01/08/nizk-by-crs/img/private_eye.png"><br>
-    </p>
-
-    
-    <div class="post-summary">
-      之前我们介绍了如何采用「随机预言机」来扮演一个虚拟的「第三方」角色，实现虚拟的「交互」与「随机挑战」。本文将深入讲述另一种方法实现非交互式零知识证明，即如何通过一段共享的字符串去除「交互」与「隐藏随机性」。这个字符串必须事先由「第三方」来随机产生，这就是传说中的「公共参考串」（Common Reference String，简称 CRS）。
-    </div>
-
-    <div class="read-more">
-      <a role="button" href="/blog/2020/01/08/nizk-by-crs/" class="read-more-link outline">阅读全文</a>
-    </div>
-    
-  </div>
-
-</section>
-
-  
-  
-
-<section class="jane-card post">
-  
-
-  <header class="post-header">
-    <h1 class="post-title">
-      <a class="post-link" href="/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/">
-        零知识证明 Learn by Coding：libsnark 入门篇
-      </a>
-    </h1>
-    
-    
-    <div class="post-meta-list">
-      <div class="post-meta-item post-meta-author">
-        
-<svg aria-hidden="true" class="lucide lucide-user-round-pen hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M2 21a8 8 0 0 1 10.821-7.487"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="8" r="5"/></svg>
-        p0n1
-        
-      </div>
-      <div class="post-meta-item post-meta-time">
-        
-<svg aria-hidden="true" class="lucide lucide-calendar-days hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-        <time datetime=" 2020-01-03">
-          2020-01-03
-        </time>
-      </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-
-    <p>
-      <img src="/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/img/cover.jpeg"><br>
-    </p>
-
-    
-    <div class="post-summary">
-      希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。
-    </div>
-
-    <div class="read-more">
-      <a role="button" href="/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/" class="read-more-link outline">阅读全文</a>
-    </div>
-    
-  </div>
-
-</section>
-
-  
 
 
   
@@ -658,6 +658,10 @@
     
     <li >
       <a href="/blog/page/5/">5</a>
+    </li>
+    
+    <li >
+      <a href="/blog/page/6/">6</a>
     </li>
     
   </ul>

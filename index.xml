@@ -6,10 +6,672 @@
     <description>Recent content on SECBIT Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 22 Jan 2020 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 01 Nov 2024 08:00:00 +0800</lastBuildDate>
     
         <atom:link href="https://sec-bit.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Notes on Binius (Part II): Subspace Polynomial</title>
+      <link>https://sec-bit.github.io/blog/2024/11/01/binius-02/</link>
+      <pubDate>Fri, 01 Nov 2024 08:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2024/11/01/binius-02/</guid>
+      
+        <description>&lt;ul&gt;
+&lt;li&gt;Yu Guo &lt;a href=&#34;mailto:yu.guo@secbit.io&#34;&gt;yu.guo@secbit.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Jade Xie &lt;a href=&#34;mailto:jade@secbit.io&#34;&gt;jade@secbit.io&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;FRI-Binus 论文 [DP24] 中讨论了基于 Subspace Polynomial 的 Additive FFT 算法，并给出了用奇偶项分解的视角来理解 [LCH14] 中的基于 Novel Polynomial Basis 的 Additive FFT 算法。本文直接介绍子空间多项式 Subspace Polynomial，然后据此介绍奇偶项分解视角的 Additive FFT 算法。本文省去了 Normalized Subspace Polynomial 的定义，方便读者理解。Normalization 只是影响 FFT 算法的性能，和本文介绍的简化版算法并没有本质的区别。&lt;/p&gt;
+&lt;p&gt;由于 Additive FFT 依赖的代数结构和素数域上的 Multiplicative FFT 非常相似，因此关于 Multiplicative FFT 的知识将有助于理解本文的内容。&lt;/p&gt;
+&lt;h2 id=&#34;线性子空间多项式-subspace-polynomial&#34;&gt;线性子空间多项式 Subspace Polynomial&lt;/h2&gt;
+&lt;p&gt;我们继续探索基于 $\mathbb{F}_2$ 上的 Extension Field，$\mathbb{F}_{2^m}$ 。不管是用何种方式构造的 $\mathbb{F}_{2^m}$，所有的元素构成了一个向量空间，记为 $V_m$ ，并且存在一组 Basis $(\beta_0, \beta_1, \ldots, \beta_{m-1})$ ，张成这个向量空间，记为 $V_m=\mathsf{Span}(\beta_0, \beta_1, \ldots, \beta_{m-1})$，或者用符号 $\langle \cdots \rangle$ 表示：&lt;/p&gt;
+$$
+V_m = \langle \beta_0, \beta_1, \ldots, \beta_{m-1} \rangle
+$$&lt;p&gt;这样任意一个元素 $ \theta\in\mathbb{F}_{2^m}$ ，可以写为 Basis 分量的线性组合：&lt;/p&gt;
+$$
+\theta = c_0\cdot \beta_0 + c_1\cdot \beta_1 + \ldots + c_{m-1}\cdot \beta_{m-1}, \text{ where $c_i\in \mathbb{F}_2$}
+$$&lt;p&gt;同时 $V_m$ 还是一个加法群，单位元为 $V_0=\{0\}$ ，如果 $V_k$ 是 $V_m$ 的一个线性子空间，那么  $V_k$ 也是 $V_m$ 的一个加法子群。对于 $V_k$ ，我们可以用一个多项式来编码其中的所有元素，即该多项式的根集合正好对应 $V_k$ 的所有元素的集合，我们把多项式记为 $s_k(X)$ 。这个多项式也被称为「Subspace Polynomial」子空间多项式：&lt;/p&gt;
+$$
+s_k(X) = \prod_{i=0}^{2^k-1}(X-\theta_i), \text{ where $\theta_i\in V_k$ }
+$$&lt;p&gt;多项式 $s_k(X)$ 也可以看成是 $V_k$ 这个 Domain 上的 Vanishing Polynomial，因为对于任意的 $\theta\in V_k$ ，都满足：&lt;/p&gt;
+$$
+s_k(\theta) = 0
+$$&lt;h3 id=&#34;linearized-polynomial&#34;&gt;Linearized Polynomial&lt;/h3&gt;
+&lt;p&gt;上面介绍的 Subspace 多项式是一种所谓的 Linearized Polynomial，因为它的定义满足下面的形式：&lt;/p&gt;
+$$
+L(X) = \sum_{i=0}^{n-1} c_i\cdot X^{q^i}, \quad c_i\in \mathbb{F}_{q}
+$$&lt;p&gt;多项式 $L(X)$ 之所以被称为 Linearized Polynomial，因为每一个 $L(X)$ 都对应到 $\mathbb{F}_{q}$ 的扩张域 $K$ 上的一个线性算子（Linear Operator）。假如 $L(X)$ 的所有根都在扩张域 $K=\mathbb{F}_{q^s}$ 中，那么对于所有的 $\theta\in K$，都有 $L(\theta)\in K$。而且，如果 $\theta\neq\theta&#39;$，那么 $L(\theta)\neq L(\theta&#39;)$。每一个 $L(X)$ 都可以被视为一个矩阵 $B\in \mathbb{F}_q^{s\times s}$ ，完成 向量空间 $\mathbb{F}^s_q$ 上的线性变换，使得：&lt;/p&gt;
+$$
+(c_0, c_1, \ldots, c_{s-1}) B = (d_0, d_1, \ldots, d_{s-1})
+$$&lt;p&gt;对于 Subspace Polynomial 而言，每一个 $s_k(X)$ 都是一个 Linearized Polynomial，反过来，任何一个 Linearized polynomial $L(X)\in \mathbb{F}_{q^m}[X]$，它的所有根都构成某个线性子空间 $V_n\subset V_m$。详细的证明过程请参考 [LN97]。&lt;/p&gt;
+&lt;h3 id=&#34;线性性质&#34;&gt;线性性质&lt;/h3&gt;
+&lt;p&gt;由于 $s_k(X)$ 的每一项都是 $a_i\cdot X^{2^i}$ 的形式，因此它具有加法的同态性：&lt;/p&gt;
+$$
+\begin{align*}
+s_k(x + y) &amp;= s_k(x) + s_k(y), &amp;\quad \forall x, y \in \mathbb{F}_{2^m}\\
+s_k(c\cdot x) &amp;= c\cdot s_k(x), &amp;\quad \forall x\in \mathbb{F}_{2^m}, \forall c\in \mathbb{F}_2
+\end{align*}
+$$&lt;p&gt;我们来尝试简单证明第一个等式，根据有限域理论的一个常见定理（Freshman&amp;rsquo;s dream）：&lt;/p&gt;
+$$
+(x + y)^{2} = x^2 + 2xy + y^2 = x^{2} + y^{2}, \quad\text{where $x, y\in \mathbb{F}_{2^m}$}
+$$&lt;p&gt;显然，$2xy=0$，因为在二进制域中，$2=0$。所以下面的等式也同理成立：&lt;/p&gt;
+$$
+(x + y)^{2^i} = x^{2^i} + y^{2^i}
+$$&lt;p&gt;接下来验证下 $s_k(X)$ 的加法同态性：&lt;/p&gt;
+$$
+s_k(x + y) = \sum_{i=0}^{k} a_i\cdot (x+y)^{2^i}  = \sum_{i=0}^{k} a_i\cdot \big(x^{2^i} + y^{2^i}\big) = s_k(x) + s_k(y)
+$$&lt;h3 id=&#34;子空间多项式的递推式&#34;&gt;子空间多项式的递推式&lt;/h3&gt;
+&lt;p&gt;对于子空间 $V_k$，它可以被拆分为两个不相交的集合：&lt;/p&gt;
+$$
+V_k = V_{k-1} \cup (\beta_{k-1}+V_{k-1})
+$$&lt;p&gt;这里 $V_k=\langle \beta_0, \beta_1, \ldots, \beta_{k-1} \rangle$ , $V_{k-1}=\langle \beta_0, \beta_1, \ldots, \beta_{k-2} \rangle $ ，
+那么 $V_k$, $V_{k-1}$, $\beta_{k-1}+V_{k-1}$ 所对应的子空间多项式满足下面的关系：&lt;/p&gt;
+$$
+s_k(X) = s_{k-1}(X) \cdot s_{k-1}(X+\beta_{k-1})
+$$&lt;p&gt;举个简单例子，假设 $k=3$，$V_3=\langle \beta_0,\beta_1,\beta_2\rangle $ 由两部分构成，一部分是 $V_2=\langle \beta_0,\beta_1\rangle $，另一部分是 $V_2$ 中的每一个元素加上 ${\color{blue}\beta_2}$。因此，$V_3$ 的元素个数为 $2^2 + 2^2 = 8$，下面列出 $V_3$ 的全部元素：&lt;/p&gt;
+$$
+V_3 = \{0, \beta_0, \beta_1, \beta_0+\beta_1\} \cup \{{\color{blue}\beta_2}, \beta_0+{\color{blue}\beta_2}, \beta_1+{\color{blue}\beta_2}, (\beta_0+\beta_1)+{\color{blue}\beta_2}\}
+$$&lt;p&gt;我们容易验证： $s_3(X) = s_{2}(X) \cdot s_{2}(X+\beta_{k-1})$ 。当然 $s_{2}(X)$ 也可以拆成关于 $s_1(X)$ 和 $s_1(X+\beta_1)$ 的乘积，我们不妨试着拆解到底：&lt;/p&gt;
+$$
+\begin{split}
+s_3(X) &amp; = s_2(X)\cdot s_2(X + \beta_2) \\
+&amp; = s_2(X)^2 + \beta_2\cdot s_2(X) \\
+&amp; = s_1(X)\cdot s_1(X + \beta_1)\cdot s_1(X)\cdot s_1(X + \beta_1) + \beta_2\cdot s_1(X)\cdot s_1(X + \beta_1) \\
+&amp; = (s_1(X)^2 + \beta_1\cdot s_1(X))^2 + \beta_2\cdot s_1(X)^2 + \beta_1\beta_2\cdot s_1(X) \\
+&amp; = s_1(X)^4 + \beta_1^2\cdot s_1(X)^2 + \beta_2\cdot s_1(X)^2 + \beta_1\beta_2\cdot s_1(X) \\
+&amp; = s_1(X)^4 + (\beta_1^2+\beta_2)\cdot s_1(X)^2 + \beta_1\beta_2\cdot s_1(X) \\
+&amp; = (X\cdot(X+\beta_0))^4 + (\beta_1^2+\beta_2)\cdot (X\cdot(X + \beta_0))^2 + \beta_1\beta_2\cdot (X\cdot(X + \beta_0)) \\
+&amp; = (X^2 + \beta_0\cdot X)^4 + (\beta_1^2+\beta_2)\cdot (X^2 + \beta_0\cdot X)^2 + \beta_1\beta_2\cdot (X^2 + \beta_0\cdot X) \\
+&amp; = X^8  + \beta_0^4X^4 + (\beta_1^2+\beta_2)X^4 + \beta_0^2(\beta_1^2+\beta_2)X^2 + \beta_1\beta_2X^2 + \beta_0\beta_1\beta_2X \\
+\end{split}
+$$&lt;p&gt;最后 $s_3(X)$ 的展开式满足 $\sum_{i=0}^{k} a_i\cdot X^{2^i}$ 这样的模式，也符合了我们上面的结论。&lt;/p&gt;
+&lt;h2 id=&#34;子空间上的同态映射&#34;&gt;子空间上的同态映射&lt;/h2&gt;
+&lt;p&gt;因为 Subspace Polynomial 实际上是一种 Vanishing Polynomial，并且它还具有加法同态，所以我们可以利用 Subspace Polynomial 来定义子空间之间的同态映射。&lt;/p&gt;
+&lt;p&gt;例如对于 $V_3=\langle \beta_0, \beta_1, \beta_2\rangle$ ，我们定义 $V_3$ 的子空间 $V_1=\{0, \beta_0\}$ 及其 Subspace Polynomial $s_1(X)$&lt;/p&gt;
+$$
+s_1(X) = X\cdot (X+\beta_0)
+$$&lt;p&gt;很显然，$s_1(V_1)=\{0, 0\}$，如果将 $s_1(X)$ 作用到 $V_3$ ，我们会得到下面的结果：&lt;/p&gt;
+$$
+\begin{split}
+s_1(0) &amp;= 0\\
+s_1(\beta_0) &amp; = 0 \\
+s_1(\beta_1) &amp; = \beta_0\beta_1 + \beta_1^2\\
+s_1(\beta_0+\beta_1) &amp; = \beta_0\beta_1 + \beta_1^2\\
+s_1(\beta_2) &amp;= \beta_0\beta_2 + \beta_2^2\\
+s_1(\beta_0+\beta_2) &amp;= \beta_0\beta_2 + \beta_2^2\\
+s_1(\beta_1+\beta_2) &amp;= \beta_0\beta_1 + \beta_1^2 + \beta_0\beta_2 + \beta_2^2\\
+s_1(\beta_0+\beta_1+\beta_2) &amp;= \beta_0\beta_1 + \beta_1^2 + \beta_0\beta_2 + \beta_2^2\\
+\end{split}
+$$&lt;p&gt;上面的等式显示 $s_1(V_3)$ 被映射到了一个大小只有 $V_3$ 一半的集合，记为 $V_2$。该集合也是一个子空间，$V_2= \langle \beta&#39;_0, \beta&#39;_1\rangle = \langle \beta_0\beta_1 + \beta_1^2, \beta_0\beta_2 + \beta_2^2 \rangle $，维度为 $2$ 。&lt;/p&gt;
+&lt;p&gt;这不是巧合，根据群同构定理，同态映射 $\phi: H \to G$ 的 Image $G$ 满足 $G\cong H/Ker(\phi)$ ，其中 $G$ 是一个商群，并且 $|G| = |H|/|Ker(\phi)|$ 。在上面这个例子里，$s_1: V_3\to V_2$ 是同态映射，$V_1=Ker(s_1)$ 。&lt;/p&gt;
+&lt;h3 id=&#34;映射构成的链&#34;&gt;映射构成的链&lt;/h3&gt;
+&lt;p&gt;对于 $V_2 = s_1(V_3)$，我们仍然可以继续构造一个 Degree 为 $2$ 的 Subspace Polynomial，&lt;/p&gt;
+$$
+s_1&#39;(X) = X\cdot (X+\beta_0\beta_1 + \beta_1^2)
+$$&lt;p&gt;可以继续将 $V_2$ 映射到一个一维的子空间 $V_1=\langle \beta&#39;&#39;\rangle$。我们只需要计算 $s_1(\beta&#39;_0)$ 与 $s_1(\beta&#39;_1)$ 即可，这些 Basis 分量构成了 $V_2$：&lt;/p&gt;
+$$
+\begin{split}
+s_1&#39;(\beta_0\beta_1 + \beta_1^2) &amp;= 0 \\
+s_1&#39;(\beta_0\beta_1 + \beta_1^2 + \beta_0\beta_2 + \beta_2^2)&amp; = \beta_0^2\beta_1\beta_2 + \beta_0\beta_1^2\beta_2 + \beta_0^2\beta_2^2 + \beta_0\beta_1\beta_2^2 + \beta_1^2\beta_2^2 + \beta_2^4 \\
+ &amp; = \beta&#39;&#39;
+\end{split}
+$$&lt;p&gt;其中 $V_2$ 的 Basis $(\beta&#39;_0, \beta&#39;_1)$ 中第一个分量会被映射到 $0$，第二个分量映射到 $\beta&#39;&#39;$ 。&lt;/p&gt;
+&lt;p&gt;至此，我们得到一个映射的链：&lt;/p&gt;
+$$
+V_3 \overset{s_1}{\longrightarrow} V_2 \overset{s&#39;_1}{\longrightarrow} V_1
+$$&lt;p&gt;或者也可以写为：&lt;/p&gt;
+$$
+\langle \beta_0, \beta_1, \beta_2 \rangle \overset{s_1}{\longrightarrow} \langle s_1(\beta_1), s_1(\beta_2) \rangle
+\overset{s&#39;_1}{\longrightarrow} \langle s&#39;_1(s_1(\beta_2)) \rangle
+$$&lt;p&gt;并且每次映射到的线性子空间的维度都减一，即集合大小减半。这个代数结构是我们后续构造 FFT 与 FRI 协议的关键。&lt;/p&gt;
+&lt;p&gt;不难证明，对于任意的线性子空间，只要我们选定一个 Basis 之后，就可以依次构造 Degree 为 2 的 Subspace Polynomial 作为映射函数，然后通过映射得到一个维度减 1 的子空间，然后不断重复，直到子空间降至 1 维。当然 Basis 选择不同，以及 Subspace Polynomial 的选择不同都会导致不同的映射链。选择恰当的映射链可以显著提高计算的效率。&lt;/p&gt;
+&lt;h2 id=&#34;s_1-映射的复合&#34;&gt;${s}_1$ 映射的复合&lt;/h2&gt;
+&lt;p&gt;我们定义映射链的初始子空间为 $S^{(0)}$，映射后的子空间为 $S^{(1)}$，$i$ 次映射之后的子空间为 $S^{(i)}$ ：&lt;/p&gt;
+$$
+S^{(0)} \overset{s_1}{\longrightarrow} S^{(1)} \overset{s^{(1)}_1}{\longrightarrow} \cdots \overset{s^{(n-1)}_1}{\longrightarrow} S^{(n)}
+$$&lt;p&gt;给定 $S^{(i)}$ 的一组 Basis 后，假设为 $B^{(i)}=(\beta^{(i)}_0, \beta^{(i)}_1,\ldots, \beta^{(i)}_s)$，在 Basis 上定义 Subspace Polynomial ${s}^{(i)}_1$，并用其作为群同态映射函数，把 $S^{(i)}$ 降维到 $S^{(i+1)}$。降维后的线性子空间 $S^{(i+1)}$ 的 Basis 需要把 $S^{(i)}$ 的 Basis 同步跟着 ${s}^{(i)}_1$ 转换到一个新的 Basis。切换到新 Basis 之后，我们又可以定义一组新的 Subspace Polynomial ${s}^{(i+1)}_i(X)$。&lt;/p&gt;
+&lt;p&gt;我们假设 $S^{(0)}=\langle \beta_0, \beta_1, \ldots, \beta_{k-1}\rangle $ 开始，给定一组 Basis $B_k$，经过 ${s}_1$ 的映射之后，我们得到了 $S^{(1)}$，以及其 Basis $B^{(1)}$：&lt;/p&gt;
+$$
+B^{(1)} = \langle {\color{blue}{s}_1(\beta_1)}, {\color{blue}{s}_1(\beta_2)}, \ldots, {s}_1(\beta_{k-1}) \rangle
+$$&lt;p&gt;在 $S^{(1)}$ 再定义 ${s}^{(1)}_1(X)$：&lt;/p&gt;
+$$
+{s}^{(1)}_1(X) = {X(X+{s}_1(\beta_1))} 
+$$&lt;p&gt;那么，$S^{(1)}$ 映射后产生的 $S^{(2)}$ 和 $S^{(0)}$ 之间的关系是什么？对于任何一个元素 $a \in S^{(0)}$，它先经过 ${s}_1$ 映射到 $S^{(1)}$，然后再经过 ${s}^{(1)}_1$ 映射到 $S^{(2)}$ 中的某个元素，因此经过两次映射后的值可以被写为两次映射函数的复合， ${s}^{(1)}_1({s}_1(X))$，我们化简下这个复合函数：&lt;/p&gt;
+$$
+\begin{align*}
+{s}^{(1)}_1({s}_1(X)) &amp;= {s}_1(X)({s}_1(X)+{s}_1(\beta_1))
+&amp;  \\[3ex]
+&amp;= {s}_1(X)({s}_1(X+\beta_1)) &amp; (\text{additive homomorphism })\\[3ex]
+&amp;= {s}_2(X) &amp; (\text{recurrency } )
+\end{align*}
+$$&lt;p&gt;于是我们推导出了 ${s}^{(1)}_1({s}_1(X))={s}_2(X)$。这意味着经过两次 2-to-1 的映射，等价于做一次 4-to-1 的映射，并且对应的同态映射函数为 ${s}_2$:&lt;/p&gt;
+$$
+\begin{split}
+{s}_2: &amp;S^{(0)} \to S^{(2)} \\[3ex]
+&amp; X \mapsto {X(X+\beta_0)(X+\beta_1)(X+\beta_1+\beta_0)} \\
+\end{split}
+$$&lt;p&gt;如下图所示，左右两种映射方式都会得到 $S^{(2)}$：&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;同理，我们可以得到下面的结论，对于折叠 $j$ 次之后的线性子空间 $S^{(j)}$ 为&lt;/p&gt;
+$$
+S^{(j)}  = \langle {s}_{j}(\beta_j), {s}_{j}(\beta_{j+1}), \ldots, {s}_{j}(\beta_{k-1}) \rangle
+$$&lt;p&gt;并且 ${s}_{j}$ 满足下面的复合等式：&lt;/p&gt;
+$$
+s_{j}(X) = s^{(1)}_{j-1}(s_1(X)) =  s^{(1)}_{j-1}\circ s_1
+$$&lt;p&gt;这个复合映射的等式可以解读为：先做一次 $s_1$ 映射得到 $S^{(1)}$，然后再做一次 $j-1$ 维的映射 $s^{(1)}_{j-1}$，等价于直接一次 $j$ 维映射 $s_{j}$，两者都映射到同一个子空间 $S^{(j)}$。&lt;/p&gt;
+&lt;p&gt;同样，我们还能证明：如果先做一次 $j-1$ 维的映射 $s_{j-1}$，再在映射后的子空间 $S^{(j-1)}$ 上做一次一维映射，同样可以得到子空间 $S^{(j)}$ ：&lt;/p&gt;
+$$
+s_{j}(X) = s^{(1)}_{1}(s_{j-1}(X)) =  s^{(1)}_{1}\circ s_{j-1}
+$$&lt;p&gt;更一般地，我们可以证明得到下面的重要性质，即在任意子空间 $S^{(i)}$ 上做一次 $j$ 维映射，等价于在其上连续做 $j$ 次 1 维映射：&lt;/p&gt;
+$$
+s^{(i)}_{j}(X) = s^{(i+j-1)}_1\circ s^{(i+j-2)}_1\circ \cdots \circ s^{(i)}_1
+$$&lt;h2 id=&#34;多项式的-polynomial-basis&#34;&gt;多项式的 Polynomial Basis&lt;/h2&gt;
+&lt;p&gt;对于一个次数小于 $N=2^n$ 的一元多项式 $f(X) \in \mathbb{F}[X]^{&lt;N}$，它有两种常见的表达形式，「系数式」与「点值式」。其中系数式是我们最常见的形式：&lt;/p&gt;
+$$
+f(X) = c_0 + c_1X + c_2X^2 + \ldots + c_{N-1}X^{N-1}
+$$&lt;p&gt;其中 $\vec{c}=(c_0, c_1, \ldots, c_{N-1})$ 为多项式的系数向量。另外未知数的向量 $(1, X, X^2, \ldots, X^{N-1})$ 则构成了一组多项式的基（Basis），按惯例称之为 Monomial Basis，记为 $\mathcal{B}^{mono}$ :&lt;/p&gt;
+$$
+\mathcal{B}^{mono}=(1, X, X^2, \ldots, X^{N-1})
+$$&lt;p&gt;这个基向量也可以表达为下面的 Tensor Product 形式：&lt;/p&gt;
+$$
+\mathcal{B}^{mono}=(1, X) \otimes (1, X^2) \otimes \ldots \otimes (1, X^{2^{n-1}})
+$$&lt;p&gt;一元多项式的 「点值式」称为 Lagrange Basis 表示。即我们可以用 $N$ 个「系数」来唯一确定一个  Degree 小于 N 的多项式（请注意，这里的系数是更广泛意义上的概念，而不是局限于「系数式」表示中的系数）。&lt;/p&gt;
+&lt;p&gt;通过多项式除法，我们可以得到多项式在 $\mathcal{B}^{mono}$  上的系数。例如有一个 degree 为 $7$ 的多项式 $t(X)$，那么我们可以先计算 $X^4\cdot X^2\cdot X$ 的系数，即计算多项式除法： $t(X)/(X^4\cdot X^2\cdot X)$ ，得到一个系数 $c_7$ 与一个余数多项式 $t&#39;(X)$；然后再计算 $t&#39;(X)/(X^4\cdot X^2)$，得到 $\mathcal{B}^{mono}_6 = X^6$ 的系数 $c_6$，以此类推，最终我们可以得到 $t(X)$ 关于 $\mathcal{B}^{mono}$ 的系数向量 $\vec{c}=(c_0, c_1, \ldots, c_7)$ ，使得：&lt;/p&gt;
+$$
+t(X) = c_0 + c_1X + c_2X^2 + \ldots + c_7X^7
+$$&lt;p&gt;利用前文已讨论过的 Subspace Polynomial $s_k(X)$ ，我们可以定义一组新的 Basis。根据其定义， $s_k(X)$ 的 degree 恰好也是 $2^k$ ，类似 $(1, X, X^2, X^4)$ ，因此 $(s_0(X), s_1(X), s_2(X))$ 也可作为构造多项式 Basis 的基本原料。仿照 $\mathcal{B}^{mono}$ 的定义，我们定义 (Novel) Polynomial Basis $\mathcal{B}^{novel}$ ：&lt;/p&gt;
+$$
+\mathcal{B}^{novel} = (1, s_0(X)) \otimes (1, s_1(X)) \otimes \ldots \otimes (1, s_{n-1}(X))
+$$&lt;p&gt;请注意与论文 [LCH14] 和 [DP24] 不同的是，这里我们暂时没有引入 Normalized Subspace Polynomial，以方便大家理解。回到上面的定义，其中每一个分量 $\mathcal{B}^{novel}_i$ 我们简记为 $\mathcal{X}_i(X)$ ，定义如下：&lt;/p&gt;
+$$
+\mathcal{X}_i(X) = \prod_{j=0}^{n-1}(s_j(X))^{i_j}, \text{ where $\mathsf{bits}(i)=(i_0, i_1, \ldots, i_{n-1})$}
+$$&lt;p&gt;这里 $\mathsf{bits}(i)$ 表示把整数 $i$ 按照二进制展开，比如 $i=5$，那么 $\mathsf{bits}(5)=(1, 0, 1)$， $\mathsf{bits}(6) = (0, 1, 1)$。举例 $n=3, N=8$ ，按照上面的定义，我们可以计算出一组多项式基 $\big(\mathcal{X}_0(X), \mathcal{X}_1(X),\ldots, \mathcal{X}_7(X)\big)$&lt;/p&gt;
+$$
+\begin{split}
+\mathcal{X}_0(X) &amp;= 1 \\
+\mathcal{X}_1(X) &amp;= s_0(X) = X\\
+\mathcal{X}_2(X) &amp;= s_1(X) \\
+\mathcal{X}_3(X) &amp;= s_0(X)\cdot s_1(X)\\
+\mathcal{X}_4(X) &amp;= s_2(X)\\
+\mathcal{X}_5(X) &amp;= s_0(X)\cdot s_2(X)\\
+\mathcal{X}_6(X) &amp;= s_1(X)\cdot s_2(X) \\
+\mathcal{X}_7(X) &amp;= s_0(X)\cdot s_1(X)\cdot s_2(X) \\
+\end{split}
+$$&lt;p&gt;容易检验，每一个 Basis 分量 $\mathcal{X}_i(X)$ 的 Degree 恰好为 $i$，因此 $\mathcal{B}^{novel}$ 就构成了一组线性无关的多项式 Basis。对于任意的 Degree 小于 8 的多项式 $f(X)\in \mathbb{F}_{2^m}[X]$ :&lt;/p&gt;
+$$
+\begin{split}
+f(X) &amp;= a_0\mathcal{X}_0(X) + a_1\mathcal{X}_1(X) + \ldots + a_7\mathcal{X}_7(X)\\
+&amp;= a_0 + a_1s_0(X) + a_2s_1(X) + a_3s_0(X)\cdot {s}_1(X) \\
+&amp; + a_4s_2(X) + a_5{s}_0(X)\cdot {s}_2(X) + a_6{s}_1(X)\cdot {s}_2(X) + a_7{s}_0(X)\cdot {s}_1(X)\cdot s_2(X) \\
+\end{split}
+$$&lt;p&gt;同样，我们可以利用多项式除法来将一个多项式在 $\mathcal{B}^{novel}$ 和 $\mathcal{B}^{mono}$ 之间转换。&lt;/p&gt;
+&lt;h2 id=&#34;additive-fft&#34;&gt;Additive FFT&lt;/h2&gt;
+&lt;p&gt;类似 Multiplicative FFT，要构造 Additive FFT，我们需要在 $\mathbb{F}_{2^m}$ 中定义一个加法子群的映射链。如前所述，Subspace Polynomials 恰好可以用来构造这个映射链。同时 Subspace Polynomials 又可以构造一组多项式 Basis。&lt;/p&gt;
+$$
+S^{(0)} \overset{s_1}{\longrightarrow} S^{(1)} \overset{s^{(1)}_1}{\longrightarrow} \cdots \overset{s^{(n-1)}_1}{\longrightarrow} S^{(n)}
+$$&lt;p&gt;为了演示方便，指定 $n=3$，$S^{(0)}=\langle \beta_0, \beta_1, \beta_2\rangle$ 。仿照 Multiplicative FFT 的思路，我们将用 $\mathcal{B}^{novel}$ 表示的多项式 $f(X)$ （Degree 为 7）进行奇偶项拆分，拆分成两个次数减半的多项式：&lt;/p&gt;
+$$
+\begin{split}
+f(X) &amp;= a_0\mathcal{X}_0(X) + a_1\mathcal{X}_1(X) + \ldots + a_7\mathcal{X}_7(X)\\
+&amp;= a_0 + a_1{s}_0(X) + a_2{s}_1(X) + a_3{s}_0(X)\cdot {s}_1(X) \\
+&amp; \qquad + a_4{s}_2(X) + a_5{s}_0(X)\cdot {s}_2(X) + a_6{s}_1(X)\cdot {s}_2(X) + a_7{s}_0(X)\cdot {s}_1(X)\cdot {s}_2(X) \\
+&amp; = \big(a_0 + a_2 {s}_1(X) + a_4{s}_2(X) + a_6{s}_1(X)\cdot {s}_2(X)\big) \\
+&amp; \qquad + \big(a_1 + a_3{s}_0(X)\cdot {s}_1(X) + a_5{s}_0(X)\cdot{s}_2(X) + a_7{s}_0(X)\cdot{s}_1(X)\cdot {s}_2(X)\big) \\
+&amp; = \big(a_0 + a_2 {s}_1(X) + a_4{s}_2(X) + a_6{s}_1(X)\cdot {s}_2(X)\big) \\
+&amp; \qquad + {\color{red}{s}_0(X)}\cdot \big(a_1 + a_3\cdot{s}_1(X) + a_5\cdot{s}_2(X) + a_7\cdot{s}_1(X)\cdot {s}_2(X)\big) \\
+\end{split}
+$$&lt;p&gt;然后我们引入两个辅助多项式 $f_{even}(X), f_{odd}(X)$ ，它们&lt;/p&gt;
+$$
+\begin{split}
+f_{even}(X) &amp;= a_0 + a_2\cdot {s}_1(X) + a_4\cdot {s}_2(X) + a_6\cdot {s}_1(X)\cdot {s}_2(X) \\
+f_{odd}(X) &amp;= a_1 + a_3\cdot{s}_1(X) + a_5\cdot{s}_2(X) + a_7\cdot{s}_1(X)\cdot {s}_2(X) \\
+\end{split}
+$$&lt;p&gt;根据我们之前推导的映射的复合性质，$s_1(X)=s^{(1)}_0\circ s_0(X)$，$s_2(X)=s^{(1)}_1\circ s_1(X)$，于是我们可以得到：&lt;/p&gt;
+$$
+\begin{split}
+f_{even}(X) &amp;= a_0 + a_2 \cdot s^{(1)}_0(s_1(X)) + a_4 \cdot s^{(1)}_1(s_1(X)) + a_6 \cdot s^{(1)}_0(s_1(X))\cdot s^{(1)}_1(s_1(X)) \\
+ &amp; = a_0 + a_2 \cdot s^{(1)}_0({\color{blue}s_1(X)}) + a_4 \cdot s^{(1)}_1({\color{blue}s_1(X)}) + a_6 \cdot s^{(1)}_0({\color{blue}s_1(X)})\cdot s^{(1)}_1({\color{blue}s_1(X)}) \\
+f_{odd}(X) &amp;= a_1 + a_3 \cdot s^{(1)}_0(s_1(X)) + a_5 \cdot s^{(1)}_1(s_1(X)) + a_7 \cdot s^{(1)}_0(s_1(X))\cdot s^{(1)}_1(s_1(X)) \\
+ &amp; = a_1 + a_3 \cdot s^{(1)}_0({\color{blue}s_1(X)}) + a_5 \cdot s^{(1)}_1({\color{blue}s_1(X)}) + a_7 \cdot s^{(1)}_0({\color{blue}s_1(X)})\cdot s^{(1)}_1({\color{blue}s_1(X)}) \\
+\end{split}
+$$&lt;p&gt;代入 ${\color{blue}Y=s_1(X)}$ 后，我们可以把 $f(X)$ 拆分成关于 $f_{even}({\color{blue}Y})$ 和 $f_{odd}({\color{blue}Y})$ 的等式：&lt;/p&gt;
+$$
+\begin{split}
+f(X) &amp; = f_{even}({\color{blue}Y}) +  {s}_0(X)\cdot f_{odd}({\color{blue}Y})
+\end{split}
+$$&lt;p&gt;而多项式 $f_{even}({\color{blue}Y})$ 和 $f_{odd}({\color{blue}Y})$ 正好是定义在 $\mathcal{X}^{(1)}$ 上的多项式：&lt;/p&gt;
+$$
+\begin{array}{llll}
+\mathcal{X}^{(1)}_0(X) &amp;= 1 \\
+\mathcal{X}^{(1)}_1(X) &amp;= {s}^{(1)}_0(X) &amp; = {s}_0({s}_1(X)) &amp; = {s}_1(X) \\
+\mathcal{X}^{(1)}_2(X) &amp;= {s}^{(1)}_1(X) &amp; =  {s}_1({s}_1(X)) &amp; = {s}_2(X) \\
+\mathcal{X}^{(1)}_3(X) &amp;= {s}^{(1)}_0(X)\cdot {s}^{(1)}_1(X) &amp; = {s}_0({s}_1(X)) \cdot {s}_1({s}_1(X)) &amp; = {s}_1(X) \cdot {s}_2(X)\\
+\end{array}
+$$&lt;p&gt;重写下奇偶多项式：&lt;/p&gt;
+$$
+\begin{split}
+f_{even}(X) &amp;= a_0\cdot\mathcal{X}^{(1)}_0(X) + a_2\cdot \mathcal{X}^{(1)}_1(X) + a_4\cdot \mathcal{X}^{(1)}_2(X) + a_6\cdot \mathcal{X}^{(1)}_3(X) \\
+f_{odd}(X) &amp;= a_1\cdot\mathcal{X}^{(1)}_0(X) + a_3\cdot \mathcal{X}^{(1)}_1(X) + a_5\cdot \mathcal{X}^{(1)}_2(X) + a_7\cdot \mathcal{X}^{(1)}_3(X)
+\end{split}
+$$&lt;p&gt;从结构上看，这个等式与 Multiplicative FFT 中的 $f(X)=f_{even}(X^2) + X\cdot f_{odd}(X^2)$ 拆分非常相似；而 $X\mapsto X^2$ 映射也对应于 $s_1: X \mapsto X(X+\beta_0)$ 映射。 而 $S^{(0)}$ 在 $s_1$ 的映射下，产生出一个尺寸只有原来一半的子空间 $S^{(1)}$：&lt;/p&gt;
+$$
+S^{(1)} = \langle s_1(\beta_1), s_1(\beta_2) \rangle
+$$&lt;p&gt;于是我们可以依赖递归调用，求得 $\{f_{even}(X) \mid X\in S^{(1)}\}$ 与 $\{ f_{odd}(X) \mid X\in S^{(1)}\}$ ，然后再利用 $f(X)=f_{even}(X) + s_0(X)\cdot f_{odd}(X)$ 这个等式得到 $f(X)$ 在 $S^{(0)}$ 上的值。&lt;/p&gt;
+&lt;p&gt;下面我们假设递归调用成功返回，那么我们就得到了 $f_{even}(X)$ 和 $f_{odd}(X)$ 在 $S^{(1)}$ 上的全部求值，记为 $\vec{u}$ 与 $\vec{v}$，定义如下：&lt;/p&gt;
+$$
+\begin{split}
+(u_0, u_1, u_2, u_3) &amp;= \big(f_{even}(0), f_{even}(1), f_{even}(s_1(\beta_1)), f_{even}(s_1(\beta_1) + 1)\big)\\[2ex]
+(v_0, v_1, v_2, v_3) &amp;= \big(f_{odd}(0), f_{odd}(1), f_{odd}(s_1(\beta_1)), f_{odd}(s_1(\beta_1) + 1)\big)\\
+\end{split}
+$$&lt;p&gt;然后我们就可以计算 $f(X)$ 在 $S^{(0)}$ 上的全部求值，即 $f(X)\mid_{S^{(0)}}$ ：&lt;/p&gt;
+$$
+\begin{array}{rlll}
+f(0) &amp;= f_{even}({s}_1(0)) + 0\cdot f_{odd}({s}_1(0)) \\
+    &amp; = u_0\\[1ex]
+f(1) &amp;= f_{even}({s}_1(1)) + 1\cdot v_1 \\
+    &amp; = u_0 + v_1 \\[1ex]
+f(\beta_1) &amp;= f_{even}({s}_1(\beta_1)) + \beta_1\cdot f_{odd}({s}_1(\beta_1)) \\ 
+    &amp; = u_1 + \beta_1 \cdot v_1\\[1ex]
+f(\beta_1+1) &amp;= f_{even}({s}_1(\beta_1)+{s}_1(1)) + (\beta_1 +1)\cdot f_{odd}({s}_1(\beta_1)+{s}_1(1)) \\
+    &amp; = u_1 + \beta_1\cdot v_1 + v_1\\[1ex]
+f(\beta_2) &amp;= f_{even}({s}_1(\beta_2)) + \beta_2 \cdot f_{odd}({s}_1(\beta_2)) \\ 
+    &amp; = u_2 + \beta_2\cdot v_2 \\[1ex]
+f(\beta_2+1) &amp;= f_{even}({s}_1(\beta_2)+{s}_1(1)) + (\beta_2 +1) \cdot f_{odd}({s}_1(\beta_2)+{s}_1(1)) \\
+    &amp; = u_2 + \beta_2\cdot v_2 + v_2\\[1ex]
+f(\beta_2+\beta_1) &amp;= f_{even}({s}_1(\beta_2)+{s}_1(\beta_1)) + (\beta_2 + \beta_1) \cdot f_{odd}({s}_1(\beta_2)+{s}_1(\beta_1)) \\
+    &amp; = u_3 + \beta_2\cdot v_3 + \beta_1\cdot v_3 \\[1ex]
+f(\beta_2+\beta_1+1) &amp;= f_{even}({s}_1(\beta_2)+{s}_1(\beta_1)+{s}_1(1)) + (\beta_2 + \beta_1 + 1) \cdot f_{odd}({s}_1(\beta_2)+{s}_1(\beta_1)+{s}_1(1)) \\
+    &amp; = u_3 + \beta_2\cdot v_3  + \beta_1\cdot v_3 + v_3\\[1ex]
+\end{array}
+$$&lt;p&gt;我们把上面这个 Additive FFT 递归算法用 Python 代码实现如下：&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-1&#34;&gt; 1&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-2&#34;&gt; 2&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-3&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-3&#34;&gt; 3&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-4&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-4&#34;&gt; 4&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-5&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-5&#34;&gt; 5&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-6&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-6&#34;&gt; 6&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-7&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-7&#34;&gt; 7&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-8&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-8&#34;&gt; 8&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-9&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-9&#34;&gt; 9&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-10&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-10&#34;&gt;10&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-11&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-11&#34;&gt;11&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-12&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-12&#34;&gt;12&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-13&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-13&#34;&gt;13&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-14&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-14&#34;&gt;14&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-15&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-15&#34;&gt;15&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-16&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-16&#34;&gt;16&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-17&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-17&#34;&gt;17&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-18&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-18&#34;&gt;18&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-19&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-19&#34;&gt;19&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-20&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-20&#34;&gt;20&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-21&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-21&#34;&gt;21&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-22&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-22&#34;&gt;22&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-23&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-23&#34;&gt;23&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-24&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-24&#34;&gt;24&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-25&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-25&#34;&gt;25&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-26&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-26&#34;&gt;26&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-27&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-27&#34;&gt;27&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-28&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-28&#34;&gt;28&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-29&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-29&#34;&gt;29&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-30&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-30&#34;&gt;30&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-31&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-31&#34;&gt;31&lt;/a&gt;
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-32&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-32&#34;&gt;32&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;afft&lt;/span&gt;(f, k, B):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    Perform the Additive Fast Fourier Transform (AFFT) on a given polynomial.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    Args:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        f (list): Coefficients of the polynomial to be transformed.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        k (int): The depth of recursion, where 2^k is the size of the domain.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        B (list): The basis of the domain over which the polynomial is evaluated.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    Returns:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        list: The evaluations of the polynomial over the domain.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; k &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; [f[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    half &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;**&lt;/span&gt;(k&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    f_even &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; f[::&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    f_odd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; f[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;::&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    V &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; span(B)                                &lt;span style=&#34;color:#75715e&#34;&gt;# the subspace spanned by B&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    q &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x: x&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(x&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;B[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;])&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;(B[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(B[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)) &lt;span style=&#34;color:#75715e&#34;&gt;# s^(i)_1 map&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    B_half &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [q(b) &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; b &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; B[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;:]]             &lt;span style=&#34;color:#75715e&#34;&gt;# the basis of the mapped subspace&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    e_even &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; afft(f_even, k&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, B_half)  &lt;span style=&#34;color:#75715e&#34;&gt;# compute the evaluations of f_even&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    e_odd  &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; afft(f_odd, k&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, B_half)   &lt;span style=&#34;color:#75715e&#34;&gt;# compute the evaluations of f_odd&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    e &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; (&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; half)                &lt;span style=&#34;color:#75715e&#34;&gt;# initialize the list of evaluations&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, half):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        e[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;i]   &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; e_even[i] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; V[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;i] &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; e_odd[i]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        e[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;i&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; e_even[i] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; V[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;i&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; e_odd[i]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; e&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;函数 &lt;code&gt;afft(f, k, B)&lt;/code&gt; 总共有三个参数，分别是多项式 $f(X)$ 在 $\mathcal{B}^{novel}$ 上的系数向量，递归深度 $k$，以及当前的子空间 $S^{(0)}$ 的 Basis。&lt;/p&gt;
+&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
+&lt;p&gt;Additive FFT 算法需要一个通过 Subspace Polynomial 构造的子空间的映射链。本文介绍的原理并不局限在递归构造的二进制域，而是一种更广泛的代数结构。
+在 [LCH14] 论文中采用的是另外一种递归 Additive FFT 算法，我们将在下一篇文中介绍两者的差异，以及 [DP24] 论文中的 Additive FFT 迭代算法（Algorithm 2）。&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;[DP24] Benjamin E. Diamond and Jim Posen. &amp;ldquo;Polylogarithmic Proofs for Multilinears over Binary Towers&amp;rdquo;. 2024. &lt;a href=&#34;https://eprint.iacr.org/2024/504&#34;&gt;https://eprint.iacr.org/2024/504&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[LCH14] Lin, Sian-Jheng, Wei-Ho Chung, and Yunghsiang S. Han. &amp;ldquo;Novel polynomial basis and its application to Reed-Solomon erasure codes.&amp;rdquo; 2014 ieee 55th annual symposium on foundations of computer science. IEEE, 2014. &lt;a href=&#34;https://arxiv.org/abs/1404.3458&#34;&gt;https://arxiv.org/abs/1404.3458&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[LN97] Lidl, Rudolf, and Harald Niederreiter. Finite fields. No. 20. Cambridge university press, 1997.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Notes on FRI-Binius (Part I): Binary Towers</title>
+      <link>https://sec-bit.github.io/blog/2024/10/31/binius-01/</link>
+      <pubDate>Thu, 31 Oct 2024 11:00:00 +0800</pubDate>
+      
+      <guid>https://sec-bit.github.io/blog/2024/10/31/binius-01/</guid>
+      
+        <description>&lt;ul&gt;
+&lt;li&gt;Yu Guo &lt;a href=&#34;mailto:yu.guo@secbit.io&#34;&gt;yu.guo@secbit.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Jade Xie &lt;a href=&#34;mailto:jade@secbit.io&#34;&gt;jade@secbit.io&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;二进制域拥有优美的内部结构，而 Binius 是意图充分利用这些内部结构，构造高效的 SNARK 证明系统。本文主要讨论 Binius 底层所依赖的 Binary Fields 以及 基于 Binary Fields 的 Extension Tower 的构造方法。Binary Fields 提供了更小的 Fields，并且兼容传统密码学中的各种工具构造，同时也可以充分利用硬件上的特殊指令的优化。选用 Extension Tower 优点主要有两个，一个是递归的 Extension 构造提供了一致的、增量式的 Basis 选择，从而使得 Small Field 可以以非常自然的方式嵌入到一个 Large Field 中，另一个优点是乘法和求逆运算存在高效的递归算法。&lt;/p&gt;
+&lt;h2 id=&#34;extension-fields&#34;&gt;Extension Fields&lt;/h2&gt;
+&lt;p&gt;我们尝试用简单的语言来描述下 Extension Field 的概念，为后续我们研究 Binary Tower 做铺垫，深入学习请参考有限域教科书中的严格定义和证明。&lt;/p&gt;
+&lt;p&gt;素数域 $\mathbb{F}_{p}$ 是有 $p$ 个元素的有限域，其中 $p$ 必定是一个素数。它同构于 $\mathbb{Z}/p\mathbb{Z}$ ，也就是说我们可以用整数集合 $\{0, 1, \ldots, p-1\}$ 来表示 $\mathbb{F}_p$ 的全体元素。&lt;/p&gt;
+&lt;p&gt;我们可以把素数域的任意两个元素组成一个 Tuple，即 $(a, b)\in\mathbb{F}_{p}^2$，那么这个 Tuple 也构成了一个域，其元素数量为 $p^2$。我们可以检验一下， $a+b\in\mathbb{F}_p$，那么我们定义 Tuple 的加法如下：&lt;/p&gt;
+$$
+(a_1, b_1) + (a_2, b_2) = (a_1 + a_2, b_1 + b_2)
+$$&lt;p&gt;可以验证， $\mathbb{F}_{p}^2$ 构成了一个向量空间， 因此它是一个加法群，其中零元素为 $(0, 0)$ 。接下来是怎么定义乘法的问题，我们希望乘法可以封闭，即：&lt;/p&gt;
+$$
+(a_1, b_1)\cdot (a_2, b_2) = (c, d)
+$$&lt;p&gt;一种最简单的做法是采用 Entry-wise Mulplication 来定义乘法，即 $(a_1, b_1)\cdot (a_2, b_2) = (a_1a_2, b_1b_2)$，并且乘法单位元为 $(1, 1)$，貌似这样我们构造可以让乘法封闭。但是这并不能保证每一个元素都有逆元素。例如 $(1, 0)$，它乘上任何 Tuple 都不能得到 $(1, 1)$，因为 Tuple 的第二个部分怎么计算都是 $0$。因此，这样的乘法无法构成一个「域」。&lt;/p&gt;
+&lt;p&gt;在有限域理论中，Tuple 的乘法运算是通过多项式模乘来实现的。也就是我们把 $(a_1, b_1)$ 看成是一个 Degree 为 1 的多项式的系数，同样 $(a_2, b_2)$ 也可以看成是一个 Degree 为 1 的多项式的系数，通过两者相乘，我们得到一个 Degree 为 2 的多项式：&lt;/p&gt;
+$$
+(a_1 + b_1\cdot X) \cdot (a_2 + b_2\cdot X) = a_1a_2 + (a_1b_2 + a_2b_1)X + b_1b_2X^2
+$$&lt;p&gt;然后我们再把结果多项式模掉一个 Degree 为 2 的不可约的多项式 $f(X)$，得到一个余数多项式，这个余数多项式的系数即是 $(c, d)$。那么我们定义新的 Tuple 乘法如下：&lt;/p&gt;
+$$
+(a_1 + b_1\cdot X) \cdot (a_2 + b_2\cdot X) = c + d\cdot X \mod f(X)
+$$&lt;p&gt;并且定义 $(1, 0)$ 为乘法单位元。这里我们强调 $f(X)$ 必须是一个不可约多项式。那么假如 $f(X)$ 是一个可约多项式，会有什么后果？比如 $f(X)=(u_1+u_2X)(v_1+v_2X)$，那么 $(u_1, u_2)$ 和 $(v_1, v_2)$ 这两个非零元素的乘积等于 $(0, 0)$，跳出了乘法群。严格的说，Zero Divisor 的出现破坏了乘法群的结构，从而无法构成一个「域」。&lt;/p&gt;
+&lt;p&gt;接下来的问题是，是否存在一个不可约的 Degree 为 2 的多项式 $f(X)$。如果不存在 $f(X)$ ，那么构造一个 $\mathbb{F}_{p^2}$ 的域也就无从谈起。对于素数域 $\mathbb{F}_p$，任取 $w\in\mathbb{F}_p$，它不是任何元素的平方，数论中它属于非二次剩余类，即 $w\in QNR(p)$ 。如果 $w$ 存在，那么 $f(X)=X^2-w$ 就是一个不可约多项式。进一步，$w$ 的存在性如何保证？如果 $p$ 是一个奇数，那么 $w$ 必然存在。如果 $p=2$，虽然 $w$ 不存在，但我们可以指定 $f(X)=X^2+X+1\in\mathbb{F}_2[X]$ 作为一个不可约多项式。&lt;/p&gt;
+&lt;p&gt;我们现在把 $\mathbb{F}_{p}^2$ 这个 Tuple 构成的集合，连同定义的加法和乘法运算，构成的域记为 $\mathbb{F}_{p^2}$ ，元素个数为 $p^2$。根据有限域理论，我们可以把二元 Tuple 扩大到 $n$ 元 Tuple，从而可以构成更大的有限域 $\mathbb{F}_{p^n}$。&lt;/p&gt;
+&lt;p&gt;对于某个 $\mathbb{F}_p$ 上的不可约多项式 $f(X) = c_0 + c_1X + X^2$ ，它在 $\mathbb{F}_{p^2}$ 中一定可以被分解。$f(X) = (X-\alpha)(X-\alpha&#39;)$ ，其中 $\alpha$ 和 $\alpha&#39;$ 互为共轭（Conjugate），并且它们都属于  $\mathbb{F}_{p^2}$，但不属于 $\mathbb{F}_p$ 。按照扩张域的定义，$\mathbb{F}_p(\alpha)$ 是一个 Degree 为 2 的代数扩张，它与前面我们通过不可约多项式的模乘构造的有限域同构。因此，我们也可以用 $a_1 + a_2\cdot\alpha$ 来表示 $\mathbb{F}_{p^2}$ 中的任意一个元素。或者进一步，我们可以把 $(1, \alpha)$ 看成是 $\mathbb{F}_{p^2}$ 向量空间的一组 Basis，任意一个 $a\in \mathbb{F}_{p^2}$ ，都可以表示为 Basis 的线性组合：&lt;/p&gt;
+$$
+a = a_0 \cdot 1 + a_1 \cdot \alpha, \quad a_0, a_1\in\mathbb{F}_p
+$$&lt;p&gt;这样一来，我们就可以用符号 $a_0 + a_1\cdot \alpha$ 来表示 $\mathbb{F}_{p^2}$ 中的元素，而非 $a_0 + a_1\cdot X$ 这样的多项式表示。元素的「多项式表示」并没有指定我们到底采用了哪个不可约多项式来构造的扩张域，而采用 $\alpha$ 这个不不可约多项式的根作为构建扩张域的方式，则不存在二义性。&lt;/p&gt;
+&lt;p&gt;把这个概念推广到 $\mathbb{F}_{p^n}$，对于任意一个元素 $a\in\mathbb{F}_{p^n}$，都可以表示为：&lt;/p&gt;
+$$
+a = a_0 + a_1\cdot\alpha + a_2\cdot\alpha^2 + \cdots + a_{n-1}\cdot\alpha^{n-1}
+$$&lt;p&gt;这里 $\alpha$ 是 $n$ 次不可约多项式 $f(X)$ 的根。因此 $(1, \alpha, \alpha^2, \cdots, \alpha^{n-1})$ 可以看成是 $\mathbb{F}_{p^n}$ 的一组 Basis，这个 Basis 被称为有限域的 Polynomial Basis。注意 $\mathbb{F}_{p^n}$ 作为一个 $n$ 维的向量空间，它有很多很多个不同的 Basis。后续我们将看到 Basis 选择是一个非常重要的步骤，恰当的 Basis 可以大大优化或简化一些表示或运算。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;TODO: Fp* 乘法循环群&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;binary-field&#34;&gt;Binary Field&lt;/h2&gt;
+&lt;p&gt;对于 $\mathbb{F}_{2^n}$ ，我们称之为二进制域，因为它的元素都可以表达为由 $0$ 和 $1$ 组成的长度为 $n$ 的向量。构造 $\mathbb{F}_{2^n}$ 可以通过两类方法构造，一种是通过 $n$ 次的不可约多项式；另一种是反复使用二次扩张的方法，被称为 Extension Tower。域扩张的路径非常多，对于 $2^n$ ，它有多个 2 因子，因此存在多种介于两种方法之间的构造方式，比如对于 $\mathbb{F}_{2^8}$，可以先构造 $\mathbb{F}_{2^4}$，再通过二次扩张得到 $\mathbb{F}_{2^8}$，也可以先构造 $\mathbb{F}_{2^2}$，再通过四次不可约多项式进行扩张，构造 $\mathbb{F}_{2^8}$。&lt;/p&gt;
+&lt;p&gt;我们先热身下，利用二次扩张的方法构造 $\mathbb{F}_{2^2}$。前面我们讨论过 $f(X)=X^2+X+1$ 是一个 $\mathbb{F}_2[X]$ 的不可约多项式，假设 $\eta$ 是 $f(X)$ 的一个根，那么 $\mathbb{F}_{2^2}$ 可以表示为 $a_0 + b_0\cdot\eta$。考虑到 $\mathbb{F}_{2^2}$ 只有四个元素，可以列在下面&lt;/p&gt;
+$$
+\mathbb{F}_{2^2} = \{0, 1, \eta, \eta+1\}
+$$&lt;p&gt;并且 $\eta$ 作为生成元可以产生乘法群 $\mathbb{F}_{2^2}^*=\langle \eta \rangle$，它的 Order 为 3:&lt;/p&gt;
+$$
+\begin{split}
+\eta^0 &amp;= 1 \\
+\eta^1 &amp;= \eta \\
+\eta^2 &amp;= \eta+1 \\
+\end{split}
+$$&lt;p&gt;我们演示下 $\mathbb{F}_{2^4}$ 的两种构造方式。第一种是直接采用一个 4 次 $\mathbb{F}_2$ 上的不可约多项式。其实总共有 3 个不同的 4 次不可约多项式，因此总共有 3 种不同的构造方式。&lt;/p&gt;
+$$
+\begin{split}
+f_1(X) &amp;= X^4 + X + 1 \\
+f_2(X) &amp;= X^4 + X^3 + 1 \\
+f_3(X) &amp;= X^4 + X^3 + X^2 + X + 1 \\
+\end{split}
+$$&lt;p&gt;因为只需要选择一个不可约多项式即可，那我们就选择 $f_1(X)$ 来定义 $\mathbb{F}_{2^4}$ ：&lt;/p&gt;
+$$
+\mathbb{F}_{2^4} = \mathbb{F}_2[X]/\langle f_1(X)\rangle 
+$$&lt;p&gt;我们把 $f_1(X)$ 在 $\mathbb{F}_{2^4}$ 上的根记为 $\theta$，那么 $a\in\mathbb{F}_{2^4}$ 元素可以唯一地表示为：&lt;/p&gt;
+$$
+a = a_0 + a_1\cdot\theta + a_2\cdot\theta^2 + \cdots + a_{n-1}\cdot\theta^{n-1}
+$$&lt;p&gt;这里补充一下，$f_1(X)$ 同时还是一个 Primitive 多项式，它的根 $\theta$ 同时也是 $\mathbb{F}_{2^4}$ 的一个 Primitive Element。注意并不是所有的不可约多项式都是 Primitive 多项式，例如上面列出的 $f_3(X)$ 就不是一个 Primitive 多项式。&lt;/p&gt;
+&lt;p&gt;下面我们可以列出 $\mathbb{F}_{2^4}$ 中的所有元素，每一个元素对应一个 4bit 的二进制向量：&lt;/p&gt;
+$$
+\begin{array}{ccccccc}
+0000 &amp; 0001 &amp; 0010 &amp; 0011 &amp; 0100 &amp; 0101 &amp; 0110 &amp; 0111 \\
+0 &amp; 1 &amp; \theta &amp; \theta+1 &amp; \theta^2 &amp; \theta^2+1 &amp; \theta^2+\theta &amp; \theta^2+\theta+1 \\
+\hline
+1000 &amp; 1001 &amp; 1010 &amp; 1011 &amp; 1100 &amp; 1101 &amp; 1110 &amp; 1111 \\
+\theta^3 &amp; \theta^3+1 &amp; \theta^3+\theta &amp; \theta^3+\theta+1 &amp; \theta^3+\theta^2 &amp; \theta^3+\theta^2+1 &amp; \theta^3+\theta^2+\theta &amp; \theta^3+\theta^2+\theta+1 \\
+\end{array}
+$$&lt;p&gt;对于 $\mathbb{F}_{2^4}$ 中两个元素的加法，我们只需要把它们的二进制表示按位相加即可，例如：&lt;/p&gt;
+$$
+(0101) + (1111) = (1010)
+$$&lt;p&gt;这个运算实际上就是 XOR 按位异或运算。而对于乘法，比如 $a\cdot\theta$，则对应于二进制上的移位运算：&lt;/p&gt;
+$$
+\begin{split}
+(0101) &lt;&lt; 1 &amp;= (1010)\\
+(\theta^2 + 1)\cdot\theta &amp;= \theta^3 + \theta \\
+\end{split}
+$$&lt;p&gt;如果继续乘以 $\theta$，就会出现移位溢出的情况，&lt;/p&gt;
+$$
+\begin{split}
+(\theta^3 + \theta)\cdot\theta &amp;= {\color{blue}\theta^4} + \theta^2 = \theta^2 + \theta + 1 \\
+(1010) &lt;&lt; 1  &amp;= (0100) + (0011) = (0111)\\
+\end{split}
+$$&lt;p&gt;对于溢出位，则需要补加上 $0011$，这是由不可约多项式 $f_1(X)$ 的定义决定的， $\theta^4=\theta+1$。所以一旦高位的 bit 移位溢出，就需要做一个与 $0011$ 的 XOR 运算。由此，我们看到 $\mathbb{F}_{2^4}$ 的乘法运算规则实际上取决于不可约多项式的选择。所以说，如何选择合适的不可约多项式也是二进制域乘法优化的关键步骤。&lt;/p&gt;
+&lt;h2 id=&#34;field-embedding&#34;&gt;Field Embedding&lt;/h2&gt;
+&lt;p&gt;如果我们要基于二进制域的构造 SNARK 证明系统，我们会将较小的数字用小位数来表示，但是不管怎么样，在协议的挑战轮，Verifier 都要给出一个在较大的扩张域中的随机数，以期望达到足够的密码学安全强度。这就需要我们在小域中用多项式编码 witness 信息，但在一个较大的域中对这些多项式进行取值运算。那么，我们需要找到一种办法把小域 $K$ 「嵌入」到大域 $L$ 中。&lt;/p&gt;
+&lt;p&gt;所谓的嵌入（Embedding），指的是把一个域 $K$ 中的元素映射到另一个域 $L$ 中，记为 $\phi: K\to L$。这个映射是 Injective 的，并且这个同态映射保持了加法和乘法运算的结构：&lt;/p&gt;
+$$
+\begin{split}
+\phi(a+b) &amp;= \phi(a) + \phi(b) \\
+\phi(a\cdot b) &amp;= \phi(a)\cdot\phi(b)
+\end{split}
+$$&lt;p&gt;即如果 $a\in K$，那么 $a$ 在 $L$ 中也有唯一的表示。为了保持乘法运算的结构，那么其实我们只要能找到一个 K 中的 Primitive Element $\alpha$ 对应到 $L$ 中的某个元素 $\beta$，那么这个同态映射就唯一确定了，因为 $K$ 中的任意一个元素都可以表示为 $\alpha$ 的幂次。不过，通常这个嵌入的同态映射并不是一个轻而易举可以找到。我们以 $\mathbb{F}_{2^2}\subset\mathbb{F}_{2^4}$ 为例，看看如何找到前者嵌入到后者的映射。&lt;/p&gt;
+&lt;p&gt;因为 $\eta$ 是 $\mathbb{F}_{2^2}$ 中的一个 Primitive Element，所以我们只要考虑 $\eta$ 在 $\mathbb{F}_{2^4}$ 中的表示即可。&lt;/p&gt;
+&lt;p&gt;我们先看看 $\mathbb{F}_{2^4}$ 中的 Primitive Element $\theta$ ，是否 $\eta\mapsto\theta$ 是一个嵌入映射？&lt;/p&gt;
+$$
+\eta^2 = \eta+1 \quad \text{but} \quad \theta^2 \neq \theta+1
+$$&lt;p&gt;很显然，$\eta^2 \neq \theta^2$，所以 $\eta\mapsto\theta$ 不是一个嵌入映射。联想到不可约多项式决定了元素间乘法的关系，而因为 $\eta$ 是 $X^2+X+1$ 的根，而 $\theta$ 是 $X^4+X+1$ 的根，所以 $\eta$ 和 $\theta$ 的乘法关系肯定不一样。在 $\mathbb{F}_{2^4}$ 中，也存在 $X^2+X+1$ 的两个根，分别为 $\theta^2+\theta$ 和 $\theta^2+\theta+1$，读者可以验证下面的等式：&lt;/p&gt;
+$$
+(\theta^2+\theta)^2 + (\theta^2+\theta) + 1 = \theta^4 + \theta^2 + \theta^2 + \theta + 1 = 0
+$$&lt;p&gt;那么，我们就定义嵌入映射：&lt;/p&gt;
+$$
+\begin{split}
+\phi &amp;: \mathbb{F}_{2^2} \to \mathbb{F}_{2^4},\quad \eta \mapsto \theta^2+\theta
+\end{split}
+$$&lt;p&gt;这就意味着二进制 $(10)$ 对应于 $L=\mathbb{F}_{2^4}$ 中的 $(0110)$ ；而二进制 $(11)$ （也就是 $\eta+1$）对应于 $L$ 中的 $(\theta^2+\theta+1)$，即 $(0111)$ 。这里要注意，我们也可以用 $\phi&#39;: \eta \mapsto \theta^2+\theta+1$ 作为另一个不同的嵌入映射，其内在原理是 $\theta^2+\theta$ 和 $\theta^2+\theta+1$ 互为共轭，它们是完美对称的，因此这两种映射都可以作为嵌入映射，除了映射到不同元素上，从整体结构上并且没有明显区别。&lt;/p&gt;
+&lt;p&gt;而对于任意的 $[L:K]=n$ 而言，我们将 $K$ 嵌入到 $L$，一个直接的方法就是找 $f(X)$ $L$ 中 的根，当然这个计算并不简单。并且嵌入和反嵌入都需要额外的计算，这无疑增加了系统的复杂性。&lt;/p&gt;
+&lt;p&gt;而 Binius 论文提到的采用递归式 Extension Tower 的构造方法，通过选取合适的不可约多项式和 Basis，我们就可以得到非常直接（称为 Zero-cost）的嵌入和反嵌入映射。&lt;/p&gt;
+&lt;h2 id=&#34;extension-tower&#34;&gt;Extension Tower&lt;/h2&gt;
+&lt;p&gt;我们可以通过两次的二次扩张来构造 $\mathbb{F}_{2^4}$，首先我们选择一个二次不可约多项式 $f(X)=X^2+X+1$，那么我们可以构造 $\mathbb{F}_{2^2}$，然后基于 $\mathbb{F}_{2^2}$ 再找到一个二次不可约多项式，从而构造 $\mathbb{F}_{2^4}$。&lt;/p&gt;
+$$
+\mathbb{F}_{2^2} = \mathbb{F}_2[X]/\langle X^2+X+1 \rangle \cong\mathbb{F}_2(\eta)
+$$&lt;p&gt;接下我们要找到 $\mathbb{F}_{2^2}[X]$ 中的一个二次不可约多项式。首先注意，$X^2+X+1$ 已经不能使用，根据 $\mathbb{F}_{2^2}$ 的定义，它已经可以被分解。再考虑下 $X^2+1$，它也可以被分解 $(X+1)(X+1)$， 事实上所有的 $\mathbb{F}_2[X]$ 的二次多项式都可以被分解。而一个$\mathbb{F}_{2^2}[X]$ 中的二次不可约多项式，其系数中必然包含一个带有新元素 $\eta$ 的项。&lt;/p&gt;
+&lt;p&gt;比如 $X^2+X+\eta$ 就是一个 $\mathbb{F}_{2^2}$ 上的二次不可约多项式。那么我们可以构造 $\mathbb{F}_{2^4}$：&lt;/p&gt;
+$$
+\mathbb{F}_{2^4} = \mathbb{F}_{2^2}[X]/\langle X^2+X+\eta \rangle 
+$$&lt;p&gt;我们把 $X^2+X+\eta$ 在 $\mathbb{F}_{2^4}$ 中的根记为 $\zeta$，那么 $\mathbb{F}_{2^4}$ 可以表示为：&lt;/p&gt;
+$$
+\mathbb{F}_{2^4} = \cong \mathbb{F}_{2^2}(\zeta)  \cong \mathbb{F}_2(\eta)(\zeta) \cong \mathbb{F}_2(\eta, \zeta)
+$$&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;那么 $\mathbb{F}_{2^4}$ 的全部元素可以用 $\eta, \zeta$ 来表示：&lt;/p&gt;
+$$
+\begin{array}{ccccccc}
+\hline
+0000 &amp; 0001 &amp; 0010 &amp; 0011 &amp; 0100 &amp; 0101 &amp; 0110 &amp; 0111 \\
+0 &amp; 1 &amp; \eta &amp; \eta+1 &amp; \zeta &amp; \zeta+\eta &amp; \zeta+\eta+1 &amp; \zeta+\eta+1 \\
+\hline
+1000 &amp; 1001 &amp; 1010 &amp; 1011 &amp; 1100 &amp; 1101 &amp; 1110 &amp; 1111 \\
+\zeta\eta &amp; \zeta\eta + 1 &amp; \zeta\eta + \eta &amp; \zeta\eta + \eta + 1 &amp; \zeta\eta + \zeta &amp; \zeta\eta + \zeta +1 &amp; \zeta\eta+\zeta+\eta &amp; \zeta\eta+\zeta+\eta+1 \\
+\hline
+\end{array}
+$$&lt;p&gt;这时，4bit 二进制中的每一个 bit 都对应于 $\mathbb{F}_{2^4}$ 中的一个元素，$(1000)$ 对应 $\zeta\eta$，$(0100)$ 对应 $\zeta$，$(0010)$ 对应 $\eta$，$(0001)$ 对应 $1$。因此我们可以用下面的 Basis 来表示 $\mathbb{F}_{2^4}$ 中的所有元素：&lt;/p&gt;
+$$
+\mathcal{B} = (1,\ \eta,\ \zeta,\ \eta\zeta)
+$$&lt;p&gt;这时候，$\mathbb{F}_{2^2}$ 的二进制表示直接对应于 $\mathbb{F}_{2^4}$ 二进制表示的「低两位」，例如：&lt;/p&gt;
+$$
+\begin{split}
+(1010) &amp;= (10) || (10) = \zeta\eta + \eta \\
+\end{split}
+$$&lt;p&gt;因此，我们可以直接在 $\mathbb{F}_{2^2}$ 的二进制表示的高两位补零，即可以得到 $\mathbb{F}_{2^4}$ 的对应元素。反之，只要把高位两个零去除，一个 $\mathbb{F}_{2^4}$ 中的元素直接映射回 $\mathbb{F}_{2^2}$ 中的元素。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;如上图所示，$(1011)$ 是 $\zeta\eta+\eta+1$ 的二进制表示，它的低两位 $(11)$ 直接对应于 $\mathbb{F}_{2^2}$ 中的 $(\eta+1)$ 。这种嵌入是一种「自然嵌入」，因此 Binus 论文称之为 Zero-cost Embedding。&lt;/p&gt;
+&lt;p&gt;不过 $\mathbb{F}_{2^4}$ 还是一个很小的域，不够用，如果继续往上进行二次扩张，怎么能找到合适的不可约多项式呢？方案并不唯一，我们先看看 Binius 论文 [DP23] 中给出的一个方案 —— Wiedemann Tower [Wie88]。&lt;/p&gt;
+&lt;h2 id=&#34;wiedemann-tower&#34;&gt;Wiedemann Tower&lt;/h2&gt;
+&lt;p&gt;Wiedemann Tower 是一个基于 $\mathbb{F}_2$ 的递归扩张塔。最底部的 Base Field 记为 $\mathcal{T}_0$，其元素仅为 $0$ 和 $1$：&lt;/p&gt;
+$$
+\mathcal{T}_0 = \mathbb{F}_2 \cong \{0,1\}
+$$&lt;p&gt;然后我们引入一个未知数 $X_0$，构造一个一元多项式环 $\mathbb{F}_2[X_0]$ 。如前所讨论，$X^2 + X + 1$ 是一个 $\mathcal{T}_0$ 上的不可约多项式，因此，我们可以用它来构造 $\mathcal{T}_1$。&lt;/p&gt;
+$$
+\mathcal{T}_1 = \mathbb{F}_2[X_0]/\langle  X_0^2+X_0+1 \rangle = \{0, 1, X_0, X_0+1\} \cong \mathbb{F}_{2^2} \cong \mathbb{F}_2(\alpha_0)
+$$&lt;p&gt;接下来，我们找到一个 $\mathcal{T}_1[X_1]$ 中的二次不可约多项式 $X_1^2+\alpha_0\cdot X_1+1$，那么我们可以构造 $\mathcal{T}_2$：&lt;/p&gt;
+$$
+\mathcal{T}_2 = \mathcal{T}_1[X_1]/\langle  X_1^2+ \alpha_0\cdot X_1+1\rangle \cong \mathbb{F}_{2^4} \cong \mathbb{F}_2(\alpha_0, \alpha_1)
+$$&lt;p&gt;依次类推，我们可以构造出 $\mathcal{T}_3, \mathcal{T}_4, \cdots, \mathcal{T}_n$ ：&lt;/p&gt;
+$$
+\mathcal{T}_{i+1} = \mathcal{T}_i[X_i]/\langle  X_i^2+\alpha_{i-1}\cdot X_i+1\rangle \cong \mathbb{F}_{2^{2^i}} \cong \mathbb{F}_2(\alpha_0, \alpha_1, \ldots, \alpha_i),\quad i\geq 1
+$$&lt;p&gt;这里，$\alpha_0, \alpha_1, \ldots, \alpha_{n-1}$ 是依次引入的二次不可约多项式的根，使得：&lt;/p&gt;
+$$
+\mathcal{T}_{n} = \mathbb{F}_2(\alpha_0, \alpha_1, \ldots, \alpha_{n-1})
+$$&lt;p&gt;而 $|\mathcal{T}_{n}| = 2^{2^{n}}$。这些引入的根之间的关系满足下面的等式：&lt;/p&gt;
+$$
+\alpha_{i+1} + \alpha^{-1}_{i+1} = \alpha_i
+$$&lt;p&gt;不难检验，$\alpha_0+\alpha^{-1}_0=1$。并且多元多项式环 $\mathcal{T}_0[X_0, X_1, \ldots, X_n]$ 中的多项式 $X_i^2+X_{i-1}X_i+1$ 的两个根为 $\alpha_i$ 和 $\alpha^{-1}_i$ ：&lt;/p&gt;
+$$
+(\alpha^{-1}_i)^2 + \alpha_{i-1}\alpha^{-1}_i + 1 = \alpha^{-1}_i + \alpha_{i-1} + \alpha_i = \alpha_{i-1} + \alpha_{i-1} = 0
+$$&lt;p&gt;并且，$\alpha_i$ 和 $\alpha_{i+1}$ 满足下面的递推关系：&lt;/p&gt;
+$$
+\alpha_{i+1} + \alpha^{-1}_{i+1} = \alpha_i
+$$&lt;p&gt;这是因为等式两边都乘以 $\alpha_{i+1}$ 就会得到：$\alpha_{i+1}^2 + \alpha_i\alpha_{i+1} + 1 = 0$ ，这正是我们递归构造二次扩张的不可约多项式。&lt;/p&gt;
+&lt;h3 id=&#34;multilinear-basis&#34;&gt;Multilinear Basis&lt;/h3&gt;
+&lt;p&gt;对于 $\mathcal{T}_{i+1}$ over $\mathbb{F}_2$，构成了一个关于 $\mathbb{F}_2$ 的 $n+1$ 维向量空间。我们可以使用 这些不可约多项式的根来构造 Multilinear Basis：&lt;/p&gt;
+$$
+\begin{split}
+\mathcal{B}_{i+1} &amp;= (1, \alpha_0)\otimes (1, \alpha_1) \otimes \cdots \otimes (1,\alpha_i)  \\
+&amp; = (1, \alpha_0, \alpha_1, \alpha_0\alpha_1, \alpha_2,\ \ldots,\ \alpha_0\alpha_1\cdots \alpha_i)
+\end{split}
+$$&lt;p&gt;这与我们前面讨论过的，使用 $(1, \eta, \zeta, \zeta\eta)$ 作为 $\mathbb{F}_{2}(\eta, \zeta)$ 的 Basis 是一致的。我们可以快速地验证下，首先 $(1, \alpha_0)$ 是 $\mathcal{T}_1$ 的 Basis，因为 $\mathcal{T}_1$ 的每一个元素都可以表示为&lt;/p&gt;
+$$
+a_0 + b_0\cdot \alpha_0,  \quad a_0, b_0\in\mathcal{T}_0
+$$&lt;p&gt;当 $\mathcal{T}_1$ 通过 $\alpha_1$ 扩张到 $\mathcal{T}_2$ 后，$\mathcal{T}_2$ 的元素都可以表示为：&lt;/p&gt;
+$$
+a_1 + b_1\cdot \alpha_1,  \quad a_1, b_1\in\mathcal{T}_1
+$$&lt;p&gt;代入 $a_1=a_0+b_0\cdot \alpha_0$，$b_1=a_0&#39;+b_0&#39;\cdot \alpha_1$，于是有：&lt;/p&gt;
+$$
+\begin{split}
+a_1 + b_1\cdot \alpha_1 &amp;= (a_0+b_0\cdot \alpha_0) + (a&#39;_0+b&#39;_0\cdot \alpha_0)\cdot \alpha_1 \\
+ &amp;= a_0 + b_0\alpha_0 + a&#39;_0\cdot\alpha_1+ b_0&#39;\cdot \alpha_0\alpha_1
+\end{split}
+$$&lt;p&gt;于是，$(1, \alpha_0, \alpha_1, \alpha_0\alpha_1)$ 就构成了 $\mathcal{T}_2$ 的 Basis。依次类推，$(1, \alpha_0, \alpha_1, \alpha_0\alpha_1, \alpha_2, \alpha_0\alpha_2, \alpha_1\alpha_2, \alpha_0\alpha_1\alpha_2)$ 是 $\mathcal{T}_3$ 的 Basis。最后，$\mathcal{B}_{n}$ 正是 $\mathcal{T}_{n}$ 的 Basis。&lt;/p&gt;
+&lt;h3 id=&#34;寻找-primitive-element&#34;&gt;寻找 Primitive element&lt;/h3&gt;
+&lt;p&gt;前面我们讨论过 $\alpha_i$ 和 $\alpha^{-1}_{i}$ 互为共轭根，由 Galois 理论，&lt;/p&gt;
+$$
+\alpha_{i}^{2^{2^n}} = \alpha^{-1}_{i} 
+$$&lt;p&gt;那么 $\alpha_i$ 都满足下面的性质：&lt;/p&gt;
+$$
+\alpha_i^{F_i} = 1
+$$&lt;p&gt;这里 $F_n$ 代表费马数（Fermat Number），$F_n=2^{2^n}+1$。一个著名的定理是 $\mathsf{gcd}(F_i, F_j) = 1,  i\neq j$，即任意的两个不同的费马数互质，因此&lt;/p&gt;
+$$
+\mathsf{ord}(\alpha_0\alpha_1\cdots \alpha_i) = \mathsf{ord}(\alpha_0)\mathsf{ord}(\alpha_1)\cdots\mathsf{ord}(\alpha_i) 
+$$&lt;p&gt;因此，如果费马数 $F_i$ 为素数，那么很显然 $\mathsf{ord}(\alpha_i)=F_i$。目前我们已知 $i\leq 4$ 的情况下， $F_i$ 都是素数，那么&lt;/p&gt;
+$$
+\begin{split}
+\mathsf{ord}(\alpha_0\cdot \alpha_1\cdot \cdots \cdot \alpha_i) &amp;= \mathsf{ord}(\alpha_0)\cdot \mathsf{ord}(\alpha_1)\cdot \cdots \cdot \mathsf{ord}(\alpha_n) \\
+&amp; = F_0\cdot F_1\cdot \cdots \cdot F_i = 2^{2^{i+1}} - 1 \\
+&amp; = |\mathcal{T}_{n+1}| -1
+\end{split}
+$$&lt;p&gt;如果 $\alpha_0\cdots \alpha_i, i\leq 4$，那么根据有限域的性质，它是 $\mathcal{T}_{n+1}$ 的一个 Primitive Element。&lt;/p&gt;
+&lt;p&gt;另外，通过计算机程序检查验证，对于 $5\leq i \leq 8$ 的情况，$\alpha_i$ 的 Order 仍然等于 $F_i$。这个 $\alpha_0\cdots \alpha_8$ 是有限域 $\mathbb{F}_{2^{512}}$的大小已经能满足类似 Binius 证明系统的需求。但在数学上，是否所有的 $\alpha_i$ 都满足这个性质？这个似乎还是个未解问题 [Wie88]。&lt;/p&gt;
+&lt;h2 id=&#34;乘法优化&#34;&gt;乘法优化&lt;/h2&gt;
+&lt;p&gt;采用 Extension Tower 的另一个显著的优点是乘法运算的优化。&lt;/p&gt;
+&lt;p&gt;第一种优化是 &amp;ldquo;Small-by-large Multiplication&amp;rdquo;，即 $a\in\mathcal{T}_\iota$ 与 $b\in\mathcal{T}_{\iota+\kappa}$ 两个数的乘法运算。因为 $b$ 可以分解为 $2^\kappa$ 个 $\mathcal{T}_\iota$ 元素，因此这个乘法运算等价于 $2^\kappa$ 次 $\mathcal{T}_\iota$ 上的乘法运算。&lt;/p&gt;
+$$
+a \cdot (b_0, b_1, \cdots, b_{2^\kappa-1}) = (a\cdot b_0, a\cdot b_1, \cdots, a\cdot b_{\kappa-1})
+$$&lt;p&gt;即使对于同一个域上的两个元素的乘法，也同样有优化手段。假设 $a, b\in\mathcal{T}_{i+1}$，那么根据 Tower 构造的定义，可以分别表示为 $a_0 + a_1\cdot\alpha_i$ 与 $b_0 + b_1\cdot \alpha_i$ ，那么它们的乘法可以推导如下：&lt;/p&gt;
+$$
+\begin{split}
+a\cdot b  &amp; = (a_0 + a_1\cdot\alpha_i)\cdot (b_0 + b_1\cdot\alpha_i) \\
+ &amp;= a_0b_0 + (a_0b_1+a_1b_0)\cdot\alpha_i + a_1b_1\cdot\alpha_i^2 \\
+&amp; = a_0b_0 + (a_0b_1+a_1b_0)\cdot\alpha_i + a_1b_1\cdot(\alpha_{i-1}\alpha_i+1) \\
+&amp; = a_0b_0  + a_1b_1 + (a_0b_1 + a_1b_0 + a_1b_1\cdot\alpha_{i-1})\cdot\alpha_i \\
+&amp; = a_0b_0  + a_1b_1 + \big((a_0+a_1)(b_0+b_1) - a_0b_0 - a_1b_1) + a_1b_1\cdot\alpha_{i-1}\big)\cdot\alpha_i
+\end{split}
+$$&lt;p&gt;注意上面等式的右边，我们只需要计算三个 $\mathcal{T}_{i}$ 上的乘法，分别为 $A=a_0b_0$， $B=(a_0+a_1)(b_0+b_1)$ 与 $C=a_1b_1$，然后上面的公式可以转换为：&lt;/p&gt;
+$$
+a\cdot b = (A + C) + (B-A-C+C\cdot \alpha_{i-1})\cdot\alpha_i 
+$$&lt;p&gt;其中还漏了一个 $C\cdot \alpha_{i-1}$，这是一个常数乘法，因为 $\alpha_{i-1}\in\mathcal{T}_{i}$ 是一个常数。这个常数乘法可以被归约到一个 $\mathcal{T}_{i-1}$ 上的常数乘法运算，如下所示：&lt;/p&gt;
+$$
+\begin{split}
+C\cdot \alpha_{i-1} &amp;= (c_0 + c_1\alpha_{i-1})\cdot \alpha_{i-1} \\
+&amp; = c_0\cdot \alpha_{i-1} + c_1\cdot \alpha_{i-1}^2 \\
+&amp; = c_0\cdot \alpha_{i-1} + c_1\cdot (\alpha_{i-2}\cdot \alpha_{i-1} + 1) \\
+&amp; = c_1 + (c_0 + {\color{blue}c_1\cdot \alpha_{i-2}})\cdot \alpha_{i-1}
+\end{split}
+$$&lt;p&gt;其中蓝色部分表达式，${\color{blue}c_1\cdot \alpha_{i-2}}$ 为需要递归计算的 $\mathcal{T}_{i-2}$ 上的常数乘法运算。全部递归过程只需要计算若干次加法即可完成。&lt;/p&gt;
+&lt;p&gt;再回头看看 $a\cdot b$ 的运算，我们也可以构造一个 Karatsuba 风格的递归算法，每一层递归只需要完成三次乘法运算，比不优化的四次乘法运算少一次。综合起来，优化效果会非常明显。&lt;/p&gt;
+&lt;p&gt;进一步，$\mathcal{T}_{i}$ 上的乘法逆运算也可以被大大优化 [FP97]。考虑 $a, b\in\mathcal{T}_{i+1}$，满足 $a\cdot b=1$，展开 $a$ 和 $b$ 的表达式：&lt;/p&gt;
+$$
+\begin{split}
+a\cdot b &amp;= (a_0 + a_1\cdot\alpha_i)\cdot (b_0 + b_1\cdot\alpha_i) \\
+&amp; = a_0b_0  + a_1b_1 + \big((a_0+a_1)(b_0+b_1) - a_0b_0 - a_1b_1) + a_1b_1\cdot\alpha_{i-1}\big)\cdot\alpha_i\\
+&amp;= 1\\
+\end{split}
+$$&lt;p&gt;我们可以计算得到 $b_0, b_1$ 的表达式：&lt;/p&gt;
+$$
+\begin{split}
+b_0 &amp;= \frac{a_0 + a_1\alpha_{i-1}}{a_0(a_0 + a_1\alpha_{i-1}) + a_1^2}  \\[2ex]
+b_1 &amp;= \frac{a_1}{a_0(a_0 + a_1\alpha_{i-1}) + a_1^2} \\
+\end{split}
+$$&lt;p&gt;所以，$b_0$ 和 $b_1$ 的计算包括：一次求逆运算，三次乘法，两次加法，一次常数乘法，还有一次平方运算。&lt;/p&gt;
+$$
+\begin{split}
+d_0 &amp;= \alpha_{i-1}a_1\\
+d_1 &amp;= a_0 + d_0 \\
+d_2 &amp;= a_0 \cdot d_1 \\
+d_3 &amp;= a_1^2   \\
+d_4 &amp;= d_2 + d_3 \\
+d_5 &amp;= 1/d_4 \\
+b_0 &amp; = d_1\cdot d_5\\
+b_1 &amp; = a_1 \cdot d_5\\
+\end{split}
+$$&lt;p&gt;其中 $d_5$ 的求逆运算可以沿着 Extension Tower 逐层递归，递归过程中的主要运算开销为三次乘法运算。还有 $d_3$ 的平方运算，它也可以递归地计算：&lt;/p&gt;
+$$
+\begin{split}
+a_1^2 &amp;= (e_0 + e_1\cdot\alpha_{i-1})^2 \\
+&amp; = e_0^2 + e_1^2\cdot\alpha_{i-1}^2 \\
+&amp; = e_0^2 + e_1^2\cdot(\alpha_{i-2}\alpha_{i-1} + 1) \\
+&amp; = (e_0^2 + e_1^2) + (e_1^2\alpha_{i-2})\cdot\alpha_{i-1}  \\
+\end{split}
+$$&lt;p&gt;详细的递归效率分析可以参考 [FP97]。总体上，这个计算复杂度和 Karatsuba 算法复杂度相当，从而很大程度上降低了求逆的算法复杂度。&lt;/p&gt;
+&lt;h2 id=&#34;artin-schreier-tower-conway-tower&#34;&gt;Artin-Schreier Tower (Conway Tower)&lt;/h2&gt;
+&lt;p&gt;还有一种构造 Binary Tower 的方法，源自 Amil Artin 与 Otto Schreier 发表在 1927 年的论文中，也出现在 Conway 的 「On Numbers and Games」一书中。关于这个历史溯源与相关理论，请参考 [CHS24]。&lt;/p&gt;
+&lt;p&gt;对于任意的 $\mathbb{F}_{p^n}$，我们选择 $h(X_{i+1}) = X_{i+1}^p - X_{i+1} - \alpha_0\alpha_1\cdots \alpha_i$ 作为每一层 Tower 的不可约多项式。而 $\alpha_{i+1}$ 作为 $h(X_{i+1})=0$ 在上一层 Tower 上的根。这样 我们可以得到一个 Extension Tower：&lt;/p&gt;
+$$
+\mathbb{F}_2 \subset \mathbb{F}_{2^2}\cong\mathbb{F}_2(\alpha_0) \subset \mathbb{F}_{2^4}\cong\mathbb{F}_{2^2}(\alpha_1) \subset \mathbb{F}_{2^8}\cong\mathbb{F}_{2^4}(\alpha_2)
+$$&lt;p&gt;而且 $(1, \alpha_0)\otimes(1, \alpha_1)\otimes\cdots \otimes (1, \alpha_n)$ 构成了 $\mathbb{F}_{2^{2^{i+1}}}$ 向量空间的 Basis。依照我们前面的讨论，这组 Basis 也支持 Zero-cost 的子域嵌入。这类的 Multilinear Basis 也被称为 Cantor Basis [Can89]。&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;[Wie88] Wiedemann, Doug. &amp;ldquo;An iterated quadratic extension of GF (2).&amp;rdquo; Fibonacci Quart 26.4 (1988): 290-295.&lt;/li&gt;
+&lt;li&gt;[DP23] Diamond, Benjamin E., and Jim Posen. &amp;ldquo;Succinct arguments over towers of binary fields.&amp;rdquo; Cryptology ePrint Archive (2023).&lt;/li&gt;
+&lt;li&gt;[DP24] Diamond, Benjamin E., and Jim Posen. &amp;ldquo;Polylogarithmic Proofs for Multilinears over Binary Towers.&amp;rdquo; Cryptology ePrint Archive (2024).&lt;/li&gt;
+&lt;li&gt;[LN97] Lidl, Rudolf, and Harald Niederreiter. Finite fields. No. 20. Cambridge university press, 1997.&lt;/li&gt;
+&lt;li&gt;[FP97] Fan, John L., and Christof Paar. &amp;ldquo;On efficient inversion in tower fields of characteristic two.&amp;rdquo; Proceedings of IEEE International Symposium on Information Theory. IEEE, 1997.&lt;/li&gt;
+&lt;li&gt;[CHS24] Cagliero, Leandro, Allen Herman, and Fernando Szechtman. &amp;ldquo;Artin-Schreier towers of finite fields.&amp;rdquo; arXiv preprint arXiv:2405.10159 (2024).&lt;/li&gt;
+&lt;li&gt;[Can89] David G. Cantor. On arithmetical algorithms over finite fields. J. Comb. Theory Ser. A, 50(2):285–300, March 1989.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+      
+    </item>
     
     <item>
       <title>从零开始学习 zk-SNARK（五）——Pinocchio 协议</title>
@@ -6338,211 +7000,6 @@ Conference on the Theory and Applications of Cryptographic Techniques. Springer,
 &lt;blockquote&gt;
 &lt;p&gt;在区块链领域里面，凡是套用传统方法的方案，无一胜出，唯有创新才有未来。&lt;/p&gt;
 &lt;/blockquote&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>为什么说区块链是一座全新的博弈竞技场？</title>
-      <link>https://sec-bit.github.io/blog/2019/06/13/ethereum-the-unprecedented-arena-for-playing-cooperative-games/</link>
-      <pubDate>Thu, 13 Jun 2019 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/2019/06/13/ethereum-the-unprecedented-arena-for-playing-cooperative-games/</guid>
-      
-        <description>&lt;p&gt;（本文由安比实验室&amp;amp;橙皮书联合出品）&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;区块链到底有什么用？&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;针对这个问题，以太坊基金会成员 Virgil Griffith 曾以以太坊为例，提出了一个让人眼前一亮的观点[1]：&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Ethereum is an unprecedented arena for playing cooperative games（以太坊是前所未有的合作博弈竞技场）。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;区块链和博弈论是两个不同的领域，乍一看似乎并没有太大的关联性，但事实并非如此。&lt;strong&gt;几乎所有的博弈论经典案例都可以借助区块链构建出新的博弈关系&lt;/strong&gt;。Virgil Griffith 在他的文章中以以太坊为基础，借用博弈论中经典的案例解释了如何利用区块链来建立新的博弈关系。&lt;/p&gt;
-&lt;h3 id=&#34;两败俱伤合作共赢-建立非合作博弈转变为合作博弈的支点&#34;&gt;两败俱伤？合作共赢？—— 建立非合作博弈转变为合作博弈的支点&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;博弈论&lt;/strong&gt;（&lt;strong&gt;Game Theory&lt;/strong&gt;）是经济学的一个分支，是研究博弈行为中斗争各方是否存在着最合理的行为方案，以及如何找到这个合理的行为方案的数学理论和方法[t2]。其中具有竞争或对抗性质的行为称为&lt;strong&gt;博弈行为&lt;/strong&gt;[2]。&lt;/p&gt;
-&lt;p&gt;说到博弈论就不得不提到一个大家所熟知的经典案例——&lt;strong&gt;囚徒困境&lt;/strong&gt;[3]。&lt;/p&gt;
-&lt;p&gt;有两个共谋犯罪的囚徒张三和李四被捕，他们之间不能互相交流。如果双方都不揭发对方，则每个人都只被关押 1 年；若他们双方有一方揭发，而另一方选择沉默，则揭发者将立即获释，沉默者则将被关押 8 年；若互相揭发，双方将同时被关押 5 年。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;很显然如果双方都保持沉默，是对他们最有利的选择。但实际上，最终双方在都会倾向于揭发对方。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;是什么导致了如此反直觉的结果呢？&lt;/p&gt;
-&lt;p&gt;我们用下图的矩阵来简单解释一下。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;./img1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;对于张三来说，若选择沉默，结果有两种：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;被关押 1 年，此时李四选择沉默，同样被关押 1 年；&lt;/li&gt;
-&lt;li&gt;被关押 8 年，此时李四选择揭发，直接释放。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;若张三选择揭发，其两种结果为：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;直接释放，此时李四选择沉默，被关押 8 年；&lt;/li&gt;
-&lt;li&gt;被关押 5 年，此时李四选择揭发，同样被关押 5 年。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;所以无论张三怎么选择，对李四较来说，揭发张三都是对他个人比较有利的选择。同样对张三来说亦然。&lt;/p&gt;
-&lt;p&gt;因而在双方未进行沟通协商的前提下，张三和李四只会做出对个人最有利的选择。囚徒双方的这种博弈关系被称为&lt;strong&gt;非合作博弈&lt;/strong&gt;。这里囚徒双方的选择被称为基于&lt;strong&gt;个体理性&lt;/strong&gt;的决策，与之相反的是基于&lt;strong&gt;群体理性&lt;/strong&gt;做出的决策。这里双方在做出决策揭露对方后即达到了博弈的&lt;strong&gt;纳什均衡点&lt;/strong&gt;。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;博弈的分类根据不同的基准也有不同的分类。一般认为，博弈主要可以分为合作博弈和非合作博弈[t2] 。&lt;strong&gt;合作博弈论&lt;/strong&gt;是指一些参与者以形成联盟、互相合作的方式所进行的博弈。合作博弈的相反是&lt;strong&gt;非合作博弈&lt;/strong&gt;，指的是参与者不可能形成联盟或任何合作机制都必须为自我履约契约(例如，透过置信威胁的方式)[t4]。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;纳什均衡点&lt;/strong&gt; 是指相互作用的经济主体在假定所有其他主体所选策略为既定的情况下选择他们自己最优策略的状态。如果某情况下无一参与者可以通过独自行动而增加收益，则此策略组合被称为纳什均衡点[5]。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;在博弈论中，形成&lt;strong&gt;合作博弈&lt;/strong&gt;需要满足两个基本条件[6]：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;对联盟来说，整体收益大于其每个成员单独经营时的收益之和。&lt;/li&gt;
-&lt;li&gt;对联盟内部而言，每个成员都能获得比不加入联盟时多一些的收益。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;囚徒困境的问题在于，在不知道对方选择的前提下，选择不合作将被关押的时间更短（即他们个人获得的收益更大），所以不满足合作博弈的基本条件。&lt;/p&gt;
-&lt;p&gt;Virgil Griffith  给出了一个实现合作博弈的解决方案——&lt;strong&gt;借助区块链智能合约建立新的契约关系来创建新的规则。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;我们先将囚徒双方被关押的年数转换成其在以太坊上的收益（如收益为 -1ETH 即指的是被关押 1 年）来解释这个问题。在张三和李四被逮捕之前，他们在以太坊上部署一个合约，合约内容如下：两人同时抵押 1000 ETH，并且保证选择沉默。如果任意一方选择不遵守诺言，将烧掉其在合约中锁定的 1000 ETH，即他将损失 1000 ETH，这远远大于他们原本在选择沉默或是揭发时的损失，所以囚徒困境的纳什均衡被打破。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;./img2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;通过部署一个不可修改且自动执行的合约，就可以使囚徒之间达成一个具有约束力且强制执行的协议，原来基于&lt;strong&gt;个人理性&lt;/strong&gt;而做的决策被相互&lt;strong&gt;合作的决策&lt;/strong&gt;所替代，我们成功得将&lt;strong&gt;非合作博弈关系转换成了合作博弈&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;不仅仅是囚徒困境，&lt;strong&gt;几乎所有的非合作博弈都能借助智能合约构造新的博弈关系&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;我们再来看一个非合作博弈转化为合作博弈的例子 —— &lt;strong&gt;猎鹿赛局&lt;/strong&gt;[7] 。&lt;/p&gt;
-&lt;p&gt;两名猎人 A 和 B一起去打猎，他们可以猎取鹿，也可以猎取野兔。鹿需要两个人合作才能获取，野兔一个人就可猎得，但猎鹿所得的收益大于猎野兔所得的收益。如下图所示，我们假定猎取野兔的收益为 1 ETH，猎取鹿的收益为 3 ETH。&lt;img src=&#34;./img3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;虽然两名猎人同时选择猎取鹿的收益最大，但却需要承担对方不选择猎取鹿的后果。所以猎人们可能会更倾向于做出猎取野兔这种收益小但风险也小的选择。&lt;/p&gt;
-&lt;p&gt;与囚徒困境类似，这里我们同样可以利用区块链在猎人之间建立合作关系。猎人们先在以太坊上创建合约，双方各自向合约中抵押 1000 ETH，若任意一方最终猎取了野兔，则将其抵押的 1000 ETH烧掉，于是此时任何一名猎人此时都不会选择猎取野兔。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;./img4.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;在上述例子中，我们将博弈方的收益和损失都转换为了以太坊上的价值符号表示，但在实际的应用场景中，能否以此来代替实际的收益还有待商榷；另外智能合约如何感知实际场景中的决策结果并自动触发合约执行也相对困难。因此&lt;strong&gt;如何找到适合的机制让现实博弈的关键操作与链上合约绑定&lt;/strong&gt; 至关重要。&lt;/p&gt;
-&lt;h3 id=&#34;博弈革命竞技场上的角逐新规则&#34;&gt;博弈革命——竞技场上的角逐新规则&lt;/h3&gt;
-&lt;p&gt;其实区块链和智能合约并不是改变博弈的必要条件，但区块链智能合约在应用和部署博弈模型方面有着巨大的潜力。&lt;/p&gt;
-&lt;p&gt;由于真实情况下我们难以找到适合的可信第三方来做为公平的仲裁者，辅助执行博弈结果的利益裁定。而区块链及智能合约的出现让这一切变得十分容易，正如 Upgradeability is a bug[8] 这篇文章中所说的那样，&lt;strong&gt;智能合约最大的价值恰恰是在于它的 Trustless&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;不仅仅是非合作博弈，几乎任意的博弈关系都可以与区块链结合，创造出新的规则。&lt;/p&gt;
-&lt;h4 id=&#34;1-懦夫博弈&#34;&gt;1. 懦夫博弈&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;在非合作博弈中打造竞争优势。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;懦夫博弈也叫&amp;quot;胆小鬼博弈&amp;quot;，是指两名车手甲和乙相对驱车而行，最先转弯的一方被耻笑为“胆小鬼”（chicken），另一方胜出，但如果两人拒绝转弯，任由两车相撞，最终谁都无法受益[9]。&lt;/p&gt;
-&lt;p&gt;我们假定当两人同时转弯时记为收益为 0；当一方转弯，另一方直行时，转弯的一方记为收益 -1 ETH，另一方收益为 10 ETH；当两人同时直行时记为收益为 -100 ETH。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;./img5.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;很显然，这个游戏只有当一方选择直行，另一方选择转弯收益最大，但是谁选择直行谁选择转弯却很难判定。&lt;/p&gt;
-&lt;p&gt;为了打破僵局获得最大收益，车手甲可以在游戏开始之前创建合约，抵押 1000 ETH ，并通知车手乙。若其选择转弯，合约将自动烧毁其抵押的 1000 ETH，这就使得车手甲必定选择直行，而乙就不得不选择转弯以将损失降到最低。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;./img6.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;2-爵士乐队表演&#34;&gt;2. 爵士乐队表演&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;借助智能合约保障合作博弈中的利益公平分配&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;爵士乐队表演是一个合作博弈的案例[10]。假设一个场景，某台晚会需要招募表演人员，可供选择的表演人员包括一名吉他手，一名架子鼓手和一名歌手。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;若招募的结果是只招募到一个人（歌手，吉他手，架子鼓手任意一人），则仅支付 1 ETH；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;若招募到一名歌手和一名吉他手，则共支付他们 7 ETH；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;若招募到一名歌手和一名架子鼓手，则共支付他们 5 ETH；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;若招募到一名吉他手和一名架子鼓手，则共支付他们 4 ETH；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;若同时招募到歌手，吉他手和架子鼓手 3 人，则共支付他们 10 ETH。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;./img7.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;在上述表演费用中，显然歌手，吉他手和架子鼓手组成一个乐队参与表演的收益是最大的，他们有很大的动力组成一个联盟去参加表演。三个人组成乐队得到10个以太币的报酬之后，每个人应该分配多少个以太币才合理呢？&lt;/p&gt;
-&lt;p&gt;我们可以简略分析一下乐队中每个成员的贡献：&lt;/p&gt;
-&lt;p&gt;有歌手参加的二人合作总收益为：7+5=12&lt;/p&gt;
-&lt;p&gt;有吉他手参与的二人合作总收益为：7+4=11&lt;/p&gt;
-&lt;p&gt;有架子鼓手参与的二人合作总收益为：5+4=9&lt;/p&gt;
-&lt;p&gt;在二人合作中，我们可以看到歌手的价值最高，吉他手的价值居中，架子鼓手的价值最低。&lt;/p&gt;
-&lt;p&gt;2012年诺贝尔经济学奖获得者夏普利曾提出一个Shapley值的概念，解决了在合作博弈中合理分配收益给参与者的问题[11]。如果依据他的理论进行分配，歌手应该得到 4，吉他手 3.5，架子鼓手 2.5。&lt;/p&gt;
-&lt;p&gt;举办方可以将分配的Shapley值计算公式写入智能合约，在演奏结束之后让合约自动转账给演奏参与者，从而保证分配的公平性。&lt;/p&gt;
-&lt;h4 id=&#34;3-从他人的博弈中套利&#34;&gt;3. 从他人的博弈中套利&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;空手套白狼：干扰他人博弈以套利&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;假设在一个博弈关系中有两个参与者：A 和 B。A 可以执行两个动作，向上或者向下；B 也可以执行两个动作向左或者向右。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;若 A 选择向上，B 选择向左，则双方均获得 10 ETH 的收益；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;若 A 选择向上，B 选择向右，则双方没有收益；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;若 A 选择向下，B 选择向左，A没有收益，B 获得 1 ETH的收益；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;若 A 选择向下，B 选择向右，A获得 1 ETH的收益，B 没有收益。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;./img8.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;显然这个时候 A 选择向上，B 选择向左是对双方最有利的选择。&lt;/p&gt;
-&lt;p&gt;在游戏开始之前，第三方 C 创建一个合约，A 需在游戏开始前向 C 转 5 ETH,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;若 A 按照要求向 C 转 5 ETH，C将不再干预游戏，最终 A 获得 5ETH收益，B 获得 10 ETH的收益。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;./img9.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;若 A 未按照要求向 C 转 5 ETH，C将干预游戏，游戏结束后若B选择向右，合约自动向 B 转 100 ETH，那么 A 最多获得 1ETH 的收益，B 则获得 100 ETH的收益。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;./img10.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;对于 B 来说，他需要根据 A 是否事先向 C 转账来决定他的选择。而对于 A 来说，向 C 转 5 ETH最终他还能获得 5 ETH的收益，如果不转则最多只能获得 1 ETH 的收益。面对理性的 A 和 B，C 仅需要创建一个合约，不支付任何费用，就可以让 A 乖乖得将部分收益转让给他。&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;面对这种赤裸裸的 &amp;ldquo;&lt;strong&gt;敲诈&lt;/strong&gt;&amp;rdquo; 行为，A 是否可以借助区块链来逆转局面呢？&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;（聪明的小伙伴如果想到了解决的办法，欢迎添加小安的微信 secbit_xiaoanbi 来参与讨论）&lt;/p&gt;
-&lt;h3 id=&#34;道阻且长--寻找链上链下的绑定机制&#34;&gt;道阻且长 —— 寻找链上链下的绑定机制&lt;/h3&gt;
-&lt;p&gt;正如 Virgil Griffith 所说，&lt;/p&gt;
-&lt;p&gt;&amp;lsquo;&lt;em&gt;Ethereum enables powerful economic vehicles we don&amp;rsquo;t yet understand.（以太坊支持我们不甚知晓的强大的经济学工具。）&lt;/em&gt;&amp;rsquo; [1]&lt;/p&gt;
-&lt;p&gt;区块链作为一种去中心化，执行结果明确，不可篡改的&amp;quot;可信第三方&amp;quot;，打破了传统的思维，为打破博弈关系建立新的规则提供了非常有效的途径。作为一座全新的博弈竞技场，区块链和智能合约必定会为博弈的应用和改变注入更多的灵感。&lt;/p&gt;
-&lt;p&gt;但正如上文所提到的，如何找到适合的机制让现实博弈的关键操作与链上合约绑定，还需要更进一步的探索。&lt;/p&gt;
-&lt;p&gt;&amp;ldquo;或许距离这座&amp;quot;竞技场&amp;quot;真正运转起来还有很长的路要走。&amp;rdquo;&lt;/p&gt;
-&lt;p&gt;​																			— 郭宇(安比实验室创始人)&lt;/p&gt;
-&lt;p&gt;参考文献&lt;/p&gt;
-&lt;p&gt;[1] &lt;a href=&#34;https://medium.com/@virgilgr/ethereum-is-game-changing-technology-literally-d67e01a01cf8&#34;&gt;https://medium.com/@virgilgr/ethereum-is-game-changing-technology-literally-d67e01a01cf8&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[2] &lt;a href=&#34;https://en.wikipedia.org/wiki/Game_theory&#34;&gt;https://en.wikipedia.org/wiki/Game_theory&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[3] &lt;a href=&#34;https://en.wikipedia.org/wiki/Prisoner%27s_dilemma&#34;&gt;https://en.wikipedia.org/wiki/Prisoner%27s_dilemma&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[4] &lt;a href=&#34;https://en.wikipedia.org/wiki/Cooperative_game_theory&#34;&gt;https://en.wikipedia.org/wiki/Cooperative_game_theory&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[5] &lt;a href=&#34;https://en.wikipedia.org/wiki/Nash_equilibrium&#34;&gt;https://en.wikipedia.org/wiki/Nash_equilibrium&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[6] &lt;a href=&#34;https://wiki.mbalib.com/wiki/%E5%90%88%E4%BD%9C%E5%8D%9A%E5%BC%88&#34;&gt;https://wiki.mbalib.com/wiki/%E5%90%88%E4%BD%9C%E5%8D%9A%E5%BC%88&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[7]https://en.wikipedia.org/wiki/Stag_hunt&lt;/p&gt;
-&lt;p&gt;[8] Upgradeability Is a Bug &lt;a href=&#34;https://medium.com/consensys-diligence/upgradeability-is-a-bug-dba0203152ce&#34;&gt;https://medium.com/consensys-diligence/upgradeability-is-a-bug-dba0203152ce&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[9] &lt;a href=&#34;https://en.wikipedia.org/wiki/Chicken_(game)&#34;&gt;https://en.wikipedia.org/wiki/Chicken_(game)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[10] &lt;a href=&#34;https://www.coursera.org/lecture/mathematical-game-theory/shapley-value-and-core-gWuz9&#34;&gt;https://www.coursera.org/lecture/mathematical-game-theory/shapley-value-and-core-gWuz9&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[11] &lt;a href=&#34;https://en.wikipedia.org/wiki/Shapley_value&#34;&gt;https://en.wikipedia.org/wiki/Shapley_value&lt;/a&gt;&lt;/p&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>Don’t Test, Verify —— 哪个故事真正符合你对形式化验证的想象？</title>
-      <link>https://sec-bit.github.io/blog/2018/10/24/formal-verification-background/</link>
-      <pubDate>Wed, 24 Oct 2018 08:00:00 +0800</pubDate>
-      
-      <guid>https://sec-bit.github.io/blog/2018/10/24/formal-verification-background/</guid>
-      
-        <description>&lt;blockquote&gt;
-&lt;p&gt;世界上是否有一种技术可以保证计算机程序绝对安全，能够完全抵挡住黑客的进攻？&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;em&gt;2015年夏天，一组黑客奉命对美国军方一款名为Little Bird的无人直升机发动电子攻击，目的是掌控无人机的控制权[1]。该攻击测试持续进行了几个月之久，在每次正式进攻开始前，黑客们占尽先机，他们已经被授权进入了该无人机系统的一部分子系统。接下来，黑客们要做的就是侵入这个无人机的飞行控制系统，从而完全掌握该无人机的控制权。在此次攻击测试刚开始的时候，黑客团队很容易就能侵入该无人机的控制系统。在接下来的一段时间内，来自美国国防部高级研究计划署（DARPA）的专家们重新开发了该无人机的核心控制程序，当该程序被部署到Little Bird上之后，黑客们对Little Bird重新发动攻击。在给定的六周时间内，黑客们使用了当今世界上所有的攻击手段，都未能攻破新部署的系统。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;到底是什么技术给予了Little Bird超强的防御能力，从而使它阻挡了所有的攻击？答案就是：&lt;strong&gt;数学证明！&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;./2-little-bird.jpg&#34; alt=&#34;Little Bird&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;通过数学证明来进行程序设计与验证的技术通称为形式化方法&lt;/strong&gt;。如果说这个世界上是否有一种技术可以保证计算机程序绝对安全，能够完全抵挡住黑客的进攻？答案已经呼之欲出了。&lt;/p&gt;
-&lt;p&gt;在区块链领域，据安比（SECBIT）实验室调查显示,仅2018年上半年就已经有大约&lt;strong&gt;11亿美元&lt;/strong&gt;的加密货币被盗，不仅如此，与区块链系统相关的漏洞（如以太坊中的智能合约漏洞）以及围绕加密货币的生态系统安全问题（如多个中心化交易所被盗）更是层出不穷。目前区块链系统中的相关漏洞，以及加密货币生态系统的安全问题归根结底是相关程序设计与实现的问题。以智能合约为例，其一经部署、发布便不能更改的特性，为形式化方法在区块链领域的应用探索提供了可能性。&lt;/p&gt;
-&lt;p&gt;形式化方法的核心思想由计算机科学先驱，1972年图灵奖获得者Edsger Dijkstra（大名鼎鼎的Dijkstra最短路径算法发明者）率先提出，其目的是&lt;strong&gt;通过严格的逻辑推理开发出正确且可靠的程序&lt;/strong&gt;，从而避免程序出现错误。如今大部分的计算机系统都通过软件测试来保证程序的正确性，然而正如Dijkstra所说的那样：“&lt;em&gt;程序测试能证明错误的存在,但不能证明错误不存在&lt;/em&gt;”。&lt;/p&gt;
-&lt;p&gt;人类已经在软件和硬件开发方面由于程序设计错误付出了十分惨痛的代价。1996年6月4日，雄心勃勃的欧洲航天局首次发射新一代重型航天运载火箭-阿丽亚娜5型（Ariane 5），欧洲航天局花费了约&lt;strong&gt;80亿美元&lt;/strong&gt;和&lt;strong&gt;9年时间&lt;/strong&gt;设计和研发该型运载火箭，虽然这是阿丽亚娜5型火箭的首次发射，欧洲航天局依然将价值不菲的卫星搭载到该火箭上。然而，火箭在发射仅仅37秒后便偏离了预定轨道，最终坠毁。经过详细调查，调查委员会认定火箭发射失败是由于控制惯性导航系统的计算机向箭载计算机发送了一个错误指令造成的，该&lt;strong&gt;错误指令是由将浮点数转换为整数造成溢出而产生的&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;无独有偶，2016年2月17日，日本将价值约3亿美元的天体观测卫星“瞳”发射至距离地面580公里的轨道上，大约五周之后，“瞳”与地面信息通信中断，并且逐步解体。“瞳”卫星上搭载了先进的X射线望远镜及检测器，科学家希望通过这些设备研究宇宙的起源。随着卫星的解体，原本设定的研究计划完全无法进行，给天文学的研究带来了巨大的损失。日本宇宙航空研究开发机构（JAXA）调查显示，事故发生的原因在于卫星底层软件系统的设计出现了问题，“瞳”的控制系统在发现卫星飞行姿态错位时启动了&lt;strong&gt;错误的调整命令&lt;/strong&gt;，导致推进器点火时朝向了相反的方向，进而使卫星产生了更加严重的自旋，在错误指令的操作下“瞳”最终解体。由于航天控制器对软件系统的安全性要求很高，我们国家已经将形式化方法用在验证玉兔号月球车相关控制系统的正确性上[2]。玉兔号月球车于2013年12月15日登陆月球，并且在月球表面生存工作了972天，超额完成了任务。此外，研究人员已经逐步对我国第一个自主研发的空间飞行器嵌入式实时操作系统SpaceOS进行安全性验证[3]。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;yutu.jpg&#34; alt=&#34;玉兔&#34;&gt;&lt;/p&gt;
-&lt;p&gt;1994年，数学教授Thomas Nicely在使用电脑进行大数除法运算时一直出错，经过调查，发现这个错误是由于英特尔（Intel）奔腾处理器存在漏洞-奔腾浮点除错误（Pentium FDIV bug）导致的,这个漏洞不仅使英特尔公司付出了5亿美元的代价，更加严重影响了英特尔的声誉。经过这次惨痛的教训，英特尔公司聘请剑桥大学专家Harrison用HOL证明器对芯片中的浮点运算器进行了形式化的验证，从而证明了新设计的浮点运算器的正确性[4]。时至今日，英特尔公司成立了专门形式化验证的小组专门对芯片的功能进行正确性验证。&lt;/p&gt;
-&lt;h2 id=&#34;什么是形式化方法&#34;&gt;什么是形式化方法&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;形式化方法已经被运用到对软件和硬件安全要求很高的领域&lt;/strong&gt;。除了Intel公司之外，其他几家硬件巨头如AMD， NVIDIA 和 CADENCE都已经将形式化方法应用到产品设计与验证过程中。美国国家航空航天局（NASA）早已意识到形式化方法在设计航空航天控制系统中的重要作用，早在30年前就成立了专门的形式化方法小组。随着无人航天技术的发展，NASA对软硬件系统进行错误检测、诊断和预测的需求日益增多，形式化方法已经被NASA运用到系统规范，开发和验证全过程。为了促进形式化方法的研究，NASA每年都会举办形式化方法研讨会（NASA Formal Methods Symposium）[5]，NASA形式化方法研究团队一直在不断壮大，如今，其形式化研究小组的成员分布在NASA的六个研究中心，是NASA研发力量的一个重要组成部分。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;形式化方法特指用来对软件和硬件系统进行&lt;strong&gt;规范&lt;/strong&gt;，&lt;strong&gt;设计&lt;/strong&gt;和&lt;strong&gt;验证&lt;/strong&gt;的数学理论及相关工具。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;其中，形式化规范  (formal specification) 通过&lt;strong&gt;数学语言&lt;/strong&gt;对系统的预期行为 (例如将数量 S 的 token 从账户 A 转移到账户 B) 和性质 (例如转账不会造成账户 B 额度的溢出) 进行严格和全面的定义。形式化规范往往定义了系统的正确性和安全性。&lt;/p&gt;
-&lt;p&gt;给定一个系统的形式化规范，我们即可以从规范出发开始迭代设计和实现出这个系统。在迭代的每一步中，我们可以通过精化 (refinement)、集成 (synthesis) 、形式化证明在内的一系列方法在数学上严格的保证迭代产生的系统和迭代前的规范或者系统保持一致。&lt;/p&gt;
-&lt;p&gt;除了从形式化规范出发设计和实现一个系统，我们也可以使用包括&lt;strong&gt;符号执行 (symbolic execution)&lt;/strong&gt;、&lt;strong&gt;模型检测 (model checking) &lt;strong&gt;和&lt;/strong&gt;形式化证明 (formal proving)&lt;/strong&gt; 在内的一系列方法验证已有的设计和实现与该规范保持一致。例如，对于一段智能合约程序，我们可以从它所有可能的输入 (例如函数参数的组合) 和初始状态 (例如状态变量初始值的组合) 出发，根据每条语句的语义，逐句推导出程序的所有可能的结束状态 (例如合约执行结束后的状态变量的值和产生的 event log)，并检查合约的所有输入、初始状态、结束状态的组合是否都和形式化规范保持一致。这里，所有的定义都是通过严格的数学语言描述，推导和检查也是严格的数学推导和证明。根据待验证的系统及其形式化规范的复杂程度，推导和证明即可以手工构造，也可能可以由机器自动产生。在实践中，&lt;strong&gt;推导&lt;/strong&gt;和&lt;strong&gt;证明&lt;/strong&gt;无法进行下去往往意味着设计和实现中存在不符合规范的 bug。通过分析推导和证明卡壳的位置和原因，往往可以定位出 bug 在设计和实现中具体位置和成因。&lt;/p&gt;
-&lt;h2 id=&#34;形式化方法的应用&#34;&gt;形式化方法的应用&lt;/h2&gt;
-&lt;p&gt;通过形式化方法对程序进行验证，需要在原程序的基础上增加相关的检查和证明语句，对程序添加证明是一件十分复杂的工作。在目前的软件开发实践中，软件测试比形式化方法更加广泛的应用到程序开发中。随着与形式化方法相关的技术不断发展，工业界已经开始使用形式化方法来开发和验证高度可靠的软件系统。&lt;/p&gt;
-&lt;p&gt;2009年，澳大利亚的科学家使用形式化方法对工业级操作系统seL4微内核进行了完整功能性验证[6]，这是世界上第一个没有漏洞的操作系统内核，能够完全防止系统崩溃或者恶意攻击。&lt;em&gt;微内核是操作系统的最小核心&lt;/em&gt;，其提供了底层位地址空间管理、进程间通信和调度等功能。与seL4微内核相关的信息可以在其官方网站上查看。此外，耶鲁大学的研究团队通过模块分层验证法（modular layered verification methods）也成功的研发了一个可以防范黑客攻击,并且支持并发操作的计算机操作系统CertiKOS[7]，CertiKOS具有极高的安全性和可靠性。中国科学技术大学软件安全实验室的研究人员也提出一个针对可抢占操作系统的形式化验证框架，并成功的应用在对商用嵌入式操作系统 uC/OS-II 的验证中，以数学证明的形式为其调度系统等主要模块的正确性提供了严格的证据[8]。美国国家自然科学基金（NSF）资助了美国多所顶尖大学进行形式化方法方面的研究，其中一个项目DeepSpec[9]目的在于为硬件和软件开发提供深度规范和验证，从而保证系统的安全性。&lt;/p&gt;
-&lt;p&gt;形式化验证技术还被用来设计和验证轨道交通系统，欧洲铁路安全标准（例如EN50128）要求使用形式化方法来确保系统设计满足相应的安全属性。一个典型的例子是Ansaldo-STS公司的开发人员在设计列车管理系统软件LDS时，使用形式化方法验证该系统安全逻辑的正确性[10]。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;proof.png&#34; alt=&#34;proof&#34;&gt;&lt;/p&gt;
-&lt;p&gt;在目前区块链安全事件频发的时期，&lt;strong&gt;将形式化方法应用到区块链领域有着非常现实的意义&lt;/strong&gt;。以太坊黑客攻击第一大案The DAO中，攻击者窃取了当时价值5500万美元的以太币，并且导致了以太坊的硬分叉。这之后，与以太坊智能合约相关的攻击一直在继续，2017年11月，以太坊Parity钱包由于被黑客攻击，导致用户损失了价值约为&lt;strong&gt;1.5亿美元&lt;/strong&gt;的数字资产。由于智能合约关键逻辑代码全都是开源的，并且代码直接与数字货币的操作相关，这就导致黑客们会不遗余力的寻找每一个智能合约代码中的漏洞，从而瞬间获得数额巨大的不义之财。&lt;em&gt;通过形式化方法对智能合约的行为进行精确地数学推理和证明，可以保证智能合约的行为符合开发者的设计意图，从而保证代码的安全性。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;安比（SECBIT）实验室在应用形式化方法对智能合约进行安全验证方面走在世界前列，其率先完成了全球首个携带交互式形式化证明的智能合约库，并且将相关代码开源[11]。&lt;strong&gt;安比（SECBIT）实验室的研究员通过交互式定理证明工具 COQ，对 ERC20 智能合约中的一些高阶逻辑特性进行了证明&lt;/strong&gt;。经过证明的 ERC20合约具有以下特性：不存在溢出漏洞、所有账户余额的总和与totalSupply一致、Token中的总量不变、合约转账无法影响非相关账户余额等。此外，MakerDAO项目方发布了第一个经过形式化验证的去中心化应用程序（DApp）[12]，MakerDAO 是一个基于以太坊的智能合约平台，该平台提供了稳定币（stablecoin），抵押贷款（collateral loans），以及去中心化社区治理功能。为了保证所部署的智能合约的安全性，MakerDAO团队对抵押贷款（CDP）核心引擎合约代码通过K-Framewok进行了验证，因此而表明其智能合约程序满足预期的规范，相关证明代码可参考其项目库[13]。&lt;/p&gt;
-&lt;h2 id=&#34;结语&#34;&gt;结语&lt;/h2&gt;
-&lt;p&gt;由于区块链自身不可篡改的特点，智能合约在部署之前要确保没有bug，这与传统软件开发允许试错，快速迭代的特点十分不同；又由于区块链在金融领域的应用使得相关智能合约直接与数字资产绑定，而智能合约一旦被攻破，所有者的资产将化为乌有。&lt;strong&gt;基于数学证明的形式化方法为开发高可信的软件系统提供了有效的手段&lt;/strong&gt;。安比（SECBIT）实验室认为应用形式化方法对安全性要求非常高的智能合约系统进行开发和验证，能够切实解决区块链目前遇到的安全威胁。形式化方法要求对代码进行额外的推理证明，相比于基于测试的软件开发流程更加复杂，为了保证智能合约的安全，付出更多的努力是值得的。我们的后续文章将更加系统的介绍形式化验证及其在智能合约安全方面的应用。&lt;/p&gt;
-&lt;p&gt;参考文献&lt;/p&gt;
-&lt;p&gt;[1] COMPUTER SCIENTISTS CLOSE IN ON PERFECT, HACK-PROOF CODE, &lt;a href=&#34;https://www.wired.com/2016/09/computer-scientists-close-perfect-hack-proof-code/&#34;&gt;https://www.wired.com/2016/09/computer-scientists-close-perfect-hack-proof-code/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[2] Shan, L., Wang, Y., Fu, N., Zhou, X., Zhao, L., Wan, L., Qiao, L. and Chen, J., 2014, May. Formal verification of lunar rover control software using UPPAAL. In International Symposium on Formal Methods (pp. 718-732). Springer, Cham.&lt;/p&gt;
-&lt;p&gt;[3] 乔磊, 杨孟飞, 谭彦亮, 蒲戈光 and 杨桦, 2017. 基于 Event-B 的航天器内存管理系统形式化验证. 软件学报, 28(5), pp.1204-1220.&lt;/p&gt;
-&lt;p&gt;[4] Formal Proofs of Floating-Point Algorithms, 2010, &lt;a href=&#34;https://www.cl.cam.ac.uk/~jrh13/slides/scan-28sep10/slides.pdf&#34;&gt;https://www.cl.cam.ac.uk/~jrh13/slides/scan-28sep10/slides.pdf&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[5] Tenth NASA Formal Methods Symposium, 2018, &lt;a href=&#34;https://shemesh.larc.nasa.gov/NFM2018/&#34;&gt;https://shemesh.larc.nasa.gov/NFM2018/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[6] The seL4 Microkernel, &lt;a href=&#34;https://sel4.systems/&#34;&gt;https://sel4.systems/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[7] Certified OS Kernels, &lt;a href=&#34;http://flint.cs.yale.edu/certikos/&#34;&gt;http://flint.cs.yale.edu/certikos/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[8] Fengwei Xu, Ming Fu, Xinyu Feng, Xiaoran Zhang, Hui Zhang and Zhaohui Li. A Practical Verification Framework for Preemptive OS Kernels. Proc. 28th International Conference on Computer Aided Verification (CAV&#39;16).&lt;/p&gt;
-&lt;p&gt;[9] The science of Deep Specification, 2018, &lt;a href=&#34;https://deepspec.org/main&#34;&gt;https://deepspec.org/main&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[10] Cimatti, A., Corvino, R., Lazzaro, A., Narasamdya, I., Rizzo, T., Roveri, M., Sanseviero, A. and Tchaltsev, A., 2012, July. Formal verification and validation of ERTMS industrial railway train spacing system. In International Conference on Computer Aided Verification (pp. 378-393). Springer, Berlin, Heidelberg.&lt;/p&gt;
-&lt;p&gt;[11] Token Libraries with Proofs, 2018, &lt;a href=&#34;https://github.com/sec-bit/tokenlibs-with-proofs&#34;&gt;https://github.com/sec-bit/tokenlibs-with-proofs&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[12] The Code is Ready, 2018,  &lt;a href=&#34;https://medium.com/makerdao/the-code-is-ready-2aee2aa62e73&#34;&gt;https://medium.com/makerdao/the-code-is-ready-2aee2aa62e73&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[13] k-dss, 2018, &lt;a href=&#34;https://github.com/dapphub/k-dss&#34;&gt;https://github.com/dapphub/k-dss&lt;/a&gt;&lt;/p&gt;
 </description>
       
     </item>

@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage" data-theme="light">
+
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>
+  Notes on FRI-Binius (Part I): Binary Towers - SECBIT Blog
+  </title>
+
+
+<link rel="alternate" hreflang="zh-cn" href="https://sec-bit.github.io/blog/2024/10/31/binius-01/" />
+
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="color-scheme" content="light dark" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Yu Guo  and Jade Xie " />
+<meta name="description" content="Binary fields possess elegant internal structures, and Binius aims to fully utilize these internal structures to construct efficient SNARK proof systems. This article mainly discusses the Binary Fields that Binius relies on at its core and the construction methods of Extension Towers based on Binary Fields. Binary Fields provide smaller fields and are compatible with various tool constructions in traditional cryptography while also being able to fully utilize optimization of special instructions on hardware. There are two main advantages to choosing Extension Towers: one is that the recursive Extension construction provides a consistent and incremental Basis selection, allowing Small Fields to be embedded into Large Fields in a very natural way; the other advantage is that multiplication and inversion operations have efficient recursive algorithms." />
+
+<meta name="keywords"
+  content="Blockchain, Smart Contract, Zero Knowledge Proof" />
+
+
+
+
+<meta name="generator" content="Hugo 0.136.5" />
+
+
+<link rel="canonical" href="https://sec-bit.github.io/blog/en/2024/10/31/binius-01/" />
+
+
+
+
+
+<link rel="icon" href="/blog/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/css/style.min.5e5bee44735bed010b649d7ef0edd441cf2b54477f8a87d7bb6a056e674b0e54.css" integrity="sha256-XlvuRHNb7QELZJ1&#43;8O3UQc8rVEd/iofXu2oFbmdLDlQ=" media="screen"
+  crossorigin="anonymous">
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/css/">
+
+
+<meta property="og:url" content="https://sec-bit.github.io/blog/en/2024/10/31/binius-01/">
+  <meta property="og:site_name" content="SECBIT Blog">
+  <meta property="og:title" content="Notes on FRI-Binius (Part I): Binary Towers">
+  <meta property="og:description" content="Binary fields possess elegant internal structures, and Binius aims to fully utilize these internal structures to construct efficient SNARK proof systems. This article mainly discusses the Binary Fields that Binius relies on at its core and the construction methods of Extension Towers based on Binary Fields. Binary Fields provide smaller fields and are compatible with various tool constructions in traditional cryptography while also being able to fully utilize optimization of special instructions on hardware. There are two main advantages to choosing Extension Towers: one is that the recursive Extension construction provides a consistent and incremental Basis selection, allowing Small Fields to be embedded into Large Fields in a very natural way; the other advantage is that multiplication and inversion operations have efficient recursive algorithms.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2024-10-31T11:00:00+08:00">
+    <meta property="article:modified_time" content="2024-11-01T20:31:26+08:00">
+    <meta property="article:tag" content="Cryptography">
+    <meta property="article:tag" content="Finite Fields">
+    <meta property="article:tag" content="SNARK">
+    <meta property="article:tag" content="Binius">
+
+  <meta itemprop="name" content="Notes on FRI-Binius (Part I): Binary Towers">
+  <meta itemprop="description" content="Binary fields possess elegant internal structures, and Binius aims to fully utilize these internal structures to construct efficient SNARK proof systems. This article mainly discusses the Binary Fields that Binius relies on at its core and the construction methods of Extension Towers based on Binary Fields. Binary Fields provide smaller fields and are compatible with various tool constructions in traditional cryptography while also being able to fully utilize optimization of special instructions on hardware. There are two main advantages to choosing Extension Towers: one is that the recursive Extension construction provides a consistent and incremental Basis selection, allowing Small Fields to be embedded into Large Fields in a very natural way; the other advantage is that multiplication and inversion operations have efficient recursive algorithms.">
+  <meta itemprop="datePublished" content="2024-10-31T11:00:00+08:00">
+  <meta itemprop="dateModified" content="2024-11-01T20:31:26+08:00">
+  <meta itemprop="wordCount" content="4211">
+  <meta itemprop="keywords" content="Cryptography,Finite Fields,SNARK,Binius">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Notes on FRI-Binius (Part I): Binary Towers">
+  <meta name="twitter:description" content="Binary fields possess elegant internal structures, and Binius aims to fully utilize these internal structures to construct efficient SNARK proof systems. This article mainly discusses the Binary Fields that Binius relies on at its core and the construction methods of Extension Towers based on Binary Fields. Binary Fields provide smaller fields and are compatible with various tool constructions in traditional cryptography while also being able to fully utilize optimization of special instructions on hardware. There are two main advantages to choosing Extension Towers: one is that the recursive Extension construction provides a consistent and incremental Basis selection, allowing Small Fields to be embedded into Large Fields in a very natural way; the other advantage is that multiplication and inversion operations have efficient recursive algorithms.">
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-CVGF90VYL2"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-CVGF90VYL2');
+        }
+      </script>
+
+
+
+<script>
+  (function () {
+    var savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  })();
+</script>
+
+</head>
+
+<body>
+  <div id="back-to-top"></div>
+
+  <header>
+    
+<div class="desktop-header">
+  <div class="desktop-header-logo">
+    <a href="/en/" class="logo">
+      
+      SECBIT Blog
+      
+    </a>
+  </div>
+
+  <nav class="desktop-navbar">
+    <ul id="menu" class="menu">
+      
+      
+      <li class="menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/">Home</a>
+        
+
+        
+
+      </li>
+      
+      <li class="menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/post/">Archives</a>
+        
+
+        
+
+      </li>
+      
+      <li class="menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/tags/">Tags</a>
+        
+
+        
+
+      </li>
+      
+      <li class="menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/categories/">Categories</a>
+        
+
+        
+
+      </li>
+      
+
+      
+      <li class="menu-item">
+        
+        <a class="menu-item-link menu-parent menu-item-lang" href="#">
+          
+          
+<svg aria-hidden="true" class="lucide lucide-languages hi-svg-inline icon--languages" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+          English
+        </a>
+        <ul class="submenu">
+          
+          
+          
+          
+          <li class="submenu-item">
+            <a href="https://sec-bit.github.io/blog/">中文</a>
+          </li>
+          
+          
+        </ul>
+      </li>
+      
+
+      
+      <li class="menu-item">
+        <a id="openSearch" class="menu-item-link menu-item-search" href="#">
+          
+<svg aria-hidden="true" class="lucide lucide-search hi-svg-inline icon--search" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </a>
+      </li>
+      
+
+      <li class="menu-item">
+        <a class="theme-toggle menu-item-link" href="javascript:void(0);">
+
+            
+<svg aria-hidden="true" class="lucide lucide-sun hi-svg-inline theme-icon-light" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+
+            
+<svg aria-hidden="true" class="lucide lucide-moon hi-svg-inline theme-icon-dark" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+          title="rss" target="_blank">
+          
+<svg aria-hidden="true" class="lucide lucide-rss hi-svg-inline icon--rss" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+        </a>
+        
+      </li>
+    </ul>
+  </nav>
+</div>
+
+    
+
+<div class="mobile-header">
+  <div id="mobile-navbar" class="mobile-navbar">
+    <div id="mobile-navbar-icon" class="mobile-navbar-icon">
+      
+<svg aria-hidden="true" class="lucide lucide-menu hi-svg-inline icon--menu" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+    </div>
+    <div class="mobile-navbar-logo">
+      <a href="/blog/en/%20/" class="logo">SECBIT Blog</a>
+    </div>
+  </div>
+
+  <div id="mobile-menu-close-modal" class="mobile-menu-close-modal"></div>
+  <nav id="mobile-menu" class="mobile-menu">
+    <ul class="mobile-menu-list">
+      <li class="mobile-menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/">Home</a>
+        
+        
+      </li><li class="mobile-menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/post/">Archives</a>
+        
+        
+      </li><li class="mobile-menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/tags/">Tags</a>
+        
+        
+      </li><li class="mobile-menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/categories/">Categories</a>
+        
+        
+      </li>
+      <li class="mobile-menu-item">
+        
+        <div class="mobile-menu-parent mobile-menu-item-lang">
+          <span class="mobile-submenu-open"></span>
+          <a href="#">
+            
+            
+<svg aria-hidden="true" class="lucide lucide-languages hi-svg-inline icon--languages" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+            English
+            Language
+          </a>
+        </div>
+        <ul class="mobile-submenu-list">
+          
+          <li>
+            
+            <a href="https://sec-bit.github.io/blog/en/"><strong>English</strong></a>
+            
+          </li>
+          
+          <li>
+            
+            <a href="https://sec-bit.github.io/blog/">中文</a>
+            
+          </li>
+          
+        </ul>
+      </li>
+
+      
+      <li class="mobile-menu-item">
+        <a id="openSearchMobile" class="mobile-menu-item-link menu-item-search" href="#">
+          
+<svg aria-hidden="true" class="lucide lucide-search hi-svg-inline icon--search" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </a>
+      </li>
+      
+
+      <li class="mobile-menu-item">
+        <a class="theme-toggle menu-item-link" href="javascript:void(0);">
+
+            
+<svg aria-hidden="true" class="lucide lucide-sun hi-svg-inline theme-icon-light" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+
+            
+<svg aria-hidden="true" class="lucide lucide-moon hi-svg-inline theme-icon-dark" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+
+        </a>
+      </li>
+
+      <li class="mobile-menu-item">
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/en/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+          title="rss" target="_blank">
+          
+<svg aria-hidden="true" class="lucide lucide-rss hi-svg-inline icon--rss" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+        </a>
+        
+      </li>
+    </ul>
+  </nav>
+</div>
+
+  </header>
+
+  
+
+  
+
+
+
+  <main id="main" class="main pico container">
+    <div class="content-wrapper">
+  <aside class="sidebar">
+  </aside>
+  <div id="content" class="content">
+    <article class="post">
+      
+      <header class="post-header">
+        <h1 class="post-title">Notes on FRI-Binius (Part I): Binary Towers</h1>
+        
+
+
+<div class="post-title-i18n">
+  
+<svg aria-hidden="true" class="lucide lucide-languages hi-svg-inline icon--languages" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+  
+  <div>
+    <a href="https://sec-bit.github.io/blog/2024/10/31/binius-01/">zh-cn</a>
+  </div>
+  
+</div>
+
+
+        <div class="post-meta-list">
+  <div class="post-meta-item post-meta-author">
+    
+<svg aria-hidden="true" class="lucide lucide-user-round-pen hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M2 21a8 8 0 0 1 10.821-7.487"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="8" r="5"/></svg>
+    Yu Guo <yu.guo@secbit.io> and Jade Xie <jade@secbit.io>
+    
+  </div>
+
+  <div class="post-meta-item post-meta-time">
+    
+<svg aria-hidden="true" class="lucide lucide-calendar-days hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+    <time datetime=" 2024-10-31">
+      2024-10-31
+    </time>
+
+
+    
+    <span class="post-meta-item post-meta-lastmod">
+      (LastMod:
+      2024-11-01)
+    </span>
+    
+
+  </div>
+
+
+  <div class="post-meta__right">
+    
+
+    <div class="post-meta-item post-meta-category">
+      <a href="https://sec-bit.github.io/blog/en/categories/mle-pcs/"> mle-pcs </a>
+      
+    </div>
+
+
+    
+    
+
+
+    
+    
+  </div>
+</div>
+
+      </header>
+
+      
+      <div class="post-content">
+        <ul>
+<li>Yu Guo <a href="mailto:yu.guo@secbit.io">yu.guo@secbit.io</a></li>
+<li>Jade Xie <a href="mailto:jade@secbit.io">jade@secbit.io</a></li>
+</ul>
+<p>Binary fields possess elegant internal structures, and Binius aims to fully utilize these internal structures to construct efficient SNARK proof systems. This article mainly discusses the Binary Fields that Binius relies on at its core and the construction methods of Extension Towers based on Binary Fields. Binary Fields provide smaller fields and are compatible with various tool constructions in traditional cryptography while also being able to fully utilize optimization of special instructions on hardware. There are two main advantages to choosing Extension Towers: one is that the recursive Extension construction provides a consistent and incremental Basis selection, allowing Small Fields to be embedded into Large Fields in a very natural way; the other advantage is that multiplication and inversion operations have efficient recursive algorithms.</p>
+<h2 id="extension-fields">Extension Fields</h2>
+<p>Let&rsquo;s try to describe the concept of Extension Fields in simple language to lay the groundwork for our study of Binary Towers. For in-depth learning, please refer to the strict definitions and proofs in finite field textbooks.</p>
+<p>The prime field $\mathbb{F}_{p}$ is a finite field with $p$ elements, where $p$ must be a prime number. It is isomorphic to $\mathbb{Z}/p\mathbb{Z}$, which means we can use the set of integers $\{0, 1, \ldots, p-1\}$ to represent all elements of $\mathbb{F}_p$.</p>
+<p>We can form a Tuple with any two elements from the prime field, i.e., $(a, b)\in\mathbb{F}_{p}^2$, and this Tuple also forms a field with $p^2$ elements. We can verify this: $a+b\in\mathbb{F}_p$, so we define the addition of Tuples as follows:</p>
+$$
+(a_1, b_1) + (a_2, b_2) = (a_1 + a_2, b_1 + b_2)
+$$<p>We can verify that $\mathbb{F}_{p}^2$ forms a vector space, thus it is an additive group with the zero element being $(0, 0)$. The next question is how to define multiplication. We want multiplication to be closed, i.e.:</p>
+$$
+(a_1, b_1)\cdot (a_2, b_2) = (c, d)
+$$<p>The simplest approach would be to use Entry-wise Multiplication to define multiplication, i.e., $(a_1, b_1)\cdot (a_2, b_2) = (a_1a_2, b_1b_2)$, with the multiplicative identity being $(1, 1)$. This seems to make multiplication closed. However, this doesn&rsquo;t ensure that every element has an inverse. For example, $(1, 0)$ multiplied by any Tuple can never result in $(1, 1)$, because the second part of the Tuple will always be $0$. Therefore, this kind of multiplication cannot form a &ldquo;field&rdquo;.</p>
+<p>In finite field theory, the multiplication operation of Tuples is implemented through polynomial modular multiplication. That is, we view $(a_1, b_1)$ as the coefficients of a degree 1 polynomial, and similarly $(a_2, b_2)$ can be viewed as the coefficients of another degree 1 polynomial. By multiplying these two, we get a degree 2 polynomial:</p>
+$$
+(a_1 + b_1\cdot X) \cdot (a_2 + b_2\cdot X) = a_1a_2 + (a_1b_2 + a_2b_1)X + b_1b_2X^2
+$$<p>Then we take the modulus of the resulting polynomial with an irreducible degree 2 polynomial $f(X)$, obtaining a remainder polynomial. The coefficients of this remainder polynomial are $(c, d)$. So we define the new Tuple multiplication as follows:</p>
+$$
+(a_1 + b_1\cdot X) \cdot (a_2 + b_2\cdot X) = c + d\cdot X \mod f(X)
+$$<p>And we define $(1, 0)$ as the multiplicative identity. Here we emphasize that $f(X)$ must be an irreducible polynomial. What would happen if $f(X)$ were a reducible polynomial? For instance, if $f(X)=(u_1+u_2X)(v_1+v_2X)$, then the product of two non-zero elements $(u_1, u_2)$ and $(v_1, v_2)$ would equal $(0, 0)$, breaking out of the multiplicative group. Strictly speaking, the appearance of Zero Divisors disrupts the structure of the multiplicative group, thus failing to form a &ldquo;field&rdquo;.</p>
+<p>The next question is whether there exists an irreducible degree 2 polynomial $f(X)$. If $f(X)$ doesn&rsquo;t exist, then constructing a field $\mathbb{F}_{p^2}$ would be out of the question. For the prime field $\mathbb{F}_p$, take any $w\in\mathbb{F}_p$ that is not a square of any element, which in number theory belongs to the non-quadratic residue class, i.e., $w\in QNR(p)$. If $w$ exists, then $f(X)=X^2-w$ is an irreducible polynomial. Furthermore, how is the existence of $w$ guaranteed? If $p$ is an odd number, then $w$ must exist. If $p=2$, although $w$ doesn&rsquo;t exist, we can specify $f(X)=X^2+X+1\in\mathbb{F}_2[X]$ as an irreducible polynomial.</p>
+<p>We now denote the field formed by the set of Tuples $\mathbb{F}_{p}^2$, along with the defined addition and multiplication operations, as $\mathbb{F}_{p^2}$, which has $p^2$ elements. According to finite field theory, we can expand the binary Tuple to an $n$-ary Tuple, thus constructing larger finite fields $\mathbb{F}_{p^n}$.</p>
+<p>For an irreducible polynomial $f(X) = c_0 + c_1X + X^2$ over $\mathbb{F}_p$, it can always be factored in $\mathbb{F}_{p^2}$. $f(X) = (X-\alpha)(X-\alpha')$, where $\alpha$ and $\alpha'$ are conjugates of each other, and they both belong to $\mathbb{F}_{p^2}$ but not to $\mathbb{F}_p$. According to the definition of extension fields, $\mathbb{F}_p(\alpha)$ is a degree 2 algebraic extension, which is isomorphic to the finite field we constructed earlier through modular multiplication with an irreducible polynomial. Therefore, we can also use $a_1 + a_2\cdot\alpha$ to represent any element in $\mathbb{F}_{p^2}$. Or further, we can view $(1, \alpha)$ as a Basis of the $\mathbb{F}_{p^2}$ vector space, any $a\in \mathbb{F}_{p^2}$ can be represented as a linear combination of the Basis:</p>
+$$
+a = a_0 \cdot 1 + a_1 \cdot \alpha, \quad a_0, a_1\in\mathbb{F}_p
+$$<p>This way, we can use the symbol $a_0 + a_1\cdot \alpha$ to represent elements in $\mathbb{F}_{p^2}$, rather than the polynomial representation $a_0 + a_1\cdot X$. The &ldquo;polynomial representation&rdquo; of elements doesn&rsquo;t specify which irreducible polynomial we used to construct the extension field, while using $\alpha$, the root of the irreducible polynomial, as a way to construct the extension field eliminates any ambiguity.</p>
+<p>Generalizing this concept to $\mathbb{F}_{p^n}$, for any element $a\in\mathbb{F}_{p^n}$, it can be represented as:</p>
+$$
+a = a_0 + a_1\cdot\alpha + a_2\cdot\alpha^2 + \cdots + a_{n-1}\cdot\alpha^{n-1}
+$$<p>Here $\alpha$ is the root of the degree $n$ irreducible polynomial $f(X)$. Therefore, $(1, \alpha, \alpha^2, \cdots, \alpha^{n-1})$ can be viewed as a Basis of $\mathbb{F}_{p^n}$, and this Basis is called the Polynomial Basis of the finite field. Note that $\mathbb{F}_{p^n}$ as an $n$-dimensional vector space has many different Bases. We will see later that the choice of Basis is a very important step, and an appropriate Basis can greatly optimize or simplify some representations or operations.</p>
+<blockquote>
+<p>TODO: Fp* multiplicative cyclic group</p>
+</blockquote>
+<h2 id="binary-field">Binary Field</h2>
+<p>For $\mathbb{F}_{2^n}$, we call it a binary field because its elements can all be expressed as vectors of length $n$ composed of $0$ and $1$. $\mathbb{F}_{2^n}$ can be constructed through two types of methods: one is through an irreducible polynomial of degree $n$; the other is by repeatedly using quadratic extensions, known as an Extension Tower. There are many paths for field extension, and for $2^n$, it has multiple factors of 2, so there exist multiple construction methods between these two methods. For example, for $\mathbb{F}_{2^8}$, we can first construct $\mathbb{F}_{2^4}$, then obtain $\mathbb{F}_{2^8}$ through a quadratic extension, or we can first construct $\mathbb{F}_{2^2}$, then construct $\mathbb{F}_{2^8}$ through a quartic irreducible polynomial extension.</p>
+<p>Let&rsquo;s warm up by constructing $\mathbb{F}_{2^2}$ using the quadratic extension method. We discussed earlier that $f(X)=X^2+X+1$ is an irreducible polynomial in $\mathbb{F}_2[X]$. Suppose $\eta$ is a root of $f(X)$, then $\mathbb{F}_{2^2}$ can be represented as $a_0 + b_0\cdot\eta$. Considering that $\mathbb{F}_{2^2}$ only has four elements, they can be listed below:</p>
+$$
+\mathbb{F}_{2^2} = \{0, 1, \eta, \eta+1\}
+$$<p>And $\eta$ as a generator can produce the multiplicative group $\mathbb{F}_{2^2}^*=\langle \eta \rangle$, which has an Order of 3:</p>
+$$
+\begin{split}
+\eta^0 &= 1 \\
+\eta^1 &= \eta \\
+\eta^2 &= \eta+1 \\
+\end{split}
+$$<p>We&rsquo;ll demonstrate two construction methods for $\mathbb{F}_{2^4}$. The first is to directly use a degree 4 irreducible polynomial over $\mathbb{F}_2$. In fact, there are 3 different degree 4 irreducible polynomials, so there are 3 different construction methods in total.</p>
+$$
+\begin{split}
+f_1(X) &= X^4 + X + 1 \\
+f_2(X) &= X^4 + X^3 + 1 \\
+f_3(X) &= X^4 + X^3 + X^2 + X + 1 \\
+\end{split}
+$$<p>Since we only need to choose one irreducible polynomial, let&rsquo;s choose $f_1(X)$ to define $\mathbb{F}_{2^4}$:</p>
+$$
+\mathbb{F}_{2^4} = \mathbb{F}_2[X]/\langle f_1(X)\rangle 
+$$<p>Let&rsquo;s denote the root of $f_1(X)$ in $\mathbb{F}_{2^4}$ as $\theta$, then any element $a\in\mathbb{F}_{2^4}$ can be uniquely represented as:</p>
+$$
+a = a_0 + a_1\cdot\theta + a_2\cdot\theta^2 + \cdots + a_{n-1}\cdot\theta^{n-1}
+$$<p>To add here, $f_1(X)$ is also a Primitive polynomial, and its root $\theta$ is also a Primitive Element of $\mathbb{F}_{2^4}$. Note that not all irreducible polynomials are Primitive polynomials, for example, $f_3(X)$ listed above is not a Primitive polynomial.</p>
+<p>Now we can list all the elements in $\mathbb{F}_{2^4}$, each element corresponding to a 4-bit binary vector:</p>
+$$
+\begin{array}{ccccccc}
+0000 & 0001 & 0010 & 0011 & 0100 & 0101 & 0110 & 0111 \\
+0 & 1 & \theta & \theta+1 & \theta^2 & \theta^2+1 & \theta^2+\theta & \theta^2+\theta+1 \\
+\hline
+1000 & 1001 & 1010 & 1011 & 1100 & 1101 & 1110 & 1111 \\
+\theta^3 & \theta^3+1 & \theta^3+\theta & \theta^3+\theta+1 & \theta^3+\theta^2 & \theta^3+\theta^2+1 & \theta^3+\theta^2+\theta & \theta^3+\theta^2+\theta+1 \\
+\end{array}
+$$<p>For the addition of two elements in $\mathbb{F}_{2^4}$, we only need to add their binary representations bit by bit, for example:</p>
+$$
+(0101) + (1111) = (1010)
+$$<p>This operation is actually the XOR bitwise exclusive OR operation. As for multiplication, for example $a\cdot\theta$, it corresponds to a shift operation on the binary:</p>
+$$
+\begin{split}
+(0101) << 1 &= (1010)\\
+(\theta^2 + 1)\cdot\theta &= \theta^3 + \theta \\
+\end{split}
+$$<p>If we continue to multiply by $\theta$, a shift overflow situation will occur:</p>
+$$
+\begin{split}
+(\theta^3 + \theta)\cdot\theta &= {\color{blue}\theta^4} + \theta^2 = \theta^2 + \theta + 1 \\
+(1010) << 1  &= (0100) + (0011) = (0111)\\
+\end{split}
+$$<p>For the overflow bit, it needs to be added with $0011$, which is determined by the definition of the irreducible polynomial $f_1(X)$, $\theta^4=\theta+1$. So once the high bit overflows during shifting, an XOR operation with $0011$ needs to be performed. From this, we can see that the multiplication rules of $\mathbb{F}_{2^4}$ actually depend on the choice of the irreducible polynomial. Therefore, how to choose an appropriate irreducible polynomial is also a key step in optimizing binary field multiplication.</p>
+<h2 id="field-embedding">Field Embedding</h2>
+<p>If we want to construct a SNARK proof system based on binary fields, we would use smaller bit counts to represent smaller numbers, but in any case, in the challenge rounds of the protocol, the Verifier needs to give a random number in a relatively large extension field, in hopes of achieving sufficient cryptographic security strength. This requires us to encode witness information with polynomials in a small field, but perform evaluation operations on these polynomials in a larger field. Therefore, we need to find a way to &ldquo;embed&rdquo; the small field $K$ into the large field $L$.</p>
+<p>The so-called embedding refers to mapping elements from one field $K$ to another field $L$, denoted as $\phi: K\to L$. This mapping is Injective and this homomorphism mapping preserves the structure of addition and multiplication operations:</p>
+$$
+\begin{split}
+\phi(a+b) &= \phi(a) + \phi(b) \\
+\phi(a\cdot b) &= \phi(a)\cdot\phi(b)
+\end{split}
+$$<p>That is, if $a\in K$, then $a$ also has a unique representation in $L$. To maintain the structure of multiplication operations, we actually only need to find a Primitive Element $\alpha$ in K corresponding to an element $\beta$ in $L$, then this homomorphism mapping is uniquely determined, because any element in $K$ can be represented as a power of $\alpha$. However, usually this embedding homomorphism mapping is not easy to find. Let&rsquo;s take $\mathbb{F}_{2^2}\subset\mathbb{F}_{2^4}$ as an example to see how to find the mapping of the former embedded into the latter.</p>
+<p>Because $\eta$ is a Primitive Element in $\mathbb{F}_{2^2}$, we only need to consider the representation of $\eta$ in $\mathbb{F}_{2^4}$.</p>
+<p>Let&rsquo;s first look at the Primitive Element $\theta$ in $\mathbb{F}_{2^4}$, is $\eta\mapsto\theta$ an embedding mapping?</p>
+$$
+\eta^2 = \eta+1 \quad \text{but} \quad \theta^2 \neq \theta+1
+$$<p>Obviously, $\eta^2 \neq \theta^2$, so $\eta\mapsto\theta$ is not an embedding mapping. Thinking about how irreducible polynomials determine the multiplication relationship between elements, and because $\eta$ is a root of $X^2+X+1$ while $\theta$ is a root of $X^4+X+1$, the multiplication relationship between $\eta$ and $\theta$ must be different. In $\mathbb{F}_{2^4}$, there also exist two roots of $X^2+X+1$, which are $\theta^2+\theta$ and $\theta^2+\theta+1$ respectively. Readers can verify the following equation:</p>
+$$
+(\theta^2+\theta)^2 + (\theta^2+\theta) + 1 = \theta^4 + \theta^2 + \theta^2 + \theta + 1 = 0
+$$<p>So, we define the embedding mapping:</p>
+$$
+\begin{split}
+\phi &: \mathbb{F}_{2^2} \to \mathbb{F}_{2^4},\quad \eta \mapsto \theta^2+\theta
+\end{split}
+$$<p>This means that the binary representation $(10)$ corresponds to $(0110)$ in $L=\mathbb{F}_{2^4}$; and the binary representation $(11)$ (which is $\eta+1$) corresponds to $(\theta^2+\theta+1)$ in $L$, i.e., $(0111)$. Note here that we can also use $\phi': \eta \mapsto \theta^2+\theta+1$ as another different embedding mapping. The underlying principle is that $\theta^2+\theta$ and $\theta^2+\theta+1$ are conjugates of each other, they are perfectly symmetric, so both of these mappings can serve as embedding mappings. Although they map to different elements, there is no significant difference from the overall structure.</p>
+<p>For any $[L:K]=n$, when we embed $K$ into $L$, a direct method is to find the roots of $f(X)$ in $L$, although this calculation is not simple. Moreover, both embedding and de-embedding require additional calculations, which undoubtedly increases the complexity of the system.</p>
+<p>The recursive Extension Tower construction method mentioned in the Binius paper, by selecting appropriate irreducible polynomials and Bases, we can obtain very direct (called Zero-cost) embedding and de-embedding mappings.</p>
+<h2 id="extension-tower">Extension Tower</h2>
+<p>We can construct $\mathbb{F}_{2^4}$ through two quadratic extensions. First, we choose a quadratic irreducible polynomial $f(X)=X^2+X+1$, then we can construct $\mathbb{F}_{2^2}$, then based on $\mathbb{F}_{2^2}$ we find another quadratic irreducible polynomial to construct $\mathbb{F}_{2^4}$.</p>
+$$
+\mathbb{F}_{2^2} = \mathbb{F}_2[X]/\langle X^2+X+1 \rangle \cong\mathbb{F}_2(\eta)
+$$<p>Next, we need to find a quadratic irreducible polynomial in $\mathbb{F}_{2^2}[X]$. First note that $X^2+X+1$ can no longer be used, according to the definition of $\mathbb{F}_{2^2}$, it can already be factored. Consider $X^2+1$, it can also be factored $(X+1)(X+1)$. In fact, all quadratic polynomials in $\mathbb{F}_2[X]$ can be factored. A quadratic irreducible polynomial in $\mathbb{F}_{2^2}[X]$ must include a term with the new element $\eta$ in its coefficients.</p>
+<p>For example, $X^2+X+\eta$ is a quadratic irreducible polynomial over $\mathbb{F}_{2^2}$. Then we can construct $\mathbb{F}_{2^4}$:</p>
+$$
+\mathbb{F}_{2^4} = \mathbb{F}_{2^2}[X]/\langle X^2+X+\eta \rangle 
+$$<p>Let&rsquo;s denote the root of $X^2+X+\eta$ in $\mathbb{F}_{2^4}$ as $\zeta$, then $\mathbb{F}_{2^4}$ can be represented as:</p>
+$$
+\mathbb{F}_{2^4} = \cong \mathbb{F}_{2^2}(\zeta)  \cong \mathbb{F}_2(\eta)(\zeta) \cong \mathbb{F}_2(\eta, \zeta)
+$$<!-- raw HTML omitted -->
+<p>Then all elements of $\mathbb{F}_{2^4}$ can be represented using $\eta, \zeta$:</p>
+$$
+\begin{array}{ccccccc}
+\hline
+0000 & 0001 & 0010 & 0011 & 0100 & 0101 & 0110 & 0111 \\
+0 & 1 & \eta & \eta+1 & \zeta & \zeta+\eta & \zeta+\eta+1 & \zeta+\eta+1 \\
+\hline
+1000 & 1001 & 1010 & 1011 & 1100 & 1101 & 1110 & 1111 \\
+\zeta\eta & \zeta\eta + 1 & \zeta\eta + \eta & \zeta\eta + \eta + 1 & \zeta\eta + \zeta & \zeta\eta + \zeta +1 & \zeta\eta+\zeta+\eta & \zeta\eta+\zeta+\eta+1 \\
+\hline
+\end{array}
+$$<p>At this point, each bit in the 4-bit binary corresponds to an element in $\mathbb{F}_{2^4}$, $(1000)$ corresponds to $\zeta\eta$, $(0100)$ corresponds to $\zeta$, $(0010)$ corresponds to $\eta$, $(0001)$ corresponds to $1$. Therefore, we can use the following Basis to represent all elements in $\mathbb{F}_{2^4}$:</p>
+$$
+\mathcal{B} = (1,\ \eta,\ \zeta,\ \eta\zeta)
+$$<p>Now, the binary representation of $\mathbb{F}_{2^2}$ directly corresponds to the &ldquo;lower two bits&rdquo; of the binary representation of $\mathbb{F}_{2^4}$, for example:</p>
+$$
+\begin{split}
+(1010) &= (10) || (10) = \zeta\eta + \eta \\
+\end{split}
+$$<p>Therefore, we can directly pad zeros to the higher two bits of the binary representation of $\mathbb{F}_{2^2}$ to get the corresponding element in $\mathbb{F}_{2^4}$. Conversely, by removing the two high-order zeros, an element in $\mathbb{F}_{2^4}$ directly maps back to an element in $\mathbb{F}_{2^2}$.</p>
+<!-- raw HTML omitted -->
+<p>As shown in the figure above, $(1011)$ is the binary representation of $\zeta\eta+\eta+1$, its lower two bits $(11)$ directly correspond to $(\eta+1)$ in $\mathbb{F}_{2^2}$. This kind of embedding is a &ldquo;natural embedding&rdquo;, so the Binus paper calls it Zero-cost Embedding.</p>
+<p>However, $\mathbb{F}_{2^4}$ is still a very small field, not enough. If we continue to perform quadratic extensions upwards, how can we find suitable irreducible polynomials? The solution is not unique. Let&rsquo;s first look at a scheme given in the Binius paper [DP23] — Wiedemann Tower [Wie88].</p>
+<h2 id="wiedemann-tower">Wiedemann Tower</h2>
+<p>The Wiedemann Tower is a recursive extension tower based on $\mathbb{F}_2$. The bottom Base Field is denoted as $\mathcal{T}_0$, with elements only $0$ and $1$:</p>
+$$
+\mathcal{T}_0 = \mathbb{F}_2 \cong \{0,1\}
+$$<p>Then we introduce an unknown $X_0$, constructing a univariate polynomial ring $\mathbb{F}_2[X_0]$. As discussed earlier, $X^2 + X + 1$ is an irreducible polynomial over $\mathcal{T}_0$, so we can use it to construct $\mathcal{T}_1$.</p>
+$$
+\mathcal{T}_1 = \mathbb{F}_2[X_0]/\langle  X_0^2+X_0+1 \rangle = \{0, 1, X_0, X_0+1\} \cong \mathbb{F}_{2^2} \cong \mathbb{F}_2(\alpha_0)
+$$<p>Next, we find a quadratic irreducible polynomial $X_1^2+\alpha_0\cdot X_1+1$ in $\mathcal{T}_1[X_1]$, then we can construct $\mathcal{T}_2$:</p>
+$$
+\mathcal{T}_2 = \mathcal{T}_1[X_1]/\langle  X_1^2+ \alpha_0\cdot X_1+1\rangle \cong \mathbb{F}_{2^4} \cong \mathbb{F}_2(\alpha_0, \alpha_1)
+$$<p>And so on, we can construct $\mathcal{T}_3, \mathcal{T}_4, \cdots, \mathcal{T}_n$:</p>
+$$
+\mathcal{T}_{i+1} = \mathcal{T}_i[X_i]/\langle  X_i^2+\alpha_{i-1}\cdot X_i+1\rangle \cong \mathbb{F}_{2^{2^i}} \cong \mathbb{F}_2(\alpha_0, \alpha_1, \ldots, \alpha_i),\quad i\geq 1
+$$<p>Here, $\alpha_0, \alpha_1, \ldots, \alpha_{n-1}$ are the roots of the successively introduced quadratic irreducible polynomials, such that:</p>
+$$
+\mathcal{T}_{n} = \mathbb{F}_2(\alpha_0, \alpha_1, \ldots, \alpha_{n-1})
+$$<p>And $|\mathcal{T}_{n}| = 2^{2^{n}}$. The relationship between these introduced roots satisfies the following equation:</p>
+$$
+\alpha_{i+1} + \alpha^{-1}_{i+1} = \alpha_i
+$$<p>It&rsquo;s not hard to verify that $\alpha_0+\alpha^{-1}_0=1$. And the polynomial $X_i^2+X_{i-1}X_i+1$ in the multivariate polynomial ring $\mathcal{T}_0[X_0, X_1, \ldots, X_n]$ has two roots $\alpha_i$ and $\alpha^{-1}_i$:</p>
+$$
+(\alpha^{-1}_i)^2 + \alpha_{i-1}\alpha^{-1}_i + 1 = \alpha^{-1}_i + \alpha_{i-1} + \alpha_i = \alpha_{i-1} + \alpha_{i-1} = 0
+$$<p>Moreover, $\alpha_i$ and $\alpha_{i+1}$ satisfy the following recursive relationship:</p>
+$$
+\alpha_{i+1} + \alpha^{-1}_{i+1} = \alpha_i
+$$<p>This is because if we multiply both sides of the equation by $\alpha_{i+1}$, we get: $\alpha_{i+1}^2 + \alpha_i\alpha_{i+1} + 1 = 0$, which is exactly the irreducible polynomial we use for recursive quadratic extension construction.</p>
+<h3 id="multilinear-basis">Multilinear Basis</h3>
+<p>For $\mathcal{T}_{i+1}$ over $\mathbb{F}_2$, it forms an $n+1$ dimensional vector space over $\mathbb{F}_2$. We can use the roots of these irreducible polynomials to construct a Multilinear Basis:</p>
+$$
+\begin{split}
+\mathcal{B}_{i+1} &= (1, \alpha_0)\otimes (1, \alpha_1) \otimes \cdots \otimes (1,\alpha_i)  \\
+& = (1, \alpha_0, \alpha_1, \alpha_0\alpha_1, \alpha_2,\ \ldots,\ \alpha_0\alpha_1\cdots \alpha_i)
+\end{split}
+$$<p>This is consistent with what we discussed earlier, using $(1, \eta, \zeta, \zeta\eta)$ as the Basis for $\mathbb{F}_{2}(\eta, \zeta)$. We can quickly verify this. First, $(1, \alpha_0)$ is the Basis of $\mathcal{T}_1$, because every element of $\mathcal{T}_1$ can be expressed as</p>
+$$
+a_0 + b_0\cdot \alpha_0,  \quad a_0, b_0\in\mathcal{T}_0
+$$<p>After $\mathcal{T}_1$ is extended to $\mathcal{T}_2$ through $\alpha_1$, elements of $\mathcal{T}_2$ can all be expressed as:</p>
+$$
+a_1 + b_1\cdot \alpha_1,  \quad a_1, b_1\in\mathcal{T}_1
+$$<p>Substituting $a_1=a_0+b_0\cdot \alpha_0$, $b_1=a_0'+b_0'\cdot \alpha_1$, we have:</p>
+$$
+\begin{split}
+a_1 + b_1\cdot \alpha_1 &= (a_0+b_0\cdot \alpha_0) + (a'_0+b'_0\cdot \alpha_0)\cdot \alpha_1 \\
+ &= a_0 + b_0\alpha_0 + a'_0\cdot\alpha_1+ b_0'\cdot \alpha_0\alpha_1
+\end{split}
+$$<p>Thus, $(1, \alpha_0, \alpha_1, \alpha_0\alpha_1)$ forms the Basis of $\mathcal{T}_2$. By extension, $(1, \alpha_0, \alpha_1, \alpha_0\alpha_1, \alpha_2, \alpha_0\alpha_2, \alpha_1\alpha_2, \alpha_0\alpha_1\alpha_2)$ is the Basis of $\mathcal{T}_3$. Finally, $\mathcal{B}_{n}$ is the Basis of $\mathcal{T}_{n}$.</p>
+<h3 id="finding-primitive-element">Finding Primitive element</h3>
+<p>We discussed earlier that $\alpha_i$ and $\alpha^{-1}_{i}$ are conjugate roots. By Galois theory,</p>
+$$
+\alpha_{i}^{2^{2^n}} = \alpha^{-1}_{i} 
+$$<p>Then all $\alpha_i$ satisfy the following property:</p>
+$$
+\alpha_i^{F_i} = 1
+$$<p>Here $F_n$ represents the Fermat Number, $F_n=2^{2^n}+1$. A famous theorem is that $\mathsf{gcd}(F_i, F_j) = 1,  i\neq j$, that is, any two different Fermat numbers are coprime, so</p>
+$$
+\mathsf{ord}(\alpha_0\alpha_1\cdots \alpha_i) = \mathsf{ord}(\alpha_0)\mathsf{ord}(\alpha_1)\cdots\mathsf{ord}(\alpha_i) 
+$$<p>Therefore, if the Fermat number $F_i$ is prime, then obviously $\mathsf{ord}(\alpha_i)=F_i$. Currently, we know that when $i\leq 4$, $F_i$ are all prime, so</p>
+$$
+\begin{split}
+\mathsf{ord}(\alpha_0\cdot \alpha_1\cdot \cdots \cdot \alpha_i) &= \mathsf{ord}(\alpha_0)\cdot \mathsf{ord}(\alpha_1)\cdot \cdots \cdot \mathsf{ord}(\alpha_n) \\
+& = F_0\cdot F_1\cdot \cdots \cdot F_i = 2^{2^{i+1}} - 1 \\
+& = |\mathcal{T}_{n+1}| -1
+\end{split}
+$$<p>If $\alpha_0\cdots \alpha_i, i\leq 4$, then according to the properties of finite fields, it is a Primitive Element of $\mathcal{T}_{n+1}$.</p>
+<p>Additionally, through computer program verification, for the cases of $5\leq i \leq 8$, the Order of $\alpha_i$ is still equal to $F_i$. The $\alpha_0\cdots \alpha_8$ is of the size of the finite field $\mathbb{F}_{2^{512}}$ which can already meet the needs of proof systems like Binius. But mathematically, do all $\alpha_i$ satisfy this property? This seems to still be an unsolved problem [Wie88].</p>
+<h2 id="multiplication-optimization">Multiplication Optimization</h2>
+<p>Another significant advantage of adopting the Extension Tower is the optimization of multiplication operations.</p>
+<p>The first optimization is &ldquo;Small-by-large Multiplication&rdquo;, that is, the multiplication operation of two numbers $a\in\mathcal{T}_\iota$ and $b\in\mathcal{T}_{\iota+\kappa}$. Since $b$ can be decomposed into $2^\kappa$ elements of $\mathcal{T}_\iota$, this multiplication operation is equivalent to $2^\kappa$ multiplication operations on $\mathcal{T}_\iota$.</p>
+$$
+a \cdot (b_0, b_1, \cdots, b_{2^\kappa-1}) = (a\cdot b_0, a\cdot b_1, \cdots, a\cdot b_{\kappa-1})
+$$<p>Even for the multiplication of two elements in the same field, there are still optimization techniques. Suppose $a, b\in\mathcal{T}_{i+1}$, then according to the definition of Tower construction, they can be represented as $a_0 + a_1\cdot\alpha_i$ and $b_0 + b_1\cdot \alpha_i$ respectively, then their multiplication can be derived as follows:</p>
+$$
+\begin{split}
+a\cdot b  & = (a_0 + a_1\cdot\alpha_i)\cdot (b_0 + b_1\cdot\alpha_i) \\
+ &= a_0b_0 + (a_0b_1+a_1b_0)\cdot\alpha_i + a_1b_1\cdot\alpha_i^2 \\
+& = a_0b_0 + (a_0b_1+a_1b_0)\cdot\alpha_i + a_1b_1\cdot(\alpha_{i-1}\alpha_i+1) \\
+& = a_0b_0  + a_1b_1 + (a_0b_1 + a_1b_0 + a_1b_1\cdot\alpha_{i-1})\cdot\alpha_i \\
+& = a_0b_0  + a_1b_1 + \big((a_0+a_1)(b_0+b_1) - a_0b_0 - a_1b_1) + a_1b_1\cdot\alpha_{i-1}\big)\cdot\alpha_i
+\end{split}
+$$<p>Note on the right side of the above equation, we only need to calculate three multiplications on $\mathcal{T}_{i}$, namely $A=a_0b_0$, $B=(a_0+a_1)(b_0+b_1)$ and $C=a_1b_1$, then the above formula can be converted to:</p>
+$$
+a\cdot b = (A + C) + (B-A-C+C\cdot \alpha_{i-1})\cdot\alpha_i 
+$$<p>There&rsquo;s still one $C\cdot \alpha_{i-1}$ missing, which is a constant multiplication, because $\alpha_{i-1}\in\mathcal{T}_{i}$ is a constant. This constant multiplication can be reduced to a constant multiplication operation on $\mathcal{T}_{i-1}$, as shown below:</p>
+$$
+\begin{split}
+C\cdot \alpha_{i-1} &= (c_0 + c_1\alpha_{i-1})\cdot \alpha_{i-1} \\
+& = c_0\cdot \alpha_{i-1} + c_1\cdot \alpha_{i-1}^2 \\
+& = c_0\cdot \alpha_{i-1} + c_1\cdot (\alpha_{i-2}\cdot \alpha_{i-1} + 1) \\
+& = c_1 + (c_0 + {\color{blue}c_1\cdot \alpha_{i-2}})\cdot \alpha_{i-1}
+\end{split}
+$$<p>The blue part expression, ${\color{blue}c_1\cdot \alpha_{i-2}}$ is a constant multiplication operation on $\mathcal{T}_{i-2}$ that needs to be calculated recursively. The entire recursive process only needs to perform several additions to complete.</p>
+<p>Looking back at the $a\cdot b$ operation, we can also construct a Karatsuba-style recursive algorithm, where each layer of recursion only needs to complete three multiplication operations, one less than the four multiplication operations without optimization. Overall, the optimization effect will be very significant.</p>
+<p>Furthermore, the multiplication inverse operation on $\mathcal{T}_{i}$ can also be greatly optimized [FP97]. Consider $a, b\in\mathcal{T}_{i+1}$, satisfying $a\cdot b=1$, expand the expressions of $a$ and $b$:</p>
+$$
+\begin{split}
+a\cdot b &= (a_0 + a_1\cdot\alpha_i)\cdot (b_0 + b_1\cdot\alpha_i) \\
+& = a_0b_0  + a_1b_1 + \big((a_0+a_1)(b_0+b_1) - a_0b_0 - a_1b_1) + a_1b_1\cdot\alpha_{i-1}\big)\cdot\alpha_i\\
+&= 1\\
+\end{split}
+$$<p>We can calculate to get the expressions for $b_0, b_1$:</p>
+$$
+\begin{split}
+b_0 &= \frac{a_0 + a_1\alpha_{i-1}}{a_0(a_0 + a_1\alpha_{i-1}) + a_1^2}  \\[2ex]
+b_1 &= \frac{a_1}{a_0(a_0 + a_1\alpha_{i-1}) + a_1^2} \\
+\end{split}
+$$<p>So, the calculation of $b_0$ and $b_1$ includes: one inversion operation, three multiplications, two additions, one constant multiplication, and one squaring operation.</p>
+$$
+\begin{split}
+d_0 &= \alpha_{i-1}a_1\\
+d_1 &= a_0 + d_0 \\
+d_2 &= a_0 \cdot d_1 \\
+d_3 &= a_1^2   \\
+d_4 &= d_2 + d_3 \\
+d_5 &= 1/d_4 \\
+b_0 & = d_1\cdot d_5\\
+b_1 & = a_1 \cdot d_5\\
+\end{split}
+$$<p>The inversion operation of $d_5$ can be recursively calculated layer by layer along the Extension Tower. The main computational cost in the recursive process is three multiplication operations. There&rsquo;s also the squaring operation of $d_3$, which can also be calculated recursively:</p>
+$$
+\begin{split}
+a_1^2 &= (e_0 + e_1\cdot\alpha_{i-1})^2 \\
+& = e_0^2 + e_1^2\cdot\alpha_{i-1}^2 \\
+& = e_0^2 + e_1^2\cdot(\alpha_{i-2}\alpha_{i-1} + 1) \\
+& = (e_0^2 + e_1^2) + (e_1^2\alpha_{i-2})\cdot\alpha_{i-1}  \\
+\end{split}
+$$<p>For detailed recursive efficiency analysis, please refer to [FP97]. Overall, the computational complexity is comparable to the Karatsuba algorithm, thus greatly reducing the algorithmic complexity of inversion.</p>
+<h2 id="artin-schreier-tower-conway-tower">Artin-Schreier Tower (Conway Tower)</h2>
+<p>There&rsquo;s another method to construct Binary Towers, originating from a paper published by Amil Artin and Otto Schreier in 1927, which also appears in Conway&rsquo;s book &ldquo;On Numbers and Games&rdquo;. For the historical origins and related theories, please refer to [CHS24].</p>
+<p>For any $\mathbb{F}_{p^n}$, we choose $h(X_{i+1}) = X_{i+1}^p - X_{i+1} - \alpha_0\alpha_1\cdots \alpha_i$ as the irreducible polynomial for each layer of the Tower. And $\alpha_{i+1}$ is the root of $h(X_{i+1})=0$ on the previous layer of the Tower. This way we can get an Extension Tower:</p>
+$$
+\mathbb{F}_2 \subset \mathbb{F}_{2^2}\cong\mathbb{F}_2(\alpha_0) \subset \mathbb{F}_{2^4}\cong\mathbb{F}_{2^2}(\alpha_1) \subset \mathbb{F}_{2^8}\cong\mathbb{F}_{2^4}(\alpha_2)
+$$<p>Moreover, $(1, \alpha_0)\otimes(1, \alpha_1)\otimes\cdots \otimes (1, \alpha_n)$ forms a Basis for the vector space $\mathbb{F}_{2^{2^{i+1}}}$. According to our previous discussion, this set of Bases also supports Zero-cost subfield embedding. This type of Multilinear Basis is also known as Cantor Basis [Can89].</p>
+<h2 id="references">References</h2>
+<ul>
+<li>[Wie88] Wiedemann, Doug. &ldquo;An iterated quadratic extension of GF (2).&rdquo; Fibonacci Quart 26.4 (1988): 290-295.</li>
+<li>[DP23] Diamond, Benjamin E., and Jim Posen. &ldquo;Succinct arguments over towers of binary fields.&rdquo; Cryptology ePrint Archive (2023).</li>
+<li>[DP24] Diamond, Benjamin E., and Jim Posen. &ldquo;Polylogarithmic Proofs for Multilinears over Binary Towers.&rdquo; Cryptology ePrint Archive (2024).</li>
+<li>[LN97] Lidl, Rudolf, and Harald Niederreiter. Finite fields. No. 20. Cambridge university press, 1997.</li>
+<li>[FP97] Fan, John L., and Christof Paar. &ldquo;On efficient inversion in tower fields of characteristic two.&rdquo; Proceedings of IEEE International Symposium on Information Theory. IEEE, 1997.</li>
+<li>[CHS24] Cagliero, Leandro, Allen Herman, and Fernando Szechtman. &ldquo;Artin-Schreier towers of finite fields.&rdquo; arXiv preprint arXiv:2405.10159 (2024).</li>
+<li>[Can89] David G. Cantor. On arithmetical algorithms over finite fields. J. Comb. Theory Ser. A, 50(2):285–300, March 1989.</li>
+</ul>
+
+      </div>
+
+      
+      
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Yu Guo <yu.guo@secbit.io> and Jade Xie <jade@secbit.io></span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+      2024-11-01
+      
+        <a href="https://github.com/sec-bit/blog/commit/0453263d11ca7e177a7154e403f6d7fe381806fc" title="add binius 01 &amp; 02">
+          (0453263)
+        </a>
+        
+          <br>add binius 01 &amp; 02
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content">If you need to reprint, please indicate the author and source of the article.</span>
+  </p>
+</div>
+
+
+
+      
+      
+
+
+      <footer class="post-footer">
+        <div class="post-tags">
+          <a href="https://sec-bit.github.io/blog/en/tags/cryptography/">cryptography</a>
+          <a href="https://sec-bit.github.io/blog/en/tags/finite-fields/">finite fields</a>
+          <a href="https://sec-bit.github.io/blog/en/tags/snark/">SNARK</a>
+          <a href="https://sec-bit.github.io/blog/en/tags/binius/">Binius</a>
+          
+        </div>
+
+
+        
+        <nav class="post-nav">
+          
+          <a class="prev" href="/blog/en/2024/11/01/binius-02/">
+            
+            <i class="iconfont">
+              
+<svg aria-hidden="true" class="lucide lucide-chevron-left hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="m15 18-6-6 6-6"/></svg>
+            </i>
+            <span class="prev-text nav-default">Notes on Binius (Part II): Subspace Polynomial</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+          
+          <a class="next" href="/blog/en/2024/01/19/trust-wallets-fomo3d-summer-vuln/">
+            <span class="next-text nav-default">Trust Wallet&#39;s Fomo3D Summer: Fresh Discovery of Low Entropy Flaw From 2018</span>
+            <span class="prev-text nav-mobile">Next</span>
+            
+            <i class="iconfont">
+              
+<svg aria-hidden="true" class="lucide lucide-chevron-right hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
+            </i>
+          </a>
+        </nav>
+      </footer>
+    </article>
+
+    
+    
+    
+    
+
+
+    
+    
+
+  
+
+  
+  
+    <div class="comment">
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="sec-bit/comments-for-secbit-blog"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkyMTQ2MDkzNjM="
+    data-category="Comments"
+    data-category-id="DIC_kwDODMqt084CY2v-"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="en"
+    
+      data-loading="lazy"
+    
+    crossorigin="anonymous"
+    async
+  ></script>
+</div>
+
+  
+
+  
+  
+
+  
+
+  
+
+    
+
+  
+
+  
+
+
+  </div>
+
+  
+  <nav class="toc" id="toc">
+    <div class="toc-title">Table of Contents</div>
+    <div class="toc-content custom-scrollbar">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#extension-fields">Extension Fields</a></li>
+    <li><a href="#binary-field">Binary Field</a></li>
+    <li><a href="#field-embedding">Field Embedding</a></li>
+    <li><a href="#extension-tower">Extension Tower</a></li>
+    <li><a href="#wiedemann-tower">Wiedemann Tower</a>
+      <ul>
+        <li><a href="#multilinear-basis">Multilinear Basis</a></li>
+        <li><a href="#finding-primitive-element">Finding Primitive element</a></li>
+      </ul>
+    </li>
+    <li><a href="#multiplication-optimization">Multiplication Optimization</a></li>
+    <li><a href="#artin-schreier-tower-conway-tower">Artin-Schreier Tower (Conway Tower)</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+  </nav>
+
+
+</div>
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="social-icon-links">
+  
+
+
+<a href="mailto:hi@secbit.io" rel="me noopener" class="social-icon-link" title="email" >
+  
+<svg aria-hidden="true" class="icon hi-svg-inline" fill="currentColor" height="1em" version="1.1" viewBox="0 0 1451 1024" width="1em" xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+</a>
+<a href="https://twitter.com/SECBIT_IO" rel="me noopener" class="social-icon-link" title="twitter"  target="_blank" >
+  
+<svg aria-hidden="true" class="icon hi-svg-inline" fill="currentColor" height="1em" version="1.1" viewBox="0 0 1264 1024" width="1em" xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1229.8616 18.043658c0 0-117.852626 63.135335-164.151872 67.344358-105.225559-164.151872-505.082682-92.598492-437.738325 223.078185C278.622548 312.675223 89.216542 47.506814 89.216542 47.506814s-117.852626 189.406006 75.762402 345.139833C127.097743 396.85567 55.544363 371.601535 55.544363 371.601535S26.081207 535.753407 253.368414 615.724832c-21.045112 29.463156-113.643603 8.418045-113.643603 8.418045s25.254134 143.10676 231.496229 180.987961c-143.10676 130.479693-387.230056 92.598492-370.393967 105.225559 206.242095 189.406006 1119.599946 231.496229 1128.01799-643.98042C1179.353331 249.539887 1263.533778 123.269217 1263.533778 123.269217s-130.479693 37.881201-138.897738 33.672179C1225.652577 98.015083 1229.8616 18.043658 1229.8616 18.043658"></path>
+</svg>
+
+</a>
+<a href="https://github.com/sec-bit" rel="me noopener" class="social-icon-link" title="github"  target="_blank" >
+  
+<svg aria-hidden="true" class="icon hi-svg-inline" fill="currentColor" height="1em" version="1.1" viewBox="0 0 1024 1024" width="1em" xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+</a>
+<a href="https://www.zhihu.com/org/secbit/" rel="me noopener" class="social-icon-link" title="zhihu"  target="_blank" >
+  
+<svg aria-hidden="true" class="icon hi-svg-inline" fill="currentColor" height="1em" version="1.1" viewBox="0 0 1024 1024" width="1em" xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+</a>
+
+
+<a href="https://sec-bit.github.io/blog/en/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="social-icon-link" title="rss"
+  target="_blank">
+  
+<svg aria-hidden="true" class="lucide lucide-rss hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+</a>
+
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+    2018 -
+    2024
+    <span class="heart">
+      
+      <i class="iconfont">
+        
+<svg aria-hidden="true" class="lucide lucide-heart hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+      </i>
+    </span><span class="author">
+      SECBIT Labs
+      
+    </span></span>
+
+  
+  
+
+  
+</div>
+
+  </footer>
+
+  
+
+
+
+
+<script type="text/javascript" src="/blog/js/main.030d3b354be764fb5e159ae3733f7696508bd3f2bba9dc28ab767fcaccd39230.js" integrity="sha256-Aw07NUvnZPteFZrjcz92llCL0/K7qdwoq3Z/yszTkjA=" crossorigin="anonymous"></script>
+
+
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/blog/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/blog/js/custom.js"></script>
+
+
+</body>
+
+</html>

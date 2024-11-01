@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Finite Fields on SECBIT Blog</title>
+    <link>https://sec-bit.github.io/blog/en/tags/finite-fields/</link>
+    <description>Recent content in Finite Fields on SECBIT Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 01 Nov 2024 20:31:26 +0800</lastBuildDate>
+    <atom:link href="https://sec-bit.github.io/blog/en/tags/finite-fields/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Notes on Binius (Part II): Subspace Polynomial</title>
+      <link>https://sec-bit.github.io/blog/en/2024/11/01/binius-02/</link>
+      <pubDate>Fri, 01 Nov 2024 08:00:00 +0800</pubDate>
+      <guid>https://sec-bit.github.io/blog/en/2024/11/01/binius-02/</guid>
+      <description>The FRI-Binus paper [DP24] discusses the Additive FFT algorithm based on Subspace Polynomial and provides a perspective to understand the Additive FFT algorithm based on Novel Polynomial Basis in [LCH14] using odd-even decomposition. This article directly introduces the Subspace Polynomial, and then introduces the Additive FFT algorithm from the perspective of odd-even decomposition. This article omits the definition of Normalized Subspace Polynomial for easier understanding. Normalization only affects the performance of the FFT algorithm and has no essential difference from the simplified algorithm introduced in this article.</description>
+    </item>
+    <item>
+      <title>Notes on FRI-Binius (Part I): Binary Towers</title>
+      <link>https://sec-bit.github.io/blog/en/2024/10/31/binius-01/</link>
+      <pubDate>Thu, 31 Oct 2024 11:00:00 +0800</pubDate>
+      <guid>https://sec-bit.github.io/blog/en/2024/10/31/binius-01/</guid>
+      <description>Binary fields possess elegant internal structures, and Binius aims to fully utilize these internal structures to construct efficient SNARK proof systems. This article mainly discusses the Binary Fields that Binius relies on at its core and the construction methods of Extension Towers based on Binary Fields. Binary Fields provide smaller fields and are compatible with various tool constructions in traditional cryptography while also being able to fully utilize optimization of special instructions on hardware. There are two main advantages to choosing Extension Towers: one is that the recursive Extension construction provides a consistent and incremental Basis selection, allowing Small Fields to be embedded into Large Fields in a very natural way; the other advantage is that multiplication and inversion operations have efficient recursive algorithms.</description>
+    </item>
+  </channel>
+</rss>
