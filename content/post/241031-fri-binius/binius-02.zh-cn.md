@@ -10,6 +10,7 @@ categories: ["mle-pcs"]
 contentCopyright: "If you need to reprint, please indicate the author and source of the article."
 ---
 
+> Check the latest on mle-pcs repo: https://github.com/sec-bit/mle-pcs/blob/main/fri-binius/binius-02.md
 - Yu Guo <yu.guo@secbit.io>
 - Jade Xie <jade@secbit.io>
 
