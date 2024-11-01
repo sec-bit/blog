@@ -127,7 +127,6 @@ defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multil
 
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
-  customCSS = ['']            # if ['custom.css'], load '/static/css/custom.css' file
   customJS = ['custom.js']             # if ['custom.js'], load '/static/js/custom.js' file
 
   [params.author]                  # essential                     # 必需
