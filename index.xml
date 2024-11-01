@@ -18,7 +18,10 @@
       
       <guid>https://sec-bit.github.io/blog/2024/11/01/binius-02/</guid>
       
-        <description>&lt;ul&gt;
+        <description>&lt;blockquote&gt;
+&lt;p&gt;Check the latest on mle-pcs repo: &lt;a href=&#34;https://github.com/sec-bit/mle-pcs/blob/main/fri-binius/binius-02.md&#34;&gt;https://github.com/sec-bit/mle-pcs/blob/main/fri-binius/binius-02.md&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
 &lt;li&gt;Yu Guo &lt;a href=&#34;mailto:yu.guo@secbit.io&#34;&gt;yu.guo@secbit.io&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Jade Xie &lt;a href=&#34;mailto:jade@secbit.io&#34;&gt;jade@secbit.io&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -382,7 +385,10 @@ $$&lt;p&gt;我们把上面这个 Additive FFT 递归算法用 Python 代码实�
       
       <guid>https://sec-bit.github.io/blog/2024/10/31/binius-01/</guid>
       
-        <description>&lt;ul&gt;
+        <description>&lt;blockquote&gt;
+&lt;p&gt;Check the latest on mle-pcs repo: &lt;a href=&#34;https://github.com/sec-bit/mle-pcs/blob/main/fri-binius/binius-01.md&#34;&gt;https://github.com/sec-bit/mle-pcs/blob/main/fri-binius/binius-01.md&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
 &lt;li&gt;Yu Guo &lt;a href=&#34;mailto:yu.guo@secbit.io&#34;&gt;yu.guo@secbit.io&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Jade Xie &lt;a href=&#34;mailto:jade@secbit.io&#34;&gt;jade@secbit.io&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
