@@ -4,12 +4,12 @@
     <title>Tags on SECBIT Blog</title>
     <link>https://sec-bit.github.io/blog/tags/</link>
     <description>Recent content in Tags on SECBIT Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 22 Jan 2020 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 01 Nov 2024 16:58:03 +0800</lastBuildDate>
     <atom:link href="https://sec-bit.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>tutorials</title>
+      <title>Tutorials</title>
       <link>https://sec-bit.github.io/blog/tags/tutorials/</link>
       <pubDate>Wed, 22 Jan 2020 08:00:00 +0800</pubDate>
       <guid>https://sec-bit.github.io/blog/tags/tutorials/</guid>
@@ -23,7 +23,7 @@
       <description></description>
     </item>
     <item>
-      <title>zkSNARKs</title>
+      <title>ZkSNARKs</title>
       <link>https://sec-bit.github.io/blog/tags/zksnarks/</link>
       <pubDate>Wed, 22 Jan 2020 08:00:00 +0800</pubDate>
       <guid>https://sec-bit.github.io/blog/tags/zksnarks/</guid>
@@ -44,21 +44,21 @@
       <description></description>
     </item>
     <item>
-      <title>libsnark</title>
+      <title>Libsnark</title>
       <link>https://sec-bit.github.io/blog/tags/libsnark/</link>
       <pubDate>Fri, 03 Jan 2020 08:00:00 +0800</pubDate>
       <guid>https://sec-bit.github.io/blog/tags/libsnark/</guid>
       <description></description>
     </item>
     <item>
-      <title>mixer</title>
+      <title>Mixer</title>
       <link>https://sec-bit.github.io/blog/tags/mixer/</link>
       <pubDate>Thu, 19 Dec 2019 08:00:00 +0800</pubDate>
       <guid>https://sec-bit.github.io/blog/tags/mixer/</guid>
       <description></description>
     </item>
     <item>
-      <title>privacy</title>
+      <title>Privacy</title>
       <link>https://sec-bit.github.io/blog/tags/privacy/</link>
       <pubDate>Thu, 19 Dec 2019 08:00:00 +0800</pubDate>
       <guid>https://sec-bit.github.io/blog/tags/privacy/</guid>
@@ -100,7 +100,7 @@
       <description></description>
     </item>
     <item>
-      <title>quantum computing</title>
+      <title>Quantum Computing</title>
       <link>https://sec-bit.github.io/blog/tags/quantum-computing/</link>
       <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
       <guid>https://sec-bit.github.io/blog/tags/quantum-computing/</guid>

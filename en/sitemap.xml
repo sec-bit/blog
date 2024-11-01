@@ -1,4 +1,4 @@
-<?xml-stylesheet type="text/xsl" href="https://sec-bit.github.io/blog/sitemap.xsl"?>
+<?xml-stylesheet type="text/xsl" href="https://sec-bit.github.io/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
@@ -10,7 +10,7 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/categories/</loc>
-    <lastmod>2024-01-25T14:47:27+08:00</lastmod>
+    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -73,7 +73,7 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/post/</loc>
-    <lastmod>2024-01-25T14:47:27+08:00</lastmod>
+    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -87,7 +87,7 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/</loc>
-    <lastmod>2024-01-25T14:47:27+08:00</lastmod>
+    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -101,7 +101,7 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/tags/</loc>
-    <lastmod>2024-01-25T14:47:27+08:00</lastmod>
+    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -122,7 +122,7 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/tags/vulnerability/</loc>
-    <lastmod>2024-01-25T14:47:27+08:00</lastmod>
+    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -136,7 +136,7 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/tags/smart-contract/</loc>
-    <lastmod>2019-12-31T17:00:52+08:00</lastmod>
+    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -220,7 +220,7 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/categories/smart-contract/</loc>
-    <lastmod>2019-12-31T17:00:52+08:00</lastmod>
+    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -255,21 +255,21 @@
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/tags/erc223/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/tags/erc827/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://sec-bit.github.io/blog/en/2018/06/24/lacking-insights-in-erc223-erc827-implementation/</loc>
-    <lastmod>2019-10-12T18:48:30+08:00</lastmod>
+    <lastmod>2024-11-01T17:05:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

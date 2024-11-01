@@ -4,9 +4,9 @@
     <title>Categories on SECBIT Blog</title>
     <link>https://sec-bit.github.io/blog/categories/</link>
     <description>Recent content in Categories on SECBIT Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 22 Jan 2020 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 01 Nov 2024 16:58:03 +0800</lastBuildDate>
     <atom:link href="https://sec-bit.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Zero Knowledge Proof</title>
@@ -16,14 +16,14 @@
       <description></description>
     </item>
     <item>
-      <title>zkSNARKs</title>
+      <title>ZkSNARKs</title>
       <link>https://sec-bit.github.io/blog/categories/zksnarks/</link>
       <pubDate>Wed, 22 Jan 2020 08:00:00 +0800</pubDate>
       <guid>https://sec-bit.github.io/blog/categories/zksnarks/</guid>
       <description></description>
     </item>
     <item>
-      <title>privacy</title>
+      <title>Privacy</title>
       <link>https://sec-bit.github.io/blog/categories/privacy/</link>
       <pubDate>Thu, 19 Dec 2019 08:00:00 +0800</pubDate>
       <guid>https://sec-bit.github.io/blog/categories/privacy/</guid>
@@ -37,7 +37,7 @@
       <description></description>
     </item>
     <item>
-      <title>quantum computing</title>
+      <title>Quantum Computing</title>
       <link>https://sec-bit.github.io/blog/categories/quantum-computing/</link>
       <pubDate>Mon, 28 Oct 2019 08:00:00 +0800</pubDate>
       <guid>https://sec-bit.github.io/blog/categories/quantum-computing/</guid>
@@ -51,7 +51,7 @@
       <description></description>
     </item>
     <item>
-      <title>zkPoD</title>
+      <title>ZkPoD</title>
       <link>https://sec-bit.github.io/blog/categories/zkpod/</link>
       <pubDate>Wed, 24 Jul 2019 08:00:00 +0800</pubDate>
       <guid>https://sec-bit.github.io/blog/categories/zkpod/</guid>

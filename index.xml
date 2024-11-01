@@ -2155,7 +2155,12 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;/ol&gt;
 &lt;p&gt;不妨用一个十分简短（简化）的例子，来对照上面四个步骤。该例子模仿自&lt;a href=&#34;https://media.consensys.net/introduction-to-zksnarks-with-examples-3283b554fc3b&#34;&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;有这样一个函数 &lt;code&gt;C(x, out)&lt;/code&gt;，用于判断秘密 &lt;code&gt;x&lt;/code&gt; 是否满足等式 &lt;code&gt;x^3 + x + 5 == out&lt;/code&gt;，若满足则返回 &lt;code&gt;true&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-2&#34;&gt;2&lt;/a&gt;
@@ -2164,12 +2169,18 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;C&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;) {
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; ( &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;^&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt; );
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;第一步&lt;/strong&gt;，我们需要将函数 &lt;code&gt;C(x, out)&lt;/code&gt; 在 libsnark 中进行表达。此处先省略，后面介绍详细过程。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;第一步&lt;/strong&gt;，我们需要将函数 &lt;code&gt;C(x, out)&lt;/code&gt; 在 libsnark 中进行表达。此处先省略，后面介绍详细过程。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;第二步&lt;/strong&gt;，对应下面的 Generator 函数（&lt;em&gt;&lt;strong&gt;G&lt;/strong&gt;&lt;/em&gt;），&lt;code&gt;lambda&lt;/code&gt; 为随机产生，也就是常说的 trusted setup 过程中产生的 &amp;ldquo;toxic waste&amp;rdquo;。人们喜欢称它为“有毒废物”，是因为它必须被妥善处理（如必须销毁，不能让任何人知道），否则会影响证明协议安全。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-1-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-1-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-1-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-1-2&#34;&gt;2&lt;/a&gt;
@@ -2178,91 +2189,145 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;lambda&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;random&lt;/span&gt;()
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;pk&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;vk&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;G&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;C&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;lambda&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;pk&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;vk&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;G&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;C&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;lambda&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;最终生成 proving key (&lt;code&gt;pk&lt;/code&gt;) 和 verification key (&lt;code&gt;vk&lt;/code&gt;)。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;最终生成 proving key (&lt;code&gt;pk&lt;/code&gt;) 和 verification key (&lt;code&gt;vk&lt;/code&gt;)。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;第三步&lt;/strong&gt;，对应使用 Prove 函数（&lt;em&gt;&lt;strong&gt;P&lt;/strong&gt;&lt;/em&gt;）生成证明。这里想证明的是 prover 知道一个秘密值 &lt;code&gt;x&lt;/code&gt; 和计算结果 &lt;code&gt;out&lt;/code&gt; 可使等式满足。因此将 &lt;code&gt;x&lt;/code&gt;、&lt;code&gt;out&lt;/code&gt; 还有 &lt;code&gt;pk&lt;/code&gt; 作为输入一起传给 &lt;em&gt;&lt;strong&gt;P&lt;/strong&gt;&lt;/em&gt;，最终生成证明 &lt;code&gt;proof&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-2-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-2-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;proof&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;P&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;pk&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;proof&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;P&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;pk&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;第四步&lt;/strong&gt;，对应使用 Verify 函数（&lt;em&gt;&lt;strong&gt;V&lt;/strong&gt;&lt;/em&gt;）验证证明，将 &lt;code&gt;proof&lt;/code&gt;、&lt;code&gt;out&lt;/code&gt; 还有 &lt;code&gt;vk&lt;/code&gt; 传给 &lt;em&gt;&lt;strong&gt;G&lt;/strong&gt;&lt;/em&gt;，即可在不暴露秘密的情况下证明存在一个秘密值可使等式满足。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;第四步&lt;/strong&gt;，对应使用 Verify 函数（&lt;em&gt;&lt;strong&gt;V&lt;/strong&gt;&lt;/em&gt;）验证证明，将 &lt;code&gt;proof&lt;/code&gt;、&lt;code&gt;out&lt;/code&gt; 还有 &lt;code&gt;vk&lt;/code&gt; 传给 &lt;em&gt;&lt;strong&gt;G&lt;/strong&gt;&lt;/em&gt;，即可在不暴露秘密的情况下证明存在一个秘密值可使等式满足。&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-3-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-3-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;V&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;vk&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;proof&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;?=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;V&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;vk&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;proof&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;?=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;而&lt;strong&gt;开发者主要工作量就集中在第一步&lt;/strong&gt;，需要按照 libsnark 的接口规则手写 C++ 电路代码来描述命题，由代码构造 R1CS 约束。整个过程也即对应下图的 Computation -&amp;gt; Arithmetic Circuit -&amp;gt; R1CS。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;而&lt;strong&gt;开发者主要工作量就集中在第一步&lt;/strong&gt;，需要按照 libsnark 的接口规则手写 C++ 电路代码来描述命题，由代码构造 R1CS 约束。整个过程也即对应下图的 Computation -&amp;gt; Arithmetic Circuit -&amp;gt; R1CS。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;img/flow.png&#34; alt=&#34;flow&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;3-搭建-zk-snarks-应用开发环境&#34;&gt;3. 搭建 zk-SNARKs 应用开发环境&lt;/h2&gt;
 &lt;p&gt;下面进入动手环节，快速上手 libsnark，跑通例子。&lt;/p&gt;
 &lt;p&gt;先下载本文对应的 libsnark 最小可用例子代码库 &lt;code&gt;libsnark_abc&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-4-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-4-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git clone https://github.com/sec-bit/libsnark_abc.git
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git clone https://github.com/sec-bit/libsnark_abc.git&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;img/github.png&#34; alt=&#34;github&#34;&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;img/github.png&#34; alt=&#34;github&#34;&gt;&lt;/p&gt;
 &lt;p&gt;通过 git submodule 拉取 libsnark 代码。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-5-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-5-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-5-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-5-2&#34;&gt;2&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cd libsnark_abc
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git submodule update --init --recursive
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git submodule update --init --recursive&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;参考 libsnark &lt;a href=&#34;https://github.com/scipr-lab/libsnark#dependencies&#34;&gt;项目文档&lt;/a&gt;完成相关依赖安装。以 Ubuntu 16.04 LTS 为例，需安装以下组件：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;参考 libsnark &lt;a href=&#34;https://github.com/scipr-lab/libsnark#dependencies&#34;&gt;项目文档&lt;/a&gt;完成相关依赖安装。以 Ubuntu 16.04 LTS 为例，需安装以下组件：&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-6-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-6-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install build-essential cmake git libgmp3-dev libprocps4-dev python-markdown libboost-all-dev libssl-dev
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install build-essential cmake git libgmp3-dev libprocps4-dev python-markdown libboost-all-dev libssl-dev&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;初始化 &lt;code&gt;build&lt;/code&gt; 文件夹。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;初始化 &lt;code&gt;build&lt;/code&gt; 文件夹。&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-7-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-7-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir build &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; cd build &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; cmake ..
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir build &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; cd build &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; cmake ..&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;这步在 macOS 系统可能会遇到问题，参考&lt;a href=&#34;https://github.com/scipr-lab/libsnark/issues/99#issuecomment-367677834&#34;&gt;这个 issue&lt;/a&gt; 处理。或尝试使用以下命令：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这步在 macOS 系统可能会遇到问题，参考&lt;a href=&#34;https://github.com/scipr-lab/libsnark/issues/99#issuecomment-367677834&#34;&gt;这个 issue&lt;/a&gt; 处理。或尝试使用以下命令：&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-8-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-8-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir build &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; cd build &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; CPPFLAGS&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;-I/usr/local/opt/openssl/include LDFLAGS&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;-L/usr/local/opt/openssl/lib PKG_CONFIG_PATH&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/usr/local/opt/openssl/lib/pkgconfig cmake -DWITH_PROCPS&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;OFF -DWITH_SUPERCOP&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;OFF ..
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir build &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; cd build &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; CPPFLAGS&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;-I/usr/local/opt/openssl/include LDFLAGS&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;-L/usr/local/opt/openssl/lib PKG_CONFIG_PATH&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/usr/local/opt/openssl/lib/pkgconfig cmake -DWITH_PROCPS&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;OFF -DWITH_SUPERCOP&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;OFF ..&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;成功后，依旧在 &lt;code&gt;build&lt;/code&gt; 目录进行编译。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;成功后，依旧在 &lt;code&gt;build&lt;/code&gt; 目录进行编译。&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-9-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-9-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;make
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;make&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;编译成功后，在 &lt;code&gt;build/src&lt;/code&gt; 目录中可看到 3 个二进制文件。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;编译成功后，在 &lt;code&gt;build/src&lt;/code&gt; 目录中可看到 3 个二进制文件。&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-10-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-10-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-10-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-10-2&#34;&gt;2&lt;/a&gt;
@@ -2271,26 +2336,38 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;main
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;range
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;test
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;test&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;到这儿，你就以及完成示例项目的编译啦。尝试运行示例代码吧。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;到这儿，你就以及完成示例项目的编译啦。尝试运行示例代码吧。&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-11-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-11-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./src/main
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./src/main&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;最终出现如下日志，则说明一切正常。&lt;strong&gt;你已顺利拥有了 zkSNARK 应用开发环境，并成功跑了第一个 zk-SNARKs 的 demo&lt;/strong&gt;。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;最终出现如下日志，则说明一切正常。&lt;strong&gt;你已顺利拥有了 zkSNARK 应用开发环境，并成功跑了第一个 zk-SNARKs 的 demo&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;img/run-main.png&#34; alt=&#34;run-main&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;4-理解示例代码&#34;&gt;4. 理解示例代码&lt;/h2&gt;
 &lt;p&gt;下面我们一起来仔细瞅瞅代码。示例项目包含了 3 份代码（也可查看文末附录）。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;不妨先看看 &lt;code&gt;src/main.cpp&lt;/code&gt;&lt;/strong&gt;。这个例子来自 Howard Wu 的 &lt;a href=&#34;https://github.com/howardwu/libsnark-tutorial&#34;&gt;libsnark_tutorial&lt;/a&gt;，他也是 libsnark 作者之一哦。本文 &lt;code&gt;libsnark_abc&lt;/code&gt; 的项目结构就是依照他的 &lt;code&gt;libsnark_tutorial&lt;/code&gt; 搭建，属于“官方推荐风格” ，请放心食用 😆。&lt;/p&gt;
 &lt;p&gt;只有区区几十行代码，其中 &lt;code&gt;run_r1cs_gg_ppzksnark()&lt;/code&gt; 是主要部分。很容易发现，真正起作用的实质代码只有下面 5 行。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-12-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-12-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-12-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-12-2&#34;&gt;2&lt;/a&gt;
@@ -2311,13 +2388,19 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; ans &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; r1cs_gg_ppzksnark_verifier_strong_IC&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;ppT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(keypair.vk, example.primary_input, proof);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; ans2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; r1cs_gg_ppzksnark_online_verifier_strong_IC&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;ppT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(pvk, example.primary_input, proof);
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; ans2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; r1cs_gg_ppzksnark_online_verifier_strong_IC&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;ppT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(pvk, example.primary_input, proof);&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;仅从“超长”的函数名就能看出来每步是在做什么，但是却看不到如何构造电路的细节。实际上这里仅仅是调用了自带的 &lt;code&gt;r1cs_example&lt;/code&gt;，隐去了实现细节。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;仅从“超长”的函数名就能看出来每步是在做什么，但是却看不到如何构造电路的细节。实际上这里仅仅是调用了自带的 &lt;code&gt;r1cs_example&lt;/code&gt;，隐去了实现细节。&lt;/p&gt;
 &lt;p&gt;既然如此，&lt;strong&gt;那让我们通过一个更直观的例子来学习电路细节&lt;/strong&gt;。研究 &lt;code&gt;src/test.cpp&lt;/code&gt;，这个例子改编自 Christian Lundkvist 的 &lt;a href=&#34;https://github.com/christianlundkvist/libsnark-tutorial&#34;&gt;libsnark-tutorial&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;代码开头仅引用了三个头文件，分别是：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-13-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-13-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-13-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-13-2&#34;&gt;2&lt;/a&gt;
@@ -2326,25 +2409,37 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;libsnark/gadgetlib1/pb_variable.hpp&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;libsnark/gadgetlib1/pb_variable.hpp&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;前面提到 &lt;code&gt;r1cs_gg_ppzksnark&lt;/code&gt; 对应的是 Groth16 方案。这里加了 &lt;code&gt;gg&lt;/code&gt; 是为了区别 &lt;code&gt;r1cs_ppzksnark&lt;/code&gt;（也就是 BCTV14a 方案），表示 Generic Group Model（通用群模型）。Groth16 安全性证明依赖 Generic Group Model，以更强的安全假设换得了更好的性能和更短的证明。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;前面提到 &lt;code&gt;r1cs_gg_ppzksnark&lt;/code&gt; 对应的是 Groth16 方案。这里加了 &lt;code&gt;gg&lt;/code&gt; 是为了区别 &lt;code&gt;r1cs_ppzksnark&lt;/code&gt;（也就是 BCTV14a 方案），表示 Generic Group Model（通用群模型）。Groth16 安全性证明依赖 Generic Group Model，以更强的安全假设换得了更好的性能和更短的证明。&lt;/p&gt;
 &lt;p&gt;第一个头文件是为了引入 &lt;code&gt;default_r1cs_gg_ppzksnark_pp&lt;/code&gt; 类型，第二个则为了引入证明相关的各个接口。&lt;code&gt;pb_variable&lt;/code&gt; 则是用来定义电路相关的变量。&lt;/p&gt;
 &lt;p&gt;下面需要进行一些初始化，定义使用的有限域，并初始化曲线参数。这是相当于每次的准备工作。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-14-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-14-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-14-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-14-2&#34;&gt;2&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;typedef&lt;/span&gt; libff&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;Fr&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;default_r1cs_gg_ppzksnark_pp&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; FieldT;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;default_r1cs_gg_ppzksnark_pp&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;init_public_params();
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;default_r1cs_gg_ppzksnark_pp&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;init_public_params();&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;接下来就需要明确「待证命题」是什么。这里不妨沿用之前的例子，证明秘密 &lt;code&gt;x&lt;/code&gt; 满足等式 &lt;code&gt;x^3 + x + 5 == out&lt;/code&gt;。这实际也是 Vitalik 博文 &lt;a href=&#34;https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649&#34;&gt;&amp;ldquo;Quadratic Arithmetic Programs: from Zero to Hero&amp;rdquo;&lt;/a&gt; 中用的例子。如果对下面的变化陌生，可尝试阅读该博文。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;接下来就需要明确「待证命题」是什么。这里不妨沿用之前的例子，证明秘密 &lt;code&gt;x&lt;/code&gt; 满足等式 &lt;code&gt;x^3 + x + 5 == out&lt;/code&gt;。这实际也是 Vitalik 博文 &lt;a href=&#34;https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649&#34;&gt;&amp;ldquo;Quadratic Arithmetic Programs: from Zero to Hero&amp;rdquo;&lt;/a&gt; 中用的例子。如果对下面的变化陌生，可尝试阅读该博文。&lt;/p&gt;
 &lt;p&gt;通过引入中间变量 &lt;code&gt;sym_1&lt;/code&gt;、&lt;code&gt;y&lt;/code&gt;、&lt;code&gt;sym_2&lt;/code&gt; 将 &lt;code&gt;x^3 + x + 5 = out&lt;/code&gt; 扁平化为若干个二次方程式，几个只涉及简单乘法或加法的式子，&lt;strong&gt;对应到算术电路中就是乘法门和加法门&lt;/strong&gt;。你可以很容易地在纸上画出对应的电路。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-15-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-15-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-15-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-15-2&#34;&gt;2&lt;/a&gt;
@@ -2355,12 +2450,18 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x * x = sym_1
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sym_1 * x = y
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;y + x = sym_2
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sym_2 + 5 = out
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sym_2 + 5 = out&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;通常文章到这里便会顺着介绍如何按照 R1CS 的形式编排上面的几个等式，并一步步推导出具体对应的向量。这对理解如何把 Gate 转换为 R1CS 有帮助，然而却不是本文的核心目的。所以此处省略一百字。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;通常文章到这里便会顺着介绍如何按照 R1CS 的形式编排上面的几个等式，并一步步推导出具体对应的向量。这对理解如何把 Gate 转换为 R1CS 有帮助，然而却不是本文的核心目的。所以此处省略一百字。&lt;/p&gt;
 &lt;p&gt;下面定义与命题相关的变量。首先创建的 &lt;code&gt;protoboard&lt;/code&gt; 是 libsnark 中的一个重要概念，顾名思义就是&lt;strong&gt;原型板&lt;/strong&gt;或者&lt;strong&gt;面包板&lt;/strong&gt;，用来快速搭建电路，在 zk-SNARKs 电路中则是用来关联所有变量、组件和约束。接下来的代码定义了所有需要外部输入的变量以及中间变量。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-16-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-16-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-16-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-16-2&#34;&gt;2&lt;/a&gt;
@@ -2381,11 +2482,17 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb_variable&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; sym_1;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb_variable&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; y;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb_variable&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; sym_2;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb_variable&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; out;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb_variable&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; out;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;下面将各个变量与 &lt;code&gt;protoboard&lt;/code&gt; 连接，相当于把各个元器件插到“面包板”上。&lt;code&gt;allocate()&lt;/code&gt; 函数的第二个 string 类型变量仅是用来方便 DEBUG 时的注释，方便 DEBUG 时查看日志。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;下面将各个变量与 &lt;code&gt;protoboard&lt;/code&gt; 连接，相当于把各个元器件插到“面包板”上。&lt;code&gt;allocate()&lt;/code&gt; 函数的第二个 string 类型变量仅是用来方便 DEBUG 时的注释，方便 DEBUG 时查看日志。&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-17-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-17-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-17-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-17-2&#34;&gt;2&lt;/a&gt;
@@ -2400,12 +2507,18 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sym_1.allocate(pb, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;sym_1&amp;#34;&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;y.allocate(pb, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;y&amp;#34;&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sym_2.allocate(pb, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;sym_2&amp;#34;&lt;/span&gt;);
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb.set_input_sizes(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;);
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb.set_input_sizes(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;);&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;注意，&lt;strong&gt;此处第一个与 &lt;code&gt;pb&lt;/code&gt; 连接的是 &lt;code&gt;out&lt;/code&gt; 变量&lt;/strong&gt;。我们知道 zk-SNARKs 中有 public input 和 private witness 的概念，分别对应 libsnark 中的 primary 和 auxiliary 变量。那么如何在代码中进行区分呢？我们需要借助 &lt;code&gt;set_input_sizes(n)&lt;/code&gt; 来声明与 protoboard 连接的 public/primary 变量的个数 &lt;code&gt;n&lt;/code&gt;。在这里 &lt;code&gt;n = 1&lt;/code&gt;，表明与 &lt;code&gt;pb&lt;/code&gt; 连接的&lt;strong&gt;前 &lt;code&gt;n = 1&lt;/code&gt; 个变量&lt;/strong&gt;是 public 的，其余都是 private 的。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;注意，&lt;strong&gt;此处第一个与 &lt;code&gt;pb&lt;/code&gt; 连接的是 &lt;code&gt;out&lt;/code&gt; 变量&lt;/strong&gt;。我们知道 zk-SNARKs 中有 public input 和 private witness 的概念，分别对应 libsnark 中的 primary 和 auxiliary 变量。那么如何在代码中进行区分呢？我们需要借助 &lt;code&gt;set_input_sizes(n)&lt;/code&gt; 来声明与 protoboard 连接的 public/primary 变量的个数 &lt;code&gt;n&lt;/code&gt;。在这里 &lt;code&gt;n = 1&lt;/code&gt;，表明与 &lt;code&gt;pb&lt;/code&gt; 连接的&lt;strong&gt;前 &lt;code&gt;n = 1&lt;/code&gt; 个变量&lt;/strong&gt;是 public 的，其余都是 private 的。&lt;/p&gt;
 &lt;p&gt;至此， 所有变量都已经顺利与 protoboard 相连，下面需要确定的是这些变量间的约束关系。这个也很好理解，类似元器件插至面包板后，需要根据电路需求确定他们之间的关系再连线焊接。如下调用 protoboard 的 &lt;code&gt;add_r1cs_constraint()&lt;/code&gt; 函数，为 &lt;code&gt;pb&lt;/code&gt; 添加形如 &lt;code&gt;a * b = c&lt;/code&gt; 的 &lt;code&gt;r1cs_constraint&lt;/code&gt;。即 &lt;code&gt;r1cs_constraint&amp;lt;FieldT&amp;gt;(a, b, c)&lt;/code&gt; 中参数应该满足 &lt;code&gt;a * b = c&lt;/code&gt;。根据注释不难理解每个等式和约束之间的关系。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-18-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-18-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-18-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-18-2&#34;&gt;2&lt;/a&gt;
@@ -2424,22 +2537,34 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// y + x = sym_2
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;pb.add_r1cs_constraint(r1cs_constraint&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(y &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; x, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, sym_2));
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// sym_2 + 5 = ~out
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;pb.add_r1cs_constraint(r1cs_constraint&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(sym_2 &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, out));
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;pb.add_r1cs_constraint(r1cs_constraint&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(sym_2 &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, out));&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;至此，变量间的约束也已添加完成，针对命题的电路已构建完毕。下面进入前文提到的“四个步骤”中的&lt;strong&gt;第二步&lt;/strong&gt;：使用生成算法（&lt;em&gt;&lt;strong&gt;G&lt;/strong&gt;&lt;/em&gt;）为该命题生成公共参数（&lt;code&gt;pk&lt;/code&gt; 和 &lt;code&gt;vk&lt;/code&gt;），即 trusted setup。生成出来的 proving key 和 verification key 分别可以通过 &lt;code&gt;keypair.pk&lt;/code&gt; 和 &lt;code&gt;keypair.vk&lt;/code&gt; 获得。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;至此，变量间的约束也已添加完成，针对命题的电路已构建完毕。下面进入前文提到的“四个步骤”中的&lt;strong&gt;第二步&lt;/strong&gt;：使用生成算法（&lt;em&gt;&lt;strong&gt;G&lt;/strong&gt;&lt;/em&gt;）为该命题生成公共参数（&lt;code&gt;pk&lt;/code&gt; 和 &lt;code&gt;vk&lt;/code&gt;），即 trusted setup。生成出来的 proving key 和 verification key 分别可以通过 &lt;code&gt;keypair.pk&lt;/code&gt; 和 &lt;code&gt;keypair.vk&lt;/code&gt; 获得。&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-19-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-19-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-19-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-19-2&#34;&gt;2&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; r1cs_constraint_system&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; constraint_system &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get_constraint_system();
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; r1cs_gg_ppzksnark_keypair&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;default_r1cs_gg_ppzksnark_pp&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; keypair &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; r1cs_gg_ppzksnark_generator&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;default_r1cs_gg_ppzksnark_pp&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(constraint_system);
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; r1cs_gg_ppzksnark_keypair&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;default_r1cs_gg_ppzksnark_pp&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; keypair &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; r1cs_gg_ppzksnark_generator&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;default_r1cs_gg_ppzksnark_pp&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(constraint_system);&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;进入&lt;strong&gt;第三步&lt;/strong&gt;，生成证明。先为 public input 以及 witness 提供具体数值。不难发现，&lt;code&gt;x = 3, out = 35&lt;/code&gt; 是原始方程的一个解。则依次为 &lt;code&gt;x&lt;/code&gt;、&lt;code&gt;out&lt;/code&gt; 以及各个中间变量赋值。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;进入&lt;strong&gt;第三步&lt;/strong&gt;，生成证明。先为 public input 以及 witness 提供具体数值。不难发现，&lt;code&gt;x = 3, out = 35&lt;/code&gt; 是原始方程的一个解。则依次为 &lt;code&gt;x&lt;/code&gt;、&lt;code&gt;out&lt;/code&gt; 以及各个中间变量赋值。&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-20-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-20-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-20-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-20-2&#34;&gt;2&lt;/a&gt;
@@ -2454,28 +2579,41 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb.val(x) = 3;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb.val(sym_1) = 9;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb.val(y) = 27;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb.val(sym_2) = 30;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb.val(sym_2) = 30;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;再把 public input 以及 witness 的数值传给 prover 函数进行证明，可分别通过 &lt;code&gt;pb.primary_input()&lt;/code&gt; 和 &lt;code&gt;pb.auxiliary_input()&lt;/code&gt; 访问。生成的证明用 &lt;code&gt;proof&lt;/code&gt; 变量保存。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;再把 public input 以及 witness 的数值传给 prover 函数进行证明，可分别通过 &lt;code&gt;pb.primary_input()&lt;/code&gt; 和 &lt;code&gt;pb.auxiliary_input()&lt;/code&gt; 访问。生成的证明用 &lt;code&gt;proof&lt;/code&gt; 变量保存。&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-21-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-21-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; r1cs_gg_ppzksnark_proof&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;default_r1cs_gg_ppzksnark_pp&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; proof &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; r1cs_gg_ppzksnark_prover&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;default_r1cs_gg_ppzksnark_pp&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(keypair&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;pk, pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;primary_input(), pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;auxiliary_input());
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; r1cs_gg_ppzksnark_proof&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;default_r1cs_gg_ppzksnark_pp&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; proof &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; r1cs_gg_ppzksnark_prover&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;default_r1cs_gg_ppzksnark_pp&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(keypair&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;pk, pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;primary_input(), pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;auxiliary_input());&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;最后我们使用 verifier 函数校验证明。如果 &lt;code&gt;verified = true&lt;/code&gt; 则说明证明验证成功。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;最后我们使用 verifier 函数校验证明。如果 &lt;code&gt;verified = true&lt;/code&gt; 则说明证明验证成功。&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-22-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-22-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&amp;lt;default_r1cs_gg_ppzksnark_pp&amp;gt;(keypair.vk, pb.primary_input(), proof);
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&amp;lt;default_r1cs_gg_ppzksnark_pp&amp;gt;(keypair.vk, pb.primary_input(), proof);&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;从日志输出中可以看出验证结果为 &lt;code&gt;true&lt;/code&gt;，R1CS 约束数量为 4，public input 和 private input 数量分别为 1 和 4。日志输出符合预期。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;从日志输出中可以看出验证结果为 &lt;code&gt;true&lt;/code&gt;，R1CS 约束数量为 4，public input 和 private input 数量分别为 1 和 4。日志输出符合预期。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;img/test-output.png&#34; alt=&#34;test_output&#34;&gt;&lt;/p&gt;
 &lt;p&gt;实际应用中，trusted setup、prove、verify 会由不同角色分别开展，最终实现的效果就是 &lt;code&gt;prover&lt;/code&gt; 给 &lt;code&gt;verifier&lt;/code&gt; 一段简短的 &lt;code&gt;proof&lt;/code&gt; 和 &lt;code&gt;public input&lt;/code&gt;，&lt;code&gt;verifier&lt;/code&gt; 可以自行校验某命题是否成立。对于前面的例子，就是能在不知道方程的解 &lt;code&gt;x&lt;/code&gt; 具体是多少的情况下，验证 &lt;code&gt;prover&lt;/code&gt; 知道一个秘密的 &lt;code&gt;x&lt;/code&gt; 可以使得 &lt;code&gt;x^3 + x + 5 = out&lt;/code&gt; 成立。&lt;/p&gt;
 &lt;p&gt;通过短短的几十行代码，你就可以很轻易地操控学术界 zk-SNARKs 最新研究成果。&lt;/p&gt;
@@ -2486,7 +2624,12 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;p&gt;zk-SNARKs 电路开发的主要工作量和难点在于如何用代码“精确”地描述命题中的所有约束。一旦描述不“精确”，则要么是漏掉约束、要么是写错约束，最终电路想要证明的内容则会与原命题相差甚远。上一节的例子只涉及简单的乘法和加法，与 &lt;code&gt;r1cs_constraint&lt;/code&gt; 最基本的形式一致，因此约束的表达相对容易。除此之外几乎所有的约束都不是很直观，作为初学者很难正确地描述约束细节。&lt;/p&gt;
 &lt;p&gt;幸好 libsnark 已经为我们实现了大量基础电路小组件。&lt;code&gt;gadgetlib1&lt;/code&gt; 和 &lt;code&gt;gadgetlib2&lt;/code&gt; 下提供了许多可以直接使用的 gadget。其中 &lt;code&gt;gadgetlib1&lt;/code&gt; 更常用一些，里面收集了包括 &lt;code&gt;sha256&lt;/code&gt; 在内的 hash 计算、merkle tree、pairing 等电路实现。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;DangDangDang&lt;/em&gt;，&lt;code&gt;gadgetlib1/gadgets/basic_gadgets.hpp&lt;/code&gt; 中的 &lt;code&gt;comparison_gadget&lt;/code&gt; 正是我们所需。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-23-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-23-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-23-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-23-2&#34;&gt;2&lt;/a&gt;
@@ -2503,12 +2646,18 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; pb_linear_combination&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;B,
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; pb_variable&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;less,
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; pb_variable&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;less_or_eq,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; std::string &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;annotation_prefix&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; std::string &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;annotation_prefix&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;该 gadget 需要传入的参数较多：&lt;code&gt;n&lt;/code&gt; 表示位数，&lt;code&gt;A&lt;/code&gt; 和 &lt;code&gt;B&lt;/code&gt; 分别为需要比较的两个数，&lt;code&gt;less&lt;/code&gt; 和 &lt;code&gt;less_or_eq&lt;/code&gt; 用来标记两个数的关系是「小于」还是「小于或等于」。该 gadget 实现的原理简单来讲是把 &lt;code&gt;A&lt;/code&gt; 和 &lt;code&gt;B&lt;/code&gt; 的比较，转化为 &lt;code&gt;2^n + B - A&lt;/code&gt; 按位表示。具体实现还用到了其余多个基础 gadget，可以通过 &lt;code&gt;comparison_gadget&amp;lt;FieldT&amp;gt;::generate_r1cs_constraints()&lt;/code&gt; 研究。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;该 gadget 需要传入的参数较多：&lt;code&gt;n&lt;/code&gt; 表示位数，&lt;code&gt;A&lt;/code&gt; 和 &lt;code&gt;B&lt;/code&gt; 分别为需要比较的两个数，&lt;code&gt;less&lt;/code&gt; 和 &lt;code&gt;less_or_eq&lt;/code&gt; 用来标记两个数的关系是「小于」还是「小于或等于」。该 gadget 实现的原理简单来讲是把 &lt;code&gt;A&lt;/code&gt; 和 &lt;code&gt;B&lt;/code&gt; 的比较，转化为 &lt;code&gt;2^n + B - A&lt;/code&gt; 按位表示。具体实现还用到了其余多个基础 gadget，可以通过 &lt;code&gt;comparison_gadget&amp;lt;FieldT&amp;gt;::generate_r1cs_constraints()&lt;/code&gt; 研究。&lt;/p&gt;
 &lt;p&gt;这里需要创建以下变量，并将 &lt;code&gt;x&lt;/code&gt; 和 &lt;code&gt;max&lt;/code&gt; 与 &lt;code&gt;pb&lt;/code&gt; 相连，把 &lt;code&gt;max&lt;/code&gt; 值设为 &lt;code&gt;60&lt;/code&gt;，代表数值上限。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-24-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-24-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-24-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-24-2&#34;&gt;2&lt;/a&gt;
@@ -2529,11 +2678,17 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;allocate(pb, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;x&amp;#34;&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;max&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;allocate(pb, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;max&amp;#34;&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;val(max)&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;60&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;val(max)&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;60&lt;/span&gt;;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;使用 &lt;code&gt;comparison_gadget&lt;/code&gt; 创建 &lt;code&gt;cmp&lt;/code&gt;，并把前面的参数填入，并调用 gadget 自带的 &lt;code&gt;generate_r1cs_constraints()&lt;/code&gt; 方法。同时另外添加一个约束，要求 &lt;code&gt;less * 1 = 1&lt;/code&gt;，也就是 &lt;code&gt;less&lt;/code&gt; 必须为 &lt;code&gt;true&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;使用 &lt;code&gt;comparison_gadget&lt;/code&gt; 创建 &lt;code&gt;cmp&lt;/code&gt;，并把前面的参数填入，并调用 gadget 自带的 &lt;code&gt;generate_r1cs_constraints()&lt;/code&gt; 方法。同时另外添加一个约束，要求 &lt;code&gt;less * 1 = 1&lt;/code&gt;，也就是 &lt;code&gt;less&lt;/code&gt; 必须为 &lt;code&gt;true&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-25-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-25-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-25-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-25-2&#34;&gt;2&lt;/a&gt;
@@ -2542,11 +2697,17 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;comparison_gadget&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; cmp(pb, &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;, x, max, less, less_or_eq, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;cmp&amp;#34;&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmp&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;generate_r1cs_constraints();
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;add_r1cs_constraint(r1cs_constraint&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(less, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, FieldT::one()));
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;add_r1cs_constraint(r1cs_constraint&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;FieldT&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(less, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, FieldT::one()));&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;输入 witness（秘密值 x），比如让 &lt;code&gt;x = 18&lt;/code&gt;。这里还需要调用 &lt;code&gt;comparison_gadget&lt;/code&gt; 的 &lt;code&gt;generate_r1cs_witness&lt;/code&gt; 方法。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;输入 witness（秘密值 x），比如让 &lt;code&gt;x = 18&lt;/code&gt;。这里还需要调用 &lt;code&gt;comparison_gadget&lt;/code&gt; 的 &lt;code&gt;generate_r1cs_witness&lt;/code&gt; 方法。&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-26-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-26-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-26-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-26-2&#34;&gt;2&lt;/a&gt;
@@ -2555,10 +2716,11 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;// Add witness values
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pb.val(x) = 18; // secret
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmp.generate_r1cs_witness();
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmp.generate_r1cs_witness();&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;其余部分和上一个例子一致，即可在不泄露秘密数字大小的前提下，证明某数字小于 &lt;code&gt;60&lt;/code&gt;。同理，就实现一个对数值作最大和最小值限定的 “range proof”。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;其余部分和上一个例子一致，即可在不泄露秘密数字大小的前提下，证明某数字小于 &lt;code&gt;60&lt;/code&gt;。同理，就实现一个对数值作最大和最小值限定的 “range proof”。&lt;/p&gt;
 &lt;p&gt;在强大基础库的帮助下，我们又用更短的代码实现了证明需求。&lt;/p&gt;
 &lt;h2 id=&#34;6-whats-next&#34;&gt;6. What&amp;rsquo;s NEXT?&lt;/h2&gt;
 &lt;p&gt;读到这里，相信大家都对 libsnark 的使用方法和 zk-SNARKs 电路开发有了一个初步的了解。&lt;/p&gt;
@@ -2571,7 +2733,12 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;h2 id=&#34;7-附录&#34;&gt;7. 附录&lt;/h2&gt;
 &lt;h3 id=&#34;maincpp&#34;&gt;&lt;code&gt;main.cpp&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;第一个例子 &lt;code&gt;main.cpp&lt;/code&gt;，调用 libsnark 官方 example 的示例代码。通过该例子可了解 libsnark 的基本使用流程和主要函数。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-27-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-27-1&#34;&gt; 1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-27-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-27-2&#34;&gt; 2&lt;/a&gt;
@@ -2692,12 +2859,18 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    test_r1cs_gg_ppzksnark&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;default_r1cs_gg_ppzksnark_pp&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1000&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;testcpp&#34;&gt;&lt;code&gt;test.cpp&lt;/code&gt;&lt;/h3&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;testcpp&#34;&gt;&lt;code&gt;test.cpp&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;第二个例子 &lt;code&gt;test.cpp&lt;/code&gt;。这个例子具体展示了如何利用 libsnark 构建一个最简单的电路。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-28-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-28-1&#34;&gt; 1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-28-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-28-2&#34;&gt; 2&lt;/a&gt;
@@ -2848,12 +3021,18 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Primary (public) input: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; pb.primary_input() &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Auxiliary (private) input: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; pb.auxiliary_input() &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Verification status: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; verified &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;rangecpp&#34;&gt;&lt;code&gt;range.cpp&lt;/code&gt;&lt;/h3&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;rangecpp&#34;&gt;&lt;code&gt;range.cpp&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;第三个例子 &lt;code&gt;range.cpp&lt;/code&gt;。该例子利用了 libsnark 自带的 &lt;code&gt;comparison_gadget&lt;/code&gt; 来实现取值范围证明。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-29-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-29-1&#34;&gt; 1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-29-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-29-2&#34;&gt; 2&lt;/a&gt;
@@ -2954,10 +3133,11 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Primary (public) input: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; pb.primary_input() &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Auxiliary (private) input: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; pb.auxiliary_input() &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Verification status: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; verified &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description>
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
       
     </item>
     
@@ -3599,10 +3779,9 @@ url: https://z.cash/blog/the-design-of-the-ceremony/&lt;/p&gt;
 &lt;p&gt;我们的讨论从证明多项式的知识开始，再将证明协议逐步转换成一种通用的方法，在这个过程中我们也将发现多项式的很多其它性质。&lt;/p&gt;
 &lt;p&gt;但是到目前为止，我们的协议还只是一个很弱的证明，因为协议中并没有采取任何措施去保证参与方必须按照协议的规则生成证明，所以参与方只能互相信任。例如，prover 并不需要知道多项式，也可能通过其它方式得到正确的答案。而且，如果 verifier 要验证的多项式的解的取值范围不够大，比如我们前文说的 10，那个就可以去猜一个数字，猜对答案的概率是不可忽略不计的。因而我们必须要解决协议中的这个缺陷，在解决问题之前首先来想一下，&lt;strong&gt;知道多项式意味着什么呢？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;多项式可以用下面的形式来表示（其中 &lt;em&gt;n&lt;/em&gt; 指的是多项式的阶）：&lt;/p&gt;
-&lt;p&gt;$$
+$$
 c_{n} x^{n}+\ldots \ldots+c_{1} x^{1}+c_{0} x^{0}
-$$&lt;/p&gt;
-&lt;p&gt;如果一个人说他或她知道一个一阶多项式（即：$c_{1} x^{1} + c_{0} = 0$），那么这就意味着他或她确实&lt;em&gt;知道&lt;/em&gt; 系数 $c_{0}$, $c_{1}$ 的值。这个系数可以是包括 0 在内的任意值。&lt;/p&gt;
+$$&lt;p&gt;如果一个人说他或她知道一个一阶多项式（即：$c_{1} x^{1} + c_{0} = 0$），那么这就意味着他或她确实&lt;em&gt;知道&lt;/em&gt; 系数 $c_{0}$, $c_{1}$ 的值。这个系数可以是包括 0 在内的任意值。&lt;/p&gt;
 &lt;p&gt;假设证明者声称他知道一个包含 &lt;em&gt;x=1&lt;/em&gt; 和 &lt;em&gt;x=2&lt;/em&gt; 两个解的三阶多项式。满足此条件的一个有效的多项式就是 &lt;em&gt;x3 – 3x2+ 2x= 0&lt;/em&gt;。因为&lt;em&gt;x= 1: 1 – 3 + 2 = 0&lt;/em&gt;，&lt;em&gt;x= 2: 8 – 12 + 4 = 0&lt;/em&gt;。&lt;/p&gt;
 &lt;p&gt;我们先来仔细得研究一下这个答案的结构。&lt;/p&gt;
 &lt;blockquote&gt;
@@ -3729,8 +3908,7 @@ $$&lt;/p&gt;
 &lt;h3 id=&#34;加密多项式&#34;&gt;加密多项式&lt;/h3&gt;
 &lt;p&gt;配合这些工具，我们现在就可以在加密的随机数 &lt;em&gt;x&lt;/em&gt; 上做运算并相应地修改&lt;em&gt;零知识&lt;/em&gt; 协议了。&lt;/p&gt;
 &lt;p&gt;我们来看一下如何计算多项式 &lt;em&gt;p(x) = x³ – 3x² + 2x&lt;/em&gt;。我们前面明确了，知道一个多项式就是知道它的系数，也就是这个例子中知道：1，-3，2。因为同态加密并不允许再对加密值求幂，所以我们必须要给出 &lt;em&gt;x&lt;/em&gt; 的 1 到 3 次幂取加密值：&lt;em&gt;E&lt;/em&gt;(&lt;em&gt;x&lt;/em&gt;)&lt;em&gt;，E&lt;/em&gt;(&lt;em&gt;x&lt;/em&gt;²)&lt;em&gt;，E&lt;/em&gt;(&lt;em&gt;x&lt;/em&gt;³)，那么我们要计算的加密多项式就是：&lt;/p&gt;
-&lt;p&gt;$$E(x^{3})^{1} · E(x^{2})^{-3} · E(x)^{2} = (g^{x^{3}})^{1} · (g^{x^{2}})^{-3} · (g^x)^2 =  g^{1x^3} · g^{-3x^2} · g^{2x} = g^{x^3-3x^2+2x} $$&lt;/p&gt;
-&lt;p&gt;所以通过这些运算，我们就获得了多项式在一些未知数 &lt;em&gt;x&lt;/em&gt; 处的加密计算结果。这确实是一个很强大的机制，因为同态的性质，同一个多项式的加密运算在加密空间中始终是相同的。&lt;/p&gt;
+$$E(x^{3})^{1} · E(x^{2})^{-3} · E(x)^{2} = (g^{x^{3}})^{1} · (g^{x^{2}})^{-3} · (g^x)^2 =  g^{1x^3} · g^{-3x^2} · g^{2x} = g^{x^3-3x^2+2x} $$&lt;p&gt;所以通过这些运算，我们就获得了多项式在一些未知数 &lt;em&gt;x&lt;/em&gt; 处的加密计算结果。这确实是一个很强大的机制，因为同态的性质，同一个多项式的加密运算在加密空间中始终是相同的。&lt;/p&gt;
 &lt;p&gt;我们现在就可以更新前面版本的协议了，比如对于阶数为 &lt;em&gt;d&lt;/em&gt; 的多项式：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -3763,7 +3941,7 @@ $$&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;ul&gt;
-&lt;li&gt;最后一步是 verifier 去校验 $p = t(s) ·h$: $ g^{p} = (g^{h})^{t(s)} =&amp;gt; g^{p} = g^{t(s)·h} $&lt;/li&gt;
+&lt;li&gt;最后一步是 verifier 去校验 $p = t(s) ·h$: $ g^{p} = (g^{h})^{t(s)} =&gt; g^{p} = g^{t(s)·h} $&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -3875,7 +4053,7 @@ $$&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;Tornado Mixer 由 Peppersec 团队开发，同样基于零知识证明，利用 zk-SNARKs 技术，在主网和 Kovan 测试网均已部署。Peppersec 本身为一个安全咨询公司，该项目由团队独立开发，之后又受到 MolochDAO 👹的两笔资助。当前支持的金额为 0.1 ETH，后期会开放更大的金额。Tornado 团队开发相当活跃，最近还完成了电路代码和智能合约的第三方安全审计。这可能是第一个完成完整外部安全审计的 Mixer 项目。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;img/tornado.png&#34; alt=&#34;tornado&#34;&gt;&lt;/p&gt;
-&lt;p&gt;值得一提的是，Tornado 团队在开发 Mixer 过程中，还发现了影响很多零知识证明项目（包括很多 Mixer）的“双花漏洞”。具体讨论可以参考安比实验室此前的分析文章👇。&lt;/p&gt;
+&lt;p&gt;值得一提的是，Tornado 团队在开发 Mixer 过程中，还发现了影响很多零知识证明项目（包括很多 Mixer）的“双花漏洞”。具体讨论可以参考安比实验室此前的分析文章👇。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/&#34;&gt;https://sec-bit.github.io/blog/2019/07/29/the-input-aliasing-bug-caused-by-a-contract-library-of-zksnarks/&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;Heiswap (黑 swap) 由 Kendrick Tan 开发，是四个中唯一基于环签名和隐身地址技术的 Mixer，而这两个技术是 CryptoNote 协议的关键部分，也是 Monero 能够实现匿名的重要原因。Kendrick Tan 认为，从成熟的技术和产品中借鉴而不是非要使用最新的技术（比如 zk-SNARKs），有时候反而能够事半功倍。Heiswap 目前在 Ropsten 测试网上线，支持的可选金额最高到 64 ETH。&lt;/p&gt;
@@ -4554,15 +4732,21 @@ $$&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;img/schnorr.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;我们来看，如何把一个三步的 Schnorr 协议变成一步。&lt;/p&gt;
 &lt;p&gt;看一下 Schnorr 协议的第二步，Bob 需要给出一个随机的挑战数 &lt;code&gt;c&lt;/code&gt;，这里我们可以让 Alice 用下面这个式子来计算这个挑战数，从而达到去除协议第二步的目的。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;c = Hash(PK, R)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;c = Hash(PK, R)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;其中 &lt;code&gt;R&lt;/code&gt; 是 Alice 发给 Bob 的椭圆曲线点，&lt;code&gt;PK&lt;/code&gt; 是公钥。大家可以好好看看这个利用 Hash 算法计算 &lt;code&gt;c&lt;/code&gt; 的式子。这个式子达到了两个目的：&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;其中 &lt;code&gt;R&lt;/code&gt; 是 Alice 发给 Bob 的椭圆曲线点，&lt;code&gt;PK&lt;/code&gt; 是公钥。大家可以好好看看这个利用 Hash 算法计算 &lt;code&gt;c&lt;/code&gt; 的式子。这个式子达到了两个目的：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Alice 在产生承诺 &lt;code&gt;R&lt;/code&gt; 之前，没有办法预测 &lt;code&gt;c&lt;/code&gt;，即使 &lt;code&gt;c&lt;/code&gt; 最终变相是 Alice 挑选的&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;c&lt;/code&gt; 通过 Hash 函数计算，会均匀分布在一个整数域内，而且可以作为一个随机数（&lt;em&gt;注：请大家暂且这么理解，我们在后文再深入讨论&lt;/em&gt;）&lt;/li&gt;
@@ -4576,17 +4760,23 @@ $$&lt;/p&gt;
 &lt;p&gt;不严格地说，数字签名方案相当于在证明（1）我拥有私钥，并且（2）私钥和消息进行了关联计算。&lt;/p&gt;
 &lt;p&gt;我首先要证明我的身份，那么这个简单，这正是 Schnorr 协议的功能，能够向对方证明「我拥有私钥」这个陈述。并且这个证明过程是零知识的：不泄露关于「私钥」的任何知识。&lt;/p&gt;
 &lt;p&gt;那么如何和这句唐诗关联呢？我们修改下计算 &lt;code&gt;c&lt;/code&gt; 的过程：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-1-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-1-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-1-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-1-2&#34;&gt;2&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;m = &amp;#34;白日依山尽，黄河入海流&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;c = Hash(m, R)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;c = Hash(m, R)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;这里为了保证攻击者不能随意伪造签名，正是利用了离散对数难题（DLP）与 Hash 函数满足抗第二原象（Secondary Preimage Resistance ）这个假设。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这里为了保证攻击者不能随意伪造签名，正是利用了离散对数难题（DLP）与 Hash 函数满足抗第二原象（Secondary Preimage Resistance ）这个假设。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;注：这里严格点讲，为了保证数字签名的不可伪造性，需要证明 Schnorr 协议满足「Simulation Soundness」这个更强的性质。这点请参考文献[2]&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;img/schnorr-sig.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;上图就是大家所熟知的数字签名方案 —— Schnorr 签名方案[1]。在这里还有一个优化，Alice 发给 Bob 的内容不是 &lt;code&gt;(R, z)&lt;/code&gt; 而是 &lt;code&gt;(c, z)&lt;/code&gt;，这是因为 &lt;code&gt;R&lt;/code&gt; 可以通过 &lt;code&gt;c&lt;/code&gt;, &lt;code&gt;z&lt;/code&gt; 计算出来。&lt;/p&gt;
@@ -4653,15 +4843,21 @@ $$&lt;/p&gt;
 &lt;p&gt;通过绑架「精灵」，Zlice 同样可以提前预知随机数，这和时间倒流能达到同样的效果。&lt;/p&gt;
 &lt;p&gt;我们已经证明了模拟器 Zlice 的「存在性」，于是我们上面已经证明了 NIZK。&lt;/p&gt;
 &lt;p&gt;接下来我们证明这个这个协议的「可靠性」。设想在另一个「理想世界」中，一个叫做「抽取器」的玩意儿，也同样绑架了精灵。当无辜 Alice 的向「精灵」索要一个随机数时，「精灵」返回了一个 &lt;code&gt;c1&lt;/code&gt;，「抽取器」从精灵的表格中偷窥到了&lt;code&gt;c1&lt;/code&gt;，当 Alice 计算出来 &lt;code&gt;z1&lt;/code&gt; 之后，然后这时候「抽取器」仍然可以发动「时间倒流」超能力，让 Alice 倒退到第二步，再次向「精灵」要一个随机数，Alice 发送的字符串显然和第一次发送的字符串是相同的，&lt;code&gt;(R, m)&lt;/code&gt;。按道理，因为 &lt;code&gt;(R, m)&lt;/code&gt; 已经写在精灵表格的「左栏」里，所以一个诚实的「精灵」应该返回 &lt;code&gt;c1&lt;/code&gt;。但是，「抽取器」绑架了精灵，他把表格中对应 &lt;code&gt;(R, m)&lt;/code&gt; 这一行的「右栏」改成了一个不同的数 &lt;code&gt;c2&lt;/code&gt;。当 Alice 计算出另一个 &lt;code&gt;z2&lt;/code&gt; 之后，抽取器就完成了任务，通过下面的方程计算出 Alice 的私钥 &lt;code&gt;sk&lt;/code&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-2-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-2-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sk = (z1 - z2)/(c1 - c2)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sk = (z1 - z2)/(c1 - c2)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;fiat-shamir-变换--从-public-coin-到-nizk&#34;&gt;Fiat-Shamir 变换 —— 从 Public-Coin 到 NIZK&lt;/h2&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;fiat-shamir-变换--从-public-coin-到-nizk&#34;&gt;Fiat-Shamir 变换 —— 从 Public-Coin 到 NIZK&lt;/h2&gt;
 &lt;p&gt;不仅仅对于 Schnorr 协议，对于任意的 「Public-Coin 协议」，都可以用 Fiat-Shamir 变换来把整个协议「压缩」成一步交互，也就是一个非交互式的证明系统，这个变换技巧最早来自于 Amos Fiat 与 Adi Shamir 两人的论文『How to Prove Yourself: Practical Solutions to Identification and Signature Problems.』，发表在 1986 年的 Crypto 会议上[5]。也有一说，这个技巧来源于 Manuel Blum[6].&lt;/p&gt;
 &lt;p&gt;重复一遍，在 Public-coin 协议中，验证者 Bob 只做一类事情，就是产生一个随机数，然后挑战 Alice 。通过 Fiat-Shamir 变换，可以把 Bob 每一次的「挑战行为」用一次「随机预言」来代替。&lt;/p&gt;
 &lt;p&gt;而在具体实现中，随机预言需要用一个具有密码学安全强度的 Hash 函数（不能随便选，一定要采用密码学安全的 Hash），而 Hash 函数的参数应该是之前所有的上下文输入。下面是一个示例图，大家可以迅速理解这个 Fiat-Shamir 变换的做法。&lt;/p&gt;
@@ -4911,15 +5107,21 @@ $$&lt;/p&gt;
 &lt;p&gt;第一步：为了保证零知识，Alice 需要先产生一个随机数，&lt;code&gt;r&lt;/code&gt;，这个随机数的用途是用来保护私钥无法被 Bob 抽取出来。这个随机数也需要映射到椭圆曲线群上，&lt;code&gt;rG&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;第二步：Bob 要提供一个随机数进行挑战，我们把它称为 &lt;code&gt;c&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;第三步：Alice 根据挑战数计算 &lt;code&gt;z = r + a * c&lt;/code&gt;，同时把 &lt;code&gt;z&lt;/code&gt;发给 Bob，Bob通过下面的式子进行检验：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;z*G ?= R + c*PK = rG + c*(aG)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;z*G ?= R + c*PK = rG + c*(aG)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;大家可以看到 Bob  在第三步「同态地」检验 &lt;code&gt;z&lt;/code&gt; 的计算过程。如果这个式子成立，那么就能证明 Alice 确实有私钥 &lt;code&gt;a&lt;/code&gt;。可是，这是为什么呢？&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;大家可以看到 Bob  在第三步「同态地」检验 &lt;code&gt;z&lt;/code&gt; 的计算过程。如果这个式子成立，那么就能证明 Alice 确实有私钥 &lt;code&gt;a&lt;/code&gt;。可是，这是为什么呢？&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;z&lt;/code&gt; 的计算和验证过程很有趣，有几个关键技巧：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;首先 Bob 必须给出一个「随机」挑战数，然后 Bob 在椭圆曲线上同态地检查 &lt;code&gt;z&lt;/code&gt; 。如果我们把挑战数 &lt;code&gt;c&lt;/code&gt; 看成是一个未知数，那么 &lt;code&gt;r+a*c=z&lt;/code&gt; 可以看成是一个一元一次方程，其中 &lt;code&gt;r&lt;/code&gt; 与 &lt;code&gt;a&lt;/code&gt; 是方程系数。请注意在 &lt;code&gt;c&lt;/code&gt; 未知的前提下，如果 &lt;code&gt;r + a*x = r&#39; + a&#39;*x&lt;/code&gt; 要成立，那么根据 Schwatz-Zippel 定理[3]，极大概率上 &lt;code&gt;r=r&#39;&lt;/code&gt;，&lt;code&gt;a=a&#39;&lt;/code&gt; 都成立。也就是说， Alice 在 &lt;code&gt;c&lt;/code&gt; 未知的前提下，想找到另一对不同的 &lt;code&gt;r&#39;&lt;/code&gt;,&lt;code&gt;a&#39;&lt;/code&gt; 来计算 &lt;code&gt;z&lt;/code&gt; 骗过 Bob 是几乎不可能的。这个随机挑战数 &lt;code&gt;c&lt;/code&gt; 实现了&lt;code&gt;r&lt;/code&gt; 和 &lt;code&gt;a&lt;/code&gt; 的限制。虽然 Bob 随机选了一个数，但是由于 Alice 事先不知道，所以 Alice 不得不使用私钥 &lt;code&gt;a&lt;/code&gt; 来计算 &lt;code&gt;z&lt;/code&gt;。这里的关键： &lt;code&gt;c&lt;/code&gt; 必须是个随机数。&lt;/li&gt;
@@ -4995,31 +5197,43 @@ $$&lt;/p&gt;
 &lt;p&gt;江湖上流传着一个说法：ECDSA 签名方案有个严重的安全隐患，如果在两次签名中使用了同一个随机数，那么签名者的私钥将会暴露出来。其实 Schnorr 签名方案也有同样的问题。&lt;/p&gt;
 &lt;p&gt;当年 Sony  PlayStation 3 的工程师在调用 ECDSA 库函数时，本来应该输入随机数的参数位置上，却传入了一个常数。熟悉密码学的黑客们发现了这个严重的后门。2011年1月，神奇小子 Geohot 公开发布了 Sony PS3 的主私钥，这意味着任何用户都可以轻松拿到游戏机的 root 权限。Sony 随后大为光火…… （后续故事大家可以上网搜）&lt;/p&gt;
 &lt;p&gt;如果 Alice 在两次交互过程中使用了同一个 &lt;code&gt;K&lt;/code&gt;，那么 Bob 可以通过发送两个不同的 &lt;code&gt;c&lt;/code&gt; 和 &lt;code&gt;c&#39;&lt;/code&gt; 来得到 &lt;code&gt;s&lt;/code&gt; 和 &lt;code&gt;s&#39;&lt;/code&gt;，然后通过下面的公式算出私钥 &lt;code&gt;a&lt;/code&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-1-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-1-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-1-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-1-2&#34;&gt;2&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;k = (c - c&amp;#39;)/(s - s&amp;#39;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;a = (k * s - c)/e
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;a = (k * s - c)/e&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;那么我们应该怎么来看这个「安全后门」呢？大家想想看，这个安全后门和我们前面证明过的 Schnorr 协议的可靠性证明几乎一模一样！这个算法正是 ECDSA 认证协议的「可靠性」证明中的「抽取器」算法。只不过在可靠性证明中，为了让 Alice 使用同一个随机数 &lt;code&gt;k&lt;/code&gt; 来认证两次，「抽取器」需要利用「时间倒流」的超能力。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;那么我们应该怎么来看这个「安全后门」呢？大家想想看，这个安全后门和我们前面证明过的 Schnorr 协议的可靠性证明几乎一模一样！这个算法正是 ECDSA 认证协议的「可靠性」证明中的「抽取器」算法。只不过在可靠性证明中，为了让 Alice 使用同一个随机数 &lt;code&gt;k&lt;/code&gt; 来认证两次，「抽取器」需要利用「时间倒流」的超能力。&lt;/p&gt;
 &lt;p&gt;但是在 Sony PS3 系统中，随机数被不明所以的工程师写成了一个固定不变的值，这样相当于直接赋予了黑客「超能力」，而这是在「现实世界」中。或者说，黑客在不需要「时间倒流」的情况下就能实现「抽取器」。&lt;/p&gt;
 &lt;p&gt;提醒下，不仅仅是随机数不能重复的问题。而是随机数必须是具有密码学安全强度的随机数。&lt;/p&gt;
 &lt;p&gt;设想下，如果随机数 &lt;code&gt;r&lt;/code&gt; 是通过一个利用「线性同余」原理的伪随机数生成器产生，虽然 &lt;code&gt;r&lt;/code&gt;的值一直在变化，但是仍然不能阻止「知识抽取」。假设线性同余算法为 &lt;code&gt;r2= d*r1 + e (mod m)&lt;/code&gt;，还回到 Schnorr 协议的第三步：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-2-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-2-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-2-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-2-2&#34;&gt;2&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;1: z1 = r1 + c1*a
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2: z2 = r2 + c2*a
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2: z2 = r2 + c2*a&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;如果攻击者让 Alice 连续做两次签名，那么将 &lt;code&gt;r2&lt;/code&gt; 代入  &lt;code&gt;r1&lt;/code&gt; 之后，就出现了两个线性方程求解两个未知数 &lt;code&gt;(r1, a)&lt;/code&gt; 的情况，&lt;code&gt;z1, z2, c1, c2, d, e&lt;/code&gt; 对于 攻击者是已知的，这个方程组只用初中数学知识就可以求解。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果攻击者让 Alice 连续做两次签名，那么将 &lt;code&gt;r2&lt;/code&gt; 代入  &lt;code&gt;r1&lt;/code&gt; 之后，就出现了两个线性方程求解两个未知数 &lt;code&gt;(r1, a)&lt;/code&gt; 的情况，&lt;code&gt;z1, z2, c1, c2, d, e&lt;/code&gt; 对于 攻击者是已知的，这个方程组只用初中数学知识就可以求解。&lt;/p&gt;
 &lt;p&gt;请注意，这并不是 Schnorr 协议（或 ECDSA 协议）的「设计缺陷」，恰恰相反，这是 Schnorr 协议设计比较精巧的地方，它&lt;strong&gt;从原理上保证了协议的可靠性&lt;/strong&gt;。类似技巧在密码学协议中频繁出现，达到一目了然的「简洁」。但是也不得不说，如果不清楚协议的内在机制，尤其是区分不清楚「理想世界」与「现实世界」，使用者很容易引入各种花式的「安全漏洞」。&lt;/p&gt;
 &lt;p&gt;作为一个能写出可靠软件的靠谱码农，我们需要了解哪些？彻底理解安全协议的设计机制当然是最好的，但是绝大多数情况下是非常耗费精力的。一般来说，我们把各种密码学工具当做「黑盒」来用，可能是不够的，我们最好还能了解下：&lt;/p&gt;
 &lt;ol&gt;
@@ -5383,10 +5597,10 @@ $$&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;img/3c-4.png&#34; alt=&#34;3c-4&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Alice 再次把颜色做一次变换，把蓝色改成紫色，改绿色改成棕色，把橙色改成灰色，然后把所有的顶点盖上纸片。然后 Bob 再挑选一条边，比如像上图一样，选择的是一条竖着的边，然后让 Alice 揭开纸片看看，如果这时候 Bob 再次发现这条边两端的顶点颜色不同，那么 Bob 这时候已经有点动摇了，可能 Alice 真的有这个染色答案。可是，两次仍然不够，Bob 还想再多来几遍。&lt;/p&gt;
 &lt;p&gt;那么经过反复多次重复这三个步骤，可以让 Alice 作弊并能成功骗过 Bob 的概率会以指数级的方式减小。假设经过 &lt;code&gt;n&lt;/code&gt; 轮之后，Alice 作弊的概率为
+&lt;/p&gt;
 $$
-Pr[(G, c)\ | \ ThreeColor(G, c) = 0] &amp;lt; (1 - \frac{1}{|E|})^n
-$$&lt;/p&gt;
-&lt;p&gt;这里 &lt;code&gt;|E|&lt;/code&gt; 是图中所有边的个数， 如果 &lt;code&gt;n&lt;/code&gt; 足够大，这个概率 &lt;code&gt;Pr&lt;/code&gt; 会变得非常非常小，变得「微不足道」。&lt;/p&gt;
+Pr[(G, c)\ | \ ThreeColor(G, c) = 0] &lt; (1 - \frac{1}{|E|})^n
+$$&lt;p&gt;这里 &lt;code&gt;|E|&lt;/code&gt; 是图中所有边的个数， 如果 &lt;code&gt;n&lt;/code&gt; 足够大，这个概率 &lt;code&gt;Pr&lt;/code&gt; 会变得非常非常小，变得「微不足道」。&lt;/p&gt;
 &lt;p&gt;可是，Bob 每次看到的局部染色情况都是 Alice 变换过后的结果，无论 Bob 看多少次，都不能拼出一个完整的三染色答案出来。实际上，Bob 在这个过程中，虽然获得了很多「信息」，但是却没有获得真正的「知识」。&lt;/p&gt;
 &lt;h2 id=&#34;信息-vs-知识&#34;&gt;信息 vs. 知识&lt;/h2&gt;
 &lt;ul&gt;
@@ -5513,7 +5727,12 @@ IEEE Symposium on Security and Privacy (SP). IEEE, 2018.&lt;/li&gt;
 &lt;p&gt;&lt;strong&gt;很多 zkSNARKs 合约尤其是混币合约，核心逻辑都与第 82 行和 83 行类似，因此都存在同样的安全问题，可利用「输入假名」漏洞进行攻击。&lt;/strong&gt;&lt;/p&gt;
 &lt;h2 id=&#34;漏洞解析一笔钱如何匿名地重复花-5-次&#34;&gt;漏洞解析：一笔钱如何匿名地重复花 5 次？&lt;/h2&gt;
 &lt;p&gt;上面 &lt;code&gt;verifyProof(a, b, c, input)&lt;/code&gt; 函数的作用是根据传入的数值在椭圆曲线上进行计算校验，核心用到了名为 &lt;code&gt;scalar_mul()&lt;/code&gt; 的函数，&lt;a href=&#34;https://github.com/iden3/snarkjs/blob/0349d90824bd25688e3013ca26f7f73b51bc7755/templates/verifier_groth.sol#L202&#34;&gt;实现了椭圆曲线上的标量乘法&lt;/a&gt;[4]。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-1&#34;&gt; 1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-2&#34;&gt; 2&lt;/a&gt;
@@ -5546,10 +5765,11 @@ IEEE Symposium on Security and Privacy (SP). IEEE, 2018.&lt;/li&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;switch&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;success&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; { &lt;span style=&#34;color:#a6e22e&#34;&gt;invalid&lt;/span&gt;() }
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;success&lt;/span&gt;);
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;我们知道以太坊内置了多个预编译合约，进行椭圆曲线上的密码学运算，降低 zkSNARKs 验证在链上的 Gas 消耗。函数 &lt;code&gt;scalar_mul()&lt;/code&gt; 的实现则调用了以太坊预编译 7 号合约，根据 &lt;a href=&#34;https://github.com/ethereum/EIPs/blob/master/EIPS/eip-196.md&#34;&gt;EIP 196&lt;/a&gt; 实现了椭圆曲线 alt_bn128 上的标量乘法[5]。下图为黄皮书中对该操作的定义，我们常称之为 ECMUL 或 ecc_mul。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;我们知道以太坊内置了多个预编译合约，进行椭圆曲线上的密码学运算，降低 zkSNARKs 验证在链上的 Gas 消耗。函数 &lt;code&gt;scalar_mul()&lt;/code&gt; 的实现则调用了以太坊预编译 7 号合约，根据 &lt;a href=&#34;https://github.com/ethereum/EIPs/blob/master/EIPS/eip-196.md&#34;&gt;EIP 196&lt;/a&gt; 实现了椭圆曲线 alt_bn128 上的标量乘法[5]。下图为黄皮书中对该操作的定义，我们常称之为 ECMUL 或 ecc_mul。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./yellow_paper_ecmul.png&#34; alt=&#34;以太坊黄皮书定义&#34;&gt;&lt;/p&gt;
 &lt;p&gt;密码学中，椭圆曲线的 &lt;code&gt;{x,y}&lt;/code&gt; 的值域是一个基于 mod p 的有限域，这个有限域称之为 Zp 或 Fp。也就是说，一个椭圆曲线上的一个点 &lt;code&gt;{x,y}&lt;/code&gt; 中的 x,y 是 Fp 中的值。一条椭圆曲线上的某些点构成一个较大的循环群，这些点的个数称之为群的阶，记为&lt;code&gt;q&lt;/code&gt;。基于椭圆曲线的加密就在这个循环群中进行。如果这个循环群的阶数（&lt;code&gt;q&lt;/code&gt;）为质数，那么加密就可以在 mod q 的有限域中进行，该有限域记作 &lt;code&gt;Fq&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;一般选取较大的循环群作为加密计算的基础。在循环群中，任意选定一个非无穷远点作为生成元 &lt;code&gt;G&lt;/code&gt;（通常这个群的阶&lt;code&gt;q&lt;/code&gt;是个大质数，那么任选一个非零点都是等价的），其他所有的点都可以通过 &lt;code&gt;G+G+....&lt;/code&gt; 产生出来。这个群里的元素个数为 &lt;code&gt;q&lt;/code&gt;，也即一共有 &lt;code&gt;q&lt;/code&gt; 个点，那么我们可以用 &lt;code&gt;0,1,2,3,....q-1&lt;/code&gt; 来编号每一个点。在这里第 0 个点是无穷远点，点&lt;code&gt;1&lt;/code&gt; 就是刚才提到的那个 &lt;code&gt;G&lt;/code&gt;，也叫做基点。点&lt;code&gt;2&lt;/code&gt; 就是 &lt;code&gt;G+G&lt;/code&gt;，点&lt;code&gt;3&lt;/code&gt; 就是 &lt;code&gt;G+G+G&lt;/code&gt;。&lt;/p&gt;
@@ -5623,15 +5843,21 @@ IEEE Symposium on Security and Privacy (SP). IEEE, 2018.&lt;/li&gt;
 &lt;h2 id=&#34;锁定数据的特征authenticator&#34;&gt;锁定数据的特征：Authenticator&lt;/h2&gt;
 &lt;p&gt;对于&lt;strong&gt;关键问题(1)&lt;/strong&gt;，我们需要一个锚点，什么是你想要的数据。这里简单起见，假设我们事先约定了一个数据文件的唯一标签，或者特征。然后你购买的数据需要能和这个标签一一对应。&lt;/p&gt;
 &lt;p&gt;一般来说，大家喜欢用 Hash 来标记对一个字符串的特征，比如计算&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;h = MD5(&amp;#34;hello,zkPoD!&amp;#34;)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;h = MD5(&amp;#34;hello,zkPoD!&amp;#34;)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;我们看下这个字符串  &lt;code&gt;&amp;quot;hello,zkPoD!&amp;quot;&lt;/code&gt; 总共有 12 个字节大小，也就是 96 个 bit。于是我们可以将这 12 个字节转换成一个有限域上的整数（这里我们假设有限域的大小接近 256 bit ）。这样我们可以把这个字符串编码成一个整数，我们姑且用一个符号表示这个整数， 假设是 $m$。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;我们看下这个字符串  &lt;code&gt;&amp;quot;hello,zkPoD!&amp;quot;&lt;/code&gt; 总共有 12 个字节大小，也就是 96 个 bit。于是我们可以将这 12 个字节转换成一个有限域上的整数（这里我们假设有限域的大小接近 256 bit ）。这样我们可以把这个字符串编码成一个整数，我们姑且用一个符号表示这个整数， 假设是 $m$。&lt;/p&gt;
 &lt;p&gt;我们通过下面的运算产生这个数据的「承诺」。&lt;/p&gt;
 &lt;p&gt;$\sigma = g^{m}$&lt;/p&gt;
 &lt;p&gt;承诺也叫 Commitment，它可以做到和数据的一一对应，同时并且能够隐藏数据的值。
@@ -5690,8 +5916,8 @@ $\overline{m}$ 就是加密数据。我可以把 $K= g^k$ 也发给你，这样�
 &lt;/ul&gt;
 &lt;p&gt;&lt;img src=&#34;pod-tiny-5.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;步骤：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;第一步&lt;/strong&gt;：Alice 产生一个随机数，$r \overset{$}\leftarrow Rand()​$ ，然后发给 Bob 两个数 $K=g^k​$ 和 $R=g^r$&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;第二步&lt;/strong&gt;：Bob 产生一个随机数 $c\overset{$}\leftarrow Rand()$，发送给 Alice&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第一步&lt;/strong&gt;：Alice 产生一个随机数，$r \overset{\$}\leftarrow Rand()​$ ，然后发给 Bob 两个数 $K=g^k​$ 和 $R=g^r$&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第二步&lt;/strong&gt;：Bob 产生一个随机数 $c\overset{\$}\leftarrow Rand()$，发送给 Alice&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;第三步&lt;/strong&gt;：Alice 计算两个数字 $\overline{m}=k + m​$，$z=r+c\cdot k​$，并且发送给 Bob。这两个数，第一个 $\overline{m}​$ 是用一次性密钥 $k​$ 加密后的密文，而 $z​$ 是「对密钥加密」生成的密文。&lt;/p&gt;
 &lt;p&gt;注：什么？对密钥加密？没错，这里 Alice 用第一步生成的随机数 $r$，加上第二步 Bob 提供的挑战数对 $k$ 做了加密，得到了 $z$。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;第四步&lt;/strong&gt;：Bob 对收到的数据密文 $\overline{m}$ 进行验证（公式(1) ），并且对密钥的密文进行验证（公式(2) ）：&lt;/p&gt;
@@ -5721,8 +5947,8 @@ $\overline{m}$ 就是加密数据。我可以把 $K= g^k$ 也发给你，这样�
 &lt;p&gt;如果我们不考虑多次交易，PoD-Tiny 是一个「公平」的交易协议。我们接下来依次分析下为何这个协议是公平的。&lt;/p&gt;
 &lt;p&gt;我们首先考虑 Alice 有哪些作弊手段：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;将假的数据 $m&amp;rsquo;$ 加密后传给 Bob&lt;/li&gt;
-&lt;li&gt;加密数据时用的密钥 $k$，但是在加密密钥的时候却用的是 $k&amp;rsquo;$，并且 $k\not= k&#39;$&lt;/li&gt;
+&lt;li&gt;将假的数据 $m&#39;$ 加密后传给 Bob&lt;/li&gt;
+&lt;li&gt;加密数据时用的密钥 $k$，但是在加密密钥的时候却用的是 $k&#39;$，并且 $k\not= k&#39;$&lt;/li&gt;
 &lt;li&gt;向 Julia 出示一个假的密文密钥 $r&#39;$&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;这里如果 Alice 采用作弊手法 A1，那么 Bob 在校验公式(1)时能够发现；如果 Alice 采用作弊手法 A2，那么 Bob可以通过计算公式(2)发现；如果 Alice 采用作弊手法 A3，那么 Julia 通过公式(3)就能发现。&lt;/p&gt;
@@ -5739,67 +5965,67 @@ $\overline{m}$ 就是加密数据。我可以把 $K= g^k$ 也发给你，这样�
 PoD-Tiny 协议中的前三步，直接「压缩」成为一步。&lt;/p&gt;
 &lt;h4 id=&#34;压缩前&#34;&gt;压缩前：&lt;/h4&gt;
 &lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Step&lt;/th&gt;
-&lt;th&gt;Interaction&lt;/th&gt;
-&lt;th&gt;Info&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;第一步&lt;/td&gt;
-&lt;td&gt;Alice  =&amp;gt;  Bob&lt;/td&gt;
-&lt;td&gt;$(K, R)$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;第二步&lt;/td&gt;
-&lt;td&gt;Bob =&amp;gt; Alice&lt;/td&gt;
-&lt;td&gt;$c$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;第三步&lt;/td&gt;
-&lt;td&gt;Alice =&amp;gt; Bob&lt;/td&gt;
-&lt;td&gt;$(\overline{m}, z)$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;第四步&lt;/td&gt;
-&lt;td&gt;Bob =&amp;gt; Julia&lt;/td&gt;
-&lt;td&gt;$R$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;第五步&lt;/td&gt;
-&lt;td&gt;Alice =&amp;gt; Julia&lt;/td&gt;
-&lt;td&gt;$r$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Step&lt;/th&gt;
+          &lt;th&gt;Interaction&lt;/th&gt;
+          &lt;th&gt;Info&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;第一步&lt;/td&gt;
+          &lt;td&gt;Alice  =&amp;gt;  Bob&lt;/td&gt;
+          &lt;td&gt;$(K, R)$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;第二步&lt;/td&gt;
+          &lt;td&gt;Bob =&amp;gt; Alice&lt;/td&gt;
+          &lt;td&gt;$c$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;第三步&lt;/td&gt;
+          &lt;td&gt;Alice =&amp;gt; Bob&lt;/td&gt;
+          &lt;td&gt;$(\overline{m}, z)$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;第四步&lt;/td&gt;
+          &lt;td&gt;Bob =&amp;gt; Julia&lt;/td&gt;
+          &lt;td&gt;$R$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;第五步&lt;/td&gt;
+          &lt;td&gt;Alice =&amp;gt; Julia&lt;/td&gt;
+          &lt;td&gt;$r$&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h4 id=&#34;压缩后&#34;&gt;压缩后：&lt;/h4&gt;
 &lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Step&lt;/th&gt;
-&lt;th&gt;Interaction&lt;/th&gt;
-&lt;th&gt;Info&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;第一步&lt;/td&gt;
-&lt;td&gt;Alice  =&amp;gt;  Bob&lt;/td&gt;
-&lt;td&gt;$(K, R, c, \overline{m}, z)$，这里 $c=Hash(\sigma_m || K || R)$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;第二步&lt;/td&gt;
-&lt;td&gt;Bob =&amp;gt; Julia&lt;/td&gt;
-&lt;td&gt;$R$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;第三步&lt;/td&gt;
-&lt;td&gt;Alice =&amp;gt; Julia&lt;/td&gt;
-&lt;td&gt;$r$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Step&lt;/th&gt;
+          &lt;th&gt;Interaction&lt;/th&gt;
+          &lt;th&gt;Info&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;第一步&lt;/td&gt;
+          &lt;td&gt;Alice  =&amp;gt;  Bob&lt;/td&gt;
+          &lt;td&gt;$(K, R, c, \overline{m}, z)$，这里 $c=Hash(\sigma_m \|\| K \|\| R)$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;第二步&lt;/td&gt;
+          &lt;td&gt;Bob =&amp;gt; Julia&lt;/td&gt;
+          &lt;td&gt;$R$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;第三步&lt;/td&gt;
+          &lt;td&gt;Alice =&amp;gt; Julia&lt;/td&gt;
+          &lt;td&gt;$r$&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;我们发现最主要的不同是，在压缩后的PoD-Tiny 中挑战数不再由 Bob 产生，而是由 Alice 产生。这里大家可能会产生疑问，这样做会不会对 Bob 不公平？这相当于 三步的 Schnorr 协议直接压缩成一步就完成了。这里先下个结论：压缩后的协议保持零知识的性质，仍然对双方公平。原因是，压缩前的协议可以证明 HVZK(Honest Verifier Zero-Knowledge)；压缩后的协议可以证明出 NIZK (Non-Interactive Zero-Knowledge)。但是安全性在压缩前后的对比会比较 Subtle，这里不再展开。&lt;/p&gt;
 &lt;p&gt;经过压缩，最后这个协议变得不可思议地简洁：&lt;/p&gt;

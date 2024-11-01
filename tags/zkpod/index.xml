@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>zkPoD on SECBIT Blog</title>
+    <title>ZkPoD on SECBIT Blog</title>
     <link>https://sec-bit.github.io/blog/tags/zkpod/</link>
-    <description>Recent content in zkPoD on SECBIT Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in ZkPoD on SECBIT Blog</description>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 24 Jul 2019 08:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 12 Oct 2019 18:48:30 +0800</lastBuildDate>
     <atom:link href="https://sec-bit.github.io/blog/tags/zkpod/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>PoD-Tiny——实现零信任交易的最简协议</title>

@@ -60,7 +60,12 @@
 &lt;p&gt;Upon reviewing the repositories they might have utilized at the time for iOS, we had to navigate through a few dependencies due to the separate repositories in use.&lt;/p&gt;
 &lt;p&gt;Trust Wallet&amp;rsquo;s iOS platform relied on the &lt;a href=&#34;https://github.com/trezor/trezor-crypto/&#34;&gt;&lt;code&gt;trezor-crypto&lt;/code&gt;&lt;/a&gt; library to generate BIP39 mnemonic words.&lt;/p&gt;
 &lt;p&gt;In &lt;code&gt;trezor-crypto/bip39.c&lt;/code&gt;, we noticed:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-1&#34;&gt; 1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-2&#34;&gt; 2&lt;/a&gt;
@@ -85,12 +90,18 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;r &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mnemonic_from_data&lt;/span&gt;(data, strength &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;memzero&lt;/span&gt;(data, &lt;span style=&#34;color:#66d9ef&#34;&gt;sizeof&lt;/span&gt;(data));
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; r;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;This function hinges on the &lt;code&gt;trezor-crypto&lt;/code&gt; library to generate a random number, the seed/entropy for producing mnemonic words.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This function hinges on the &lt;code&gt;trezor-crypto&lt;/code&gt; library to generate a random number, the seed/entropy for producing mnemonic words.&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;trezor-crypto/rand.c&lt;/code&gt; section, however, is where things get intriguing:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-1-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-1-1&#34;&gt; 1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-1-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-1-2&#34;&gt; 2&lt;/a&gt;
@@ -179,10 +190,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        buf[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (r &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; ((i &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;)) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0xFF&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;The answer, it turned out, was right there in front of us!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The answer, it turned out, was right there in front of us!&lt;/p&gt;
 &lt;h2 id=&#34;what-was-the-root-cause-of-the-vulnerability&#34;&gt;What Was the Root Cause of the Vulnerability?&lt;/h2&gt;
 &lt;p&gt;Breaking down the original code, it incorporates two distinct functions: &lt;code&gt;random32()&lt;/code&gt; and &lt;code&gt;random_buffer()&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;random32()&lt;/code&gt; function initializes the random seed only once, using the current time in seconds. This seed is then used to generate a 32-bit random value through the repeated calling of the &lt;code&gt;rand()&lt;/code&gt; function. Notably, the &lt;code&gt;rand()&lt;/code&gt; function is not suitable for cryptographic purposes, as many implementations of it are easily &lt;a href=&#34;https://crypto.stackexchange.com/questions/52000/how-can-c-rand-be-exploited-if-a-secure-seed-is-used&#34;&gt;broken or exploited&lt;/a&gt;. The core security weakness here is the usage of &lt;code&gt;srand((unsigned)time(NULL))&lt;/code&gt;, which seeds the random number generator based on the current time. This predictable value could allow an attacker to guess the state of the random number generator if they have an idea of when the generator was seeded. If two users generate mnemonic words at the exact same second, they will get the same seed, leading to identical wallet addresses. This weakened seeding reduces the key space, making wallet keys very predictable.&lt;/p&gt;
@@ -331,7 +343,12 @@
 &lt;p&gt;&lt;strong&gt;Many zkSNARKs contracts, especially those involving mixcoin, have the same core logic of line 82 and 83. Therefore, they all have the same bug and might get attacked by &amp;lsquo;Input Aliasing&amp;rsquo;.&lt;/strong&gt;&lt;/p&gt;
 &lt;h2 id=&#34;analysis-how-to-spend-the-money-5-times-anonymously&#34;&gt;Analysis: How to Spend The Money 5 Times Anonymously?&lt;/h2&gt;
 &lt;p&gt;The function &lt;code&gt;verifyProof(a, b, c, input)&lt;/code&gt; computes input parameters on the elliptic curve and applies a function called &lt;code&gt;scalar_mul()&lt;/code&gt; to &lt;a href=&#34;https://github.com/iden3/snarkjs/blob/0349d90824bd25688e3013ca26f7f73b51bc7755/templates/verifier_groth.sol#L202&#34;&gt;implement scalar multiplication on the elliptic curve&lt;/a&gt;[4].&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-1&#34;&gt; 1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-2&#34;&gt; 2&lt;/a&gt;
@@ -364,10 +381,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;switch&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;success&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; { &lt;span style=&#34;color:#a6e22e&#34;&gt;invalid&lt;/span&gt;() }
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;success&lt;/span&gt;);
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;We know that ethereum has some pre-compiled contract embedded for cryptographic computation on the elliptic curve to reduce the gas consumption of zkSNARKs verification. The implementation of &lt;code&gt;scalar_mul()&lt;/code&gt; calls the No. 7 pre-compiled ethereum contract and realizes scalar multiplication[5] of elliptic curve alt_bn128 according to &lt;a href=&#34;https://github.com/ethereum/EIPs/blob/master/EIPS/eip-196.md&#34;&gt;EIP 196&lt;/a&gt;. The following graph is the definition in the yellow book, which we usually call ECMUL or ecc_mul.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;We know that ethereum has some pre-compiled contract embedded for cryptographic computation on the elliptic curve to reduce the gas consumption of zkSNARKs verification. The implementation of &lt;code&gt;scalar_mul()&lt;/code&gt; calls the No. 7 pre-compiled ethereum contract and realizes scalar multiplication[5] of elliptic curve alt_bn128 according to &lt;a href=&#34;https://github.com/ethereum/EIPs/blob/master/EIPS/eip-196.md&#34;&gt;EIP 196&lt;/a&gt;. The following graph is the definition in the yellow book, which we usually call ECMUL or ecc_mul.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./yellow_paper_ecmul.png&#34; alt=&#34;以太坊黄皮书定义&#34;&gt;&lt;/p&gt;
 &lt;p&gt;In cryptography, the range of elliptic curve &lt;code&gt;{x,y}&lt;/code&gt; is a finite field based on mod p called Zp or Fp. In another word, the x and y from coordinate &lt;code&gt;{x,y}&lt;/code&gt; of the elliptic curve are values in Fp. Some points from an elliptic curve form a relatively huge cyclic group and the sum of the points are called the order, &lt;code&gt;q&lt;/code&gt;, of the group. The encryption based on the elliptic curve is performed within this cyclic group. If the cyclic group order &lt;code&gt;q&lt;/code&gt; is a prime number, then the encryption could get performed in a mod q finite field &lt;code&gt;Fq&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Usually, we pick big cyclic groups as the base of encryption. Select a random non-infinite point of the cyclic group as the generator &lt;code&gt;G&lt;/code&gt; (The group order &lt;code&gt;q&lt;/code&gt; is usually a huge prime number, then picking any non-zero point is equival), and all other points could get generated by &lt;code&gt;G+G+....&lt;/code&gt;. The number of elements in this group is &lt;code&gt;q&lt;/code&gt; meaning that there are &lt;code&gt;q&lt;/code&gt; points, and we could mark every point by &lt;code&gt;0,1,2,3,....q-1&lt;/code&gt;. Here the point 0 is an infinite point, point 1 is &lt;code&gt;G&lt;/code&gt; mentioned before - it is also called the base point, point 2 is &lt;code&gt;G+G&lt;/code&gt; and point 3 is &lt;code&gt;G+G+G&lt;/code&gt;.&lt;/p&gt;
@@ -584,7 +602,12 @@
 &lt;h3 id=&#34;analysis-on-atn-incident&#34;&gt;Analysis on ATN Incident&lt;/h3&gt;
 &lt;p&gt;ERC223 is a draft of Token standard raised by Dexaran on March 5th, 2017 [3] to solve the problem of handling tokens sent to an ERC20 contract. ERC20 has 2 ways to transfer tokens: one is calling &lt;code&gt;transfer()&lt;/code&gt; directly and another is invoking &lt;code&gt;approve()&lt;/code&gt; + &lt;code&gt;transferFrom()&lt;/code&gt; - approve first, then transfer. Taking the later approach is required when the smart contract takes the receiver role, otherwise tokens sent to the contract address would be locked forever.&lt;/p&gt;
 &lt;p&gt;Here is a &lt;strong&gt;correct sample&lt;/strong&gt; of ERC223 draft: when calling &lt;code&gt;transfer()&lt;/code&gt;, the contract checks if &lt;code&gt;to&lt;/code&gt; address is a contract. If so, it calls &lt;code&gt;tokenFallback()&lt;/code&gt; in the target contract to handle tokens sent to the contract. There is no CUSTOM_CALL abusing.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-1&#34;&gt; 1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-0-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-0-2&#34;&gt; 2&lt;/a&gt;
@@ -619,12 +642,18 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#a6e22e&#34;&gt;receiver&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;tokenFallback&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;msg&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;sender&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_value&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_data&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;ERC223 is a superset of ERC20 designed to replace ERC20 as a new Token contract standard, while not being widely accepted for over a year. Only a small portion of projects employed it.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;ERC223 is a superset of ERC20 designed to replace ERC20 as a new Token contract standard, while not being widely accepted for over a year. Only a small portion of projects employed it.&lt;/p&gt;
 &lt;p&gt;This is an &lt;strong&gt;incorrect implementation&lt;/strong&gt; of ERC223 taken by ATN Token unfortunately. The user is permitted to pass arbitrary &lt;code&gt;_custom_fallback&lt;/code&gt; to call any functions from &lt;code&gt;_to&lt;/code&gt; address.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-1-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-1-1&#34;&gt; 1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-1-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-1-2&#34;&gt; 2&lt;/a&gt;
@@ -657,11 +686,17 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;ERC223ReceivingContract&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;receiver&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ERC223ReceivingContract&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;_to&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;receiving&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;call&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)(&lt;span style=&#34;color:#a6e22e&#34;&gt;byte4&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;keccak256&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;_custom_fallback&lt;/span&gt;)), &lt;span style=&#34;color:#a6e22e&#34;&gt;_from&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;amout&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ...
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Report on ATN bugs stated that its contract referred to a recommended implementation of ERC223 [4]. After investigating this issue, we found that it was indeed similar to &lt;code&gt;transfer()&lt;/code&gt; in Recommended branch of ERC223-token-standard repo maintained by Dexaran [5]:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Report on ATN bugs stated that its contract referred to a recommended implementation of ERC223 [4]. After investigating this issue, we found that it was indeed similar to &lt;code&gt;transfer()&lt;/code&gt; in Recommended branch of ERC223-token-standard repo maintained by Dexaran [5]:&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-2-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-2-1&#34;&gt; 1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-2-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-2-2&#34;&gt; 2&lt;/a&gt;
@@ -690,14 +725,20 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ...
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;assert&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;_to&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;call&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)(&lt;span style=&#34;color:#a6e22e&#34;&gt;bytes4&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;keccak256&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;_custom_fallback&lt;/span&gt;)), &lt;span style=&#34;color:#a6e22e&#34;&gt;msg&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;sender&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_value&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_data&lt;/span&gt;));
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ...
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;This is actually risky. &amp;lsquo;&lt;em&gt;A Guide to Smart Contract Security Best Practices&lt;/em&gt;&amp;rsquo; by ConsenSys urges developers avoiding contract external calling. The hacker passed &lt;code&gt;setOwner(address)&lt;/code&gt; as &lt;code&gt;_custom_fallback&lt;/code&gt; in this attack and the target address &lt;code&gt;_to&lt;/code&gt; was exactly ATN contract itself, thus invoking &lt;code&gt;setOwner(address)&lt;/code&gt; of ATN contract indirectly. &lt;code&gt;msg.sender&lt;/code&gt; became ATN Token contract itself so as to pass the test &lt;code&gt;isAuthorized()&lt;/code&gt; in &lt;code&gt;ds-auth&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This is actually risky. &amp;lsquo;&lt;em&gt;A Guide to Smart Contract Security Best Practices&lt;/em&gt;&amp;rsquo; by ConsenSys urges developers avoiding contract external calling. The hacker passed &lt;code&gt;setOwner(address)&lt;/code&gt; as &lt;code&gt;_custom_fallback&lt;/code&gt; in this attack and the target address &lt;code&gt;_to&lt;/code&gt; was exactly ATN contract itself, thus invoking &lt;code&gt;setOwner(address)&lt;/code&gt; of ATN contract indirectly. &lt;code&gt;msg.sender&lt;/code&gt; became ATN Token contract itself so as to pass the test &lt;code&gt;isAuthorized()&lt;/code&gt; in &lt;code&gt;ds-auth&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;EVM does not check the number of parameters when reading them. After the hacker called &lt;code&gt;setOwner(adddress)&lt;/code&gt;, EVM only read &lt;code&gt;_from&lt;/code&gt; on left. Therefore no error would emerge on differences between parameter numbers and the required sum by the function when applying low-level &lt;code&gt;call()&lt;/code&gt; for parameter passing. The hacker had no difficulty constructing attacking parameters as a result.&lt;/p&gt;
 &lt;h3 id=&#34;danger-of-abusing-custom_call&#34;&gt;Danger of Abusing CUSTOM_CALL&lt;/h3&gt;
 &lt;p&gt;Back to &lt;code&gt;_custom_fallback&lt;/code&gt; implementation. As a common Token interface, the designer should, in our opinion, take as many cases as possible into account to get rid of introducing potential risks and vulnerabilities. Suppose &lt;code&gt;_custom_fallback&lt;/code&gt; interface above gets accepted widely, more similar security problems are yet to come. A robust interface design should be simple, easy-handling and straightforward. The &lt;code&gt;tokenFallback()&lt;/code&gt; interface in the draft could have dealt with the ERC20 issue intended for, whereas introducing &lt;code&gt;_custom_fallback&lt;/code&gt; would disrupt developers and become abused.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-3-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-3-1&#34;&gt; 1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-3-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-3-2&#34;&gt; 2&lt;/a&gt;
@@ -728,10 +769,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;approve&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;_spender&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_value&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;_spender&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;call&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;msg&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;)(&lt;span style=&#34;color:#a6e22e&#34;&gt;_data&lt;/span&gt;));
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;In most cases, when we pass a smart contract address to ERC20 &lt;code&gt;approve()&lt;/code&gt;, the other side cannot get relevant notifications for next steps and  a common solution is &lt;code&gt;receiverCall&lt;/code&gt;. The snippet above is one implementation and unluckily contains severe CUSTOM_CALL abusing. After executing &lt;code&gt;approveAndCall()&lt;/code&gt;, it would run other operations defined by &lt;code&gt;_spender&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;In most cases, when we pass a smart contract address to ERC20 &lt;code&gt;approve()&lt;/code&gt;, the other side cannot get relevant notifications for next steps and  a common solution is &lt;code&gt;receiverCall&lt;/code&gt;. The snippet above is one implementation and unluckily contains severe CUSTOM_CALL abusing. After executing &lt;code&gt;approveAndCall()&lt;/code&gt;, it would run other operations defined by &lt;code&gt;_spender&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Pay attention to this one.&lt;/p&gt;
 &lt;p&gt;Consequences: These types of contracts are designed to permit users defining &lt;code&gt;call()&lt;/code&gt; with functions on any addresses, which is highly risky. By capturing the contract&amp;rsquo;s identity, hackers could easily conduct &lt;strong&gt;any operations&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;This often leads to 3 dangerous results:&lt;/p&gt;
@@ -747,7 +789,12 @@
 &lt;h3 id=&#34;inconsistency-between-erc223s-draft--interface&#34;&gt;Inconsistency Between ERC223&amp;rsquo;s Draft &amp;amp; Interface&lt;/h3&gt;
 &lt;p&gt;With further investigation, we found no description of using &lt;code&gt;_custom_fallback&lt;/code&gt; in ERC223 interface draft.&lt;/p&gt;
 &lt;p&gt;This is the interface defined by the draft:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-4-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-4-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-4-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-4-2&#34;&gt;2&lt;/a&gt;
@@ -764,10 +811,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;transfer&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;address&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;to&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;uint&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;transfer&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;address&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;to&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;uint&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;bytes&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;event&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Transfer&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;address&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;indexed&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;from&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;address&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;indexed&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;to&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;uint&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;bytes&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;);
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;No parameters called &lt;code&gt;_custom_fallback&lt;/code&gt; appear in two &lt;code&gt;transfer()&lt;/code&gt; interfaces.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;No parameters called &lt;code&gt;_custom_fallback&lt;/code&gt; appear in two &lt;code&gt;transfer()&lt;/code&gt; interfaces.&lt;/p&gt;
 &lt;p&gt;Let us inspect the draft description:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;If the receiver is a contract ERC223 token contract will try to call tokenFallback function on receiver contract. If there is no tokenFallback function on receiver contract transaction will fail. tokenFallback function is analogue of fallback function for Ether transactions. It can be used to handle incoming transactions.&lt;/p&gt;
@@ -777,18 +825,29 @@
 &lt;h3 id=&#34;other-bugs-in-erc223-implementation&#34;&gt;Other Bugs in ERC223 Implementation&lt;/h3&gt;
 &lt;p&gt;In fact, ERC223 Recommended branch has other bugs.&lt;/p&gt;
 &lt;p&gt;When dealing with bytes, &lt;code&gt;call()&lt;/code&gt; would trigger a bug in EVM level, causing inconsistency in data [6].&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-5-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-5-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-5-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-5-2&#34;&gt;2&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// ERC223_Token.sol#L70
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;assert&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;_to&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;call&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)(&lt;span style=&#34;color:#a6e22e&#34;&gt;bytes4&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;keccak256&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;_custom_fallback&lt;/span&gt;)), &lt;span style=&#34;color:#a6e22e&#34;&gt;msg&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;sender&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_value&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_data&lt;/span&gt;));
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;assert&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;_to&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;call&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)(&lt;span style=&#34;color:#a6e22e&#34;&gt;bytes4&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;keccak256&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;_custom_fallback&lt;/span&gt;)), &lt;span style=&#34;color:#a6e22e&#34;&gt;msg&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;sender&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_value&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_data&lt;/span&gt;));&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Under certain circumstances, errors would arise in event handling indexed bytes variables [7].&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Under certain circumstances, errors would arise in event handling indexed bytes variables [7].&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-6-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-6-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-6-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-6-2&#34;&gt;2&lt;/a&gt;
@@ -798,10 +857,17 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;event&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Transfer&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;address&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;indexed&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;from&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;address&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;indexed&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;to&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;uint&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;bytes&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;indexed&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;); 
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;It is safe to say ERC223 Recommended branch is not reliable, please try not to apply the code.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It is safe to say ERC223 Recommended branch is not reliable, please try not to apply the code.&lt;/p&gt;
 &lt;h2 id=&#34;mechanism-of-passing-parameters-in-evm&#34;&gt;Mechanism of Passing Parameters in EVM&lt;/h2&gt;
 &lt;p&gt;To better understand this vulnerability, we would explore EVM&amp;rsquo;s mechanism of calling functions and passing parameters. Take a look at this sample&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-7-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-7-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-7-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-7-2&#34;&gt;2&lt;/a&gt;
@@ -814,41 +880,65 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;transfer&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;address&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;to&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;uint256&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;){
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  	      &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;First comes an introduction to parameter passing in EVM: When calling a function, if it has parameters, we need to construct the input according to types appointed by ABI normally. For example, if Ethereum invokes &lt;code&gt;transfer()&lt;/code&gt; in the form of &lt;code&gt;transfer(address to, uint256 value)&lt;/code&gt;, it takes first 4 bytes of function signature&amp;rsquo;s hash value as &lt;code&gt;function selector&lt;/code&gt; and computes &lt;code&gt;sha3(transfer(address,uint256))&lt;/code&gt;, then the result is &lt;code&gt;0xA9059CBB&lt;/code&gt;, plus the address of &lt;code&gt;to&lt;/code&gt;, the 256 bits becomes&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;First comes an introduction to parameter passing in EVM: When calling a function, if it has parameters, we need to construct the input according to types appointed by ABI normally. For example, if Ethereum invokes &lt;code&gt;transfer()&lt;/code&gt; in the form of &lt;code&gt;transfer(address to, uint256 value)&lt;/code&gt;, it takes first 4 bytes of function signature&amp;rsquo;s hash value as &lt;code&gt;function selector&lt;/code&gt; and computes &lt;code&gt;sha3(transfer(address,uint256))&lt;/code&gt;, then the result is &lt;code&gt;0xA9059CBB&lt;/code&gt;, plus the address of &lt;code&gt;to&lt;/code&gt;, the 256 bits becomes&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-8-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-8-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;0x0000000000000000000000003f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;0x0000000000000000000000003f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;code&gt;value&lt;/code&gt; is also plugged into 256 bits computation&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;value&lt;/code&gt; is also plugged into 256 bits computation&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-9-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-9-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;0x000000000000000000000000000000000000000000000000000000e8d4a51000
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;0x000000000000000000000000000000000000000000000000000000e8d4a51000&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Finally we have a full calldata:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Finally we have a full calldata:&lt;/p&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-10-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-10-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;0xa9059cbb0000000000000000000000003f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be000000000000000000000000000000000000000000000000000000e8d4a51000
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;0xa9059cbb0000000000000000000000003f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be000000000000000000000000000000000000000000000000000000e8d4a51000&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Send the transaction along with the calldata, Ethereum could complete function calling. When an Ethereum node receives a request, it loads calldata and smart contract byte code into EVM. Byte code gets generated in compilation such that processing parameters are done in the mean time. The byte code only checks if &lt;code&gt;calldata&lt;/code&gt; is shorter than a minimum requirement rather than if it is too long. The compiler would generate a series of &lt;code&gt;CALLDATALOAD&lt;/code&gt; with mathematical operations to extract parameters required by the function. First it computes the target function invoked:&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Send the transaction along with the calldata, Ethereum could complete function calling. When an Ethereum node receives a request, it loads calldata and smart contract byte code into EVM. Byte code gets generated in compilation such that processing parameters are done in the mean time. The byte code only checks if &lt;code&gt;calldata&lt;/code&gt; is shorter than a minimum requirement rather than if it is too long. The compiler would generate a series of &lt;code&gt;CALLDATALOAD&lt;/code&gt; with mathematical operations to extract parameters required by the function. First it computes the target function invoked:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;CALLDATALOAD&lt;/code&gt; instruction would load the calldata (&lt;code&gt;0xa9059cbb0000000000000000000000003f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be000000000000000000000000000000000000000000000000000000e8d4a51000&lt;/code&gt;) of the trade into the stack and divide the first 256 bits by &lt;code&gt;0x100000000000000000000000000000000000000000000000000000000&lt;/code&gt;, then gets &lt;code&gt;0xA9059CBB&lt;/code&gt;. Every other parameter would be extracted in a similar way. However, byte code and EVM would not process parameters when there are too many of them and leave out this step instead. All in all, this feature originates from the compiler. The hacker could easily construct attacking parameters on CUSTOM_CALL.&lt;/p&gt;
 &lt;h2 id=&#34;risky-erc827-implementation&#34;&gt;Risky ERC827 Implementation&lt;/h2&gt;
 &lt;p&gt;The similar ERC827 Token draft possesses this issue as well [8]. Code below comes from an ERC827 buggy implementation by &lt;strong&gt;openzeppelin-solidity&lt;/strong&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-11-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-11-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-11-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-11-2&#34;&gt;2&lt;/a&gt;
@@ -867,10 +957,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;transfer&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;_to&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_value&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;_to&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;call&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;msg&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;)(&lt;span style=&#34;color:#a6e22e&#34;&gt;_data&lt;/span&gt;));
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;After the program finished transaction in &lt;code&gt;transferAndCall()&lt;/code&gt;, it would call a function on &lt;code&gt;_to&lt;/code&gt; address with parameters set by callers. Since the check &lt;code&gt;_to != address(this)&lt;/code&gt;, the code cannot bypass the authority check combined with &lt;code&gt;ds-auth&lt;/code&gt; library(&lt;code&gt;second result&lt;/code&gt;), while might introduce &lt;code&gt;first result&lt;/code&gt; and &lt;code&gt;second result&lt;/code&gt; above, managing buggy contracts&amp;rsquo; tokens(attack other contracts via &amp;rsquo;this&amp;rsquo; contract).&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;After the program finished transaction in &lt;code&gt;transferAndCall()&lt;/code&gt;, it would call a function on &lt;code&gt;_to&lt;/code&gt; address with parameters set by callers. Since the check &lt;code&gt;_to != address(this)&lt;/code&gt;, the code cannot bypass the authority check combined with &lt;code&gt;ds-auth&lt;/code&gt; library(&lt;code&gt;second result&lt;/code&gt;), while might introduce &lt;code&gt;first result&lt;/code&gt; and &lt;code&gt;second result&lt;/code&gt; above, managing buggy contracts&amp;rsquo; tokens(attack other contracts via &amp;rsquo;this&amp;rsquo; contract).&lt;/p&gt;
 &lt;p&gt;Aside from this, numerous ERC20 Token contracts implement similar &lt;code&gt;call()&lt;/code&gt; which is highly risky. It permits attackers stealing contracts&amp;rsquo; tokens and bypassing authority checks in some cases.&lt;/p&gt;
 &lt;h2 id=&#34;correct-erc20--erc721-implementation-on-receivercall&#34;&gt;Correct ERC20 &amp;amp; ERC721 Implementation on &amp;lsquo;receiverCall&amp;rsquo;&lt;/h2&gt;
 &lt;p&gt;A correct &amp;lsquo;receiverCall&amp;rsquo; program should hard-code the signature of called function to prevent from getting &lt;strong&gt;arbitrarily appointed&lt;/strong&gt; by an attacker. Here are 2 correct &amp;lsquo;receiverCall&amp;rsquo; examples:&lt;/p&gt;
@@ -878,7 +969,12 @@
 &lt;li&gt;Conduct &amp;lsquo;receiverCall&amp;rsquo; via declaring Receiver function&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Take ERC20 code maintained by ethereum.org as an example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-12-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-12-1&#34;&gt;1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-12-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-12-2&#34;&gt;2&lt;/a&gt;
@@ -899,15 +995,21 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;spender&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;receiveApproval&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;msg&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;sender&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_value&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_extraData&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&amp;lsquo;receiverCall&amp;rsquo; acts like a normal function call.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;lsquo;receiverCall&amp;rsquo; acts like a normal function call.&lt;/p&gt;
 &lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;run &amp;lsquo;receiverCall&amp;rsquo; by &lt;strong&gt;signature constant&lt;/strong&gt; of Receiver function&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;This correct snippet comes from Token-Factory by ConsenSys&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;div class=&#34;highlight-container&#34;&gt;
+
+  &lt;button class=&#34;copy-code-btn outline&#34;&gt;Copy&lt;/button&gt;
+
+  
+  &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-13-1&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-13-1&#34;&gt; 1&lt;/a&gt;
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34; id=&#34;hl-13-2&#34;&gt;&lt;a style=&#34;outline:none;text-decoration:none;color:inherit&#34; href=&#34;#hl-13-2&#34;&gt; 2&lt;/a&gt;
@@ -932,10 +1034,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;//it is assumed that when does this that the call *should* succeed, otherwise one would use vanilla approve instead.
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;_spender&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;call&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;bytes4&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;bytes32&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;sha3&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;receiveApproval(address,uint256,address,bytes)&amp;#34;&lt;/span&gt;))), &lt;span style=&#34;color:#a6e22e&#34;&gt;msg&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;sender&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_value&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;_extraData&lt;/span&gt;)) { &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt;; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;There are some repositories implementing &amp;lsquo;receiverCall&amp;rsquo; correctly&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;There are some repositories implementing &amp;lsquo;receiverCall&amp;rsquo; correctly&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/svenstucki/ERC677&#34;&gt;https://github.com/svenstucki/ERC677&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/token/ERC721/ERC721BasicToken.sol#L349&#34;&gt;https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/token/ERC721/ERC721BasicToken.sol#L349&lt;/a&gt;&lt;/li&gt;
@@ -952,16 +1055,16 @@
 &lt;/ul&gt;
 &lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;[1]&lt;a href=&#34;https://atn.io/resource/aareport.pdf&#34;&gt;ATN Report&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[2]&lt;a href=&#34;https://github.com/OpenZeppelin/openzeppelin-solidity/pull/1045&#34;&gt;OpenZeppelin removed ERC827&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[3]&lt;a href=&#34;https://github.com/ethereum/EIPs/issues/223&#34;&gt;ERC-223 Token Standard Proposal Draft&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[4]&lt;a href=&#34;https://github.com/ATNIO/atn-contracts/blob/7203781ad8d106ec6d1f9ca8305e76dd1274b181/src/ATN.sol#L114&#34;&gt;ATN.sol transferFrom()&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[5]&lt;a href=&#34;https://github.com/Dexaran/ERC223-token-standard/blob/16d350ec85d5b14b9dc857468c8e0eb4a10572d3/ERC223_Token.sol#L70&#34;&gt;ERC223_Token.sol transfer() function&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[6]&lt;a href=&#34;https://github.com/Dexaran/ERC223-token-standard/issues/50&#34;&gt;ERC223-token-standard Issue 50&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[7]&lt;a href=&#34;https://github.com/Dexaran/ERC223-token-standard/issues/51&#34;&gt;ERC223-token-standard Issue 51&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[8]&lt;a href=&#34;https://github.com/OpenZeppelin/openzeppelin-solidity/blob/f18c3bc438b366f9cb3a8613f5be160c2cbced5e/contracts/token/ERC827/ERC827Token.sol#L73&#34;&gt;ERC827Token.sol&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[9]&lt;a href=&#34;https://peckshield.com/2018/06/23/evilReflex/&#34;&gt;New evilReflex Bug Identified in Multiple ERC20 Smart Contracts (CVE-2018-12702, CVE-2018-12703)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[10]&lt;a href=&#34;https://huobiglobal.zendesk.com/hc/en-us/articles/360000110521-HADAX-Suspends-18T-and-GVE-Deposits-and-Withdrawals&#34;&gt;HADAX Suspends 18T and GVE Deposits and Withdrawals&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[1] &lt;a href=&#34;https://atn.io/resource/aareport.pdf&#34;&gt;ATN Report&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[2] &lt;a href=&#34;https://github.com/OpenZeppelin/openzeppelin-solidity/pull/1045&#34;&gt;OpenZeppelin removed ERC827&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[3] &lt;a href=&#34;https://github.com/ethereum/EIPs/issues/223&#34;&gt;ERC-223 Token Standard Proposal Draft&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[4] &lt;a href=&#34;https://github.com/ATNIO/atn-contracts/blob/7203781ad8d106ec6d1f9ca8305e76dd1274b181/src/ATN.sol#L114&#34;&gt;ATN.sol transferFrom()&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[5] [ERC223_Token.sol transfer() function](&lt;a href=&#34;https://github.com/Dexaran/ERC223-token-standard/blob/16d350ec85d5b14b9dc857468c8e0eb4a10572d3/ERC223&#34;&gt;https://github.com/Dexaran/ERC223-token-standard/blob/16d350ec85d5b14b9dc857468c8e0eb4a10572d3/ERC223&lt;/a&gt;_ Token.sol#L70)&lt;/li&gt;
+&lt;li&gt;[6] &lt;a href=&#34;https://github.com/Dexaran/ERC223-token-standard/issues/50&#34;&gt;ERC223-token-standard Issue 50&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[7] &lt;a href=&#34;https://github.com/Dexaran/ERC223-token-standard/issues/51&#34;&gt;ERC223-token-standard Issue 51&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[8] [ERC827Token.sol](&lt;a href=&#34;https://github.com/OpenZeppelin/openzeppelin-solidity/blob/f18c3bc438b366f9cb3a8613f5be160c2cbced5e/contracts/token/ERC827/&#34;&gt;https://github.com/OpenZeppelin/openzeppelin-solidity/blob/f18c3bc438b366f9cb3a8613f5be160c2cbced5e/contracts/token/ERC827/&lt;/a&gt; ERC827Token.sol#L73)&lt;/li&gt;
+&lt;li&gt;[9] &lt;a href=&#34;https://peckshield.com/2018/06/23/evilReflex/&#34;&gt;New evilReflex Bug Identified in Multiple ERC20 Smart Contracts (CVE-2018-12702, CVE-2018-12703)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[10] &lt;a href=&#34;https://huobiglobal.zendesk.com/hc/en-us/articles/360000110521-HADAX-Suspends-18T-and-GVE-Deposits-and-Withdrawals&#34;&gt;HADAX Suspends 18T and GVE Deposits and Withdrawals&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
       

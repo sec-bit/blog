@@ -1,27 +1,25 @@
 <!DOCTYPE html>
-<html
-  lang="zh-cn"
-  itemscope
-  itemtype="http://schema.org/WebPage"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>
-          零知识证明 Learn by Coding：libsnark 入门篇 - SECBIT Blog
-        </title>
-    
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage" data-theme="light">
+
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>
+  零知识证明 Learn by Coding：libsnark 入门篇 - SECBIT Blog
+  </title>
+
+
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
 
-<meta name="MobileOptimized" content="width"/>
-<meta name="HandheldFriendly" content="true"/>
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
 
 
 <meta name="applicable-device" content="pc,mobile">
 
-<meta name="theme-color" content="#f8f5ec" />
+<meta name="color-scheme" content="light dark" />
 <meta name="msapplication-navbutton-color" content="#f8f5ec">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
@@ -29,16 +27,15 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="p0n1" />
-  <meta name="description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。" />
+<meta name="description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。" />
 
-  <meta name="keywords" content="Blockchain, Smart Contract, Zero Knowledge Proof" />
-
-
-
+<meta name="keywords"
+  content="Blockchain, Smart Contract, Zero Knowledge Proof" />
 
 
 
-<meta name="generator" content="Hugo 0.120.4" />
+
+<meta name="generator" content="Hugo 0.136.5" />
 
 
 <link rel="canonical" href="https://sec-bit.github.io/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/" />
@@ -59,30 +56,41 @@
 
 
 
-<link rel="stylesheet" href="/blog/sass/jane.min.cb76cda4c6286b015fd7f3fbe9eb5efe14bc7cc74cb6e2888ddc36bb35ca96f5.css" integrity="sha256-y3bNpMYoawFf1/P76ete/hS8fMdMtuKIjdw2uzXKlvU=" media="screen" crossorigin="anonymous">
+
+<link rel="stylesheet" href="/blog/css/style.min.49a46fbd9a9a63db2d16a9bd6bddb7459d68e7176765beec331c19d668268297.css" integrity="sha256-SaRvvZqaY9stFqm9a923RZ1o5xdnZb7sMxwZ1mgmgpc=" media="screen"
+  crossorigin="anonymous">
 
 
 
 
 
 
-<link rel="stylesheet" href="/blog/css/custom.css">
+<link rel="stylesheet" href="/blog/css/">
 
 
-<meta property="og:title" content="零知识证明 Learn by Coding：libsnark 入门篇" />
-<meta property="og:description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://sec-bit.github.io/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2020-01-03T08:00:00+08:00" />
-<meta property="article:modified_time" content="2020-03-24T13:12:58+08:00" />
+<meta property="og:url" content="https://sec-bit.github.io/blog/2020/01/03/zkp-learn-by-coding-libsnark-101/">
+  <meta property="og:site_name" content="SECBIT Blog">
+  <meta property="og:title" content="零知识证明 Learn by Coding：libsnark 入门篇">
+  <meta property="og:description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2020-01-03T08:00:00+08:00">
+    <meta property="article:modified_time" content="2020-03-24T13:12:58+08:00">
+    <meta property="article:tag" content="Zero Knowledge Proof">
+    <meta property="article:tag" content="ZkSNARKs">
+    <meta property="article:tag" content="Libsnark">
+    <meta property="article:tag" content="Tutorials">
 
-<meta itemprop="name" content="零知识证明 Learn by Coding：libsnark 入门篇">
-<meta itemprop="description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。"><meta itemprop="datePublished" content="2020-01-03T08:00:00+08:00" />
-<meta itemprop="dateModified" content="2020-03-24T13:12:58+08:00" />
-<meta itemprop="wordCount" content="6613">
-<meta itemprop="keywords" content="Zero Knowledge Proof,zksnarks,libsnark,tutorials," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="零知识证明 Learn by Coding：libsnark 入门篇"/>
-<meta name="twitter:description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。"/>
+  <meta itemprop="name" content="零知识证明 Learn by Coding：libsnark 入门篇">
+  <meta itemprop="description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。">
+  <meta itemprop="datePublished" content="2020-01-03T08:00:00+08:00">
+  <meta itemprop="dateModified" content="2020-03-24T13:12:58+08:00">
+  <meta itemprop="wordCount" content="6643">
+  <meta itemprop="keywords" content="Zero Knowledge Proof,ZkSNARKs,Libsnark,Tutorials">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="零知识证明 Learn by Coding：libsnark 入门篇">
+  <meta name="twitter:description" content="希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -94,363 +102,313 @@
 <![endif]-->
 
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CVGF90VYL2"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-CVGF90VYL2', { 'anonymize_ip': false });
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-CVGF90VYL2"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-CVGF90VYL2');
+        }
+      </script>
+
+
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        renderMathInElement(document.body,
-            {
-                delimiters: [
-                    { left: "$$", right: "$$", display: true },
-                    { left: "$", right: "$", display: false },
-                ]
-            }
-        );
-    });
+  (function () {
+    var savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  })();
 </script>
 
-  </head>
-  <body>
-    <div id="back-to-top"></div>
+</head>
 
-    <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/blog" class="logo">SECBIT Blog</a>
+<body>
+  <div id="back-to-top"></div>
+
+  <header>
+    
+<div class="desktop-header">
+  <div class="desktop-header-logo">
+    <a href="/" class="logo">
+      
+      SECBIT Blog
+      
+    </a>
   </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <li class="mobile-menu-item">
+
+  <nav class="desktop-navbar">
+    <ul id="menu" class="menu">
+      
+      
+      <li class="menu-item">
         
-          
-          
-            <a class="menu-item-link" href="https://sec-bit.github.io/blog/">主页</a>
-          
         
-      </li><li class="mobile-menu-item">
         
-          
-          
-            <a class="menu-item-link" href="https://sec-bit.github.io/blog/post/">归档</a>
-          
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/">主页</a>
         
-      </li><li class="mobile-menu-item">
+
         
-          
-          
-            <a class="menu-item-link" href="https://sec-bit.github.io/blog/tags/">标签</a>
-          
+
+      </li>
+      
+      <li class="menu-item">
         
-      </li><li class="mobile-menu-item">
         
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/post/">归档</a>
+        
+
+        
+
+      </li>
+      
+      <li class="menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/tags/">标签</a>
+        
+
+        
+
+      </li>
+      
+      <li class="menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/categories/">分类</a>
+        
+
+        
+
+      </li>
+      
+
+      
+      <li class="menu-item">
+        
+        <a class="menu-item-link menu-parent menu-item-lang" href="#">
           
           
-            <a class="menu-item-link" href="https://sec-bit.github.io/blog/categories/">分类</a>
+<svg aria-hidden="true" class="lucide lucide-languages hi-svg-inline icon--languages" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+          中文
+        </a>
+        <ul class="submenu">
           
+          
+          <li class="submenu-item">
+            <a href="https://sec-bit.github.io/blog/en/">English</a>
+          </li>
+          
+          
+          
+          
+        </ul>
+      </li>
+      
+
+      
+      <li class="menu-item">
+        <a id="openSearch" class="menu-item-link menu-item-search" href="#">
+          
+<svg aria-hidden="true" class="lucide lucide-search hi-svg-inline icon--search" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </a>
+      </li>
+      
+
+      <li class="menu-item">
+        <a class="theme-toggle menu-item-link" href="javascript:void(0);">
+
+            
+<svg aria-hidden="true" class="lucide lucide-sun hi-svg-inline theme-icon-light" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+
+            
+<svg aria-hidden="true" class="lucide lucide-moon hi-svg-inline theme-icon-dark" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+          title="rss" target="_blank">
+          
+<svg aria-hidden="true" class="lucide lucide-rss hi-svg-inline icon--rss" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+        </a>
         
       </li>
-    <li class="mobile-menu-item">
+    </ul>
+  </nav>
+</div>
+
+    
+
+<div class="mobile-header">
+  <div id="mobile-navbar" class="mobile-navbar">
+    <div id="mobile-navbar-icon" class="mobile-navbar-icon">
+      
+<svg aria-hidden="true" class="lucide lucide-menu hi-svg-inline icon--menu" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+    </div>
+    <div class="mobile-navbar-logo">
+      <a href="/blog/%20/" class="logo">SECBIT Blog</a>
+    </div>
+  </div>
+
+  <div id="mobile-menu-close-modal" class="mobile-menu-close-modal"></div>
+  <nav id="mobile-menu" class="mobile-menu">
+    <ul class="mobile-menu-list">
+      <li class="mobile-menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/">主页</a>
+        
+        
+      </li><li class="mobile-menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/post/">归档</a>
+        
+        
+      </li><li class="mobile-menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/tags/">标签</a>
+        
+        
+      </li><li class="mobile-menu-item">
+        
+        
+        
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/categories/">分类</a>
+        
+        
+      </li>
+      <li class="mobile-menu-item">
         
         <div class="mobile-menu-parent mobile-menu-item-lang">
           <span class="mobile-submenu-open"></span>
           <a href="#">
             
-            <i class="iconfont">
-              <svg height="16" width="16" version="1.1" viewBox="0 0 128 128">
-  <path d="m 64.719501,1.4279814 c -34.694029,0 -62.8192028,28.1251726 -62.8192028,62.8192016 0,34.694036 28.1251738,62.819207 62.8192028,62.819207 4.245691,0 8.392744,-0.42239 12.402214,-1.2253 -1.616124,-0.77296 -1.792473,-6.57213 -0.194346,-9.87848 1.779059,-3.68082 7.361625,-13.00555 1.840404,-16.134231 -5.521221,-3.12869 -3.98755,-4.53968 -7.361625,-8.15914 -3.374083,-3.61947 -1.994181,-4.16357 -2.208492,-5.09179 -0.736158,-3.19004 3.251385,-7.975096 3.435429,-8.465866 0.184043,-0.490781 0.184043,-2.331182 0.122689,-2.883308 -0.06131,-0.552125 -2.515051,-2.024446 -3.12852,-2.085791 -0.613469,-0.06133 -0.920209,0.98154 -1.77906,1.042896 -0.858856,0.06133 -4.601018,-2.269838 -5.39853,-2.883308 -0.797504,-0.61346 -1.165591,-2.085792 -2.269828,-3.190033 -1.104247,-1.104252 -1.226945,-0.24539 -2.944651,-0.920206 -1.717714,-0.674812 -7.238935,-2.69926 -11.471867,-4.416975 -4.23294,-1.717714 -4.601019,-4.125615 -4.662365,-5.827954 -0.06131,-1.702333 -2.57657,-4.171587 -3.756227,-5.950646 -1.179335,-1.77906 -1.396914,-4.232932 -1.826339,-3.680809 -0.429425,0.552114 2.208484,6.993538 1.77906,7.177582 -0.429425,0.184043 -1.349635,-1.77906 -2.576572,-3.374083 -1.226936,-1.595016 1.28829,-0.736159 -2.637915,-8.465864 -3.926198,-7.729705 1.226944,-11.671284 1.472324,-15.704806 0.24539,-4.033514 3.312738,1.472325 1.717715,-1.104238 -1.595016,-2.576571 0.122697,-7.975094 -1.104246,-9.938197 -1.226936,-1.963102 -8.220475,2.208492 -8.220475,2.208492 0.184036,-1.901758 6.134682,-5.153142 10.428966,-8.1591366 4.294277,-3.005996 6.91682,-0.674813 10.367621,0.4294236 3.450803,1.104246 3.680817,0.736167 2.515226,-0.368079 -1.165591,-1.1042446 0.49077,-1.6563686 3.190031,-1.2269356 2.699269,0.429425 3.435428,3.6808086 7.545669,3.3740746 4.110242,-0.306735 0.429425,0.797511 0.981548,1.840412 0.552123,1.042892 -0.613468,0.920202 -3.312729,2.760607 -2.699262,1.840403 0.06131,1.840403 4.846407,5.337177 4.785055,3.496773 3.312729,-2.331183 2.821952,-4.907753 -0.490777,-2.576563 3.496773,-0.552115 3.496773,-0.552115 2.944651,1.963094 2.400546,0.107972 4.547684,0.782784 2.147139,0.674814 7.967076,5.597286 7.967076,5.597286 -7.300273,3.98755 -2.699261,4.416975 -1.472325,5.337178 1.226937,0.920202 -2.515218,2.699261 -2.515218,2.699261 -1.53367,-1.53367 -1.779059,0.06131 -2.760614,0.613476 -0.981548,0.552115 -0.06131,1.963095 -0.06131,1.963095 -5.076415,0.797512 -3.926198,6.13469 -3.864852,7.422971 0.06131,1.288289 -3.251385,3.251384 -4.110242,5.091796 -0.858857,1.840405 2.208491,5.827948 0.613468,6.073336 -1.595016,0.24539 -3.190031,-6.011991 -11.778601,-3.680808 -2.589322,0.702954 -8.343174,3.680808 -5.275824,9.754153 3.06734,6.073336 8.15913,-1.717714 9.876843,-0.858857 1.717714,0.858857 -0.490778,4.72371 -0.122691,4.785055 0.368079,0.06131 4.8464,0.168662 5.09179,5.398522 0.245388,5.229868 6.809502,4.785065 8.220482,4.907755 1.410972,0.12269 6.134682,-3.864859 6.809502,-4.048894 0.674815,-0.184034 3.374076,-2.453876 9.263377,0.920195 5.889301,3.374089 8.895296,2.883308 10.919743,4.294285 2.02445,1.410987 0.61347,4.232939 2.51523,5.153134 1.90175,0.920217 9.50876,-0.306736 11.41051,2.821966 1.90176,3.1287 -7.8524,18.833491 -10.91974,20.551201 -3.06734,1.71772 -4.478321,5.64392 -7.545665,8.15913 -3.067349,2.51523 -7.361625,5.62854 -11.410522,8.03646 -3.583968,2.1311 -4.228845,5.949 -5.825333,7.15419 28.11404,-6.24545 49.13623,-31.328971 49.13623,-61.323497 0,-34.694029 -28.125171,-62.8192016 -62.819206,-62.8192016 z M 79.442753,60.382331 c -0.858857,0.245389 -2.637917,1.840405 -6.993547,-0.736166 -4.35563,-2.576564 -7.361625,-2.085794 -7.729705,-2.515218 0,0 -0.368079,-1.0429 1.533671,-1.226937 3.905098,-0.378065 8.833951,3.619464 9.938196,3.680809 1.104246,0.06131 1.656361,-1.104245 3.619464,-0.471631 1.963103,0.631953 0.490777,1.023755 -0.368079,1.269143 z M 58.891546,7.6853614 c -0.427786,-0.311152 0.354344,-0.669418 0.82058,-1.288281 0.269103,-0.357613 0.0695,-0.951289 0.406356,-1.28829 0.92021,-0.920203 5.459876,-2.208485 4.572225,0.306734 -0.887321,2.515226 -5.12434,2.760614 -5.799161,2.269837 z m 10.98109,7.9750936 c -1.533672,-0.06131 -5.14381,-0.442837 -4.478321,-1.104246 2.591952,-2.576563 -0.981548,-3.312729 -3.190039,-3.496766 -2.208485,-0.184043 -3.128687,-1.4109786 -2.02444,-1.5336776 1.104237,-0.12269 5.521213,0.06139 6.257379,0.6748206 0.736158,0.613469 4.723709,2.208485 4.969099,3.374076 0.24538,1.16559 0,2.147138 -1.533678,2.085793 z M 83.184914,15.23103 c -1.226943,0.981547 -7.400887,-3.521968 -8.588569,-4.539674 -5.153134,-4.4169746 -7.913742,-2.9446486 -8.995903,-3.6808086 -1.082485,-0.736166 -0.696897,-1.717713 0.959464,-3.190039 1.656369,-1.472325 6.318732,0.490778 9.017994,0.797512 2.699262,0.306734 5.827955,2.392527 5.889301,4.871925 0.06131,2.4792256 2.944649,4.7595296 1.717713,5.7410846 z" />
-</svg>
-
-            </i>
+            
+<svg aria-hidden="true" class="lucide lucide-languages hi-svg-inline icon--languages" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+            中文
             语言
           </a>
         </div>
         <ul class="mobile-submenu-list">
           
-            <li>
-              
-                <a href="https://sec-bit.github.io/blog/en/">English</a>
-              
-            </li>
+          <li>
+            
+            <a href="https://sec-bit.github.io/blog/en/">English</a>
+            
+          </li>
           
-            <li>
-              
-                <a href="https://sec-bit.github.io/blog/"><strong>中文</strong></a>
-              
-            </li>
+          <li>
+            
+            <a href="https://sec-bit.github.io/blog/"><strong>中文</strong></a>
+            
+          </li>
           
         </ul>
       </li>
 
-    
+      
       <li class="mobile-menu-item">
         <a id="openSearchMobile" class="mobile-menu-item-link menu-item-search" href="#">
-          <i class="iconfont">
-            <svg version="1.1" viewBox="0 0 1024 1024"
-  xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-  xmlns:xlink="http://www.w3.org/1999/xlink">
-  <path d="M973.81454219 973.81454219a91.78207815 91.78207815 0 0 1-129.80999631 0l-161.97482118-161.97482118a425.48527711 425.48527711 0 0 1-230.35931791 68.16531768 428.3346319 428.3346319 0 1 1 428.3346319-428.3346319 425.48527711 425.48527711 0 0 1-68.16531768 230.35931791l162.02961656 161.97482118a91.83687354 91.83687354 0 0 1-0.05479538 129.80999631zM451.67040679 145.69361559a305.97679241 305.97679241 0 1 0 0 611.95358361 305.97679241 305.97679241 0 0 0 0-611.95358361z">
-  </path>
-</svg>
-
-          </i>
+          
+<svg aria-hidden="true" class="lucide lucide-search hi-svg-inline icon--search" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         </a>
       </li>
-    
-  </ul>
-</nav>
-
-
-    
       
 
+      <li class="mobile-menu-item">
+        <a class="theme-toggle menu-item-link" href="javascript:void(0);">
 
-
-
-
-
-  <link rel="stylesheet" href="/blog/lib/photoswipe/photoswipe.min.css" />
-  <link rel="stylesheet" href="/blog/lib/photoswipe/default-skin/default-skin.min.css" />
-
-
-
-
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-<div class="pswp__bg"></div>
-
-<div class="pswp__scroll-wrap">
-    
-    <div class="pswp__container">
-      <div class="pswp__item"></div>
-      <div class="pswp__item"></div>
-      <div class="pswp__item"></div>
-    </div>
-    
-    <div class="pswp__ui pswp__ui--hidden">
-    <div class="pswp__top-bar">
-      
-      <div class="pswp__counter"></div>
-      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-      <button class="pswp__button pswp__button--share" title="Share"></button>
-      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-      
-      
-      <div class="pswp__preloader">
-        <div class="pswp__preloader__icn">
-          <div class="pswp__preloader__cut">
-            <div class="pswp__preloader__donut"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-      <div class="pswp__share-tooltip"></div>
-    </div>
-    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-    </button>
-    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-    </button>
-    <div class="pswp__caption">
-      <div class="pswp__caption__center"></div>
-    </div>
-    </div>
-    </div>
-</div>
-
-    
-
-    
-      
-<div class="modal-dialog">
-    
-    <div class="modal-content">
-      <div id="closeSearch" title="Close" class="close">X</div>
-      <div class="modal-header">
-        <div class="modal-title">Search</div>
-      </div>
-      <div class="modal-body">
-          <script>
-            (function() {
-              var cx = '013402755253274635861:4rj70y1whw3';
-              var gcse = document.createElement('script');
-              gcse.type = 'text/javascript';
-              gcse.async = true;
-              gcse.src = (document.location.protocol == 'https:' ? 'https:' :
-                  'http:') +
-                '//cse.google.com/cse.js?cx=' + cx;
-              var s = document.getElementsByTagName('script')[0];
-              s.parentNode.insertBefore(gcse, s);
-            })();
-          </script>
-          <gcse:search></gcse:search>
-      </div>
-    </div>
-</div>
-
-    
-
-    
-
-
-    <header id="header" class="header">
-      <div class="logo-wrapper">
-  <a href="/blog" class="logo">
-    
-      SECBIT Blog
-    
-  </a>
-</div>
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    
-    
-        <li class="menu-item">
-        
-          
-          
-            <a class="menu-item-link" href="https://sec-bit.github.io/blog/">主页</a>
-          
-
-        
-
-      </li>
-    
-        <li class="menu-item">
-        
-          
-          
-            <a class="menu-item-link" href="https://sec-bit.github.io/blog/post/">归档</a>
-          
-
-        
-
-      </li>
-    
-        <li class="menu-item">
-        
-          
-          
-            <a class="menu-item-link" href="https://sec-bit.github.io/blog/tags/">标签</a>
-          
-
-        
-
-      </li>
-    
-        <li class="menu-item">
-        
-          
-          
-            <a class="menu-item-link" href="https://sec-bit.github.io/blog/categories/">分类</a>
-          
-
-        
-
-      </li>
-    
-
-    
-    <li class="menu-item">
-        
-        <a class="menu-item-link menu-parent menu-item-lang" href="#">
-          
-          <i class="iconfont">
-            <svg height="16" width="16" version="1.1" viewBox="0 0 128 128">
-  <path d="m 64.719501,1.4279814 c -34.694029,0 -62.8192028,28.1251726 -62.8192028,62.8192016 0,34.694036 28.1251738,62.819207 62.8192028,62.819207 4.245691,0 8.392744,-0.42239 12.402214,-1.2253 -1.616124,-0.77296 -1.792473,-6.57213 -0.194346,-9.87848 1.779059,-3.68082 7.361625,-13.00555 1.840404,-16.134231 -5.521221,-3.12869 -3.98755,-4.53968 -7.361625,-8.15914 -3.374083,-3.61947 -1.994181,-4.16357 -2.208492,-5.09179 -0.736158,-3.19004 3.251385,-7.975096 3.435429,-8.465866 0.184043,-0.490781 0.184043,-2.331182 0.122689,-2.883308 -0.06131,-0.552125 -2.515051,-2.024446 -3.12852,-2.085791 -0.613469,-0.06133 -0.920209,0.98154 -1.77906,1.042896 -0.858856,0.06133 -4.601018,-2.269838 -5.39853,-2.883308 -0.797504,-0.61346 -1.165591,-2.085792 -2.269828,-3.190033 -1.104247,-1.104252 -1.226945,-0.24539 -2.944651,-0.920206 -1.717714,-0.674812 -7.238935,-2.69926 -11.471867,-4.416975 -4.23294,-1.717714 -4.601019,-4.125615 -4.662365,-5.827954 -0.06131,-1.702333 -2.57657,-4.171587 -3.756227,-5.950646 -1.179335,-1.77906 -1.396914,-4.232932 -1.826339,-3.680809 -0.429425,0.552114 2.208484,6.993538 1.77906,7.177582 -0.429425,0.184043 -1.349635,-1.77906 -2.576572,-3.374083 -1.226936,-1.595016 1.28829,-0.736159 -2.637915,-8.465864 -3.926198,-7.729705 1.226944,-11.671284 1.472324,-15.704806 0.24539,-4.033514 3.312738,1.472325 1.717715,-1.104238 -1.595016,-2.576571 0.122697,-7.975094 -1.104246,-9.938197 -1.226936,-1.963102 -8.220475,2.208492 -8.220475,2.208492 0.184036,-1.901758 6.134682,-5.153142 10.428966,-8.1591366 4.294277,-3.005996 6.91682,-0.674813 10.367621,0.4294236 3.450803,1.104246 3.680817,0.736167 2.515226,-0.368079 -1.165591,-1.1042446 0.49077,-1.6563686 3.190031,-1.2269356 2.699269,0.429425 3.435428,3.6808086 7.545669,3.3740746 4.110242,-0.306735 0.429425,0.797511 0.981548,1.840412 0.552123,1.042892 -0.613468,0.920202 -3.312729,2.760607 -2.699262,1.840403 0.06131,1.840403 4.846407,5.337177 4.785055,3.496773 3.312729,-2.331183 2.821952,-4.907753 -0.490777,-2.576563 3.496773,-0.552115 3.496773,-0.552115 2.944651,1.963094 2.400546,0.107972 4.547684,0.782784 2.147139,0.674814 7.967076,5.597286 7.967076,5.597286 -7.300273,3.98755 -2.699261,4.416975 -1.472325,5.337178 1.226937,0.920202 -2.515218,2.699261 -2.515218,2.699261 -1.53367,-1.53367 -1.779059,0.06131 -2.760614,0.613476 -0.981548,0.552115 -0.06131,1.963095 -0.06131,1.963095 -5.076415,0.797512 -3.926198,6.13469 -3.864852,7.422971 0.06131,1.288289 -3.251385,3.251384 -4.110242,5.091796 -0.858857,1.840405 2.208491,5.827948 0.613468,6.073336 -1.595016,0.24539 -3.190031,-6.011991 -11.778601,-3.680808 -2.589322,0.702954 -8.343174,3.680808 -5.275824,9.754153 3.06734,6.073336 8.15913,-1.717714 9.876843,-0.858857 1.717714,0.858857 -0.490778,4.72371 -0.122691,4.785055 0.368079,0.06131 4.8464,0.168662 5.09179,5.398522 0.245388,5.229868 6.809502,4.785065 8.220482,4.907755 1.410972,0.12269 6.134682,-3.864859 6.809502,-4.048894 0.674815,-0.184034 3.374076,-2.453876 9.263377,0.920195 5.889301,3.374089 8.895296,2.883308 10.919743,4.294285 2.02445,1.410987 0.61347,4.232939 2.51523,5.153134 1.90175,0.920217 9.50876,-0.306736 11.41051,2.821966 1.90176,3.1287 -7.8524,18.833491 -10.91974,20.551201 -3.06734,1.71772 -4.478321,5.64392 -7.545665,8.15913 -3.067349,2.51523 -7.361625,5.62854 -11.410522,8.03646 -3.583968,2.1311 -4.228845,5.949 -5.825333,7.15419 28.11404,-6.24545 49.13623,-31.328971 49.13623,-61.323497 0,-34.694029 -28.125171,-62.8192016 -62.819206,-62.8192016 z M 79.442753,60.382331 c -0.858857,0.245389 -2.637917,1.840405 -6.993547,-0.736166 -4.35563,-2.576564 -7.361625,-2.085794 -7.729705,-2.515218 0,0 -0.368079,-1.0429 1.533671,-1.226937 3.905098,-0.378065 8.833951,3.619464 9.938196,3.680809 1.104246,0.06131 1.656361,-1.104245 3.619464,-0.471631 1.963103,0.631953 0.490777,1.023755 -0.368079,1.269143 z M 58.891546,7.6853614 c -0.427786,-0.311152 0.354344,-0.669418 0.82058,-1.288281 0.269103,-0.357613 0.0695,-0.951289 0.406356,-1.28829 0.92021,-0.920203 5.459876,-2.208485 4.572225,0.306734 -0.887321,2.515226 -5.12434,2.760614 -5.799161,2.269837 z m 10.98109,7.9750936 c -1.533672,-0.06131 -5.14381,-0.442837 -4.478321,-1.104246 2.591952,-2.576563 -0.981548,-3.312729 -3.190039,-3.496766 -2.208485,-0.184043 -3.128687,-1.4109786 -2.02444,-1.5336776 1.104237,-0.12269 5.521213,0.06139 6.257379,0.6748206 0.736158,0.613469 4.723709,2.208485 4.969099,3.374076 0.24538,1.16559 0,2.147138 -1.533678,2.085793 z M 83.184914,15.23103 c -1.226943,0.981547 -7.400887,-3.521968 -8.588569,-4.539674 -5.153134,-4.4169746 -7.913742,-2.9446486 -8.995903,-3.6808086 -1.082485,-0.736166 -0.696897,-1.717713 0.959464,-3.190039 1.656369,-1.472325 6.318732,0.490778 9.017994,0.797512 2.699262,0.306734 5.827955,2.392527 5.889301,4.871925 0.06131,2.4792256 2.944649,4.7595296 1.717713,5.7410846 z" />
-</svg>
-
-          </i>
-          中文
-        </a>
-        <ul class="submenu">
-          
             
-              <li class="submenu-item">
-                <a href="https://sec-bit.github.io/blog/en/">English</a>
-              </li>
-            
-          
-            
-          
-        </ul>
-      </li>
-    
+<svg aria-hidden="true" class="lucide lucide-sun hi-svg-inline theme-icon-light" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
 
-    
-      <li class="menu-item">
-        <a id="openSearch" class="menu-item-link menu-item-search" href="#">
-          <i class="iconfont">
-            <svg version="1.1" viewBox="0 0 1024 1024"
-  xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-  xmlns:xlink="http://www.w3.org/1999/xlink">
-  <path d="M973.81454219 973.81454219a91.78207815 91.78207815 0 0 1-129.80999631 0l-161.97482118-161.97482118a425.48527711 425.48527711 0 0 1-230.35931791 68.16531768 428.3346319 428.3346319 0 1 1 428.3346319-428.3346319 425.48527711 425.48527711 0 0 1-68.16531768 230.35931791l162.02961656 161.97482118a91.83687354 91.83687354 0 0 1-0.05479538 129.80999631zM451.67040679 145.69361559a305.97679241 305.97679241 0 1 0 0 611.95358361 305.97679241 305.97679241 0 0 0 0-611.95358361z">
-  </path>
-</svg>
+            
+<svg aria-hidden="true" class="lucide lucide-moon hi-svg-inline theme-icon-dark" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
 
-          </i>
         </a>
       </li>
-    
-  </ul>
-</nav>
 
-    </header>
-
-    <div id="mobile-panel">
-      <main id="main" class="main bg-llight wallpaper">
-        <div class="content-wrapper">
-    <div id="content" class="content">
-      <article class="post">
-        
-        <header class="post-header">
-          <h1 class="post-title">零知识证明 Learn by Coding：libsnark 入门篇</h1>
+      <li class="mobile-menu-item">
+        <a class="menu-item-link" href="https://sec-bit.github.io/blog/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+          title="rss" target="_blank">
           
+<svg aria-hidden="true" class="lucide lucide-rss hi-svg-inline icon--rss" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+        </a>
+        
+      </li>
+    </ul>
+  </nav>
+</div>
 
-          <div class="post-meta">
-  <div class="post-meta-author">
-    by
-      p0n1
+  </header>
+
+  
+
+  
+
+
+
+  <main id="main" class="main pico container">
+    <div class="content-wrapper">
+  <aside class="sidebar">
+  </aside>
+  <div id="content" class="content">
+    <article class="post">
+      
+      <header class="post-header">
+        <h1 class="post-title">零知识证明 Learn by Coding：libsnark 入门篇</h1>
+        
+
+
+
+        <div class="post-meta-list">
+  <div class="post-meta-item post-meta-author">
+    
+<svg aria-hidden="true" class="lucide lucide-user-round-pen hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M2 21a8 8 0 0 1 10.821-7.487"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="8" r="5"/></svg>
+    p0n1
     
   </div>
 
-  <div class="post-meta-time">
-    <time datetime="2020-01-03">
+  <div class="post-meta-item post-meta-time">
+    
+<svg aria-hidden="true" class="lucide lucide-calendar-days hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+    <time datetime=" 2020-01-03">
       2020-01-03
     </time>
-  </div>
 
-  
-    <div class="post-meta-lastmod">
+
+    
+    <span class="post-meta-item post-meta-lastmod">
       (上次更新:
       2020-03-24)
-    </div>
-  
+    </span>
+    
+
+  </div>
 
 
   <div class="post-meta__right">
     
 
-    <div class="post-meta-category">
-        <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
-          <a href="https://sec-bit.github.io/blog/categories/zksnarks/"> zkSNARKs </a>
-          
-      </div>
+    <div class="post-meta-item post-meta-category">
+      <a href="https://sec-bit.github.io/blog/categories/zero-knowledge-proof/"> Zero Knowledge Proof </a>
+      <a href="https://sec-bit.github.io/blog/categories/zksnarks/"> zkSNARKs </a>
+      
+    </div>
 
 
     
@@ -462,11 +420,11 @@ if (!doNotTrack) {
   </div>
 </div>
 
-        </header>
+      </header>
 
-        
-        <div class="post-content">
-          <p>libsnark 是目前实现 zk-SNARKs 电路最重要的框架，在众多私密交易或隐私计算相关项目间广泛应用，其中最著名当然要数 Zcash。Zcash 在 Sapling 版本升级前一直使用 libsnark 来实现电路（之后才替换为 bellman）。毫不夸张地说，libsnark 支撑并促进了 zk-SNARKs 技术的<strong>首次大规模应用</strong>，填补了零知识证明技术从最新理论到工程实现间的空缺。</p>
+      
+      <div class="post-content">
+        <p>libsnark 是目前实现 zk-SNARKs 电路最重要的框架，在众多私密交易或隐私计算相关项目间广泛应用，其中最著名当然要数 Zcash。Zcash 在 Sapling 版本升级前一直使用 libsnark 来实现电路（之后才替换为 bellman）。毫不夸张地说，libsnark 支撑并促进了 zk-SNARKs 技术的<strong>首次大规模应用</strong>，填补了零知识证明技术从最新理论到工程实现间的空缺。</p>
 <p>希望通过本系列文章，所有开发者都能亲自上手实践，在短时间内迅速入门 libsnark，一步步了解 libsnark 的基本概念，学会如何开发 zk-SNARKs 电路，完成证明的生成和验证，最终将零知识证明应用到真实业务中去。</p>
 <h2 id="1-zk-snarks-和-libsnark-背景简介">1. zk-SNARKs 和 libsnark 背景简介</h2>
 <p>零知识证明，可能是目前最具应用前景和想象力的密码学黑科技。而 zk-SNARKs 正是一类零知识证明方案的简称，全称为 Zero-Knowledge Succinct Non-interactive Arguments of Knowledge。这一名字几乎包含了其所有技术特征，即可以在不泄露任何其他信息的前提下证明一个命题的正确性，并且最终生成的证明具有简洁性（Succinct），也就是说最终生成的证明足够小，并且与计算量大小无关，是一个常数。用白话说就是，你理论上可以在不暴露任何隐私的情况下向其他所有人证明某件事，并且生成的证明体积很小，校验成本很低，与需要证明的内容计算量无关。听起来简直太美好了！</p>
@@ -527,7 +485,12 @@ if (!doNotTrack) {
 </ol>
 <p>不妨用一个十分简短（简化）的例子，来对照上面四个步骤。该例子模仿自<a href="https://media.consensys.net/introduction-to-zksnarks-with-examples-3283b554fc3b">这篇文章</a>。</p>
 <p>有这样一个函数 <code>C(x, out)</code>，用于判断秘密 <code>x</code> 是否满足等式 <code>x^3 + x + 5 == out</code>，若满足则返回 <code>true</code>。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-2">2</a>
@@ -536,12 +499,18 @@ if (!doNotTrack) {
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">C</span>(<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">out</span>) {
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> ( <span style="color:#a6e22e">x</span><span style="color:#f92672">^</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">out</span> );
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></td></tr></table>
 </div>
-</div><p><strong>第一步</strong>，我们需要将函数 <code>C(x, out)</code> 在 libsnark 中进行表达。此处先省略，后面介绍详细过程。</p>
+</div>
+</div>
+<p><strong>第一步</strong>，我们需要将函数 <code>C(x, out)</code> 在 libsnark 中进行表达。此处先省略，后面介绍详细过程。</p>
 <p><strong>第二步</strong>，对应下面的 Generator 函数（<em><strong>G</strong></em>），<code>lambda</code> 为随机产生，也就是常说的 trusted setup 过程中产生的 &ldquo;toxic waste&rdquo;。人们喜欢称它为“有毒废物”，是因为它必须被妥善处理（如必须销毁，不能让任何人知道），否则会影响证明协议安全。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-2">2</a>
@@ -550,91 +519,145 @@ if (!doNotTrack) {
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">lambda</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">random</span>()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>(<span style="color:#a6e22e">pk</span>, <span style="color:#a6e22e">vk</span>) <span style="color:#f92672">=</span> <span style="color:#a6e22e">G</span>(<span style="color:#a6e22e">C</span>, <span style="color:#a6e22e">lambda</span>)
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>(<span style="color:#a6e22e">pk</span>, <span style="color:#a6e22e">vk</span>) <span style="color:#f92672">=</span> <span style="color:#a6e22e">G</span>(<span style="color:#a6e22e">C</span>, <span style="color:#a6e22e">lambda</span>)</span></span></code></pre></td></tr></table>
 </div>
-</div><p>最终生成 proving key (<code>pk</code>) 和 verification key (<code>vk</code>)。</p>
+</div>
+</div>
+<p>最终生成 proving key (<code>pk</code>) 和 verification key (<code>vk</code>)。</p>
 <p><strong>第三步</strong>，对应使用 Prove 函数（<em><strong>P</strong></em>）生成证明。这里想证明的是 prover 知道一个秘密值 <code>x</code> 和计算结果 <code>out</code> 可使等式满足。因此将 <code>x</code>、<code>out</code> 还有 <code>pk</code> 作为输入一起传给 <em><strong>P</strong></em>，最终生成证明 <code>proof</code>。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-1">1</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">proof</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">P</span>(<span style="color:#a6e22e">pk</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">x</span>)
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">proof</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">P</span>(<span style="color:#a6e22e">pk</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">x</span>)</span></span></code></pre></td></tr></table>
 </div>
-</div><p><strong>第四步</strong>，对应使用 Verify 函数（<em><strong>V</strong></em>）验证证明，将 <code>proof</code>、<code>out</code> 还有 <code>vk</code> 传给 <em><strong>G</strong></em>，即可在不暴露秘密的情况下证明存在一个秘密值可使等式满足。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p><strong>第四步</strong>，对应使用 Verify 函数（<em><strong>V</strong></em>）验证证明，将 <code>proof</code>、<code>out</code> 还有 <code>vk</code> 传给 <em><strong>G</strong></em>，即可在不暴露秘密的情况下证明存在一个秘密值可使等式满足。</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-1">1</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">V</span>(<span style="color:#a6e22e">vk</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">proof</span>) <span style="color:#f92672">?=</span> <span style="color:#66d9ef">true</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">V</span>(<span style="color:#a6e22e">vk</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">proof</span>) <span style="color:#f92672">?=</span> <span style="color:#66d9ef">true</span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>而<strong>开发者主要工作量就集中在第一步</strong>，需要按照 libsnark 的接口规则手写 C++ 电路代码来描述命题，由代码构造 R1CS 约束。整个过程也即对应下图的 Computation -&gt; Arithmetic Circuit -&gt; R1CS。</p>
+</div>
+</div>
+<p>而<strong>开发者主要工作量就集中在第一步</strong>，需要按照 libsnark 的接口规则手写 C++ 电路代码来描述命题，由代码构造 R1CS 约束。整个过程也即对应下图的 Computation -&gt; Arithmetic Circuit -&gt; R1CS。</p>
 <p><img src="img/flow.png" alt="flow"></p>
 <h2 id="3-搭建-zk-snarks-应用开发环境">3. 搭建 zk-SNARKs 应用开发环境</h2>
 <p>下面进入动手环节，快速上手 libsnark，跑通例子。</p>
 <p>先下载本文对应的 libsnark 最小可用例子代码库 <code>libsnark_abc</code>。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-1">1</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git clone https://github.com/sec-bit/libsnark_abc.git
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git clone https://github.com/sec-bit/libsnark_abc.git</span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="img/github.png" alt="github"></p>
+</div>
+</div>
+<p><img src="img/github.png" alt="github"></p>
 <p>通过 git submodule 拉取 libsnark 代码。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-2">2</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd libsnark_abc
-</span></span><span style="display:flex;"><span>git submodule update --init --recursive
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>git submodule update --init --recursive</span></span></code></pre></td></tr></table>
 </div>
-</div><p>参考 libsnark <a href="https://github.com/scipr-lab/libsnark#dependencies">项目文档</a>完成相关依赖安装。以 Ubuntu 16.04 LTS 为例，需安装以下组件：</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>参考 libsnark <a href="https://github.com/scipr-lab/libsnark#dependencies">项目文档</a>完成相关依赖安装。以 Ubuntu 16.04 LTS 为例，需安装以下组件：</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-6-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-6-1">1</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo apt-get install build-essential cmake git libgmp3-dev libprocps4-dev python-markdown libboost-all-dev libssl-dev
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo apt-get install build-essential cmake git libgmp3-dev libprocps4-dev python-markdown libboost-all-dev libssl-dev</span></span></code></pre></td></tr></table>
 </div>
-</div><p>初始化 <code>build</code> 文件夹。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>初始化 <code>build</code> 文件夹。</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-7-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-7-1">1</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build <span style="color:#f92672">&amp;&amp;</span> cmake ..
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build <span style="color:#f92672">&amp;&amp;</span> cmake ..</span></span></code></pre></td></tr></table>
 </div>
-</div><p>这步在 macOS 系统可能会遇到问题，参考<a href="https://github.com/scipr-lab/libsnark/issues/99#issuecomment-367677834">这个 issue</a> 处理。或尝试使用以下命令：</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>这步在 macOS 系统可能会遇到问题，参考<a href="https://github.com/scipr-lab/libsnark/issues/99#issuecomment-367677834">这个 issue</a> 处理。或尝试使用以下命令：</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-8-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-8-1">1</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build <span style="color:#f92672">&amp;&amp;</span> CPPFLAGS<span style="color:#f92672">=</span>-I/usr/local/opt/openssl/include LDFLAGS<span style="color:#f92672">=</span>-L/usr/local/opt/openssl/lib PKG_CONFIG_PATH<span style="color:#f92672">=</span>/usr/local/opt/openssl/lib/pkgconfig cmake -DWITH_PROCPS<span style="color:#f92672">=</span>OFF -DWITH_SUPERCOP<span style="color:#f92672">=</span>OFF ..
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build <span style="color:#f92672">&amp;&amp;</span> CPPFLAGS<span style="color:#f92672">=</span>-I/usr/local/opt/openssl/include LDFLAGS<span style="color:#f92672">=</span>-L/usr/local/opt/openssl/lib PKG_CONFIG_PATH<span style="color:#f92672">=</span>/usr/local/opt/openssl/lib/pkgconfig cmake -DWITH_PROCPS<span style="color:#f92672">=</span>OFF -DWITH_SUPERCOP<span style="color:#f92672">=</span>OFF ..</span></span></code></pre></td></tr></table>
 </div>
-</div><p>成功后，依旧在 <code>build</code> 目录进行编译。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>成功后，依旧在 <code>build</code> 目录进行编译。</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-9-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-9-1">1</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>make
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>make</span></span></code></pre></td></tr></table>
 </div>
-</div><p>编译成功后，在 <code>build/src</code> 目录中可看到 3 个二进制文件。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>编译成功后，在 <code>build/src</code> 目录中可看到 3 个二进制文件。</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-10-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-10-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-10-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-10-2">2</a>
@@ -643,26 +666,38 @@ if (!doNotTrack) {
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>main
 </span></span><span style="display:flex;"><span>range
-</span></span><span style="display:flex;"><span>test
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>test</span></span></code></pre></td></tr></table>
 </div>
-</div><p>到这儿，你就以及完成示例项目的编译啦。尝试运行示例代码吧。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>到这儿，你就以及完成示例项目的编译啦。尝试运行示例代码吧。</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-11-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-11-1">1</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>./src/main
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>./src/main</span></span></code></pre></td></tr></table>
 </div>
-</div><p>最终出现如下日志，则说明一切正常。<strong>你已顺利拥有了 zkSNARK 应用开发环境，并成功跑了第一个 zk-SNARKs 的 demo</strong>。</p>
+</div>
+</div>
+<p>最终出现如下日志，则说明一切正常。<strong>你已顺利拥有了 zkSNARK 应用开发环境，并成功跑了第一个 zk-SNARKs 的 demo</strong>。</p>
 <p><img src="img/run-main.png" alt="run-main"></p>
 <hr>
 <h2 id="4-理解示例代码">4. 理解示例代码</h2>
 <p>下面我们一起来仔细瞅瞅代码。示例项目包含了 3 份代码（也可查看文末附录）。</p>
 <p><strong>不妨先看看 <code>src/main.cpp</code></strong>。这个例子来自 Howard Wu 的 <a href="https://github.com/howardwu/libsnark-tutorial">libsnark_tutorial</a>，他也是 libsnark 作者之一哦。本文 <code>libsnark_abc</code> 的项目结构就是依照他的 <code>libsnark_tutorial</code> 搭建，属于“官方推荐风格” ，请放心食用 😆。</p>
 <p>只有区区几十行代码，其中 <code>run_r1cs_gg_ppzksnark()</code> 是主要部分。很容易发现，真正起作用的实质代码只有下面 5 行。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-12-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-12-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-12-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-12-2">2</a>
@@ -683,13 +718,19 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">bool</span> ans <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_verifier_strong_IC<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(keypair.vk, example.primary_input, proof);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">bool</span> ans2 <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_online_verifier_strong_IC<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(pvk, example.primary_input, proof);
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">bool</span> ans2 <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_online_verifier_strong_IC<span style="color:#f92672">&lt;</span>ppT<span style="color:#f92672">&gt;</span>(pvk, example.primary_input, proof);</span></span></code></pre></td></tr></table>
 </div>
-</div><p>仅从“超长”的函数名就能看出来每步是在做什么，但是却看不到如何构造电路的细节。实际上这里仅仅是调用了自带的 <code>r1cs_example</code>，隐去了实现细节。</p>
+</div>
+</div>
+<p>仅从“超长”的函数名就能看出来每步是在做什么，但是却看不到如何构造电路的细节。实际上这里仅仅是调用了自带的 <code>r1cs_example</code>，隐去了实现细节。</p>
 <p>既然如此，<strong>那让我们通过一个更直观的例子来学习电路细节</strong>。研究 <code>src/test.cpp</code>，这个例子改编自 Christian Lundkvist 的 <a href="https://github.com/christianlundkvist/libsnark-tutorial">libsnark-tutorial</a>。</p>
 <p>代码开头仅引用了三个头文件，分别是：</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-13-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-13-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-13-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-13-2">2</a>
@@ -698,25 +739,37 @@ if (!doNotTrack) {
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/common/default_types/r1cs_gg_ppzksnark_pp.hpp&gt;</span><span style="color:#75715e">
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/zk_proof_systems/ppzksnark/r1cs_gg_ppzksnark/r1cs_gg_ppzksnark.hpp&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/gadgetlib1/pb_variable.hpp&gt;</span><span style="color:#75715e">
-</span></span></span></code></pre></td></tr></table>
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libsnark/gadgetlib1/pb_variable.hpp&gt;</span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>前面提到 <code>r1cs_gg_ppzksnark</code> 对应的是 Groth16 方案。这里加了 <code>gg</code> 是为了区别 <code>r1cs_ppzksnark</code>（也就是 BCTV14a 方案），表示 Generic Group Model（通用群模型）。Groth16 安全性证明依赖 Generic Group Model，以更强的安全假设换得了更好的性能和更短的证明。</p>
+</div>
+</div>
+<p>前面提到 <code>r1cs_gg_ppzksnark</code> 对应的是 Groth16 方案。这里加了 <code>gg</code> 是为了区别 <code>r1cs_ppzksnark</code>（也就是 BCTV14a 方案），表示 Generic Group Model（通用群模型）。Groth16 安全性证明依赖 Generic Group Model，以更强的安全假设换得了更好的性能和更短的证明。</p>
 <p>第一个头文件是为了引入 <code>default_r1cs_gg_ppzksnark_pp</code> 类型，第二个则为了引入证明相关的各个接口。<code>pb_variable</code> 则是用来定义电路相关的变量。</p>
 <p>下面需要进行一些初始化，定义使用的有限域，并初始化曲线参数。这是相当于每次的准备工作。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-14-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-14-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-14-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-14-2">2</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> libff<span style="color:#f92672">::</span>Fr<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> FieldT;
-</span></span><span style="display:flex;"><span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">::</span>init_public_params();
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">::</span>init_public_params();</span></span></code></pre></td></tr></table>
 </div>
-</div><p>接下来就需要明确「待证命题」是什么。这里不妨沿用之前的例子，证明秘密 <code>x</code> 满足等式 <code>x^3 + x + 5 == out</code>。这实际也是 Vitalik 博文 <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">&ldquo;Quadratic Arithmetic Programs: from Zero to Hero&rdquo;</a> 中用的例子。如果对下面的变化陌生，可尝试阅读该博文。</p>
+</div>
+</div>
+<p>接下来就需要明确「待证命题」是什么。这里不妨沿用之前的例子，证明秘密 <code>x</code> 满足等式 <code>x^3 + x + 5 == out</code>。这实际也是 Vitalik 博文 <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">&ldquo;Quadratic Arithmetic Programs: from Zero to Hero&rdquo;</a> 中用的例子。如果对下面的变化陌生，可尝试阅读该博文。</p>
 <p>通过引入中间变量 <code>sym_1</code>、<code>y</code>、<code>sym_2</code> 将 <code>x^3 + x + 5 = out</code> 扁平化为若干个二次方程式，几个只涉及简单乘法或加法的式子，<strong>对应到算术电路中就是乘法门和加法门</strong>。你可以很容易地在纸上画出对应的电路。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-15-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-15-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-15-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-15-2">2</a>
@@ -727,12 +780,18 @@ if (!doNotTrack) {
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>x * x = sym_1
 </span></span><span style="display:flex;"><span>sym_1 * x = y
 </span></span><span style="display:flex;"><span>y + x = sym_2
-</span></span><span style="display:flex;"><span>sym_2 + 5 = out
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>sym_2 + 5 = out</span></span></code></pre></td></tr></table>
 </div>
-</div><p>通常文章到这里便会顺着介绍如何按照 R1CS 的形式编排上面的几个等式，并一步步推导出具体对应的向量。这对理解如何把 Gate 转换为 R1CS 有帮助，然而却不是本文的核心目的。所以此处省略一百字。</p>
+</div>
+</div>
+<p>通常文章到这里便会顺着介绍如何按照 R1CS 的形式编排上面的几个等式，并一步步推导出具体对应的向量。这对理解如何把 Gate 转换为 R1CS 有帮助，然而却不是本文的核心目的。所以此处省略一百字。</p>
 <p>下面定义与命题相关的变量。首先创建的 <code>protoboard</code> 是 libsnark 中的一个重要概念，顾名思义就是<strong>原型板</strong>或者<strong>面包板</strong>，用来快速搭建电路，在 zk-SNARKs 电路中则是用来关联所有变量、组件和约束。接下来的代码定义了所有需要外部输入的变量以及中间变量。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-16-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-16-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-16-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-16-2">2</a>
@@ -753,11 +812,17 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> sym_1;
 </span></span><span style="display:flex;"><span>pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> y;
 </span></span><span style="display:flex;"><span>pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> sym_2;
-</span></span><span style="display:flex;"><span>pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> out;
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> out;</span></span></code></pre></td></tr></table>
 </div>
-</div><p>下面将各个变量与 <code>protoboard</code> 连接，相当于把各个元器件插到“面包板”上。<code>allocate()</code> 函数的第二个 string 类型变量仅是用来方便 DEBUG 时的注释，方便 DEBUG 时查看日志。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>下面将各个变量与 <code>protoboard</code> 连接，相当于把各个元器件插到“面包板”上。<code>allocate()</code> 函数的第二个 string 类型变量仅是用来方便 DEBUG 时的注释，方便 DEBUG 时查看日志。</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-17-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-17-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-17-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-17-2">2</a>
@@ -772,12 +837,18 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>sym_1.allocate(pb, <span style="color:#e6db74">&#34;sym_1&#34;</span>);
 </span></span><span style="display:flex;"><span>y.allocate(pb, <span style="color:#e6db74">&#34;y&#34;</span>);
 </span></span><span style="display:flex;"><span>sym_2.allocate(pb, <span style="color:#e6db74">&#34;sym_2&#34;</span>);
-</span></span><span style="display:flex;"><span>pb.set_input_sizes(<span style="color:#ae81ff">1</span>);
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>pb.set_input_sizes(<span style="color:#ae81ff">1</span>);</span></span></code></pre></td></tr></table>
 </div>
-</div><p>注意，<strong>此处第一个与 <code>pb</code> 连接的是 <code>out</code> 变量</strong>。我们知道 zk-SNARKs 中有 public input 和 private witness 的概念，分别对应 libsnark 中的 primary 和 auxiliary 变量。那么如何在代码中进行区分呢？我们需要借助 <code>set_input_sizes(n)</code> 来声明与 protoboard 连接的 public/primary 变量的个数 <code>n</code>。在这里 <code>n = 1</code>，表明与 <code>pb</code> 连接的<strong>前 <code>n = 1</code> 个变量</strong>是 public 的，其余都是 private 的。</p>
+</div>
+</div>
+<p>注意，<strong>此处第一个与 <code>pb</code> 连接的是 <code>out</code> 变量</strong>。我们知道 zk-SNARKs 中有 public input 和 private witness 的概念，分别对应 libsnark 中的 primary 和 auxiliary 变量。那么如何在代码中进行区分呢？我们需要借助 <code>set_input_sizes(n)</code> 来声明与 protoboard 连接的 public/primary 变量的个数 <code>n</code>。在这里 <code>n = 1</code>，表明与 <code>pb</code> 连接的<strong>前 <code>n = 1</code> 个变量</strong>是 public 的，其余都是 private 的。</p>
 <p>至此， 所有变量都已经顺利与 protoboard 相连，下面需要确定的是这些变量间的约束关系。这个也很好理解，类似元器件插至面包板后，需要根据电路需求确定他们之间的关系再连线焊接。如下调用 protoboard 的 <code>add_r1cs_constraint()</code> 函数，为 <code>pb</code> 添加形如 <code>a * b = c</code> 的 <code>r1cs_constraint</code>。即 <code>r1cs_constraint&lt;FieldT&gt;(a, b, c)</code> 中参数应该满足 <code>a * b = c</code>。根据注释不难理解每个等式和约束之间的关系。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-18-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-18-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-18-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-18-2">2</a>
@@ -796,22 +867,34 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span><span style="color:#75715e">// y + x = sym_2
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>pb.add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(y <span style="color:#f92672">+</span> x, <span style="color:#ae81ff">1</span>, sym_2));
 </span></span><span style="display:flex;"><span><span style="color:#75715e">// sym_2 + 5 = ~out
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>pb.add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(sym_2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, out));
-</span></span></code></pre></td></tr></table>
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>pb.add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(sym_2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, out));</span></span></code></pre></td></tr></table>
 </div>
-</div><p>至此，变量间的约束也已添加完成，针对命题的电路已构建完毕。下面进入前文提到的“四个步骤”中的<strong>第二步</strong>：使用生成算法（<em><strong>G</strong></em>）为该命题生成公共参数（<code>pk</code> 和 <code>vk</code>），即 trusted setup。生成出来的 proving key 和 verification key 分别可以通过 <code>keypair.pk</code> 和 <code>keypair.vk</code> 获得。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>至此，变量间的约束也已添加完成，针对命题的电路已构建完毕。下面进入前文提到的“四个步骤”中的<strong>第二步</strong>：使用生成算法（<em><strong>G</strong></em>）为该命题生成公共参数（<code>pk</code> 和 <code>vk</code>），即 trusted setup。生成出来的 proving key 和 verification key 分别可以通过 <code>keypair.pk</code> 和 <code>keypair.vk</code> 获得。</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-19-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-19-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-19-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-19-2">2</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> r1cs_constraint_system<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> constraint_system <span style="color:#f92672">=</span> pb<span style="color:#f92672">.</span>get_constraint_system();
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> r1cs_gg_ppzksnark_keypair<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> keypair <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_generator<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(constraint_system);
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> r1cs_gg_ppzksnark_keypair<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> keypair <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_generator<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(constraint_system);</span></span></code></pre></td></tr></table>
 </div>
-</div><p>进入<strong>第三步</strong>，生成证明。先为 public input 以及 witness 提供具体数值。不难发现，<code>x = 3, out = 35</code> 是原始方程的一个解。则依次为 <code>x</code>、<code>out</code> 以及各个中间变量赋值。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>进入<strong>第三步</strong>，生成证明。先为 public input 以及 witness 提供具体数值。不难发现，<code>x = 3, out = 35</code> 是原始方程的一个解。则依次为 <code>x</code>、<code>out</code> 以及各个中间变量赋值。</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-20-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-20-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-20-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-20-2">2</a>
@@ -826,28 +909,41 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>pb.val(x) = 3;
 </span></span><span style="display:flex;"><span>pb.val(sym_1) = 9;
 </span></span><span style="display:flex;"><span>pb.val(y) = 27;
-</span></span><span style="display:flex;"><span>pb.val(sym_2) = 30;
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>pb.val(sym_2) = 30;</span></span></code></pre></td></tr></table>
 </div>
-</div><p>再把 public input 以及 witness 的数值传给 prover 函数进行证明，可分别通过 <code>pb.primary_input()</code> 和 <code>pb.auxiliary_input()</code> 访问。生成的证明用 <code>proof</code> 变量保存。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>再把 public input 以及 witness 的数值传给 prover 函数进行证明，可分别通过 <code>pb.primary_input()</code> 和 <code>pb.auxiliary_input()</code> 访问。生成的证明用 <code>proof</code> 变量保存。</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-21-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-21-1">1</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> r1cs_gg_ppzksnark_proof<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> proof <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_prover<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(keypair<span style="color:#f92672">.</span>pk, pb<span style="color:#f92672">.</span>primary_input(), pb<span style="color:#f92672">.</span>auxiliary_input());
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> r1cs_gg_ppzksnark_proof<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span> proof <span style="color:#f92672">=</span> r1cs_gg_ppzksnark_prover<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(keypair<span style="color:#f92672">.</span>pk, pb<span style="color:#f92672">.</span>primary_input(), pb<span style="color:#f92672">.</span>auxiliary_input());</span></span></code></pre></td></tr></table>
 </div>
-</div><p>最后我们使用 verifier 函数校验证明。如果 <code>verified = true</code> 则说明证明验证成功。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>最后我们使用 verifier 函数校验证明。如果 <code>verified = true</code> 则说明证明验证成功。</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-22-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-22-1">1</a>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>bool verified = r1cs_gg_ppzksnark_verifier_strong_IC&lt;default_r1cs_gg_ppzksnark_pp&gt;(keypair.vk, pb.primary_input(), proof);</span></span></code></pre></td></tr></table>
 </div>
-</div><p>从日志输出中可以看出验证结果为 <code>true</code>，R1CS 约束数量为 4，public input 和 private input 数量分别为 1 和 4。日志输出符合预期。</p>
+</div>
+</div>
+<p>从日志输出中可以看出验证结果为 <code>true</code>，R1CS 约束数量为 4，public input 和 private input 数量分别为 1 和 4。日志输出符合预期。</p>
 <p><img src="img/test-output.png" alt="test_output"></p>
 <p>实际应用中，trusted setup、prove、verify 会由不同角色分别开展，最终实现的效果就是 <code>prover</code> 给 <code>verifier</code> 一段简短的 <code>proof</code> 和 <code>public input</code>，<code>verifier</code> 可以自行校验某命题是否成立。对于前面的例子，就是能在不知道方程的解 <code>x</code> 具体是多少的情况下，验证 <code>prover</code> 知道一个秘密的 <code>x</code> 可以使得 <code>x^3 + x + 5 = out</code> 成立。</p>
 <p>通过短短的几十行代码，你就可以很轻易地操控学术界 zk-SNARKs 最新研究成果。</p>
@@ -858,7 +954,12 @@ if (!doNotTrack) {
 <p>zk-SNARKs 电路开发的主要工作量和难点在于如何用代码“精确”地描述命题中的所有约束。一旦描述不“精确”，则要么是漏掉约束、要么是写错约束，最终电路想要证明的内容则会与原命题相差甚远。上一节的例子只涉及简单的乘法和加法，与 <code>r1cs_constraint</code> 最基本的形式一致，因此约束的表达相对容易。除此之外几乎所有的约束都不是很直观，作为初学者很难正确地描述约束细节。</p>
 <p>幸好 libsnark 已经为我们实现了大量基础电路小组件。<code>gadgetlib1</code> 和 <code>gadgetlib2</code> 下提供了许多可以直接使用的 gadget。其中 <code>gadgetlib1</code> 更常用一些，里面收集了包括 <code>sha256</code> 在内的 hash 计算、merkle tree、pairing 等电路实现。</p>
 <p><em>DangDangDang</em>，<code>gadgetlib1/gadgets/basic_gadgets.hpp</code> 中的 <code>comparison_gadget</code> 正是我们所需。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-23-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-23-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-23-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-23-2">2</a>
@@ -875,12 +976,18 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">const</span> pb_linear_combination<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span>B,
 </span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">const</span> pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span>less,
 </span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">const</span> pb_variable<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span>less_or_eq,
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">const</span> std::string <span style="color:#f92672">&amp;</span>annotation_prefix<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">const</span> std::string <span style="color:#f92672">&amp;</span>annotation_prefix<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)</span></span></code></pre></td></tr></table>
 </div>
-</div><p>该 gadget 需要传入的参数较多：<code>n</code> 表示位数，<code>A</code> 和 <code>B</code> 分别为需要比较的两个数，<code>less</code> 和 <code>less_or_eq</code> 用来标记两个数的关系是「小于」还是「小于或等于」。该 gadget 实现的原理简单来讲是把 <code>A</code> 和 <code>B</code> 的比较，转化为 <code>2^n + B - A</code> 按位表示。具体实现还用到了其余多个基础 gadget，可以通过 <code>comparison_gadget&lt;FieldT&gt;::generate_r1cs_constraints()</code> 研究。</p>
+</div>
+</div>
+<p>该 gadget 需要传入的参数较多：<code>n</code> 表示位数，<code>A</code> 和 <code>B</code> 分别为需要比较的两个数，<code>less</code> 和 <code>less_or_eq</code> 用来标记两个数的关系是「小于」还是「小于或等于」。该 gadget 实现的原理简单来讲是把 <code>A</code> 和 <code>B</code> 的比较，转化为 <code>2^n + B - A</code> 按位表示。具体实现还用到了其余多个基础 gadget，可以通过 <code>comparison_gadget&lt;FieldT&gt;::generate_r1cs_constraints()</code> 研究。</p>
 <p>这里需要创建以下变量，并将 <code>x</code> 和 <code>max</code> 与 <code>pb</code> 相连，把 <code>max</code> 值设为 <code>60</code>，代表数值上限。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-24-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-24-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-24-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-24-2">2</a>
@@ -901,11 +1008,17 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>x<span style="color:#f92672">.</span>allocate(pb, <span style="color:#e6db74">&#34;x&#34;</span>);
 </span></span><span style="display:flex;"><span>max<span style="color:#f92672">.</span>allocate(pb, <span style="color:#e6db74">&#34;max&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>pb<span style="color:#f92672">.</span>val(max)<span style="color:#f92672">=</span> <span style="color:#ae81ff">60</span>;
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>pb<span style="color:#f92672">.</span>val(max)<span style="color:#f92672">=</span> <span style="color:#ae81ff">60</span>;</span></span></code></pre></td></tr></table>
 </div>
-</div><p>使用 <code>comparison_gadget</code> 创建 <code>cmp</code>，并把前面的参数填入，并调用 gadget 自带的 <code>generate_r1cs_constraints()</code> 方法。同时另外添加一个约束，要求 <code>less * 1 = 1</code>，也就是 <code>less</code> 必须为 <code>true</code>。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>使用 <code>comparison_gadget</code> 创建 <code>cmp</code>，并把前面的参数填入，并调用 gadget 自带的 <code>generate_r1cs_constraints()</code> 方法。同时另外添加一个约束，要求 <code>less * 1 = 1</code>，也就是 <code>less</code> 必须为 <code>true</code>。</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-25-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-25-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-25-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-25-2">2</a>
@@ -914,11 +1027,17 @@ if (!doNotTrack) {
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>comparison_gadget<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span> cmp(pb, <span style="color:#ae81ff">10</span>, x, max, less, less_or_eq, <span style="color:#e6db74">&#34;cmp&#34;</span>);
 </span></span><span style="display:flex;"><span>cmp<span style="color:#f92672">.</span>generate_r1cs_constraints();
-</span></span><span style="display:flex;"><span>pb<span style="color:#f92672">.</span>add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(less, <span style="color:#ae81ff">1</span>, FieldT::one()));
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>pb<span style="color:#f92672">.</span>add_r1cs_constraint(r1cs_constraint<span style="color:#f92672">&lt;</span>FieldT<span style="color:#f92672">&gt;</span>(less, <span style="color:#ae81ff">1</span>, FieldT::one()));</span></span></code></pre></td></tr></table>
 </div>
-</div><p>输入 witness（秘密值 x），比如让 <code>x = 18</code>。这里还需要调用 <code>comparison_gadget</code> 的 <code>generate_r1cs_witness</code> 方法。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+</div>
+</div>
+<p>输入 witness（秘密值 x），比如让 <code>x = 18</code>。这里还需要调用 <code>comparison_gadget</code> 的 <code>generate_r1cs_witness</code> 方法。</p>
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-26-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-26-1">1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-26-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-26-2">2</a>
@@ -927,10 +1046,11 @@ if (!doNotTrack) {
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>// Add witness values
 </span></span><span style="display:flex;"><span>pb.val(x) = 18; // secret
-</span></span><span style="display:flex;"><span>cmp.generate_r1cs_witness();
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>cmp.generate_r1cs_witness();</span></span></code></pre></td></tr></table>
 </div>
-</div><p>其余部分和上一个例子一致，即可在不泄露秘密数字大小的前提下，证明某数字小于 <code>60</code>。同理，就实现一个对数值作最大和最小值限定的 “range proof”。</p>
+</div>
+</div>
+<p>其余部分和上一个例子一致，即可在不泄露秘密数字大小的前提下，证明某数字小于 <code>60</code>。同理，就实现一个对数值作最大和最小值限定的 “range proof”。</p>
 <p>在强大基础库的帮助下，我们又用更短的代码实现了证明需求。</p>
 <h2 id="6-whats-next">6. What&rsquo;s NEXT?</h2>
 <p>读到这里，相信大家都对 libsnark 的使用方法和 zk-SNARKs 电路开发有了一个初步的了解。</p>
@@ -943,7 +1063,12 @@ if (!doNotTrack) {
 <h2 id="7-附录">7. 附录</h2>
 <h3 id="maincpp"><code>main.cpp</code></h3>
 <p>第一个例子 <code>main.cpp</code>，调用 libsnark 官方 example 的示例代码。通过该例子可了解 libsnark 的基本使用流程和主要函数。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-1"> 1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-27-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-27-2"> 2</a>
@@ -1064,12 +1189,18 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    test_r1cs_gg_ppzksnark<span style="color:#f92672">&lt;</span>default_r1cs_gg_ppzksnark_pp<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">100</span>);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="testcpp"><code>test.cpp</code></h3>
+</div>
+</div>
+<h3 id="testcpp"><code>test.cpp</code></h3>
 <p>第二个例子 <code>test.cpp</code>。这个例子具体展示了如何利用 libsnark 构建一个最简单的电路。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-1"> 1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-28-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-28-2"> 2</a>
@@ -1220,12 +1351,18 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Primary (public) input: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> pb.primary_input() <span style="color:#f92672">&lt;&lt;</span> endl;
 </span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Auxiliary (private) input: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> pb.auxiliary_input() <span style="color:#f92672">&lt;&lt;</span> endl;
 </span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Verification status: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> verified <span style="color:#f92672">&lt;&lt;</span> endl;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="rangecpp"><code>range.cpp</code></h3>
+</div>
+</div>
+<h3 id="rangecpp"><code>range.cpp</code></h3>
 <p>第三个例子 <code>range.cpp</code>。该例子利用了 libsnark 自带的 <code>comparison_gadget</code> 来实现取值范围证明。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight-container">
+
+  <button class="copy-code-btn outline">Copy</button>
+
+  
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-1"> 1</a>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-29-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-29-2"> 2</a>
@@ -1326,14 +1463,15 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Primary (public) input: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> pb.primary_input() <span style="color:#f92672">&lt;&lt;</span> endl;
 </span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Auxiliary (private) input: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> pb.auxiliary_input() <span style="color:#f92672">&lt;&lt;</span> endl;
 </span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Verification status: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> verified <span style="color:#f92672">&lt;&lt;</span> endl;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></td></tr></table>
 </div>
 </div>
-        </div>
+</div>
 
-        
-        
+      </div>
+
+      
+      
 <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
@@ -1362,68 +1500,60 @@ if (!doNotTrack) {
 
 
 
-        
-        
+      
+      
 
 
-        <footer class="post-footer">
-          <div class="post-tags">
-              <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
-                <a href="https://sec-bit.github.io/blog/tags/zksnarks/">zksnarks</a>
-                <a href="https://sec-bit.github.io/blog/tags/libsnark/">libsnark</a>
-                <a href="https://sec-bit.github.io/blog/tags/tutorials/">tutorials</a>
-                
-            </div>
-
-
+      <footer class="post-footer">
+        <div class="post-tags">
+          <a href="https://sec-bit.github.io/blog/tags/zero-knowledge-proof/">Zero Knowledge Proof</a>
+          <a href="https://sec-bit.github.io/blog/tags/zksnarks/">zksnarks</a>
+          <a href="https://sec-bit.github.io/blog/tags/libsnark/">libsnark</a>
+          <a href="https://sec-bit.github.io/blog/tags/tutorials/">tutorials</a>
           
-          <nav class="post-nav">
-            
-              <a class="prev" href="/blog/2020/01/08/nizk-by-crs/">
-                
-                <i class="iconfont">
-                  <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="18" height="18">
-  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
-</svg>
+        </div>
 
-                </i>
-                <span class="prev-text nav-default">云中「秘密」：构建非交互式零知识证明</span>
-                <span class="prev-text nav-mobile">上一篇</span>
-              </a>
-            
-              <a class="next" href="/blog/2020/01/01/learn-zk-snark-from-zero-part-two/">
-                <span class="next-text nav-default">从零开始学习 zk-SNARK（二）——多项式的非交互式零知识证明</span>
-                <span class="prev-text nav-mobile">下一篇</span>
-                
-                <i class="iconfont">
-                  <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="18" height="18">
-  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
-</svg>
 
-                </i>
-              </a>
-          </nav>
-        </footer>
-      </article>
-
-      
-      
         
-      
+        <nav class="post-nav">
+          
+          <a class="prev" href="/blog/2020/01/08/nizk-by-crs/">
+            
+            <i class="iconfont">
+              
+<svg aria-hidden="true" class="lucide lucide-chevron-left hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="m15 18-6-6 6-6"/></svg>
+            </i>
+            <span class="prev-text nav-default">云中「秘密」：构建非交互式零知识证明</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+          
+          <a class="next" href="/blog/2020/01/01/learn-zk-snark-from-zero-part-two/">
+            <span class="next-text nav-default">从零开始学习 zk-SNARK（二）——多项式的非交互式零知识证明</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              
+<svg aria-hidden="true" class="lucide lucide-chevron-right hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
+            </i>
+          </a>
+        </nav>
+      </footer>
+    </article>
+
+    
+    
+    
+    
 
 
-      
-      
+    
+    
 
   
 
   
   
-    <div class="post">
+    <div class="comment">
   <script
     src="https://giscus.app/client.js"
     data-repo="sec-bit/comments-for-secbit-blog"
@@ -1461,10 +1591,10 @@ if (!doNotTrack) {
   
 
 
-    </div>
+  </div>
 
-    
-    <nav class="toc" id="toc">
+  
+  <nav class="toc" id="toc">
     <div class="toc-title">文章目录</div>
     <div class="toc-content custom-scrollbar">
       <nav id="TableOfContents">
@@ -1488,69 +1618,51 @@ if (!doNotTrack) {
   </nav>
 
 
-  </div>
+</div>
+  </main>
 
-      </main>
+  <footer id="footer" class="footer">
+    <div class="social-icon-links">
+  
 
-      <footer id="footer" class="footer">
-        <div class="icon-links">
+
+<a href="mailto:hi@secbit.io" rel="me noopener" class="social-icon-link" title="email" >
   
-  
-    <a href="mailto:hi@secbit.io" rel="me noopener" class="iconfont"
-      title="email" >
-      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="36" height="36">
+<svg aria-hidden="true" class="icon hi-svg-inline" fill="currentColor" height="1em" version="1.1" viewBox="0 0 1451 1024" width="1em" xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
   <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
 </svg>
 
-    </a>
+</a>
+<a href="https://twitter.com/SECBIT_IO" rel="me noopener" class="social-icon-link" title="twitter"  target="_blank" >
   
-    <a href="https://twitter.com/SECBIT_IO" rel="me noopener" class="iconfont"
-      title="twitter"  target="_blank"
-      >
-      <svg class="icon" viewBox="0 0 1264 1024" version="1.1"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="36" height="36">
+<svg aria-hidden="true" class="icon hi-svg-inline" fill="currentColor" height="1em" version="1.1" viewBox="0 0 1264 1024" width="1em" xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
   <path d="M1229.8616 18.043658c0 0-117.852626 63.135335-164.151872 67.344358-105.225559-164.151872-505.082682-92.598492-437.738325 223.078185C278.622548 312.675223 89.216542 47.506814 89.216542 47.506814s-117.852626 189.406006 75.762402 345.139833C127.097743 396.85567 55.544363 371.601535 55.544363 371.601535S26.081207 535.753407 253.368414 615.724832c-21.045112 29.463156-113.643603 8.418045-113.643603 8.418045s25.254134 143.10676 231.496229 180.987961c-143.10676 130.479693-387.230056 92.598492-370.393967 105.225559 206.242095 189.406006 1119.599946 231.496229 1128.01799-643.98042C1179.353331 249.539887 1263.533778 123.269217 1263.533778 123.269217s-130.479693 37.881201-138.897738 33.672179C1225.652577 98.015083 1229.8616 18.043658 1229.8616 18.043658"></path>
 </svg>
 
-    </a>
+</a>
+<a href="https://github.com/sec-bit" rel="me noopener" class="social-icon-link" title="github"  target="_blank" >
   
-    <a href="https://github.com/sec-bit" rel="me noopener" class="iconfont"
-      title="github"  target="_blank"
-      >
-      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="36" height="36">
+<svg aria-hidden="true" class="icon hi-svg-inline" fill="currentColor" height="1em" version="1.1" viewBox="0 0 1024 1024" width="1em" xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
   <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
 </svg>
 
-    </a>
+</a>
+<a href="https://www.zhihu.com/org/secbit/" rel="me noopener" class="social-icon-link" title="zhihu"  target="_blank" >
   
-    <a href="https://www.zhihu.com/org/secbit/" rel="me noopener" class="iconfont"
-      title="zhihu"  target="_blank"
-      >
-      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="36" height="36">
+<svg aria-hidden="true" class="icon hi-svg-inline" fill="currentColor" height="1em" version="1.1" viewBox="0 0 1024 1024" width="1em" xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
   <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
   <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
 </svg>
 
-    </a>
+</a>
 
 
-<a href="https://sec-bit.github.io/blog/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
-    class="iconfont" title="rss" target="_blank">
-    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="30" height="30">
-  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
-</svg>
-
-  </a>
+<a href="https://sec-bit.github.io/blog/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="social-icon-link" title="rss"
+  target="_blank">
   
+<svg aria-hidden="true" class="lucide lucide-rss hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+</a>
+
 </div>
 
 <div class="copyright">
@@ -1565,23 +1677,18 @@ if (!doNotTrack) {
   <span class="copyright-year">
     &copy;
     
-      2018 -
+    2018 -
     2024
     <span class="heart">
       
       <i class="iconfont">
-        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="14" height="14">
-  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
-   fill="#8a8a8a"></path>
-</svg>
-
+        
+<svg aria-hidden="true" class="lucide lucide-heart hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
       </i>
     </span><span class="author">
-        SECBIT Labs
-        
-      </span></span>
+      SECBIT Labs
+      
+    </span></span>
 
   
   
@@ -1589,60 +1696,23 @@ if (!doNotTrack) {
   
 </div>
 
-      </footer>
-
-      <div class="button__back-to-top">
-        <a href="#back-to-top">
-          <i class="iconfont">
-            
-            <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="35" height="35">
-  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
-</svg>
-
-          </i>
-        </a>
-      </div>
-    </div>
-    
-<script type="text/javascript" src="/blog/lib/jquery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="/blog/lib/slideout/slideout-1.0.1.min.js"></script>
-
-
-
-
-<script type="text/javascript" src="/blog/js/main.8f212fb6e092bf9e169cea5934d935af61b1e0d48702c784602d318f3bb1cc67.js" integrity="sha256-jyEvtuCSv54WnOpZNNk1r2Gx4NSHAseEYC0xjzuxzGc=" crossorigin="anonymous"></script>
-
-
-
-
-
-
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css"
-    integrity="sha384-BdGj8xC2eZkQaxoQ8nSLefg4AV4/AwB3Fj+8SUSo7pnKP6Eoy18liIKTPn9oBYNG"
-    crossorigin="anonymous">
+  </footer>
 
   
-  <script defer
-    src="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.js"
-    integrity="sha384-JiKN5O8x9Hhs/UE5cT5AAJqieYlOZbGT3CHws/y97o3ty4R7/O5poG9F3JoiOYw1"
-    crossorigin="anonymous"></script>
 
-  
-  <script defer
-    src="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/contrib/auto-render.min.js"
-    integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
-    crossorigin="anonymous" onload="renderMathInElement(document.body);">
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      renderMathInElement(document.body, {
-        
-      });
-    });
-  </script>
+
+
+
+<script type="text/javascript" src="/blog/js/main.030d3b354be764fb5e159ae3733f7696508bd3f2bba9dc28ab767fcaccd39230.js" integrity="sha256-Aw07NUvnZPteFZrjcz92llCL0/K7qdwoq3Z/yszTkjA=" crossorigin="anonymous"></script>
+
+
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
 
 
 
@@ -1666,26 +1736,12 @@ if (!doNotTrack) {
 
 
 
-  <script>
-    $("#openSearch, #openSearchMobile").click(function(){
-      $(".modal-dialog").addClass("visible");
-    });
-
-    $("#closeSearch").click(function(){
-      $(".modal-dialog").removeClass("visible");
-    });
-
-    $(document).click(function(event) {
-    
-      if (!$(event.target).closest(".modal-content, #openSearch, #openSearchMobile").length) {
-        $("body").find(".modal-dialog").removeClass("visible");
-      }
-    });
-  </script>
 
 
 
+  <script src="/blog/js/custom.js"></script>
 
 
-  </body>
+</body>
+
 </html>
