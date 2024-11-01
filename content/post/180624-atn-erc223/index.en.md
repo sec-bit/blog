@@ -293,14 +293,14 @@ There are some repositories implementing 'receiverCall' correctly
 
 ## Reference
 
-- \[1\][ATN Report](https://atn.io/resource/aareport.pdf)
-- \[2\][OpenZeppelin removed ERC827](https://github.com/OpenZeppelin/openzeppelin-solidity/pull/1045)
-- \[3\][ERC-223 Token Standard Proposal Draft](https://github.com/ethereum/EIPs/issues/223)
-- \[4\][ATN.sol transferFrom()](https://github.com/ATNIO/atn-contracts/blob/7203781ad8d106ec6d1f9ca8305e76dd1274b181/src/ATN.sol#L114)
-- \[5\][ERC223_Token.sol transfer() function](https://github.com/Dexaran/ERC223-token-standard/blob/16d350ec85d5b14b9dc857468c8e0eb4a10572d3/ERC223_Token.sol#L70)
-- \[6\][ERC223-token-standard Issue 50](https://github.com/Dexaran/ERC223-token-standard/issues/50)
-- \[7\][ERC223-token-standard Issue 51](https://github.com/Dexaran/ERC223-token-standard/issues/51)
-- \[8\][ERC827Token.sol](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/f18c3bc438b366f9cb3a8613f5be160c2cbced5e/contracts/token/ERC827/ERC827Token.sol#L73)
-- \[9\][New evilReflex Bug Identified in Multiple ERC20 Smart Contracts (CVE-2018-12702, CVE-2018-12703)](https://peckshield.com/2018/06/23/evilReflex/)
-- \[10\][HADAX Suspends 18T and GVE Deposits and Withdrawals](https://huobiglobal.zendesk.com/hc/en-us/articles/360000110521-HADAX-Suspends-18T-and-GVE-Deposits-and-Withdrawals)
+- \[1\] [ATN Report](https://atn.io/resource/aareport.pdf)
+- \[2\] [OpenZeppelin removed ERC827](https://github.com/OpenZeppelin/openzeppelin-solidity/pull/1045)
+- \[3\] [ERC-223 Token Standard Proposal Draft](https://github.com/ethereum/EIPs/issues/223)
+- \[4\] [ATN.sol transferFrom()](https://github.com/ATNIO/atn-contracts/blob/7203781ad8d106ec6d1f9ca8305e76dd1274b181/src/ATN.sol#L114)
+- \[5\] [ERC223_Token.sol transfer() function](https://github.com/Dexaran/ERC223-token-standard/blob/16d350ec85d5b14b9dc857468c8e0eb4a10572d3/ERC223_ Token.sol#L70)
+- \[6\] [ERC223-token-standard Issue 50](https://github.com/Dexaran/ERC223-token-standard/issues/50)
+- \[7\] [ERC223-token-standard Issue 51](https://github.com/Dexaran/ERC223-token-standard/issues/51)
+- \[8\] [ERC827Token.sol](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/f18c3bc438b366f9cb3a8613f5be160c2cbced5e/contracts/token/ERC827/ ERC827Token.sol#L73)
+- \[9\] [New evilReflex Bug Identified in Multiple ERC20 Smart Contracts (CVE-2018-12702, CVE-2018-12703)](https://peckshield.com/2018/06/23/evilReflex/)
+- \[10\] [HADAX Suspends 18T and GVE Deposits and Withdrawals](https://huobiglobal.zendesk.com/hc/en-us/articles/360000110521-HADAX-Suspends-18T-and-GVE-Deposits-and-Withdrawals)
 
