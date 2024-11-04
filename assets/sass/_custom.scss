@@ -13,17 +13,13 @@
 //     Hiragino Sans GB, Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif;
 // }
 
-:lang(zh-cn) {
-    font-family: 'Noto Sans SC',
-    #{$global-font-family};
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
-:lang(zh-cn) h1,
-:lang(zh-cn) h2,
-:lang(zh-cn) h3,
-:lang(zh-cn) h4,
-:lang(zh-cn) h5,
-:lang(zh-cn) h6 {
-    font-family: 'Noto Sans SC',
-    #{$title-font-family};
+code,
+kbd,
+pre,
+samp {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 }
