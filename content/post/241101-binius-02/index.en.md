@@ -271,7 +271,7 @@ $$
 ## Polynomial Basis
 
 
-For a univariate polynomial $f(X) \in \mathbb{F}[X]^{<N}$ of degree less than $N=2^n$, it has two common forms of expression, "coefficient form" and "point value form". The coefficient form is the most common form we see:
+For a univariate polynomial $f(X) \in \mathbb{F}[X]^{\lt N}$ of degree less than $N=2^n$, it has two common forms of expression, "coefficient form" and "point value form". The coefficient form is the most common form we see:
 
 $$
 f(X) = c_0 + c_1X + c_2X^2 + \ldots + c_{N-1}X^{N-1}
