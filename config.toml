@@ -219,6 +219,8 @@ defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multil
         [markup.goldmark.extensions.passthrough.delimiters]
           block = [['\[', '\]'], ['$$', '$$']]
           inline = [['\(', '\)'], ['$', '$']]
+    [markup.goldmark.renderer]
+      unsafe = true # https://gohugo.io/getting-started/configuration-markup/#rendererunsafe
 
   # Highlight options. See https://gohugo.io/content-management/syntax-highlighting/
   [markup.highlight]
