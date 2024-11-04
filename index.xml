@@ -170,7 +170,7 @@ $$&lt;p&gt;更一般地，我们可以证明得到下面的重要性质，即在
 $$
 s^{(i)}_{j}(X) = s^{(i+j-1)}_1\circ s^{(i+j-2)}_1\circ \cdots \circ s^{(i)}_1
 $$&lt;h2 id=&#34;多项式的-polynomial-basis&#34;&gt;多项式的 Polynomial Basis&lt;/h2&gt;
-&lt;p&gt;对于一个次数小于 $N=2^n$ 的一元多项式 $f(X) \in \mathbb{F}[X]^{&lt;N}$，它有两种常见的表达形式，「系数式」与「点值式」。其中系数式是我们最常见的形式：&lt;/p&gt;
+&lt;p&gt;对于一个次数小于 $N=2^n$ 的一元多项式 $f(X) \in \mathbb{F}[X]^{\lt N}$，它有两种常见的表达形式，「系数式」与「点值式」。其中系数式是我们最常见的形式：&lt;/p&gt;
 $$
 f(X) = c_0 + c_1X + c_2X^2 + \ldots + c_{N-1}X^{N-1}
 $$&lt;p&gt;其中 $\vec{c}=(c_0, c_1, \ldots, c_{N-1})$ 为多项式的系数向量。另外未知数的向量 $(1, X, X^2, \ldots, X^{N-1})$ 则构成了一组多项式的基（Basis），按惯例称之为 Monomial Basis，记为 $\mathcal{B}^{mono}$ :&lt;/p&gt;

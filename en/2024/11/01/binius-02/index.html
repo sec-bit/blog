@@ -76,7 +76,7 @@
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
     <meta property="article:published_time" content="2024-11-01T08:00:00+08:00">
-    <meta property="article:modified_time" content="2024-11-04T15:03:16+08:00">
+    <meta property="article:modified_time" content="2024-11-04T16:03:21+08:00">
     <meta property="article:tag" content="Cryptography">
     <meta property="article:tag" content="Finite Fields">
     <meta property="article:tag" content="SNARK">
@@ -85,8 +85,8 @@
   <meta itemprop="name" content="Notes on Binius (Part II): Subspace Polynomial">
   <meta itemprop="description" content="The FRI-Binus paper [DP24] discusses the Additive FFT algorithm based on Subspace Polynomial and provides a perspective to understand the Additive FFT algorithm based on Novel Polynomial Basis in [LCH14] using odd-even decomposition. This article directly introduces the Subspace Polynomial, and then introduces the Additive FFT algorithm from the perspective of odd-even decomposition. This article omits the definition of Normalized Subspace Polynomial for easier understanding. Normalization only affects the performance of the FFT algorithm and has no essential difference from the simplified algorithm introduced in this article.">
   <meta itemprop="datePublished" content="2024-11-01T08:00:00+08:00">
-  <meta itemprop="dateModified" content="2024-11-04T15:03:16+08:00">
-  <meta itemprop="wordCount" content="1825">
+  <meta itemprop="dateModified" content="2024-11-04T16:03:21+08:00">
+  <meta itemprop="wordCount" content="3441">
   <meta itemprop="keywords" content="Cryptography,Finite Fields,SNARK,Binius">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Notes on Binius (Part II): Subspace Polynomial">
@@ -585,7 +585,7 @@ $$<p>More generally, we can prove the following important property, that is, doi
 $$
 s^{(i)}_{j}(X) = s^{(i+j-1)}_1\circ s^{(i+j-2)}_1\circ \cdots \circ s^{(i)}_1
 $$<h2 id="polynomial-basis">Polynomial Basis</h2>
-<p>For a univariate polynomial $f(X) \in \mathbb{F}[X]^{<N}$ of degree less than $N=2^n$, it has two common forms of expression, &ldquo;coefficient form&rdquo; and &ldquo;point value form&rdquo;. The coefficient form is the most common form we see:</p>
+<p>For a univariate polynomial $f(X) \in \mathbb{F}[X]^{\lt N}$ of degree less than $N=2^n$, it has two common forms of expression, &ldquo;coefficient form&rdquo; and &ldquo;point value form&rdquo;. The coefficient form is the most common form we see:</p>
 $$
 f(X) = c_0 + c_1X + c_2X^2 + \ldots + c_{N-1}X^{N-1}
 $$<p>where $\vec{c}=(c_0, c_1, \ldots, c_{N-1})$ is the coefficient vector of the polynomial. In addition, the vector of unknowns $(1, X, X^2, \ldots, X^{N-1})$ forms a basis of polynomials, conventionally called the Monomial Basis, denoted as $\mathcal{B}^{mono}$:</p>
@@ -804,11 +804,11 @@ The paper [LCH14] uses another recursive Additive FFT algorithm, we will introdu
     <span class="item-content">
       2024-11-04
       
-        <a href="https://github.com/sec-bit/blog/commit/317852adf7d5d4f606383f27407fa151523f4ff1" title="fix: support html in md">
-          (317852a)
+        <a href="https://github.com/sec-bit/blog/commit/261e110b7ce432ad2a0380610ba6a30b516b9efe" title="fix: &lt; to \lt">
+          (261e110)
         </a>
         
-          <br>fix: support html in md
+          <br>fix: &lt; to \lt
         
       
     </span>

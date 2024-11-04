@@ -170,7 +170,7 @@ $$&lt;p&gt;More generally, we can prove the following important property, that i
 $$
 s^{(i)}_{j}(X) = s^{(i+j-1)}_1\circ s^{(i+j-2)}_1\circ \cdots \circ s^{(i)}_1
 $$&lt;h2 id=&#34;polynomial-basis&#34;&gt;Polynomial Basis&lt;/h2&gt;
-&lt;p&gt;For a univariate polynomial $f(X) \in \mathbb{F}[X]^{&lt;N}$ of degree less than $N=2^n$, it has two common forms of expression, &amp;ldquo;coefficient form&amp;rdquo; and &amp;ldquo;point value form&amp;rdquo;. The coefficient form is the most common form we see:&lt;/p&gt;
+&lt;p&gt;For a univariate polynomial $f(X) \in \mathbb{F}[X]^{\lt N}$ of degree less than $N=2^n$, it has two common forms of expression, &amp;ldquo;coefficient form&amp;rdquo; and &amp;ldquo;point value form&amp;rdquo;. The coefficient form is the most common form we see:&lt;/p&gt;
 $$
 f(X) = c_0 + c_1X + c_2X^2 + \ldots + c_{N-1}X^{N-1}
 $$&lt;p&gt;where $\vec{c}=(c_0, c_1, \ldots, c_{N-1})$ is the coefficient vector of the polynomial. In addition, the vector of unknowns $(1, X, X^2, \ldots, X^{N-1})$ forms a basis of polynomials, conventionally called the Monomial Basis, denoted as $\mathcal{B}^{mono}$:&lt;/p&gt;
