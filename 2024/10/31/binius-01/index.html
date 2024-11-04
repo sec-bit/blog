@@ -76,7 +76,7 @@
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
     <meta property="article:published_time" content="2024-10-31T11:00:00+08:00">
-    <meta property="article:modified_time" content="2024-11-01T20:36:18+08:00">
+    <meta property="article:modified_time" content="2024-11-04T15:03:16+08:00">
     <meta property="article:tag" content="Cryptography">
     <meta property="article:tag" content="Finite Fields">
     <meta property="article:tag" content="SNARK">
@@ -85,7 +85,7 @@
   <meta itemprop="name" content="Notes on FRI-Binius (Part I): Binary Towers">
   <meta itemprop="description" content="二进制域拥有优美的内部结构，而 Binius 是意图充分利用这些内部结构，构造高效的 SNARK 证明系统。本文主要讨论 Binius 底层所依赖的 Binary Fields 以及 基于 Binary Fields 的 Extension Tower 的构造方法。Binary Fields 提供了更小的 Fields，并且兼容传统密码学中的各种工具构造，同时也可以充分利用硬件上的特殊指令的优化。选用 Extension Tower 优点主要有两个，一个是递归的 Extension 构造提供了一致的、增量式的 Basis 选择，从而使得 Small Field 可以以非常自然的方式嵌入到一个 Large Field 中，另一个优点是乘法和求逆运算存在高效的递归算法。">
   <meta itemprop="datePublished" content="2024-10-31T11:00:00+08:00">
-  <meta itemprop="dateModified" content="2024-11-01T20:36:18+08:00">
+  <meta itemprop="dateModified" content="2024-11-04T15:03:16+08:00">
   <meta itemprop="wordCount" content="7647">
   <meta itemprop="keywords" content="Cryptography,Finite Fields,SNARK,Binius">
   <meta name="twitter:card" content="summary">
@@ -404,7 +404,7 @@
     
     <span class="post-meta-item post-meta-lastmod">
       (上次更新:
-      2024-11-01)
+      2024-11-04)
     </span>
     
 
@@ -557,7 +557,7 @@ $$
 $$<p>我们把 $X^2+X+\eta$ 在 $\mathbb{F}_{2^4}$ 中的根记为 $\zeta$，那么 $\mathbb{F}_{2^4}$ 可以表示为：</p>
 $$
 \mathbb{F}_{2^4} = \cong \mathbb{F}_{2^2}(\zeta)  \cong \mathbb{F}_2(\eta)(\zeta) \cong \mathbb{F}_2(\eta, \zeta)
-$$<!-- raw HTML omitted -->
+$$<img src="img/image-2.png" align=center width="40%">
 <p>那么 $\mathbb{F}_{2^4}$ 的全部元素可以用 $\eta, \zeta$ 来表示：</p>
 $$
 \begin{array}{ccccccc}
@@ -578,7 +578,7 @@ $$
 (1010) &= (10) || (10) = \zeta\eta + \eta \\
 \end{split}
 $$<p>因此，我们可以直接在 $\mathbb{F}_{2^2}$ 的二进制表示的高两位补零，即可以得到 $\mathbb{F}_{2^4}$ 的对应元素。反之，只要把高位两个零去除，一个 $\mathbb{F}_{2^4}$ 中的元素直接映射回 $\mathbb{F}_{2^2}$ 中的元素。</p>
-<!-- raw HTML omitted -->
+<img src="img/image-1.png" width="40%">
 <p>如上图所示，$(1011)$ 是 $\zeta\eta+\eta+1$ 的二进制表示，它的低两位 $(11)$ 直接对应于 $\mathbb{F}_{2^2}$ 中的 $(\eta+1)$ 。这种嵌入是一种「自然嵌入」，因此 Binus 论文称之为 Zero-cost Embedding。</p>
 <p>不过 $\mathbb{F}_{2^4}$ 还是一个很小的域，不够用，如果继续往上进行二次扩张，怎么能找到合适的不可约多项式呢？方案并不唯一，我们先看看 Binius 论文 [DP23] 中给出的一个方案 —— Wiedemann Tower [Wie88]。</p>
 <h2 id="wiedemann-tower">Wiedemann Tower</h2>
@@ -736,13 +736,13 @@ $$<p>而且 $(1, \alpha_0)\otimes(1, \alpha_1)\otimes\cdots \otimes (1, \alpha_n
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-      2024-11-01
+      2024-11-04
       
-        <a href="https://github.com/sec-bit/blog/commit/f509495a534b190c8d4cc2a07504b2de3672ccf3" title="add source link">
-          (f509495)
+        <a href="https://github.com/sec-bit/blog/commit/317852adf7d5d4f606383f27407fa151523f4ff1" title="fix: support html in md">
+          (317852a)
         </a>
         
-          <br>add source link
+          <br>fix: support html in md
         
       
     </span>
@@ -783,6 +783,15 @@ $$<p>而且 $(1, \alpha_0)\otimes(1, \alpha_1)\otimes\cdots \otimes (1, \alpha_n
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
           
+          <a class="next" href="/blog/2020/01/22/learn-zk-snark-from-zero-part-five/">
+            <span class="next-text nav-default">从零开始学习 zk-SNARK（五）——Pinocchio 协议</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              
+<svg aria-hidden="true" class="lucide lucide-chevron-right hi-svg-inline" fill="none" height="1em" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
+            </i>
+          </a>
         </nav>
       </footer>
     </article>

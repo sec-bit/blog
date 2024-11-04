@@ -76,7 +76,7 @@
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
     <meta property="article:published_time" content="2024-10-31T11:00:00+08:00">
-    <meta property="article:modified_time" content="2024-11-01T20:36:18+08:00">
+    <meta property="article:modified_time" content="2024-11-04T15:03:16+08:00">
     <meta property="article:tag" content="Cryptography">
     <meta property="article:tag" content="Finite Fields">
     <meta property="article:tag" content="SNARK">
@@ -85,7 +85,7 @@
   <meta itemprop="name" content="Notes on FRI-Binius (Part I): Binary Towers">
   <meta itemprop="description" content="Binary fields possess elegant internal structures, and Binius aims to fully utilize these internal structures to construct efficient SNARK proof systems. This article mainly discusses the Binary Fields that Binius relies on at its core and the construction methods of Extension Towers based on Binary Fields. Binary Fields provide smaller fields and are compatible with various tool constructions in traditional cryptography while also being able to fully utilize optimization of special instructions on hardware. There are two main advantages to choosing Extension Towers: one is that the recursive Extension construction provides a consistent and incremental Basis selection, allowing Small Fields to be embedded into Large Fields in a very natural way; the other advantage is that multiplication and inversion operations have efficient recursive algorithms.">
   <meta itemprop="datePublished" content="2024-10-31T11:00:00+08:00">
-  <meta itemprop="dateModified" content="2024-11-01T20:36:18+08:00">
+  <meta itemprop="dateModified" content="2024-11-04T15:03:16+08:00">
   <meta itemprop="wordCount" content="4218">
   <meta itemprop="keywords" content="Cryptography,Finite Fields,SNARK,Binius">
   <meta name="twitter:card" content="summary">
@@ -404,7 +404,7 @@
     
     <span class="post-meta-item post-meta-lastmod">
       (LastMod:
-      2024-11-01)
+      2024-11-04)
     </span>
     
 
@@ -557,7 +557,7 @@ $$
 $$<p>Let&rsquo;s denote the root of $X^2+X+\eta$ in $\mathbb{F}_{2^4}$ as $\zeta$, then $\mathbb{F}_{2^4}$ can be represented as:</p>
 $$
 \mathbb{F}_{2^4} = \cong \mathbb{F}_{2^2}(\zeta)  \cong \mathbb{F}_2(\eta)(\zeta) \cong \mathbb{F}_2(\eta, \zeta)
-$$<!-- raw HTML omitted -->
+$$<img src="img/image-2.png" align=center width="40%">
 <p>Then all elements of $\mathbb{F}_{2^4}$ can be represented using $\eta, \zeta$:</p>
 $$
 \begin{array}{ccccccc}
@@ -578,7 +578,7 @@ $$
 (1010) &= (10) || (10) = \zeta\eta + \eta \\
 \end{split}
 $$<p>Therefore, we can directly pad zeros to the higher two bits of the binary representation of $\mathbb{F}_{2^2}$ to get the corresponding element in $\mathbb{F}_{2^4}$. Conversely, by removing the two high-order zeros, an element in $\mathbb{F}_{2^4}$ directly maps back to an element in $\mathbb{F}_{2^2}$.</p>
-<!-- raw HTML omitted -->
+<img src="img/image-1.png" width="40%">
 <p>As shown in the figure above, $(1011)$ is the binary representation of $\zeta\eta+\eta+1$, its lower two bits $(11)$ directly correspond to $(\eta+1)$ in $\mathbb{F}_{2^2}$. This kind of embedding is a &ldquo;natural embedding&rdquo;, so the Binus paper calls it Zero-cost Embedding.</p>
 <p>However, $\mathbb{F}_{2^4}$ is still a very small field, not enough. If we continue to perform quadratic extensions upwards, how can we find suitable irreducible polynomials? The solution is not unique. Let&rsquo;s first look at a scheme given in the Binius paper [DP23] — Wiedemann Tower [Wie88].</p>
 <h2 id="wiedemann-tower">Wiedemann Tower</h2>
@@ -736,13 +736,13 @@ $$<p>Moreover, $(1, \alpha_0)\otimes(1, \alpha_1)\otimes\cdots \otimes (1, \alph
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
     <span class="item-content">
-      2024-11-01
+      2024-11-04
       
-        <a href="https://github.com/sec-bit/blog/commit/f509495a534b190c8d4cc2a07504b2de3672ccf3" title="add source link">
-          (f509495)
+        <a href="https://github.com/sec-bit/blog/commit/317852adf7d5d4f606383f27407fa151523f4ff1" title="fix: support html in md">
+          (317852a)
         </a>
         
-          <br>add source link
+          <br>fix: support html in md
         
       
     </span>

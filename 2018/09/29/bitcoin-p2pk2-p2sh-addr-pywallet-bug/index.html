@@ -511,7 +511,7 @@
 <p>（图片来自Mastering Bitcoin）</p>
 <p>脚本执行过程如图所示，Bob将交易签名后得到的数据（实际上还要包含数据长度信息），真正的scriptSig 应该为<code>&lt;sig len&gt; &lt;sig&gt; &lt;pubKey len&gt; &lt;pubKey&gt;</code>，比特币脚本执行器从 PUSH 数据开始，PUSH 操作会读取第一个字节获取将要入栈的数据长度信息，然后持续执行比特币脚本，直到最后执行完毕检查执行结果。</p>
 <blockquote>
-<p>首先入栈的是 <code>&lt;sig&gt;</code>，然后将 <code>&lt;PubK&gt;</code> 入栈，一次DUP操作将在栈顶复制一份 <code>&lt;PubK&gt;</code>，HASH160弹出栈顶的<!-- raw HTML omitted --> 并计算Hash，将结果压回栈中，之后使用 EQUALVERIFY 弹出Hash对比是否和 <!-- raw HTML omitted -->相等，如果相等则返回True，不相等便标记交易为无效。执行到这一步，暴露了公钥，确保了签名者的身份的正确性，但是黑客或矿工可以通过暴露的公钥构造出一个新的交易替换原始交易，无法保证安全，那么便需要下一步来保证交易无法伪造。此时栈上还有 <code>&lt;PubK&gt;</code> 和 <code>&lt;sig&gt;</code>，执行 CHECKSIG，将校验数字签名的正确性，确保了签名者拥有地址对应的私钥。</p>
+<p>首先入栈的是 <code>&lt;sig&gt;</code>，然后将 <code>&lt;PubK&gt;</code> 入栈，一次DUP操作将在栈顶复制一份 <code>&lt;PubK&gt;</code>，HASH160弹出栈顶的<PubK> 并计算Hash，将结果压回栈中，之后使用 EQUALVERIFY 弹出Hash对比是否和 <PubKHash>相等，如果相等则返回True，不相等便标记交易为无效。执行到这一步，暴露了公钥，确保了签名者的身份的正确性，但是黑客或矿工可以通过暴露的公钥构造出一个新的交易替换原始交易，无法保证安全，那么便需要下一步来保证交易无法伪造。此时栈上还有 <code>&lt;PubK&gt;</code> 和 <code>&lt;sig&gt;</code>，执行 CHECKSIG，将校验数字签名的正确性，确保了签名者拥有地址对应的私钥。</p>
 </blockquote>
 <p>数字签名除了持有私钥的人，谁也无法伪造，执行至此，一笔比特币P2PKH交易已经安全地完成了。</p>
 <p>再解释一遍：当 Bob 要花费 Alice 给他的比特币时，Bob 只有用正确的钥匙才能打开 Alice 留给他的保险箱，把钱放入 Bob 新构造的一个保险箱里。</p>

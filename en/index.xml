@@ -155,7 +155,7 @@ $$
 &amp; X \mapsto {X(X+\beta_0)(X+\beta_1)(X+\beta_1+\beta_0)} \\
 \end{split}
 $$&lt;p&gt;As shown in the figure below, both left and right mapping methods will result in $S^{(2)}$:&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;img src=&#34;img/subspace-1.png&#34; width=&#34;100%&#34;&gt;
 &lt;p&gt;Similarly, we can get the following conclusion, for the linear subspace $S^{(j)}$ after $j$ folds&lt;/p&gt;
 $$
 S^{(j)}  = \langle {s}_{j}(\beta_j), {s}_{j}(\beta_{j+1}), \ldots, {s}_{j}(\beta_{k-1}) \rangle
@@ -509,7 +509,7 @@ $$
 $$&lt;p&gt;Let&amp;rsquo;s denote the root of $X^2+X+\eta$ in $\mathbb{F}_{2^4}$ as $\zeta$, then $\mathbb{F}_{2^4}$ can be represented as:&lt;/p&gt;
 $$
 \mathbb{F}_{2^4} = \cong \mathbb{F}_{2^2}(\zeta)  \cong \mathbb{F}_2(\eta)(\zeta) \cong \mathbb{F}_2(\eta, \zeta)
-$$&lt;!-- raw HTML omitted --&gt;
+$$&lt;img src=&#34;img/image-2.png&#34; align=center width=&#34;40%&#34;&gt;
 &lt;p&gt;Then all elements of $\mathbb{F}_{2^4}$ can be represented using $\eta, \zeta$:&lt;/p&gt;
 $$
 \begin{array}{ccccccc}
@@ -530,7 +530,7 @@ $$
 (1010) &amp;= (10) || (10) = \zeta\eta + \eta \\
 \end{split}
 $$&lt;p&gt;Therefore, we can directly pad zeros to the higher two bits of the binary representation of $\mathbb{F}_{2^2}$ to get the corresponding element in $\mathbb{F}_{2^4}$. Conversely, by removing the two high-order zeros, an element in $\mathbb{F}_{2^4}$ directly maps back to an element in $\mathbb{F}_{2^2}$.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;img src=&#34;img/image-1.png&#34; width=&#34;40%&#34;&gt;
 &lt;p&gt;As shown in the figure above, $(1011)$ is the binary representation of $\zeta\eta+\eta+1$, its lower two bits $(11)$ directly correspond to $(\eta+1)$ in $\mathbb{F}_{2^2}$. This kind of embedding is a &amp;ldquo;natural embedding&amp;rdquo;, so the Binus paper calls it Zero-cost Embedding.&lt;/p&gt;
 &lt;p&gt;However, $\mathbb{F}_{2^4}$ is still a very small field, not enough. If we continue to perform quadratic extensions upwards, how can we find suitable irreducible polynomials? The solution is not unique. Let&amp;rsquo;s first look at a scheme given in the Binius paper [DP23] — Wiedemann Tower [Wie88].&lt;/p&gt;
 &lt;h2 id=&#34;wiedemann-tower&#34;&gt;Wiedemann Tower&lt;/h2&gt;

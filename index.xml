@@ -155,7 +155,7 @@ $$
 &amp; X \mapsto {X(X+\beta_0)(X+\beta_1)(X+\beta_1+\beta_0)} \\
 \end{split}
 $$&lt;p&gt;如下图所示，左右两种映射方式都会得到 $S^{(2)}$：&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;img src=&#34;img/subspace-1.png&#34; width=&#34;100%&#34;&gt;
 &lt;p&gt;同理，我们可以得到下面的结论，对于折叠 $j$ 次之后的线性子空间 $S^{(j)}$ 为&lt;/p&gt;
 $$
 S^{(j)}  = \langle {s}_{j}(\beta_j), {s}_{j}(\beta_{j+1}), \ldots, {s}_{j}(\beta_{k-1}) \rangle
@@ -509,7 +509,7 @@ $$
 $$&lt;p&gt;我们把 $X^2+X+\eta$ 在 $\mathbb{F}_{2^4}$ 中的根记为 $\zeta$，那么 $\mathbb{F}_{2^4}$ 可以表示为：&lt;/p&gt;
 $$
 \mathbb{F}_{2^4} = \cong \mathbb{F}_{2^2}(\zeta)  \cong \mathbb{F}_2(\eta)(\zeta) \cong \mathbb{F}_2(\eta, \zeta)
-$$&lt;!-- raw HTML omitted --&gt;
+$$&lt;img src=&#34;img/image-2.png&#34; align=center width=&#34;40%&#34;&gt;
 &lt;p&gt;那么 $\mathbb{F}_{2^4}$ 的全部元素可以用 $\eta, \zeta$ 来表示：&lt;/p&gt;
 $$
 \begin{array}{ccccccc}
@@ -530,7 +530,7 @@ $$
 (1010) &amp;= (10) || (10) = \zeta\eta + \eta \\
 \end{split}
 $$&lt;p&gt;因此，我们可以直接在 $\mathbb{F}_{2^2}$ 的二进制表示的高两位补零，即可以得到 $\mathbb{F}_{2^4}$ 的对应元素。反之，只要把高位两个零去除，一个 $\mathbb{F}_{2^4}$ 中的元素直接映射回 $\mathbb{F}_{2^2}$ 中的元素。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;img src=&#34;img/image-1.png&#34; width=&#34;40%&#34;&gt;
 &lt;p&gt;如上图所示，$(1011)$ 是 $\zeta\eta+\eta+1$ 的二进制表示，它的低两位 $(11)$ 直接对应于 $\mathbb{F}_{2^2}$ 中的 $(\eta+1)$ 。这种嵌入是一种「自然嵌入」，因此 Binus 论文称之为 Zero-cost Embedding。&lt;/p&gt;
 &lt;p&gt;不过 $\mathbb{F}_{2^4}$ 还是一个很小的域，不够用，如果继续往上进行二次扩张，怎么能找到合适的不可约多项式呢？方案并不唯一，我们先看看 Binius 论文 [DP23] 中给出的一个方案 —— Wiedemann Tower [Wie88]。&lt;/p&gt;
 &lt;h2 id=&#34;wiedemann-tower&#34;&gt;Wiedemann Tower&lt;/h2&gt;

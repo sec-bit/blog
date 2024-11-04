@@ -76,7 +76,7 @@
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
     <meta property="article:published_time" content="2024-11-01T08:00:00+08:00">
-    <meta property="article:modified_time" content="2024-11-01T20:36:18+08:00">
+    <meta property="article:modified_time" content="2024-11-04T15:03:16+08:00">
     <meta property="article:tag" content="Cryptography">
     <meta property="article:tag" content="Finite Fields">
     <meta property="article:tag" content="SNARK">
@@ -85,7 +85,7 @@
   <meta itemprop="name" content="Notes on Binius (Part II): Subspace Polynomial">
   <meta itemprop="description" content="The FRI-Binus paper [DP24] discusses the Additive FFT algorithm based on Subspace Polynomial and provides a perspective to understand the Additive FFT algorithm based on Novel Polynomial Basis in [LCH14] using odd-even decomposition. This article directly introduces the Subspace Polynomial, and then introduces the Additive FFT algorithm from the perspective of odd-even decomposition. This article omits the definition of Normalized Subspace Polynomial for easier understanding. Normalization only affects the performance of the FFT algorithm and has no essential difference from the simplified algorithm introduced in this article.">
   <meta itemprop="datePublished" content="2024-11-01T08:00:00+08:00">
-  <meta itemprop="dateModified" content="2024-11-01T20:36:18+08:00">
+  <meta itemprop="dateModified" content="2024-11-04T15:03:16+08:00">
   <meta itemprop="wordCount" content="1825">
   <meta itemprop="keywords" content="Cryptography,Finite Fields,SNARK,Binius">
   <meta name="twitter:card" content="summary">
@@ -402,6 +402,11 @@
 
 
     
+    <span class="post-meta-item post-meta-lastmod">
+      (LastMod:
+      2024-11-04)
+    </span>
+    
 
   </div>
 
@@ -565,7 +570,7 @@ $$
 & X \mapsto {X(X+\beta_0)(X+\beta_1)(X+\beta_1+\beta_0)} \\
 \end{split}
 $$<p>As shown in the figure below, both left and right mapping methods will result in $S^{(2)}$:</p>
-<!-- raw HTML omitted -->
+<img src="img/subspace-1.png" width="100%">
 <p>Similarly, we can get the following conclusion, for the linear subspace $S^{(j)}$ after $j$ folds</p>
 $$
 S^{(j)}  = \langle {s}_{j}(\beta_j), {s}_{j}(\beta_{j+1}), \ldots, {s}_{j}(\beta_{k-1}) \rangle
@@ -797,13 +802,13 @@ The paper [LCH14] uses another recursive Additive FFT algorithm, we will introdu
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
     <span class="item-content">
-      2024-11-01
+      2024-11-04
       
-        <a href="https://github.com/sec-bit/blog/commit/f509495a534b190c8d4cc2a07504b2de3672ccf3" title="add source link">
-          (f509495)
+        <a href="https://github.com/sec-bit/blog/commit/317852adf7d5d4f606383f27407fa151523f4ff1" title="fix: support html in md">
+          (317852a)
         </a>
         
-          <br>add source link
+          <br>fix: support html in md
         
       
     </span>
