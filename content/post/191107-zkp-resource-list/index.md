@@ -462,7 +462,7 @@ categories: ["Zero Knowledge Proof"]
 
   原文链接：https://www.coindesk.com/monero-to-become-first-billion-dollar-crypto-to-implement-bulletproofs-tech
 
-* **「推荐文章三十」 [zkPoD:区块链，零知识证明与形式化验证，实现无中介、零信任的公平交易](https://mp.weixin.qq.com/s/TCYDfOAle0K3D69eBm6HNw)**
+* **「推荐文章三十」 [zkPoD:区块链，零知识证明与形式化验证，实现无中介、零信任的公平交易](https://mp.weixin.secbit.io/s/TCYDfOAle0K3D69eBm6HNw)**
 
   推荐值：❤️❤️❤️❤️
 
@@ -470,7 +470,7 @@ categories: ["Zero Knowledge Proof"]
 
   这是安比实验室今年发布的基于零知识证明的公平交易协议。
 
-  原文链接：https://mp.weixin.qq.com/s/TCYDfOAle0K3D69eBm6HNw
+  原文链接：https://mp.weixin.secbit.io/s/TCYDfOAle0K3D69eBm6HNw
 
 * **「推荐文章三十一」 [零知识证明 - Loopring DEX 3.0](https://mp.weixin.qq.com/s/oTbzyqtc-TzJXbMafj28DQ)**
 

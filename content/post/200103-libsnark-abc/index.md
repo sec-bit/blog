@@ -25,7 +25,7 @@ zk-SNARKs 能应用到很多场景，比如隐私保护、区块链扩容、可�
 - https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627
 - https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6
 
-或者阅读**向程@HUST**写的[「深入浅出零知识证明之zk-SNARKs」](https://www.yuque.com/u428635/scg32w/edmn74)，还有**东泽**写的[「浅谈零知识证明之二：简短无交互证明（SNARK）」](https://mp.weixin.qq.com/s/623bceLkCjgtFHB6W3D0oA)。
+或者阅读**向程@HUST**写的[「深入浅出零知识证明之zk-SNARKs」](https://www.yuque.com/u428635/scg32w/edmn74)，还有**东泽**写的[「浅谈零知识证明之二：简短无交互证明（SNARK）」](https://mp.weixin.secbit.io/s/623bceLkCjgtFHB6W3D0oA)。
 
 当然也欢迎关注安比实验室[「探索零知识证明」系列](https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/)和[「从零开始学习 zk-SNARK」系列](https://sec-bit.github.io/blog/2019/12/25/learn-zk-snark-from-zero-part-one/)，以及从安比实验室维护的[「零知识证明学习资源汇总」](https://sec-bit.github.io/blog/2019/11/07/zkp-learning-resources/)中查找更多资料。
 
