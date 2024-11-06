@@ -2773,7 +2773,7 @@ data-cites=&#34;imolfar/why-and-how-zk-snark-works-5-variable-polynomials-3b4e06
 &lt;li&gt;&lt;a href=&#34;https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627&#34;&gt;https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6&#34;&gt;https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;或者阅读&lt;strong&gt;向程@HUST&lt;/strong&gt;写的&lt;a href=&#34;https://www.yuque.com/u428635/scg32w/edmn74&#34;&gt;「深入浅出零知识证明之zk-SNARKs」&lt;/a&gt;，还有&lt;strong&gt;东泽&lt;/strong&gt;写的&lt;a href=&#34;https://mp.weixin.qq.com/s/623bceLkCjgtFHB6W3D0oA&#34;&gt;「浅谈零知识证明之二：简短无交互证明（SNARK）」&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;或者阅读&lt;strong&gt;向程@HUST&lt;/strong&gt;写的&lt;a href=&#34;https://www.yuque.com/u428635/scg32w/edmn74&#34;&gt;「深入浅出零知识证明之zk-SNARKs」&lt;/a&gt;，还有&lt;strong&gt;东泽&lt;/strong&gt;写的&lt;a href=&#34;https://mp.weixin.secbit.io/s/623bceLkCjgtFHB6W3D0oA&#34;&gt;「浅谈零知识证明之二：简短无交互证明（SNARK）」&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;当然也欢迎关注安比实验室&lt;a href=&#34;https://sec-bit.github.io/blog/2019/07/31/zero-knowledge-and-proof/&#34;&gt;「探索零知识证明」系列&lt;/a&gt;和&lt;a href=&#34;https://sec-bit.github.io/blog/2019/12/25/learn-zk-snark-from-zero-part-one/&#34;&gt;「从零开始学习 zk-SNARK」系列&lt;/a&gt;，以及从安比实验室维护的&lt;a href=&#34;https://sec-bit.github.io/blog/2019/11/07/zkp-learning-resources/&#34;&gt;「零知识证明学习资源汇总」&lt;/a&gt;中查找更多资料。&lt;/p&gt;
 &lt;p&gt;本文主角 libsnark 是用于开发 zk-SNARKs 应用的 C++ 代码库，由 SCIPR Lab 开发并维护。libsnark 工程实现背后的理论基础是近年来（尤其是 2013 年以来）零知识证明特别是 zk-SNARKs 方向的一系列重要论文。如以下最著名的数篇：&lt;/p&gt;
 &lt;ul&gt;
@@ -5124,11 +5124,11 @@ $$E(x^{3})^{1} · E(x^{2})^{-3} · E(x)^{2} = (g^{x^{3}})^{1} · (g^{x^{2}})^{-3
 &lt;p&gt;原文链接：https://www.coindesk.com/monero-to-become-first-billion-dollar-crypto-to-implement-bulletproofs-tech&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;「推荐文章三十」 &lt;a href=&#34;https://mp.weixin.qq.com/s/TCYDfOAle0K3D69eBm6HNw&#34;&gt;zkPoD:区块链，零知识证明与形式化验证，实现无中介、零信任的公平交易&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;「推荐文章三十」 &lt;a href=&#34;https://mp.weixin.secbit.io/s/TCYDfOAle0K3D69eBm6HNw&#34;&gt;zkPoD:区块链，零知识证明与形式化验证，实现无中介、零信任的公平交易&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;推荐值：❤️❤️❤️❤️&lt;/p&gt;
 &lt;p&gt;难度值：⭐️⭐️⭐️&lt;/p&gt;
 &lt;p&gt;这是安比实验室今年发布的基于零知识证明的公平交易协议。&lt;/p&gt;
-&lt;p&gt;原文链接：https://mp.weixin.qq.com/s/TCYDfOAle0K3D69eBm6HNw&lt;/p&gt;
+&lt;p&gt;原文链接：https://mp.weixin.secbit.io/s/TCYDfOAle0K3D69eBm6HNw&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;「推荐文章三十一」 &lt;a href=&#34;https://mp.weixin.qq.com/s/oTbzyqtc-TzJXbMafj28DQ&#34;&gt;零知识证明 - Loopring DEX 3.0&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
