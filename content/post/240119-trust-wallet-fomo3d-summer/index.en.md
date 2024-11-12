@@ -40,7 +40,7 @@ You can find more details and findings in our previous tweet thread [here](https
 
 The hack is not limited to a single wallet. Many victims were hacked, transferring funds to 0xAa8B55e21ef3df5f15adf4d0F49D3bfa854e9125. A lack of reports online could be due to the affected addresses being old and unchecked.
 
-Quick research on on-chain data using @DuneAnalytics provided important findings. The analytics dashboard can be found [here](https://dune.com/echo/2023-07-12-low-entropy-wallets-hack-analysis).
+Quick research on on-chain data using @DuneAnalytics provided important findings. The analytics dashboard can be found [here](https://dune.com/echo_/2023-07-12-low-entropy-wallets-hack-analysis).
 
 Most intriguing was the wallet creation date. A common vulnerability might link the hacked addresses. Some addresses never sent out any transactions, only receiving funds. The oldest wallet hacked was created on 2017-06-30, and the latest on 2023-06-04. It provides significant evidence that not a single provider was targeted, and the vulnerable product might still be in production. **Most addresses were created in 2018/2019, with the most being created in July and August 2018.**
 
@@ -195,7 +195,7 @@ Investigations into other potential vulnerable wallet providers are ongoing.
 
 ## Some Fun Facts About What Is Trust Wallet's "Fomo3D Summer"
 
-Examining [on-chain data](https://dune.com/echo/2023-07-12-low-entropy-wallets-hack-analysis), we discovered a surge in victims in July and August 2018, peaking precisely within those months and declining after that. Wallets compromised before July 2018 were rare, possibly indicating a major crypto wallet provider's release of a vulnerable product version in July, followed by a fixed version in August.
+Examining [on-chain data](https://dune.com/echo_/2023-07-12-low-entropy-wallets-hack-analysis), we discovered a surge in victims in July and August 2018, peaking precisely within those months and declining after that. Wallets compromised before July 2018 were rare, possibly indicating a major crypto wallet provider's release of a vulnerable product version in July, followed by a fixed version in August.
 
 ![Wallet Creation Date By Day](img/wallet-creation-date-by-day.png)
 
