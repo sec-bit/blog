@@ -4,7 +4,6 @@ enableRobotsTXT = true
 enableEmoji = true
 
 hasCJKLanguage = true     # has chinese/japanese/korean ? # 自动检测是否包含 中文\日文\韩文
-paginate = 5                                              # 首页每页显示的文章数
 rssLimit = 20             # Limit Entry Count to Rss file # 限制 Rss 文章输出数量
 googleAnalytics = "G-CVGF90VYL2"      # UA-XXXXXXXX-X
 copyright = ""            # default: author.name ↓        # 默认为下面配置的author.name ↓
@@ -13,6 +12,10 @@ enableGitInfo = true # use git commit log to generate lastmod record # 可根据
 
 # language support en / zh-cn / other... translations present in i18n/
 defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multilingual support)
+
+[pagination]
+  pagerSize = 5           # Number of articles displayed on the homepage  # 首页每页显示的文章数
+
 [langusges]
 [languages.en]
   title = "SECBIT Blog"

@@ -13,3 +13,9 @@
 - Hugo Static Site Generator hugo v0.136.5+extended
 - https://gohugo.io/getting-started/usage/
 - Cloudflare Rocket Loader should be disabled for this site or the MathJax will not work.
+
+## Hugo Version
+
+```
+hugo v0.147.9+extended+withdeploy darwin/arm64 BuildDate=2025-06-23T08:22:20Z VendorInfo=brew
+```
